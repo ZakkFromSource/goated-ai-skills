@@ -63,8 +63,10 @@ Use this skill before PRD creation, during issue exploration, or before committi
    - Do not use a prototype as a way to postpone required requirements work, tests, or design decisions.
 
 3. Choose the prototype shape:
-   - For logic, state, data-shape, or API questions, build the smallest local script, terminal loop, fixture harness, or isolated module needed to drive the state and show results.
+   - For logic, state, data-shape, or API questions, isolate the logic behind a small pure interface that could later be lifted into real code, then drive it with a throwaway terminal, script, or fixture harness.
+   - Pick the logic shape that fits the question: reducer, explicit state machine, pure function set, or a small module/class with a clear method surface when internal state is genuinely part of the model.
    - For UI or workflow questions, prefer mounting variants inside the nearest existing route, page, story, preview, or component surface so surrounding context remains visible.
+   - For UI variants, default to three structurally different variants and cap at five. Variants should differ in layout, information hierarchy, or primary affordance, not just color, spacing, or copy.
    - Create a new throwaway route or standalone surface only when there is no natural nearby host.
    - For integration questions, stub external effects unless the question specifically concerns the integration boundary.
 
@@ -78,9 +80,13 @@ Use this skill before PRD creation, during issue exploration, or before committi
 5. Build the smallest runnable experiment:
    - Use existing dependencies, commands, components, fixtures, and styling conventions.
    - Make it runnable or viewable with one command, URL, story, script, or documented entrypoint.
+   - Prefer adding an entry to the target project's existing task runner for script or terminal prototypes; if there is no task runner, put the exact command at the top of the prototype note.
    - Keep state in memory by default.
    - Use fixtures, stubs, local scratch data, or clearly wipeable files for sample data.
    - Surface the relevant state after each action, variant switch, run, or simulated case so the result can be judged.
+   - For logic prototypes, keep I/O, terminal prompts, logs, and rendering outside the pure logic module. Re-render one compact state view after each user action instead of building an ever-growing transcript.
+   - For UI prototypes on an existing route, use a shareable switch such as a `?variant=` query param when the framework supports it, and keep existing data loading, params, auth, and surrounding page context intact.
+   - For UI prototypes, provide an obvious prototype switcher or equivalent control that is visually separate from the evaluated design, supports quick cycling, and is gated so it cannot appear in production builds.
    - Skip production polish: no broad abstractions, no unrelated cleanup, no hardened error handling, and no tests for the throwaway shell.
 
 6. Evaluate the question:
@@ -91,6 +97,8 @@ Use this skill before PRD creation, during issue exploration, or before committi
 7. Clean up or hand off before final closeout:
    - Delete the prototype when it has served its purpose and no user review is pending.
    - Absorb only the validated idea into production code, then treat that production work as normal implementation with appropriate tests, docs, and review.
+   - For logic prototypes, delete the throwaway driver and lift only the validated pure logic shape if it still fits production needs.
+   - For UI prototypes, delete losing variants and the switcher; fold the chosen design into the real route or promote the winning throwaway route into a real route deliberately.
    - If the user still needs to inspect it, leave an explicit handoff note with the question, entrypoint, verdict status, cleanup owner, and cleanup trigger.
    - Do not close the work as complete while prototype artifacts remain unexplained.
 
@@ -149,6 +157,8 @@ If subagents are unavailable, perform the same work sequentially with a narrower
 - Do not introduce new frameworks, package managers, services, design systems, or major dependencies just for a prototype.
 - Do not polish the prototype beyond what is needed to learn from it.
 - Do not add tests for the throwaway shell; add tests only when validated behavior is absorbed into production code.
+- Do not blur reusable logic with the throwaway driver; keep portable logic separate from terminal, browser, logging, or fixture plumbing.
+- Do not ship prototype switchers, query-param variant branches, losing UI variants, or throwaway terminal drivers as production behavior.
 - Do not leave prototype routes, switches, variants, scripts, fixtures, or scratch data in the project without an explicit handoff and cleanup trigger.
 - Do not include private data, credentials, client details, sensitive personal context, or real user data in prototype fixtures.
 - Prefer a small honest verdict over a large impressive demo that does not answer the question.
