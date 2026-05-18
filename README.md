@@ -1,0 +1,113 @@
+# GOATED AI Skills
+
+GOATED AI Skills is a public source library for installable, framework-agnostic AI skills. The intended use is to clone, download, copy, or adapt the skill folders into an existing agentic workflow, then use those skills inside the user's own projects.
+
+This repo is not a project template that users are expected to clone into every codebase. It is the distribution home and maintainer workspace for the skills.
+
+## Current State
+
+This scaffold currently contains the repo structure and V1 PRD only. Actual skill folders and `SKILL.md` files are intentionally deferred until the PRD is approved and split with `prd-to-issues`.
+
+## Quick Use Model
+
+GOATED AI Skills has three layers:
+
+1. **Skill Pack Distribution** - users clone, download, copy, or install skill folders from this repo into Codex, Claude Code, Hermes, OpenCode, or another agent framework.
+2. **Target Project Onboarding** - installed skills prepare a user's project for serious agent work by mapping context, calibrating standards, and integrating with the chosen agent instructions.
+3. **Target Project Delivery** - installed skills help perform real project work through planning, prototyping, PRDs, issues, TDD, review, docs, commit messages, and handoff.
+
+Start with [docs/install.md](docs/install.md) for installation and adaptation guidance.
+
+## Design Principles
+
+- Skills are portable by default and explicit when they are not.
+- Installed skills must be self-contained and must not require this repo's root `AGENT.md`, `README.md`, or `CONTEXT.md` at runtime.
+- `SKILL.md` stays lean; deeper examples, templates, and checklists live in directly linked `references/`.
+- Every skill is subagent-aware but single-agent-compatible.
+- Public main stays free of private project names, sensitive personal domains, client context, and private workflow assumptions.
+- Private forks or private deployments can add private/domain-specific skills using the same classification system.
+
+## Root Layout
+
+```text
+AGENT.md               Maintainer/contributor guidance for this repo.
+AGENTS.md              Thin adapter for agents contributing to this repo.
+CLAUDE.md              Thin adapter for Claude-style contributors to this repo.
+CONTEXT.md             Public context for this skill library.
+docs/install.md        Docs-first install and adaptation guidance.
+docs/adr/              Architectural Decision Records.
+.out-of-scope/         Public future ideas and deferred upgrades.
+.local/                Ignored private notes and handoffs for local work.
+skills/                Public skill category placeholders.
+issues/                PRDs and future issue handoff docs.
+```
+
+## Planned Skill Categories
+
+- `skills/agent-workflows/` - installable operating patterns for session starts, target project onboarding, standards calibration, instruction integration, handoffs, and skill porting.
+- `skills/engineering/` - installable workflows for PRDs, prototyping, TDD, reviews, security checks, doc sync, commits, architecture maps, and refactoring.
+- `skills/productivity/` - installable productivity workflows that are public-safe and portable.
+
+Future private or domain-specific categories belong in a private fork or private deployment until intentionally sanitized for public use.
+
+## Classifications And Status
+
+Every implemented skill should declare a classification:
+
+- `portable` - safe for any compatible agent or project.
+- `domain-specific` - reusable pattern with a named public domain or project assumption.
+- `private` - intended for private forks or private deployments, not public main.
+
+Every implemented skill should declare a status:
+
+- `stable` - recommended for normal use.
+- `wip` - experimental or still being sharpened.
+- `deprecated` - kept for reference only.
+
+## Target Project Onboarding
+
+After the skill pack is installed into an agent framework, use this workflow inside a target project before durable, cross-file, PRD-level, architectural, or repeated work. Tiny one-off tasks can skip it.
+
+```text
+session-start-progressive-disclosure
+-> grill-with-docs
+-> context-matrix-map
+-> project-standards-calibration
+-> agent-instructions-integrator
+-> architecture-design-map optional
+-> doc-sync
+-> handoff optional
+```
+
+Durable target-project artifacts should go in tracked `docs/agents/`, such as `docs/agents/context-matrix.md` and `docs/agents/project-standards.md`. Session/private artifacts should go in ignored `.local/`, such as `.local/handoffs/`.
+
+## Target Project Delivery
+
+Use this workflow inside a target project after the relevant skills are installed and, for serious work, after onboarding.
+
+```text
+session-start-progressive-disclosure
+-> grill-with-docs when gated mandatory
+-> prototype optional
+-> write-a-prd
+-> prd-to-issues
+-> prototype optional per focused issue
+-> tdd
+-> standards-and-spec-review
+-> code-security-review
+-> doc-sync
+-> commit-message
+-> handoff optional
+```
+
+`grill-with-docs` is gated mandatory for onboarding, PRDs, architecture changes, cross-file work, unclear requests, and public-facing behavior. Tiny mechanical edits can skip it.
+
+## V1 Acceptance
+
+- Public docs distinguish source repo, installed skills, and target projects.
+- Root files explain the distribution model clearly.
+- `.local/` is ignored.
+- Actual skill implementation remains deferred until the PRD is split into issues.
+- Implemented skills follow the lean schema once created.
+- No actual `SKILL.md` files exist in this scaffold phase.
+- Public main contains no private names, handles, sensitive personal domains, client context, or private workflow assumptions.

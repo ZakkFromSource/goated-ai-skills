@@ -1,0 +1,12 @@
+.local/
+
+# Local/editor noise
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# Agent scratch output
+.scratch/
+tmp/
+temp/
