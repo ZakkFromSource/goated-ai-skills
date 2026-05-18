@@ -14,6 +14,7 @@ outputs:
   - scope boundaries, non-goals, and affected project areas
   - decisions made, assumptions confirmed, and remaining questions
   - source-grounded notes from docs, standards, ADRs, code, tests, or project facts
+  - candidate durable updates for context docs, ADRs, standards docs, PRDs, or doc-sync follow-up
 depends_on:
   hard: []
   soft:
@@ -21,6 +22,7 @@ depends_on:
     - context-matrix-map when docs/agents/context-matrix.md exists or onboarding should discover project sources
     - project-context-calibration when project language, boundaries, or architecture vocabulary need durable capture
     - project-standards-calibration when standards affect the decision
+    - doc-sync when settled decisions require documentation follow-up after the grill
   fallback: If project docs or companion skills are unavailable, inspect the minimum relevant local evidence and state lower confidence before asking questions.
 adapters:
   codex: usable
@@ -42,7 +44,7 @@ Use this skill before costly or ambiguous work so the agent and user reach share
 
 - User request, plan, PRD draft, architecture idea, issue, or feature description.
 - Target-project root path.
-- Existing root `CONTEXT.md`, if present.
+- Existing root `CONTEXT.md`, nested context docs, or `CONTEXT-MAP.md`, if present.
 - Existing `docs/agents/context-matrix.md`, if present.
 - Existing `docs/agents/project-standards.md`, if present.
 - Relevant README files, contributor docs, feature docs, specs, PRDs, ADRs, issue threads, glossary or context docs, and agent instructions.
@@ -60,18 +62,21 @@ Use this skill before costly or ambiguous work so the agent and user reach share
    - Start from the user's request and target-project root.
    - If a context matrix exists, use it to pick the first project sources to read.
    - Read standards, ADRs, glossary/context docs, relevant specs, issue files, and nearby source or tests only as needed.
+   - If project language, glossary/context docs, `CONTEXT.md`, `CONTEXT-MAP.md`, ownership, boundaries, or cross-context meaning affects the grill, read [references/context-docs.md](references/context-docs.md).
+   - If a settled decision may be costly to reverse, surprising without context, and tradeoff-driven, read [references/adr-capture.md](references/adr-capture.md) before recommending ADR capture.
    - Prefer discoverable facts over user questions. If code, docs, tests, config, or command definitions can answer something, inspect them before asking.
    - Stop gathering when the remaining uncertainty is a decision, tradeoff, preference, or missing product intent.
 
 3. Identify the decision tree:
    - Restate the likely goal and why the work matters.
    - List the decision branches that materially affect design, scope, behavior, testing, docs, migration, rollout, or user experience.
+   - Include scenario probes when they would clarify lifecycle, ownership, identity, cardinality, partial vs whole operations, failure states, or cross-context effects.
    - Order questions so upstream decisions are resolved before dependent details.
    - Avoid dumping every possible question at once.
 
 4. Ask one decision-shaping question at a time:
    - Ask only one focused question, then wait for the user's answer before continuing.
-   - Include the recommended default and the evidence or reasoning behind it.
+   - Include a recommended default and the evidence or rationale behind it in every decision-shaping question.
    - Ask about choices, priorities, boundaries, tradeoffs, and intent, not facts the agent should discover.
    - When the user uses vague or overloaded terms, propose a precise term and ask them to confirm or correct it.
 
@@ -79,12 +84,15 @@ Use this skill before costly or ambiguous work so the agent and user reach share
    - Compare user statements with documented standards, ADRs, glossary/context language, source behavior, tests, and known constraints.
    - Surface contradictions directly and ask which source should win.
    - Use concrete scenarios and edge cases to test boundaries between concepts.
-   - Call out when a decision would conflict with existing standards, require a new ADR, or need follow-up documentation.
+   - Call out when a decision would conflict with existing standards, may qualify for ADR capture, or need follow-up documentation.
 
 6. Capture decisions as they settle:
    - Keep a running summary of clarified goal, success criteria, scope, non-goals, decisions, assumptions, and remaining questions.
    - Note which project sources support or contradict each decision.
-   - If the project has a documented glossary, standards profile, ADR process, or doc-sync workflow, identify updates that should happen after the decision is confirmed.
+   - List candidate durable updates for `CONTEXT.md`, ADRs, standards docs, PRDs, or doc-sync follow-up.
+   - Route target-project `CONTEXT.md` curation to `project-context-calibration` when that skill is available.
+   - Route standards or enforcement updates to `project-standards-calibration` when that skill is available.
+   - Recommend ADR capture only after checking the target project's existing ADR convention; if none exists, suggest a default only when the user asks to create one.
    - Do not create new durable docs during the grill unless the user asked for that or the target project's established workflow requires it.
 
 7. Stop at shared understanding:
@@ -117,6 +125,13 @@ During the grill, keep the conversation one-question-at-a-time. After enough dec
 ## Remaining Questions
 
 - <question, owner, and when it must be answered>
+
+## Candidate Durable Updates
+
+- Include only candidates such as `CONTEXT.md`, ADRs, standards docs, PRDs, or doc-sync follow-up; if none, say `None`.
+
+| Artifact or workflow | Candidate update | Evidence or rationale | Recommended owner or next skill |
+| --- | --- | --- | --- |
 
 ## Next Step
 
@@ -158,6 +173,8 @@ If subagents are unavailable, perform the same evidence gathering sequentially w
 - Do not treat undocumented guesses as project facts.
 - Do not override existing ADRs, standards, glossary terms, or code behavior silently; surface conflicts and ask which source should change.
 - Do not create or edit durable docs during the grill unless the user requested it or the target project's established workflow calls for immediate capture.
+- Do not treat root `CONTEXT.md`, nested context docs, `CONTEXT-MAP.md`, or ADR directories as universal requirements.
+- Do not duplicate `project-context-calibration`; this skill identifies candidate context updates and routes curation when that companion skill is available.
 - Do not include private notes, ignored local scratch files, credentials, client data, or sensitive personal context in tracked outputs.
 - Prefer concrete scenarios, observable success criteria, and named tradeoffs over abstract brainstorming.
 
@@ -165,4 +182,6 @@ If subagents are unavailable, perform the same evidence gathering sequentially w
 
 This skill is self-contained after installation.
 
-Inspired by [Matt Pocock's grill-with-docs skill](https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs): ask one decision-shaping question at a time, inspect code and docs for discoverable facts, challenge language against project context, and offer ADRs only for decisions that are costly, surprising, and tradeoff-driven.
+Read [references/context-docs.md](references/context-docs.md) when project language, glossary/context docs, `CONTEXT.md`, `CONTEXT-MAP.md`, ownership, boundaries, or cross-context meaning affects the grill.
+
+Read [references/adr-capture.md](references/adr-capture.md) when a settled decision may be hard to reverse, surprising without context, and the result of a real tradeoff.
