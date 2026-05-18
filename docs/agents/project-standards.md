@@ -1,0 +1,78 @@
+# Project Standards
+
+## Purpose
+
+Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills repo standards without rediscovering them. Treat documented standards as stronger than inferred conventions, and avoid promoting preferences into rules without source evidence.
+
+## Documented Standards
+
+| Standard | Enforcement | Source | Notes |
+| --- | --- | --- | --- |
+| Read `AGENT.md`, `CONTEXT.md`, and the relevant PRD or issue before changing this repo. | review-enforced | `AGENT.md` | Applies before planning, editing, reviewing, or automation. |
+| Preserve the distinction between source repo, installed skills, and target projects. | review-enforced | `AGENT.md`, `CONTEXT.md`, `README.md` | Do not make installed skills depend on root repo guidance. |
+| Keep public main public-safe. | review-enforced | `AGENT.md`, `CONTEXT.md`, `README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | No private names, handles, credentials, client data, sensitive personal domains, or private workflow assumptions. |
+| Use `.local/` for private planning and session-local notes; do not make public behavior depend on it. | tooling-enforced | `.gitignore`, `AGENT.md`, `README.md`, `docs/install.md` | Git ignores `.local/`; public-safety still requires review judgment. |
+| Add new skill folders and `SKILL.md` files only for a specific approved implementation issue. | review-enforced | `AGENT.md`, `README.md`, `skills/README.md` | Category indexes alone are not approval to create a skill. |
+| Keep V1 installation docs-first; installer automation is out of scope for V1. | review-enforced | `docs/install.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | Completed skill folders are copied, installed, or adapted manually. |
+| Keep installed skill folders self-contained after installation. | review-enforced | `AGENT.md`, `README.md`, `skills/README.md`, `docs/install.md` | A copied skill can reference its own folder, not this repo's root files. |
+| Use the lean skill schema for implemented `SKILL.md` files. | review-enforced | `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | Required frontmatter includes name, category, classification, status, description, triggers, outputs, depends_on, and adapters. |
+| Use only public V1 categories unless a future public-safe category is intentionally added. | review-enforced | `CONTEXT.md`, `skills/README.md`, `README.md` | Current public categories are `agent-workflows`, `engineering`, and `productivity`. |
+| Keep `SKILL.md` lean and move detailed examples, templates, and stack-specific notes into directly linked `references/`. | review-enforced | `AGENT.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | The 300-line threshold is a soft review threshold, not an automated check. |
+| Make dependency behavior explicit. | review-enforced | `AGENT.md`, `skills/README.md` | Name hard dependencies, soft dependencies, and graceful fallbacks when relevant. |
+| Keep root adapter files thin and routed to `AGENT.md`. | review-enforced | `AGENT.md`, `AGENTS.md`, `CLAUDE.md`, `docs/install.md` | Do not paste full workflows into adapter files. |
+| Make workflows subagent-aware and single-agent-compatible. | review-enforced | `AGENT.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | Subagents must return evidence; the main agent owns final judgment. |
+| Use progressive disclosure instead of broad context loading. | review-enforced | `AGENT.md`, `skills/README.md`, `docs/agents/context-matrix.md` | Load root guidance, then relevant issue/category/skill sources only as needed. |
+| Store durable target-project agent artifacts under `docs/agents/`; keep session/private artifacts ignored under `.local/`. | tooling-enforced | `.gitignore`, `AGENT.md`, `README.md`, `docs/install.md` | `docs/agents/` is tracked by default; `.local/` is ignored. |
+
+## Inferred Conventions
+
+| Convention | Enforcement | Evidence | Confidence |
+| --- | --- | --- | --- |
+| Markdown is the primary artifact format. | review-enforced | Root docs, issue files, category READMEs, implemented skills, and `docs/agents/context-matrix.md` | High |
+| Use ATX headings, concise paragraphs, bullet lists, and fenced code blocks for examples or directory layouts. | review-enforced | `README.md`, `docs/install.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | High |
+| Use kebab-case names for skill folders and implemented skill names. | review-enforced | `skills/agent-workflows/session-start-progressive-disclosure`, `context-matrix-map`, `project-standards-calibration` | High |
+| Implemented skills live at `skills/<category>/<skill-name>/SKILL.md`. | review-enforced | `skills/README.md`, existing `skills/agent-workflows/*/SKILL.md` files | High |
+| Existing implemented skills use structured `depends_on` with `hard`, `soft`, and `fallback` entries. | review-enforced | Existing `skills/agent-workflows/*/SKILL.md` frontmatter | Medium |
+| Existing implemented skills use adapter maps for Codex, Claude Code, Hermes, OpenCode, and generic agents. | review-enforced | Existing `skills/agent-workflows/*/SKILL.md` frontmatter | High |
+| Skill bodies commonly include Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References. | review-enforced | Existing `skills/agent-workflows/*/SKILL.md` headings | High |
+| Issue handoffs use numbered filenames and standard sections such as Parent PRD, Type, What to build, Acceptance criteria, Blocked by, and User stories addressed. | review-enforced | `issues/*.md`, `issues/archive/*.md` heading scan | High |
+| Completed implementation issues move under `issues/archive/`. | review-enforced | Archived issues `001` through `005` | Medium |
+| Docs-only changes currently rely on manual markdown review. | review-enforced | No manifest, CI, formatter, linter, or test config found in this pass | High |
+
+## User-Confirmed Preferences
+
+| Preference | Enforcement | Confirmed by | Notes |
+| --- | --- | --- | --- |
+| None captured as durable project preferences in this pass. | preference-only | Not applicable | The user permitted use of installed onboarding skills for this session, but that is not recorded here as a permanent repo standard. |
+
+## Unresolved Questions
+
+| Question | Why it matters | Current default | Needed before |
+| --- | --- | --- | --- |
+| Should the repo add markdown linting or formatting tools later? | Tooling would change which standards can be called tooling-enforced. | Manual markdown review only. | Adding automated docs checks, CI, or formatter expectations. |
+| Should category README files list planned skills before implementation? | The PRD names this as an open question and it affects public docs shape. | Keep category READMEs lightweight and avoid creating skill folders without issues. | Expanding category indexes or generated catalog docs. |
+| Should future generated indexes be public docs, local-only artifacts, or both? | Generated indexes could affect install docs and repo maintenance. | No generated indexes in V1. | Designing any generated index workflow. |
+| Should installer automation live in this repo or framework-specific adapters later? | It affects V1 out-of-scope boundaries and future ownership. | No installer tooling in V1. | Starting installer automation work. |
+
+## Commands And Checks
+
+| Command | Purpose | Enforcement | Source |
+| --- | --- | --- | --- |
+| `.gitignore` patterns for `.local/`, `.scratch/`, `tmp/`, `temp/`, logs, and temp files | Keep local, scratch, and private artifacts out of normal tracked work. | tooling-enforced | `.gitignore` |
+| `git status --short` | Check worktree state before and after edits. | review-enforced | Used during context and standards creation. |
+| `rg --files` | Discover source files without bulk-reading. | review-enforced | Used by `docs/agents/context-matrix.md` and this pass. |
+| `rg -n` targeted scans | Find headings, schema references, and documented standards. | review-enforced | Used for issue and standards discovery. |
+| Manifest/config discovery with `rg --files -g ...` | Check whether build, test, lint, format, or CI entrypoints exist. | review-enforced | No matches found in this pass. |
+| Manual markdown review | Validate docs-only changes while no automated docs tooling exists. | review-enforced | Current practical default. |
+
+## Enforcement Levels
+
+- `tooling-enforced`: checked by named project tooling, CI, tests, schemas, hooks, generated checks, or Git ignore behavior.
+- `review-enforced`: documented or strongly expected but requires human or agent review.
+- `preference-only`: user-confirmed or locally preferred, with little or no project evidence.
+
+## Last Updated
+
+- Date: 2026-05-18
+- Updated by: Codex
+- Evidence used: installed `project-standards-calibration`; `docs/agents/context-matrix.md`; `AGENT.md`; `AGENTS.md`; `CLAUDE.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `skills/README.md`; existing `skills/agent-workflows/*/SKILL.md` files; `.gitignore`; `issues/prd-goated-ai-skills-v1-public-core.md`; issue heading scans; manifest/config discovery; test/spec discovery; `git rev-parse --show-toplevel`; `git status --short`.

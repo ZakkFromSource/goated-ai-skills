@@ -13,6 +13,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | `README.md` | Explains the public distribution model, root layout, V1 state, and planned workflows. | At the start of source-repo orientation or docs changes. | Good high-level map before opening narrower files. |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Canonical V1 product spec and acceptance reference. | Before changing product model, skill schema, category structure, install guidance, or implementation issues. | Read relevant sections first; it is intentionally broad. |
 | `docs/agents/context-matrix.md` | This routing artifact. | At the start of future serious sessions after this file exists. | Refresh when repo structure, workflow, or evidence paths change. |
+| `docs/agents/project-standards.md` | Durable standards profile for this repo. | At the start of future serious sessions after this file exists. | Use it to distinguish documented standards, inferred conventions, preferences, and unresolved questions. |
 
 ## Second-Read Sources
 
@@ -46,7 +47,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Maintainer and adapter guidance | `AGENT.md`, `AGENTS.md`, `CLAUDE.md` | Source-repo rules and thin framework adapters. | Any repo planning, edits, review, or automation. |
 | Public context and root docs | `CONTEXT.md`, `README.md` | Domain language, source repo boundary, root layout, V1 model, and public/private boundary. | Any public docs, product model, or skill-library work. |
 | Install and decision docs | `docs/install.md`, `docs/adr/` | Docs-first installation model and future ADR location. | Install/adaptation changes or accepted architecture decisions. |
-| Agent context artifacts | `docs/agents/` | Durable routing artifacts for agents working in this repo. | Serious future sessions after this matrix exists. |
+| Agent context artifacts | `docs/agents/` | Durable routing and standards artifacts for agents working in this repo. | Serious future sessions after these artifacts exist. |
 | Product and issue handoffs | `issues/`, `issues/archive/` | V1 PRD, active planned issues, and completed implementation issues. | Implementing a specific skill, tracing blockers, or validating V1 acceptance. |
 | Skill library | `skills/` | Public category indexes and implemented installable skill folders. | Creating, editing, reviewing, or installing skills. |
 | Local/private and deferred areas | `.local/`, `.out-of-scope/` | Ignored private notes and public deferred ideas. | Only when explicitly relevant; avoid `.local/` by default. |
@@ -72,6 +73,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | `issues/006-agent-instructions-integrator.md` through `issues/021-v1-acceptance-public-boundary-pass.md` | Planned future V1 implementation slices and final acceptance pass. | Active issue handoffs. | Read the current issue before implementing or reviewing that slice. |
 | `docs/adr/README.md` | ADR placement and policy. | Placeholder. | No ADR content was present in this pass. |
 | `docs/agents/context-matrix.md` | Future-agent read order for this repo. | First version. | Created from installed `session-start-progressive-disclosure` and `context-matrix-map` guidance. |
+| `docs/agents/project-standards.md` | Future-agent standards profile for this repo. | First version. | Created from installed `project-standards-calibration` guidance. |
 
 ## Gaps And Assumptions
 
@@ -86,4 +88,4 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 - Date: 2026-05-18
 - Updated by: Codex
-- Evidence used: installed `session-start-progressive-disclosure` and `context-matrix-map`; `AGENT.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; category READMEs under `skills/`; `docs/adr/README.md`; `.gitignore`; `issues/prd-goated-ai-skills-v1-public-core.md`; `rg --files`; issue heading scan with `rg -n`; `git rev-parse --show-toplevel`; `git status --short`; manifest and test discovery `rg` commands.
+- Evidence used: installed `session-start-progressive-disclosure`, `context-matrix-map`, and `project-standards-calibration`; `AGENT.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/agents/project-standards.md`; category READMEs under `skills/`; `docs/adr/README.md`; `.gitignore`; `issues/prd-goated-ai-skills-v1-public-core.md`; `rg --files`; issue heading scan with `rg -n`; `git rev-parse --show-toplevel`; `git status --short`; manifest and test discovery `rg` commands.
