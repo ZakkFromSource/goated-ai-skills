@@ -12,12 +12,12 @@ Implement `context-matrix-map` under `skills/agent-workflows/`. The skill builds
 
 ## Acceptance criteria
 
-- [ ] `skills/agent-workflows/context-matrix-map/SKILL.md` exists and follows the lean schema.
-- [ ] The workflow discovers docs, code areas, tests, commands, ADRs, and context packs without bulk-reading the project.
-- [ ] The default tracked output is `docs/agents/context-matrix.md` inside the target project.
-- [ ] The output contract separates first-read, second-read, and only-if-needed sources.
-- [ ] The guardrails prevent the context matrix from becoming a broad architecture essay.
-- [ ] Delegation notes require evidence such as paths, commands, and explicit assumptions from any subagent scan.
+- [x] `skills/agent-workflows/context-matrix-map/SKILL.md` exists and follows the lean schema.
+- [x] The workflow discovers docs, code areas, tests, commands, ADRs, and context packs without bulk-reading the project.
+- [x] The default tracked output is `docs/agents/context-matrix.md` inside the target project.
+- [x] The output contract separates first-read, second-read, and only-if-needed sources.
+- [x] The guardrails prevent the context matrix from becoming a broad architecture essay.
+- [x] Delegation notes require evidence such as paths, commands, and explicit assumptions from any subagent scan.
 
 ## Blocked by
 
