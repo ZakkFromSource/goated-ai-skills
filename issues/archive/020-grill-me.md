@@ -12,12 +12,12 @@ Implement `grill-me` under `skills/productivity/`. The skill interviews the user
 
 ## Acceptance criteria
 
-- [ ] `skills/productivity/grill-me/SKILL.md` exists and follows the lean schema.
-- [ ] The workflow asks one decision-shaping question at a time.
-- [ ] The skill recommends defaults and explains tradeoffs without pretending to know undiscovered project facts.
-- [ ] The output contract includes decisions made, assumptions locked, unresolved questions, and recommended next action.
-- [ ] The guardrails state that `grill-with-docs` is preferred when project artifacts matter.
-- [ ] The skill remains portable and public-safe.
+- [x] `skills/productivity/grill-me/SKILL.md` exists and follows the lean schema.
+- [x] The workflow asks one decision-shaping question at a time.
+- [x] The skill recommends defaults and explains tradeoffs without pretending to know undiscovered project facts.
+- [x] The output contract includes decisions made, assumptions locked, unresolved questions, and recommended next action.
+- [x] The guardrails state that `grill-with-docs` is preferred when project artifacts matter.
+- [x] The skill remains portable and public-safe.
 
 ## Blocked by
 
