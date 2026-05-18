@@ -185,5 +185,3 @@ If subagents are unavailable, perform the same gathering sequentially with a nar
 ## References
 
 This skill is self-contained after installation.
-
-Inspired by [Matt Pocock's compact handoff skill pattern](https://github.com/mattpocock/skills/tree/main/skills/productivity/handoff): summarize the current conversation for the next agent, tailor the note when the user provides a next-session focus, suggest useful next skills, and reference existing artifacts instead of duplicating them.

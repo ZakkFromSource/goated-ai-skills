@@ -186,5 +186,3 @@ If subagents are unavailable, perform the same passes sequentially with a narrow
 ## References
 
 This skill is self-contained after installation.
-
-For a public example of a compact workflow that separates a core setup procedure from adjacent seed templates, see [Matt Pocock's setup skill](https://github.com/mattpocock/skills/tree/main/skills/engineering/setup-matt-pocock-skills). Use it as structural inspiration only; this skill does not depend on that repository at runtime.
