@@ -279,6 +279,7 @@ Installed skills should use split artifact defaults inside target projects:
 Tracked durable project artifacts:
 
 ```text
+CONTEXT.md
 docs/agents/context-matrix.md
 docs/agents/project-standards.md
 ```
@@ -309,6 +310,13 @@ Durable project facts should be tracked. Session-private or temporary artifacts 
 - Writes `docs/agents/context-matrix.md` by default inside the target project.
 - Supports progressive disclosure by telling future agents what to read first, second, and only-if-needed.
 - Does not become an architecture essay.
+
+`project-context-calibration`
+
+- Creates or curates root `CONTEXT.md` inside the target project.
+- Captures project boundaries, domain language, durable artifact definitions, and reusable architecture vocabulary.
+- Uses `docs/agents/context-matrix.md` when present to find source-grounded context.
+- Does not become a source map, standards profile, architecture diagram, or refactor recommendation.
 
 `project-standards-calibration`
 
@@ -431,6 +439,7 @@ Default flow:
 session-start-progressive-disclosure
 -> grill-with-docs
 -> context-matrix-map
+-> project-context-calibration
 -> project-standards-calibration
 -> agent-instructions-integrator
 -> architecture-design-map optional
@@ -441,6 +450,7 @@ session-start-progressive-disclosure
 Expected outputs:
 
 - tracked `docs/agents/context-matrix.md`;
+- tracked root `CONTEXT.md`;
 - tracked `docs/agents/project-standards.md`;
 - target-agent instruction routing via the relevant instruction artifact or config;
 - optional architecture map;
@@ -501,6 +511,24 @@ Security review asks:
 - Did it weaken auth, persistence, validation, or execution safety?
 
 Keeping these separate prevents one axis from masking another.
+
+## Project Context File Design
+
+`project-context-calibration` should write one durable output inside the target project:
+
+```text
+CONTEXT.md
+```
+
+The file should include:
+
+- project boundaries;
+- domain language;
+- durable artifact definitions;
+- reusable architecture vocabulary;
+- explicit gaps or assumptions.
+
+It should not replace `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, architecture diagrams, ADRs, PRDs, or refactor plans.
 
 ## Project Standards Profile Design
 
@@ -610,6 +638,7 @@ The V1 implementation is complete when:
 - every `SKILL.md` respects the soft 300-line cap or justifies why it exceeds it;
 - `agent-instructions-integrator` replaces narrow single-file instruction framing everywhere;
 - Target Project Onboarding and Target Project Delivery are documented consistently;
+- `project-context-calibration` clearly defines target-project root `CONTEXT.md`;
 - `project-standards-calibration` clearly defines `docs/agents/project-standards.md`;
 - `context-matrix-map` clearly defines `docs/agents/context-matrix.md`;
 - `standards-and-spec-review` clearly defines its soft dependency behavior;

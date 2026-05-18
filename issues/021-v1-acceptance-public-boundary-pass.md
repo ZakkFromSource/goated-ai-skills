@@ -43,6 +43,7 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/018-architecture-design-map.md`
 - `issues/019-improve-codebase-architecture.md`
 - `issues/020-grill-me.md`
+- `issues/022-project-context-calibration.md`
 
 ## User stories addressed
 

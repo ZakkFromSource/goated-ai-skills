@@ -8,7 +8,7 @@ When implemented, skill folders are intended to be copied, installed, or adapted
 
 ## Categories
 
-- `agent-workflows/` - operating patterns for installed skills, target-project onboarding, handoffs, and skill porting.
+- `agent-workflows/` - operating patterns for installed skills, target-project onboarding, context calibration, handoffs, and skill porting.
 - `engineering/` - software delivery, review, testing, docs, and architecture workflows.
 - `productivity/` - portable productivity workflows.
 

@@ -19,6 +19,7 @@ depends_on:
   soft:
     - session-start-progressive-disclosure before integrating an unfamiliar target project
     - context-matrix-map when routing should reference docs/agents/context-matrix.md
+    - project-context-calibration when routing should reference root CONTEXT.md
     - project-standards-calibration when routing should reference docs/agents/project-standards.md
   fallback: If companion skills or target-project artifacts are unavailable, create a minimal framework-specific router and state what could not be verified.
 adapters:
@@ -43,6 +44,7 @@ Use this skill after core onboarding artifacts exist, or when a target project n
 - Target-project root path.
 - Installed GOATED skill location, registry, or framework-specific skill discovery path, if known.
 - Existing target-project agent instruction files, command files, skill registries, or framework config.
+- Existing root `CONTEXT.md`, if present.
 - Existing `docs/agents/context-matrix.md` and `docs/agents/project-standards.md`, if present.
 - Framework docs or user-provided framework conventions, when local evidence is insufficient.
 
@@ -79,6 +81,7 @@ Use this skill after core onboarding artifacts exist, or when a target project n
    - Include the delivery route only as a compact pointer to the installed delivery skills, not a full workflow dump.
 
 6. Route to target-project artifacts:
+   - Tell future agents to read root `CONTEXT.md` when it exists for project language, boundaries, and durable artifact definitions.
    - Tell future agents to read `docs/agents/context-matrix.md` when it exists for source discovery.
    - Tell future agents to read `docs/agents/project-standards.md` when standards affect the work.
    - Tell future agents to use ignored `.local/` paths only for session-private notes, handoffs, or scratch artifacts when the project uses them.
@@ -99,6 +102,7 @@ Update the selected target-project instruction artifact or configuration with a 
 - Framework: <Codex | Claude Code | Hermes | OpenCode | generic agent | other confirmed framework>
 - Installed skills: <path, registry, or "installed in framework; exact path not verified">
 - Start serious project work with `session-start-progressive-disclosure`.
+- Use root `CONTEXT.md` for project language and boundaries when present.
 - Use `docs/agents/context-matrix.md` for source discovery when present.
 - Use `docs/agents/project-standards.md` for project standards when present.
 - Use installed GOATED skills by name; do not copy skill bodies into this file.

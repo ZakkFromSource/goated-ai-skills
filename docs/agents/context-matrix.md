@@ -24,8 +24,8 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | `skills/agent-workflows/README.md` | Defines the agent-workflows category. | Before editing onboarding, session, handoff, or skill-porting workflows. | Keep workflows portable and adapter notes small. |
 | `skills/engineering/README.md` | Defines the engineering category. | Before implementing or reviewing delivery, testing, review, docs, architecture, or refactor skills. | Current folder may contain placeholders until issues are implemented. |
 | `skills/productivity/README.md` | Defines the productivity category. | Before implementing or reviewing productivity workflows. | Private or domain-specific workflows belong outside public main until sanitized. |
-| `issues/archive/*.md` | Completed implementation handoffs and blocker history. | Before modifying an implemented skill or tracing why an existing artifact exists. | Archived issues `001` through `005` cover scaffold and first onboarding skills. |
-| `issues/006-*.md` through `issues/021-*.md` | Active future implementation handoffs. | Before implementing the specific planned skill or acceptance pass. | Read only the issue for the current task unless blockers require more. |
+| `issues/archive/*.md` | Completed implementation handoffs and blocker history. | Before modifying an implemented skill or tracing why an existing artifact exists. | Archived issues `001` through `011` cover scaffold, first onboarding skills, and early delivery skills. |
+| `issues/012-*.md` through `issues/022-*.md` | Active future implementation handoffs. | Before implementing the specific planned skill or acceptance pass. | Read only the issue for the current task unless blockers require more. |
 | `AGENTS.md` and `CLAUDE.md` | Thin framework adapter files. | Before changing agent-specific source-repo instructions. | They should route to `AGENT.md`, not duplicate the full workflow. |
 | `docs/adr/README.md` | ADR storage policy. | Before adding or changing architectural decision records. | No accepted ADRs were present in this pass. |
 | `.gitignore` | Defines ignored local and scratch artifacts. | Before adding local/session artifacts or generated output paths. | `.local/` is intentionally ignored. |
@@ -69,8 +69,8 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Source | Scope | Status | Notes |
 | --- | --- | --- | --- |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Public core product model, skill schema, V1 skill set, onboarding and delivery workflows. | Draft reference PRD. | Primary spec until superseded by accepted ADRs or updated PRDs. |
-| `issues/archive/001-confirm-scaffold-public-scope.md` through `issues/archive/005-project-standards-calibration.md` | Completed scaffold and first onboarding skill implementation handoffs. | Archived. | Use to understand why existing first-wave artifacts were created. |
-| `issues/006-agent-instructions-integrator.md` through `issues/021-v1-acceptance-public-boundary-pass.md` | Planned future V1 implementation slices and final acceptance pass. | Active issue handoffs. | Read the current issue before implementing or reviewing that slice. |
+| `issues/archive/001-confirm-scaffold-public-scope.md` through `issues/archive/011-prototype.md` | Completed scaffold, onboarding, and early delivery implementation handoffs. | Archived. | Use to understand why existing first-wave artifacts were created. |
+| `issues/012-prd-to-issues.md` through `issues/022-project-context-calibration.md` | Planned future V1 implementation slices and final acceptance pass. | Active issue handoffs. | Read the current issue before implementing or reviewing that slice. |
 | `docs/adr/README.md` | ADR placement and policy. | Placeholder. | No ADR content was present in this pass. |
 | `docs/agents/context-matrix.md` | Future-agent read order for this repo. | First version. | Created from installed `session-start-progressive-disclosure` and `context-matrix-map` guidance. |
 | `docs/agents/project-standards.md` | Future-agent standards profile for this repo. | First version. | Created from installed `project-standards-calibration` guidance. |
@@ -88,4 +88,4 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 - Date: 2026-05-18
 - Updated by: Codex
-- Evidence used: installed `session-start-progressive-disclosure`, `context-matrix-map`, and `project-standards-calibration`; `AGENT.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/agents/project-standards.md`; category READMEs under `skills/`; `docs/adr/README.md`; `.gitignore`; `issues/prd-goated-ai-skills-v1-public-core.md`; `rg --files`; issue heading scan with `rg -n`; `git rev-parse --show-toplevel`; `git status --short`; manifest and test discovery `rg` commands.
+- Evidence used: installed `session-start-progressive-disclosure`, `context-matrix-map`, and `project-standards-calibration`; `AGENT.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/agents/project-standards.md`; category READMEs under `skills/`; `docs/adr/README.md`; `.gitignore`; `issues/prd-goated-ai-skills-v1-public-core.md`; `issues/022-project-context-calibration.md`; `rg --files`; issue heading scan with `rg -n`; `git rev-parse --show-toplevel`; `git status --short`; manifest and test discovery `rg` commands.

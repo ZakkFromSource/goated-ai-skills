@@ -20,6 +20,7 @@ depends_on:
   soft:
     - session-start-progressive-disclosure before calibrating a new or unfamiliar target project
     - context-matrix-map when a target project already has or needs docs/agents/context-matrix.md
+    - project-context-calibration when root CONTEXT.md exists or project language affects standards
   fallback: If companion skills are unavailable, inspect the minimum relevant project files directly and state lower confidence.
 adapters:
   codex: usable
@@ -42,6 +43,7 @@ Use this skill during target-project onboarding, before repeated delivery work, 
 - User request or onboarding goal.
 - Target-project root path.
 - Existing `docs/agents/context-matrix.md`, if present.
+- Existing root `CONTEXT.md`, if present.
 - Existing `docs/agents/project-standards.md`, if refreshing.
 - Project docs, agent instructions, ADRs, contributor guides, issue or PRD templates, and review guidance.
 - Build, lint, format, typecheck, test, CI, dependency, schema, and editor configuration files.

@@ -19,6 +19,7 @@ depends_on:
   soft:
     - session-start-progressive-disclosure when a future agent will need to re-orient
     - context-matrix-map when a target project has docs/agents/context-matrix.md
+    - project-context-calibration when project language or boundaries affected the work
     - project-standards-calibration when standards affected the work
   fallback: If companion skills or durable artifacts are unavailable, write a compact note with explicit gaps and lower confidence.
 adapters:
@@ -84,7 +85,7 @@ Use this skill at the end of onboarding, delivery, review, planning, or interrup
 
 6. Capture blockers and next moves:
    - Blockers, risks, unresolved questions, and missing inputs.
-   - Recommended next skills, such as `session-start-progressive-disclosure`, `context-matrix-map`, `project-standards-calibration`, `doc-sync`, `standards-and-spec-review`, `code-security-review`, or `commit-message`.
+   - Recommended next skills, such as `session-start-progressive-disclosure`, `context-matrix-map`, `project-context-calibration`, `project-standards-calibration`, `doc-sync`, `standards-and-spec-review`, `code-security-review`, or `commit-message`.
    - A short resume plan with the next one to three actions.
 
 7. Finalize and report:
@@ -176,7 +177,7 @@ If subagents are unavailable, perform the same gathering sequentially with a nar
 - Default to `.local/handoffs/` inside the target project.
 - Write tracked handoffs only when the user explicitly requests a tracked artifact.
 - Do not duplicate PRDs, issue files, ADRs, diffs, commit messages, long logs, or conversation transcripts.
-- Do not treat a handoff as a replacement for `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, a PRD, an issue, or an ADR.
+- Do not treat a handoff as a replacement for root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, a PRD, an issue, or an ADR.
 - Do not include credentials, secrets, client data, sensitive personal context, or private scratch notes in a tracked handoff.
 - Do not claim verification passed unless the check was actually run or already evidenced.
 - Keep the note short enough that a future agent can read it first.

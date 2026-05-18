@@ -19,7 +19,7 @@ These definitions are normative for this source repo. If another public doc uses
 ### V1 Workflow Model
 
 - **Docs-first installation** - the V1 installation model: users manually copy, install, or adapt completed skill folders using documentation instead of installer automation.
-- **Target Project Onboarding** - preparing a target project for serious agent work by mapping context, calibrating standards, and routing the chosen agent framework to installed skills and durable project artifacts.
+- **Target Project Onboarding** - preparing a target project for serious agent work by mapping sources, calibrating project context and standards, and routing the chosen agent framework to installed skills and durable project artifacts.
 - **Target Project Delivery** - moving one target-project change from clarified intent through planning, implementation, verification, documentation, and handoff.
 - **Public core workflow** - the portable V1 workflow set intended for public main, spanning onboarding and delivery without private project assumptions.
 - **Tiny one-off task** - a small, obvious, low-risk request that does not need full onboarding or planning ceremony, such as a typo fix, one-line rename, or direct command the user already specified.
@@ -49,9 +49,10 @@ These definitions are normative for this source repo. If another public doc uses
 - **Archived issue** - a completed implementation issue moved under `issues/archive/` with acceptance criteria checked off.
 - **ADR** - an architectural decision record stored under `docs/adr/` when a durable architecture decision needs to be recorded.
 - **Context matrix** - a durable target-project artifact, normally `docs/agents/context-matrix.md`, that tells future agents what to read first, second, and only if needed.
+- **Project context file** - a durable target-project artifact, normally root `CONTEXT.md`, that defines project boundaries, domain language, durable artifact meanings, and shared architecture vocabulary for that target project. This is distinct from this source repo's root `CONTEXT.md`.
 - **Project standards profile** - a durable target-project artifact, normally `docs/agents/project-standards.md`, that separates documented standards, inferred conventions, user-confirmed preferences, unresolved questions, and enforcement levels.
 - **Agent instruction artifact** - a file or configuration entry that tells a specific agent framework how to use installed skills and target-project artifacts.
-- **Durable artifact** - tracked project knowledge that should survive across sessions, such as PRDs, ADRs, context matrices, standards profiles, and public docs.
+- **Durable artifact** - tracked project knowledge that should survive across sessions, such as PRDs, ADRs, project context files, context matrices, standards profiles, and public docs.
 - **Local/session artifact** - ignored, private, or temporary workspace context, such as `.local/handoffs/`, `.local/scratch/`, `.scratch/`, `tmp/`, or `temp/`.
 - **Handoff** - a compact continuity note for a future agent or session. Handoffs should reference existing artifacts instead of duplicating PRDs, issues, ADRs, diffs, or commits.
 

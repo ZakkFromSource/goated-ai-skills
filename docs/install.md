@@ -15,7 +15,7 @@ Layer 0: Skill Pack Distribution
 Layer 1: Target Project Onboarding
 
 - Run the installed onboarding skills inside a project before durable, cross-file, PRD-level, architectural, or repeated work.
-- Use onboarding to create durable target-project artifacts such as `docs/agents/context-matrix.md` and `docs/agents/project-standards.md`.
+- Use onboarding to create durable target-project artifacts such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, and `docs/agents/project-standards.md`.
 - Use ignored `.local/` in the target project for private handoffs, scratch notes, and temporary artifacts.
 
 Layer 2: Target Project Delivery
@@ -59,6 +59,7 @@ For OpenCode-style workflows, place copied or adapted skills wherever OpenCode e
 Installed skills should use these defaults inside a target project:
 
 ```text
+CONTEXT.md                         tracked durable project context and language
 docs/agents/context-matrix.md      tracked durable context map
 docs/agents/project-standards.md   tracked durable standards profile
 .local/handoffs/                   ignored handoff notes

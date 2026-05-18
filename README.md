@@ -19,7 +19,7 @@ Private planning may live in ignored `.local/`, but public behavior must not dep
 GOATED AI Skills has three layers:
 
 1. **Skill Pack Distribution** - users clone, download, copy, or install skill folders from this repo into Codex, Claude Code, Hermes, OpenCode, or another agent framework.
-2. **Target Project Onboarding** - installed skills prepare a user's project for serious agent work by mapping context, calibrating standards, and integrating with the chosen agent instructions.
+2. **Target Project Onboarding** - installed skills prepare a user's project for serious agent work by mapping sources, calibrating project context and standards, and integrating with the chosen agent instructions.
 3. **Target Project Delivery** - installed skills help perform real project work through planning, prototyping, PRDs, issues, TDD, review, docs, commit messages, and handoff.
 
 Start with [docs/install.md](docs/install.md) for installation and adaptation guidance.
@@ -50,7 +50,7 @@ issues/                PRDs and future issue handoff docs.
 
 ## Planned Skill Categories
 
-- `skills/agent-workflows/` - installable operating patterns for session starts, target project onboarding, standards calibration, instruction integration, handoffs, and skill porting.
+- `skills/agent-workflows/` - installable operating patterns for session starts, target project onboarding, context calibration, standards calibration, instruction integration, handoffs, and skill porting.
 - `skills/engineering/` - installable workflows for PRDs, prototyping, TDD, reviews, security checks, doc sync, commits, architecture maps, and refactoring.
 - `skills/productivity/` - installable productivity workflows that are public-safe and portable.
 
@@ -78,6 +78,7 @@ After the skill pack is installed into an agent framework, use this workflow ins
 session-start-progressive-disclosure
 -> grill-with-docs
 -> context-matrix-map
+-> project-context-calibration
 -> project-standards-calibration
 -> agent-instructions-integrator
 -> architecture-design-map optional
@@ -85,7 +86,7 @@ session-start-progressive-disclosure
 -> handoff optional
 ```
 
-Durable target-project artifacts should go in tracked `docs/agents/`, such as `docs/agents/context-matrix.md` and `docs/agents/project-standards.md`. Session/private artifacts should go in ignored `.local/`, such as `.local/handoffs/`.
+Durable target-project artifacts should be tracked, such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, and `docs/agents/project-standards.md`. Session/private artifacts should go in ignored `.local/`, such as `.local/handoffs/`.
 
 ## Target Project Delivery
 

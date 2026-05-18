@@ -19,6 +19,7 @@ depends_on:
   soft:
     - session-start-progressive-disclosure before grilling an unfamiliar target project
     - context-matrix-map when docs/agents/context-matrix.md exists or onboarding should discover project sources
+    - project-context-calibration when project language, boundaries, or architecture vocabulary need durable capture
     - project-standards-calibration when standards affect the decision
   fallback: If project docs or companion skills are unavailable, inspect the minimum relevant local evidence and state lower confidence before asking questions.
 adapters:
@@ -41,6 +42,7 @@ Use this skill before costly or ambiguous work so the agent and user reach share
 
 - User request, plan, PRD draft, architecture idea, issue, or feature description.
 - Target-project root path.
+- Existing root `CONTEXT.md`, if present.
 - Existing `docs/agents/context-matrix.md`, if present.
 - Existing `docs/agents/project-standards.md`, if present.
 - Relevant README files, contributor docs, feature docs, specs, PRDs, ADRs, issue threads, glossary or context docs, and agent instructions.
@@ -87,7 +89,7 @@ Use this skill before costly or ambiguous work so the agent and user reach share
 
 7. Stop at shared understanding:
    - Stop when implementation can begin safely, the next skill should take over, or a blocker needs user or stakeholder input.
-   - Recommend the next direct action or skill, such as `write-a-prd`, `context-matrix-map`, `project-standards-calibration`, `architecture-design-map`, `tdd`, or `doc-sync`.
+   - Recommend the next direct action or skill, such as `write-a-prd`, `context-matrix-map`, `project-context-calibration`, `project-standards-calibration`, `architecture-design-map`, `tdd`, or `doc-sync`.
    - If the user decides to proceed with known ambiguity, name the risk clearly.
 
 ## Output Contract

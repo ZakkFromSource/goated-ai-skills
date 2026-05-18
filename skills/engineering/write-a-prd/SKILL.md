@@ -20,6 +20,7 @@ depends_on:
     - session-start-progressive-disclosure before writing a PRD for an unfamiliar target project
     - grill-with-docs when docs, standards, ADRs, project artifacts, domain language, or decision tradeoffs matter
     - context-matrix-map when docs/agents/context-matrix.md exists or source discovery is needed
+    - project-context-calibration when root CONTEXT.md exists or project language affects requirements
     - project-standards-calibration when project standards affect requirements, testing, or rollout
   fallback: If companion skills or project docs are unavailable, inspect the minimum relevant evidence and mark unverifiable assumptions in the PRD.
 adapters:
@@ -43,7 +44,7 @@ Use this skill when the next useful artifact is a PRD that can feed `prd-to-issu
 - User request, conversation context, client brief, roadmap item, feature idea, issue, or prototype verdict.
 - Target-project root path.
 - Existing PRD, spec, issue, roadmap, or planning conventions, if present.
-- Existing `docs/agents/context-matrix.md` and `docs/agents/project-standards.md`, if present.
+- Existing root `CONTEXT.md`, `docs/agents/context-matrix.md`, and `docs/agents/project-standards.md`, if present.
 - Relevant docs, ADRs, glossary/context files, standards, source files, tests, schemas, analytics notes, support notes, or product references.
 - Clarified work brief from `grill-with-docs`, when available or needed.
 

@@ -77,6 +77,7 @@ When the V1 skills are implemented and installed into an agent framework, use th
 session-start-progressive-disclosure
 -> grill-with-docs
 -> context-matrix-map
+-> project-context-calibration
 -> project-standards-calibration
 -> agent-instructions-integrator
 -> architecture-design-map optional
@@ -84,7 +85,7 @@ session-start-progressive-disclosure
 -> handoff optional
 ```
 
-Durable target-project artifacts should be tracked under `docs/agents/`. Session/private artifacts should use ignored `.local/`.
+Durable target-project artifacts should be tracked, including root `CONTEXT.md` and agent artifacts under `docs/agents/`. Session/private artifacts should use ignored `.local/`.
 
 ## Planned Target Project Delivery
 

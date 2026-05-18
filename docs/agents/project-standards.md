@@ -22,7 +22,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Keep root adapter files thin and routed to `AGENT.md`. | review-enforced | `AGENT.md`, `AGENTS.md`, `CLAUDE.md`, `docs/install.md` | Do not paste full workflows into adapter files. |
 | Make workflows subagent-aware and single-agent-compatible. | review-enforced | `AGENT.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | Subagents must return evidence; the main agent owns final judgment. |
 | Use progressive disclosure instead of broad context loading. | review-enforced | `AGENT.md`, `skills/README.md`, `docs/agents/context-matrix.md` | Load root guidance, then relevant issue/category/skill sources only as needed. |
-| Store durable target-project agent artifacts under `docs/agents/`; keep session/private artifacts ignored under `.local/`. | tooling-enforced | `.gitignore`, `AGENT.md`, `README.md`, `docs/install.md` | `docs/agents/` is tracked by default; `.local/` is ignored. |
+| Store durable target-project context in tracked files such as root `CONTEXT.md` and agent artifacts under `docs/agents/`; keep session/private artifacts ignored under `.local/`. | tooling-enforced | `.gitignore`, `AGENT.md`, `README.md`, `docs/install.md` | `docs/agents/` and root Markdown files are tracked by default; `.local/` is ignored. |
 
 ## Inferred Conventions
 
@@ -75,4 +75,4 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 - Date: 2026-05-18
 - Updated by: Codex
-- Evidence used: installed `project-standards-calibration`; `docs/agents/context-matrix.md`; `AGENT.md`; `AGENTS.md`; `CLAUDE.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `skills/README.md`; existing `skills/agent-workflows/*/SKILL.md` files; `.gitignore`; `issues/prd-goated-ai-skills-v1-public-core.md`; issue heading scans; manifest/config discovery; test/spec discovery; `git rev-parse --show-toplevel`; `git status --short`.
+- Evidence used: installed `project-standards-calibration`; `docs/agents/context-matrix.md`; `AGENT.md`; `AGENTS.md`; `CLAUDE.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `skills/README.md`; existing `skills/agent-workflows/*/SKILL.md` files; `.gitignore`; `issues/prd-goated-ai-skills-v1-public-core.md`; `issues/022-project-context-calibration.md`; issue heading scans; manifest/config discovery; test/spec discovery; `git rev-parse --show-toplevel`; `git status --short`.

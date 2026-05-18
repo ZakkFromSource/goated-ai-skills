@@ -19,6 +19,7 @@ depends_on:
   hard: []
   soft:
     - context-matrix-map when a target project already has or needs a durable context map
+    - project-context-calibration when a target project already has or needs root CONTEXT.md
     - project-standards-calibration when project standards affect the work
   fallback: If companion skills are unavailable, inspect the minimum relevant files directly and state lower confidence.
 adapters:
@@ -42,7 +43,7 @@ Use this skill to prevent broad context loading at the beginning of serious or r
 - User request or session goal.
 - Current working directory, when available.
 - Local agent instruction files, when present.
-- Existing target-project artifacts, when present, such as `docs/agents/context-matrix.md` or `docs/agents/project-standards.md`.
+- Existing target-project artifacts, when present, such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, or `docs/agents/project-standards.md`.
 
 ## Workflow
 
@@ -70,7 +71,7 @@ Use this skill to prevent broad context loading at the beginning of serious or r
    - The next safe action is clear and low risk.
    - The remaining uncertainty is a user preference or product decision.
    - Further reading would be broad context collection instead of targeted discovery.
-   - A companion skill should take over, such as `grill-with-docs`, `context-matrix-map`, `project-standards-calibration`, or `prd-to-issues`.
+   - A companion skill should take over, such as `grill-with-docs`, `context-matrix-map`, `project-context-calibration`, `project-standards-calibration`, or `prd-to-issues`.
 
 5. Produce the orientation before continuing:
    - State the task surface.

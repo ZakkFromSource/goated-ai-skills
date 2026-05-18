@@ -18,6 +18,7 @@ depends_on:
   hard: []
   soft:
     - session-start-progressive-disclosure before mapping a new or unfamiliar target project
+    - project-context-calibration after this map when project language needs a durable context file
     - project-standards-calibration after this map when standards need a durable profile
   fallback: If companion skills are unavailable, inspect the minimum relevant project files directly and state lower confidence.
 adapters:
@@ -41,6 +42,7 @@ Use this skill during target-project onboarding or when a project lacks a reliab
 - User request or onboarding goal.
 - Target-project root path.
 - Existing agent instruction files, if present.
+- Existing root `CONTEXT.md`, if present.
 - Existing project docs, ADRs, issue or PRD folders, test layout, build metadata, and command definitions.
 - Existing `docs/agents/` artifacts or context packs, if present.
 
@@ -71,6 +73,7 @@ Use this skill during target-project onboarding or when a project lacks a reliab
 
 5. Cover the required source types:
    - Docs and README files.
+   - Existing project context files, such as root `CONTEXT.md`.
    - Code areas and important boundaries.
    - Tests and verification commands.
    - Build, run, lint, format, or release commands.
