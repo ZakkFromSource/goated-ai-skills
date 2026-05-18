@@ -12,12 +12,12 @@ Implement `framework-agnostic-skill-porting` under `skills/agent-workflows/`. Th
 
 ## Acceptance criteria
 
-- [ ] `skills/agent-workflows/framework-agnostic-skill-porting/SKILL.md` exists and follows the lean schema.
-- [ ] The workflow inventories source workflow behavior, tool-specific mechanics, assumptions, dependencies, and portability risks.
-- [ ] The output contract includes a proposed neutral skill shape, adapter notes, classification recommendation, and remaining blockers.
-- [ ] The guardrails require private or sensitive content to be removed, generalized, or kept out of public main.
-- [ ] The workflow explains when to use `references/` rather than expanding `SKILL.md`.
-- [ ] Delegation notes support independent portability and privacy review passes.
+- [x] `skills/agent-workflows/framework-agnostic-skill-porting/SKILL.md` exists and follows the lean schema.
+- [x] The workflow inventories source workflow behavior, tool-specific mechanics, assumptions, dependencies, and portability risks.
+- [x] The output contract includes a proposed neutral skill shape, adapter notes, classification recommendation, and remaining blockers.
+- [x] The guardrails require private or sensitive content to be removed, generalized, or kept out of public main.
+- [x] The workflow explains when to use `references/` rather than expanding `SKILL.md`.
+- [x] Delegation notes support independent portability and privacy review passes.
 
 ## Blocked by
 
