@@ -13,6 +13,7 @@ These ideas are intentionally out of scope for V1.
 - Full security audit workflows.
 - Dependency, secret, and SAST scanner integrations.
 - Generated pipeline diagrams from metadata.
+- Remote issue tracker variants for local-first planning skills, such as publishing `prd-to-issues` slices to GitHub Issues, Linear, Jira, or similar systems.
 
 ## Why Deferred
 

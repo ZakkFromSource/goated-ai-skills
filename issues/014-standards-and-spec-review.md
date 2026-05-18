@@ -22,7 +22,7 @@ Implement `standards-and-spec-review` under `skills/engineering/`. The skill rev
 ## Blocked by
 
 - `issues/005-project-standards-calibration.md`
-- `issues/012-prd-to-issues.md`
+- `issues/archive/012-prd-to-issues.md`
 - `issues/013-tdd.md`
 
 ## User stories addressed

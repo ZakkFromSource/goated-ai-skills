@@ -34,7 +34,7 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/009-grill-with-docs.md`
 - `issues/010-write-a-prd.md`
 - `issues/011-prototype.md`
-- `issues/012-prd-to-issues.md`
+- `issues/archive/012-prd-to-issues.md`
 - `issues/013-tdd.md`
 - `issues/014-standards-and-spec-review.md`
 - `issues/015-code-security-review.md`
