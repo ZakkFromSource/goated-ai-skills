@@ -23,9 +23,9 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 
 ## Blocked by
 
-- `issues/001-confirm-scaffold-public-scope.md`
-- `issues/002-define-skill-authoring-contract.md`
-- `issues/003-session-start-progressive-disclosure.md`
+- `issues/archive/001-confirm-scaffold-public-scope.md`
+- `issues/archive/002-define-skill-authoring-contract.md`
+- `issues/archive/003-session-start-progressive-disclosure.md`
 - `issues/004-context-matrix-map.md`
 - `issues/005-project-standards-calibration.md`
 - `issues/006-agent-instructions-integrator.md`

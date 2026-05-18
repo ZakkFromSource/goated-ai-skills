@@ -21,8 +21,8 @@ Implement `framework-agnostic-skill-porting` under `skills/agent-workflows/`. Th
 
 ## Blocked by
 
-- `issues/002-define-skill-authoring-contract.md`
-- `issues/003-session-start-progressive-disclosure.md`
+- `issues/archive/002-define-skill-authoring-contract.md`
+- `issues/archive/003-session-start-progressive-disclosure.md`
 
 ## User stories addressed
 

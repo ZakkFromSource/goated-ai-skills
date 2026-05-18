@@ -21,7 +21,7 @@ Implement `grill-with-docs` under `skills/engineering/`. The skill challenges us
 
 ## Blocked by
 
-- `issues/003-session-start-progressive-disclosure.md`
+- `issues/archive/003-session-start-progressive-disclosure.md`
 - `issues/004-context-matrix-map.md`
 - `issues/005-project-standards-calibration.md`
 

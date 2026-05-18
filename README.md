@@ -6,7 +6,13 @@ This repo is not a project template that users are expected to clone into every 
 
 ## Current State
 
-This scaffold currently contains the repo structure and V1 PRD only. Actual skill folders and `SKILL.md` files are intentionally deferred until the PRD is approved and split with `prd-to-issues`.
+This repo currently contains the V1 scaffold, PRD, local implementation issue handoffs, and any skills completed through approved issues. New skill folders and `SKILL.md` files should be added only when a specific approved implementation issue calls for them.
+
+## Source Repo Boundary
+
+Use this repo as the public distribution home for reusable skill folders. Do not treat its root instructions, docs, or `.local/` notes as runtime requirements for installed skills. Once copied into an agent framework, each skill folder must carry the guidance it needs inside its own folder.
+
+Private planning may live in ignored `.local/`, but public behavior must not depend on it.
 
 ## Quick Use Model
 
@@ -24,7 +30,7 @@ Start with [docs/install.md](docs/install.md) for installation and adaptation gu
 - Installed skills must be self-contained and must not require this repo's root `AGENT.md`, `README.md`, or `CONTEXT.md` at runtime.
 - `SKILL.md` stays lean; deeper examples, templates, and checklists live in directly linked `references/`.
 - Every skill is subagent-aware but single-agent-compatible.
-- Public main stays free of private project names, sensitive personal domains, client context, and private workflow assumptions.
+- Public main stays free of private project names, handles, credentials, sensitive personal domains, client context, and private workflow assumptions.
 - Private forks or private deployments can add private/domain-specific skills using the same classification system.
 
 ## Root Layout
@@ -38,7 +44,7 @@ docs/install.md        Docs-first install and adaptation guidance.
 docs/adr/              Architectural Decision Records.
 .out-of-scope/         Public future ideas and deferred upgrades.
 .local/                Ignored private notes and handoffs for local work.
-skills/                Public skill category placeholders.
+skills/                Public skill categories and implemented skill folders.
 issues/                PRDs and future issue handoff docs.
 ```
 
@@ -107,7 +113,7 @@ session-start-progressive-disclosure
 - Public docs distinguish source repo, installed skills, and target projects.
 - Root files explain the distribution model clearly.
 - `.local/` is ignored.
-- Actual skill implementation remains deferred until the PRD is split into issues.
+- Actual skill implementation proceeds only through specific approved implementation issues.
 - Implemented skills follow the lean schema once created.
-- No actual `SKILL.md` files exist in this scaffold phase.
+- New `SKILL.md` files are created only by their approved implementation issues.
 - Public main contains no private names, handles, sensitive personal domains, client context, or private workflow assumptions.

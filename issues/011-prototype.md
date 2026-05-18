@@ -21,7 +21,7 @@ Implement `prototype` under `skills/engineering/`. The skill creates target-proj
 
 ## Blocked by
 
-- `issues/003-session-start-progressive-disclosure.md`
+- `issues/archive/003-session-start-progressive-disclosure.md`
 - `issues/009-grill-with-docs.md`
 
 ## User stories addressed

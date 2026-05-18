@@ -21,7 +21,7 @@ Implement `handoff` under `skills/agent-workflows/`. The skill writes compact co
 
 ## Blocked by
 
-- `issues/003-session-start-progressive-disclosure.md`
+- `issues/archive/003-session-start-progressive-disclosure.md`
 
 ## User stories addressed
 

@@ -8,7 +8,7 @@ GOATED AI Skills is a public source library for installable, self-contained AI s
 2. skill folders installed into an agent framework;
 3. target projects where installed skills are used.
 
-Current state: this repo contains the V1 scaffold and PRD. Actual skill folders and `SKILL.md` files are intentionally deferred until the PRD is approved and split into issues.
+Current state: this repo contains the V1 scaffold, PRD, local implementation issue handoffs, and any skills completed through approved issues. New skill folders and `SKILL.md` files should be added only when a specific approved implementation issue calls for them.
 
 ## Core Posture
 

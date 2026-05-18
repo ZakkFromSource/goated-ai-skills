@@ -21,7 +21,7 @@ Implement `project-standards-calibration` under `skills/agent-workflows/`. The s
 
 ## Blocked by
 
-- `issues/003-session-start-progressive-disclosure.md`
+- `issues/archive/003-session-start-progressive-disclosure.md`
 - `issues/004-context-matrix-map.md`
 
 ## User stories addressed

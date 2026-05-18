@@ -21,7 +21,7 @@ Implement `context-matrix-map` under `skills/agent-workflows/`. The skill builds
 
 ## Blocked by
 
-- `issues/003-session-start-progressive-disclosure.md`
+- `issues/archive/003-session-start-progressive-disclosure.md`
 
 ## User stories addressed
 
