@@ -12,7 +12,7 @@ triggers:
 outputs:
   - review scope with fixed point, changed files, spec source, standards source, and evidence inspected
   - standards findings separated from spec findings
-  - evidence-backed findings with affected paths, source evidence, impact, and recommended fix
+  - evidence-backed findings with affected paths, source evidence, impact, confidence, and recommended fix
   - explicit no-findings statements for clean review axes
   - assumptions, confidence, residual risk, and recommended next step
 depends_on:
@@ -59,6 +59,7 @@ This is a review gate, not an implementation workflow and not a security audit. 
    - Identify the target-project root and whether the review covers committed changes, staged changes, unstaged changes, or a supplied patch.
    - Identify the originating issue, PRD, ticket, spec, or user request. If none exists, review against the explicit user request and state lower spec confidence.
    - List changed files before reviewing. In git projects, use an equivalent of `git status --short`, `git diff --name-status <fixed-point>...HEAD`, and working-tree diff commands as appropriate for the requested scope.
+   - Use non-mutating commands by default. Do not format, generate, migrate, rewrite, or otherwise repair files during the review unless the user separately asks for implementation.
 
 2. Discover the fixed point:
    - Use an explicit base from the user, PR metadata, issue handoff, or review request when provided.
@@ -83,8 +84,9 @@ This is a review gate, not an implementation workflow and not a security audit. 
    - Keep findings in the correct axis. If a concern is both a standards and spec issue, report it once in the primary axis and cross-reference the other axis briefly.
 
 6. Report only evidence-backed findings:
-   - Each finding must include affected path, evidence source, impact, and recommended fix.
+   - Each finding must include affected path, evidence source, impact, confidence, and recommended fix.
    - Prefer precise file paths, line references when available, command output summaries, and quoted requirement names over broad impressions.
+   - Treat unrequested scope as a finding only when it changes public behavior, maintenance burden, verification expectations, or the agreed contract.
    - If an axis has no findings, say that explicitly.
    - Include residual risk for skipped commands, missing specs, absent standards profile, unreviewed generated files, large diffs, or weak test evidence.
 
@@ -113,6 +115,7 @@ Return a compact review shaped like this:
   - Affected path: <path>
   - Evidence: <standard, convention, command, doc, or assumption>
   - Impact: <why it matters for maintainability, consistency, verification, or workflow>
+  - Confidence: <high, medium, or low, with a short reason>
   - Recommended fix: <specific change>
 
 ## Spec Findings
@@ -121,6 +124,7 @@ Return a compact review shaped like this:
   - Affected path: <path>
   - Evidence: <requirement, acceptance criterion, issue note, diff, command, or assumption>
   - Impact: <missed behavior, unrequested scope, acceptance risk, or verification gap>
+  - Confidence: <high, medium, or low, with a short reason>
   - Recommended fix: <specific change>
 
 ## Assumptions And Confidence
@@ -162,8 +166,10 @@ If subagents are unavailable, perform the same work sequentially with a narrower
 - Do not perform or claim a security audit. Route exploitable risk, trust-boundary issues, auth, data leaks, injection, unsafe execution, and unsafe config concerns to `code-security-review`.
 - Do not mix standards findings and spec findings into one undifferentiated list.
 - Do not report speculative findings. If evidence is weak, record an assumption or residual risk instead.
+- Do not run mutating commands such as formatters, generators, migrations, codemods, or auto-fixers as part of review unless the user explicitly asks for implementation.
 - Do not treat missing `docs/agents/project-standards.md` as a failure by itself; fall back to discovered evidence and state lower confidence.
 - Do not invent project standards from ecosystem habits, personal taste, or generic best practices without local evidence.
+- Do not treat every supporting edit as unrequested scope; explain the contract, behavior, maintenance, or verification impact.
 - Do not silently choose a fixed point when multiple plausible baselines would change the review result.
 - Do not broaden the review into implementation, refactoring, architecture redesign, doc-sync, commit writing, or handoff unless the user separately requests that work.
 - Do not include private notes, ignored local scratch files, credentials, client data, sensitive personal context, or real user data in review output.
