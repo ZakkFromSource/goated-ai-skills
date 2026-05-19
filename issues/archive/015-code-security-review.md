@@ -12,16 +12,16 @@ Implement `code-security-review` under `skills/engineering/`. The skill performs
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/code-security-review/SKILL.md` exists and follows the lean schema.
-- [ ] The workflow identifies the review scope and changed files before reviewing.
-- [ ] The review reports only findings with strong evidence.
-- [ ] The output contract includes finding severity, affected path, evidence, impact, and recommended fix.
-- [ ] The guardrails state that the skill does not provide full audit coverage.
-- [ ] The workflow keeps security review separate from standards/spec review.
+- [x] `skills/engineering/code-security-review/SKILL.md` exists and follows the lean schema.
+- [x] The workflow identifies the review scope and changed files before reviewing.
+- [x] The review reports only findings with strong evidence.
+- [x] The output contract includes finding severity, affected path, evidence, impact, and recommended fix.
+- [x] The guardrails state that the skill does not provide full audit coverage.
+- [x] The workflow keeps security review separate from standards/spec review.
 
 ## Blocked by
 
-- `issues/013-tdd.md`
+- `issues/archive/013-tdd.md`
 
 ## User stories addressed
 
