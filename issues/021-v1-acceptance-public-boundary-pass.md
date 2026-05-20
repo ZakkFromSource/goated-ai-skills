@@ -44,6 +44,12 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/019-improve-codebase-architecture.md`
 - `issues/archive/020-grill-me.md`
 - `issues/archive/022-project-context-calibration.md`
+- `issues/027-add-diagnose-skill.md`
+- `issues/028-fold-zoom-out-into-architecture-design-map.md`
+- `issues/029-expand-framework-agnostic-skill-creator.md`
+- `issues/030-defer-triage-workflow.md`
+- `issues/031-add-caveman-skill.md`
+- `issues/032-v1-additions-doc-sync-and-acceptance-recheck.md`
 
 ## User stories addressed
 
