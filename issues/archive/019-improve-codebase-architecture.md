@@ -12,12 +12,12 @@ Implement `improve-codebase-architecture` under `skills/engineering/`. The skill
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/improve-codebase-architecture/SKILL.md` exists and follows the lean schema.
-- [ ] The workflow looks for shallow modules, tightly coupled concepts, hard-to-test areas, and places where deeper modules would improve clarity.
-- [ ] The workflow uses source-grounded evidence and avoids speculative rewrites.
-- [ ] The output contract includes opportunities, evidence, tradeoffs, suggested next slice, and when to write an RFC.
-- [ ] The guardrails prevent implementing refactors during review-only exploration.
-- [ ] Delegation notes support independent exploration of bounded code areas.
+- [x] `skills/engineering/improve-codebase-architecture/SKILL.md` exists and follows the lean schema.
+- [x] The workflow looks for shallow modules, tightly coupled concepts, hard-to-test areas, and places where deeper modules would improve clarity.
+- [x] The workflow uses source-grounded evidence and avoids speculative rewrites.
+- [x] The output contract includes opportunities, evidence, tradeoffs, suggested next slice, and when to write an RFC.
+- [x] The guardrails prevent implementing refactors during review-only exploration.
+- [x] Delegation notes support independent exploration of bounded code areas.
 
 ## Blocked by
 
