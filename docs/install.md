@@ -15,12 +15,12 @@ Layer 0: Skill Pack Distribution
 Layer 1: Target Project Onboarding
 
 - Run the installed onboarding skills inside a project before durable, cross-file, PRD-level, architectural, or repeated work.
-- Use onboarding to create durable target-project artifacts such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, and `docs/agents/project-standards.md`.
+- Use onboarding to create durable target-project artifacts such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, and `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful.
 - Use ignored `.local/` in the target project for private handoffs, scratch notes, and temporary artifacts.
 
 Layer 2: Target Project Delivery
 
-- Use the installed delivery skills inside the target project for PRDs, issues, prototypes, TDD, review, security checks, docs, commit messages, and handoffs.
+- Use the installed delivery skills inside the target project for PRDs, architecture plans, issues, prototypes, TDD, review, security checks, docs, commit messages, and handoffs.
 
 ## Generic Install Pattern
 
@@ -62,6 +62,8 @@ Installed skills should use these defaults inside a target project:
 CONTEXT.md                         tracked durable project context and language
 docs/agents/context-matrix.md      tracked durable context map
 docs/agents/project-standards.md   tracked durable standards profile
+docs/agents/architecture-plan.md   tracked project-wide architecture blueprint when useful
+docs/architecture/                 tracked feature-specific architecture blueprints when useful
 .local/handoffs/                   ignored handoff notes
 .local/scratch/                    ignored temporary notes or experiments
 ```

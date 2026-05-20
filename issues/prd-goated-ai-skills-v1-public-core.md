@@ -93,6 +93,7 @@ Delivery covers:
 - intent clarification;
 - optional prototypes;
 - PRDs;
+- architecture blueprints;
 - issue breakdown;
 - TDD;
 - standards/spec review;
@@ -282,6 +283,8 @@ Tracked durable project artifacts:
 CONTEXT.md
 docs/agents/context-matrix.md
 docs/agents/project-standards.md
+docs/agents/architecture-plan.md
+docs/architecture/<slug>-architecture-plan.md
 ```
 
 Ignored session/private artifacts:
@@ -414,6 +417,13 @@ Durable project facts should be tracked. Session-private or temporary artifacts 
 - Can use Excalidraw, ASCII, generated images, or plugin-backed diagrams when available and appropriate.
 - Must not create decorative or speculative diagrams unsupported by source evidence.
 
+`plan-codebase-architecture`
+
+- Plans source-grounded project-wide or feature-specific architecture before implementation begins.
+- Requires a clarified brief, PRD, issue, or `grill-with-docs` result before writing a durable blueprint.
+- Produces interface-level architecture blueprints with planned modules, seams, dependencies, test surfaces, slice order, risks, and RFC or ADR triggers.
+- Routes PRD creation, issue breakdown, RFC/ADR capture, implementation, existing-code repair, and current-state maps to companion skills.
+
 `improve-codebase-architecture`
 
 - Explores architectural improvement opportunities in a target project.
@@ -443,6 +453,7 @@ session-start-progressive-disclosure
 -> project-standards-calibration
 -> agent-instructions-integrator
 -> architecture-design-map optional
+-> plan-codebase-architecture optional
 -> doc-sync
 -> handoff optional
 ```
@@ -454,6 +465,7 @@ Expected outputs:
 - tracked `docs/agents/project-standards.md`;
 - target-agent instruction routing via the relevant instruction artifact or config;
 - optional architecture map;
+- optional project-wide architecture plan;
 - synchronized docs;
 - optional local handoff under `.local/handoffs/`.
 
@@ -468,6 +480,7 @@ session-start-progressive-disclosure
 -> grill-with-docs when gated mandatory
 -> prototype optional
 -> write-a-prd
+-> plan-codebase-architecture optional
 -> prd-to-issues
 -> prototype optional per focused issue
 -> tdd
@@ -483,6 +496,7 @@ Expected outputs:
 - clarified intent;
 - optional prototype verdict;
 - scoped PRD;
+- optional feature-specific architecture plan;
 - vertical-slice issues;
 - behavior-focused tests;
 - implemented change;
@@ -528,7 +542,7 @@ The file should include:
 - reusable architecture vocabulary;
 - explicit gaps or assumptions.
 
-It should not replace `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, architecture diagrams, ADRs, PRDs, or refactor plans.
+It should not replace `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, architecture diagrams, architecture plans, ADRs, PRDs, or refactor plans.
 
 ## Project Standards Profile Design
 
@@ -605,6 +619,18 @@ Optional outputs:
 
 Optional formats should be used only when available and useful.
 
+## Architecture Planning Policy
+
+`plan-codebase-architecture` is blueprint-first.
+
+Default durable outputs should be:
+
+- project-wide setup: `docs/agents/architecture-plan.md`;
+- feature-specific planning: `docs/architecture/<slug>-architecture-plan.md`;
+- inline response for small or exploratory architecture questions.
+
+Architecture plans should require clarified intent and stay at the interface, dependency, data ownership, test-surface, and slice-order level. They should not become speculative file trees, PRDs, issue lists, implementation diffs, current-state diagrams, or refactor reviews.
+
 ## Implementation Issue Strategy
 
 When this PRD is later passed to `prd-to-issues`, split implementation into vertical slices.
@@ -641,6 +667,7 @@ The V1 implementation is complete when:
 - `project-context-calibration` clearly defines target-project root `CONTEXT.md`;
 - `project-standards-calibration` clearly defines `docs/agents/project-standards.md`;
 - `context-matrix-map` clearly defines `docs/agents/context-matrix.md`;
+- `plan-codebase-architecture` clearly defines project-wide and feature-specific architecture plan defaults;
 - `standards-and-spec-review` clearly defines its soft dependency behavior;
 - `code-security-review` does not claim full audit coverage;
 - `handoff` defaults to `.local/handoffs/` inside the target project;

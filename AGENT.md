@@ -39,7 +39,7 @@ Layer 1: Target Project Onboarding
 Layer 2: Target Project Delivery
 
 - Installed skills help perform real work inside a target project.
-- Delivery includes planning, prototyping, PRDs, issues, TDD, review, docs, commit messaging, and handoff.
+- Delivery includes planning, architecture blueprinting, prototyping, PRDs, issues, TDD, review, docs, commit messaging, and handoff.
 
 ## Progressive Disclosure
 
@@ -81,6 +81,7 @@ session-start-progressive-disclosure
 -> project-standards-calibration
 -> agent-instructions-integrator
 -> architecture-design-map optional
+-> plan-codebase-architecture optional
 -> doc-sync
 -> handoff optional
 ```
@@ -96,6 +97,7 @@ session-start-progressive-disclosure
 -> grill-with-docs when gated mandatory
 -> prototype optional
 -> write-a-prd
+-> plan-codebase-architecture optional
 -> prd-to-issues
 -> prototype optional per focused issue
 -> tdd

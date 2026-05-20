@@ -20,7 +20,7 @@ These definitions are normative for this source repo. If another public doc uses
 
 - **Docs-first installation** - the V1 installation model: users manually copy, install, or adapt completed skill folders using documentation instead of installer automation.
 - **Target Project Onboarding** - preparing a target project for serious agent work by mapping sources, calibrating project context and standards, and routing the chosen agent framework to installed skills and durable project artifacts.
-- **Target Project Delivery** - moving one target-project change from clarified intent through planning, implementation, verification, documentation, and handoff.
+- **Target Project Delivery** - moving one target-project change from clarified intent through planning, architecture blueprinting when useful, implementation, verification, documentation, and handoff.
 - **Public core workflow** - the portable V1 workflow set intended for public main, spanning onboarding and delivery without private project assumptions.
 - **Tiny one-off task** - a small, obvious, low-risk request that does not need full onboarding or planning ceremony, such as a typo fix, one-line rename, or direct command the user already specified.
 
@@ -51,8 +51,9 @@ These definitions are normative for this source repo. If another public doc uses
 - **Context matrix** - a durable target-project artifact, normally `docs/agents/context-matrix.md`, that tells future agents what to read first, second, and only if needed.
 - **Project context file** - a durable target-project artifact, normally root `CONTEXT.md`, that defines project boundaries, domain language, durable artifact meanings, and shared architecture vocabulary for that target project. This is distinct from this source repo's root `CONTEXT.md`.
 - **Project standards profile** - a durable target-project artifact, normally `docs/agents/project-standards.md`, that separates documented standards, inferred conventions, user-confirmed preferences, unresolved questions, and enforcement levels.
+- **Architecture plan** - a durable target-project artifact, normally `docs/agents/architecture-plan.md` for project-wide setup or `docs/architecture/<slug>-architecture-plan.md` for feature-specific work, that turns clarified intent into planned modules, interfaces, dependency seams, test surfaces, and implementation slice order.
 - **Agent instruction artifact** - a file or configuration entry that tells a specific agent framework how to use installed skills and target-project artifacts.
-- **Durable artifact** - tracked project knowledge that should survive across sessions, such as PRDs, ADRs, project context files, context matrices, standards profiles, and public docs.
+- **Durable artifact** - tracked project knowledge that should survive across sessions, such as PRDs, ADRs, project context files, context matrices, standards profiles, architecture plans, and public docs.
 - **Local/session artifact** - ignored, private, or temporary workspace context, such as `.local/handoffs/`, `.local/scratch/`, `.scratch/`, `tmp/`, or `temp/`.
 - **Handoff** - a compact continuity note for a future agent or session. Handoffs should reference existing artifacts instead of duplicating PRDs, issues, ADRs, diffs, or commits.
 
@@ -80,6 +81,7 @@ These definitions guide architecture-related skills and target-project setup. GO
 - **Deep module** - a module where a small interface gives access to substantial, cohesive behavior and hides implementation complexity.
 - **Shallow module** - a module whose interface is nearly as complex as its implementation, often passing complexity through to callers instead of hiding it.
 - **Deepening** - refactoring one or more shallow or tightly coupled modules into a deeper module with a clearer interface, better locality, and a stronger test surface.
+- **Architecture blueprinting** - planning modules, interfaces, dependency seams, data/state ownership, test surfaces, and implementation slices before code is written, using source evidence and clarified intent instead of speculative file trees.
 - **Seam** - the place where a module's interface lives and where behavior can vary without editing the caller. Use `seam` for this architecture concept instead of the overloaded word `boundary`.
 - **Architecture adapter** - a concrete implementation that satisfies an interface at a seam, usually for a production dependency, test stand-in, or external service.
 - **Port** - an interface introduced at a real seam so a deep module can own the logic while production and test architecture adapters provide different dependency behavior.
