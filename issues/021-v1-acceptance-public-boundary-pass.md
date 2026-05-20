@@ -26,24 +26,24 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/archive/001-confirm-scaffold-public-scope.md`
 - `issues/archive/002-define-skill-authoring-contract.md`
 - `issues/archive/003-session-start-progressive-disclosure.md`
-- `issues/004-context-matrix-map.md`
-- `issues/005-project-standards-calibration.md`
-- `issues/006-agent-instructions-integrator.md`
-- `issues/007-handoff.md`
-- `issues/008-framework-agnostic-skill-porting.md`
-- `issues/009-grill-with-docs.md`
-- `issues/010-write-a-prd.md`
-- `issues/011-prototype.md`
+- `issues/archive/004-context-matrix-map.md`
+- `issues/archive/005-project-standards-calibration.md`
+- `issues/archive/006-agent-instructions-integrator.md`
+- `issues/archive/007-handoff.md`
+- `issues/archive/008-framework-agnostic-skill-porting.md`
+- `issues/archive/009-grill-with-docs.md`
+- `issues/archive/010-write-a-prd.md`
+- `issues/archive/011-prototype.md`
 - `issues/archive/012-prd-to-issues.md`
-- `issues/013-tdd.md`
-- `issues/014-standards-and-spec-review.md`
-- `issues/015-code-security-review.md`
-- `issues/016-doc-sync.md`
-- `issues/017-commit-message.md`
+- `issues/archive/013-tdd.md`
+- `issues/archive/014-standards-and-spec-review.md`
+- `issues/archive/015-code-security-review.md`
+- `issues/archive/016-doc-sync.md`
+- `issues/archive/017-commit-message.md`
 - `issues/018-architecture-design-map.md`
 - `issues/019-improve-codebase-architecture.md`
-- `issues/020-grill-me.md`
-- `issues/022-project-context-calibration.md`
+- `issues/archive/020-grill-me.md`
+- `issues/archive/022-project-context-calibration.md`
 
 ## User stories addressed
 

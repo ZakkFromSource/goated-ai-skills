@@ -21,9 +21,9 @@ Implement `architecture-design-map` under `skills/engineering/`. The skill produ
 
 ## Blocked by
 
-- `issues/004-context-matrix-map.md`
+- `issues/archive/004-context-matrix-map.md`
 - `issues/022-project-context-calibration.md`
-- `issues/005-project-standards-calibration.md`
+- `issues/archive/005-project-standards-calibration.md`
 
 ## User stories addressed
 
