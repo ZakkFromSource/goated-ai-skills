@@ -40,7 +40,7 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/archive/015-code-security-review.md`
 - `issues/archive/016-doc-sync.md`
 - `issues/archive/017-commit-message.md`
-- `issues/018-architecture-design-map.md`
+- `issues/archive/018-architecture-design-map.md`
 - `issues/019-improve-codebase-architecture.md`
 - `issues/archive/020-grill-me.md`
 - `issues/archive/022-project-context-calibration.md`

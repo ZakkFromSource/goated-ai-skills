@@ -12,17 +12,17 @@ Implement `architecture-design-map` under `skills/engineering/`. The skill produ
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/architecture-design-map/SKILL.md` exists and follows the lean schema.
-- [ ] The workflow gathers source evidence before diagramming.
-- [ ] The default output includes a Mermaid diagram, source references, concise explanation, and uncertainty notes.
-- [ ] Optional formats such as Excalidraw, ASCII maps, generated images, or plugin-backed diagrams are clearly secondary.
-- [ ] The guardrails prohibit decorative or speculative diagrams unsupported by source evidence.
-- [ ] The workflow states when to write a durable target-project artifact versus answer inline.
+- [x] `skills/engineering/architecture-design-map/SKILL.md` exists and follows the lean schema.
+- [x] The workflow gathers source evidence before diagramming.
+- [x] The default output includes a Mermaid diagram, source references, concise explanation, and uncertainty notes.
+- [x] Optional formats such as Excalidraw, ASCII maps, generated images, or plugin-backed diagrams are clearly secondary.
+- [x] The guardrails prohibit decorative or speculative diagrams unsupported by source evidence.
+- [x] The workflow states when to write a durable target-project artifact versus answer inline.
 
 ## Blocked by
 
 - `issues/archive/004-context-matrix-map.md`
-- `issues/022-project-context-calibration.md`
+- `issues/archive/022-project-context-calibration.md`
 - `issues/archive/005-project-standards-calibration.md`
 
 ## User stories addressed

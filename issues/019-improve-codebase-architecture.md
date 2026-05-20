@@ -21,7 +21,7 @@ Implement `improve-codebase-architecture` under `skills/engineering/`. The skill
 
 ## Blocked by
 
-- `issues/018-architecture-design-map.md`
+- `issues/archive/018-architecture-design-map.md`
 
 ## User stories addressed
 
