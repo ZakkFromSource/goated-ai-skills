@@ -24,6 +24,7 @@ depends_on:
     - write-a-prd when the prototype verdict should feed a broader product requirements document
     - prd-to-issues when the prototype is exploring one focused implementation issue
     - tdd when validated behavior is absorbed into production code after the prototype
+    - verification-before-completion before claiming the prototype verdict, cleanup, or production absorption is complete
   fallback: If companion skills or project docs are unavailable, inspect the smallest relevant local evidence, state assumptions, and keep the prototype disposable.
 adapters:
   codex: usable
@@ -110,6 +111,7 @@ Use this skill before PRD creation, during issue exploration, or before committi
    - For UI prototypes, delete losing variants and the switcher; fold the chosen design into the real route or promote the winning throwaway route into a real route deliberately.
    - If the user still needs to inspect it, leave an explicit handoff note with the question, entrypoint, verdict status, cleanup owner, and cleanup trigger.
    - Do not close the work as complete while prototype artifacts remain unexplained.
+   - Use `verification-before-completion` before claiming the prototype answered the question, cleanup is complete, or production absorption is ready; for rough exploratory prototypes, verify only the verdict or handoff claim being made and state residual risk.
 
 ## Output Contract
 

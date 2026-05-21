@@ -25,6 +25,7 @@ depends_on:
     - context-matrix-map when docs/agents/context-matrix.md exists or source discovery is needed
     - project-context-calibration when root CONTEXT.md exists or project language affects issue wording
     - project-standards-calibration when project standards affect issue scope, verification, or acceptance
+    - verification-before-completion before claiming the generated issue set is complete, checked, or ready for implementation
   fallback: If companion skills or project docs are unavailable, inspect the minimum relevant local evidence, state lower confidence, and pause instead of writing issues from an unready PRD.
 adapters:
   codex: usable
@@ -104,6 +105,7 @@ Use this skill after a PRD is ready for breakdown. Each issue should be a balanc
    - Re-read generated issue files for numbering, blockers, acceptance criteria, user stories, and local-only behavior.
    - Report created issue paths, blocker order, warnings, assumptions, and any PRD gaps that remain.
    - Recommend the next skill, usually `prototype` for a risky focused issue or `tdd` for the first implementation slice.
+   - Use `verification-before-completion` before claiming the issue set is complete, checked, or ready for implementation; for proposal-only breakdowns, verify only the claim being made and state remaining approval or PRD gaps.
 
 ## Output Contract
 

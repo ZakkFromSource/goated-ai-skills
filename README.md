@@ -107,6 +107,7 @@ session-start-progressive-disclosure
 -> standards-and-spec-review
 -> code-security-review
 -> doc-sync
+-> verification-before-completion
 -> commit-message
 -> handoff optional
 ```

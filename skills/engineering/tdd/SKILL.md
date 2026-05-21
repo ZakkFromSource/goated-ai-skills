@@ -27,6 +27,7 @@ depends_on:
     - standards-and-spec-review after implementation when available
     - code-security-review after implementation when trust boundaries, persistence, auth, or user data are touched
     - doc-sync after behavior, public interface, architecture, or testing docs may have changed
+    - verification-before-completion before claiming implementation is complete, correct, passing, or ready for review
   fallback: If companion skills or project docs are unavailable, inspect the smallest relevant local evidence, use existing tests or commands where discoverable, and state lower confidence plus residual risk.
 adapters:
   codex: usable
@@ -102,6 +103,7 @@ Bad tests are coupled to implementation. They mock internal collaborators, test 
    - Summarize test intent, red evidence, green evidence, refactor notes, and residual risk.
    - Note weak or missing test infrastructure honestly.
    - Recommend follow-up only when it is directly connected to untested behavior, missing infrastructure, or acceptance risk.
+   - Use `verification-before-completion` before making completion, correctness, passing, or review-ready claims; for drafts, analysis-only work, or fallback proof, verify only the claim being made and report residual risk.
 
 ## Output Contract
 

@@ -21,6 +21,7 @@ depends_on:
     - standards-and-spec-review before commit-message when spec fit or project standards remain unresolved
     - code-security-review before commit-message when trust boundaries, auth, user data, persistence, unsafe execution, or security-sensitive config changed
     - doc-sync before commit-message when behavior, interfaces, docs, standards, configuration, or tests may have drifted
+    - verification-before-completion before drafting commit wording that claims completion, passing checks, synced docs, or review readiness
     - handoff after commit-message when unfinished work or residual risk should be preserved for a future session
   fallback: If companion skills, git metadata, specs, or verification evidence are unavailable, inspect the smallest relevant local evidence, state lower confidence, and avoid inventing intent or checks.
 adapters:
@@ -74,6 +75,7 @@ This skill is read-only. It prepares shell-ready `git add -- ...` and `git commi
 
 4. Collect verification evidence:
    - Prefer actual command output, test results, review gates, CI summaries, and manual verification notes over assumptions.
+   - Use `verification-before-completion` before including completion, correctness, passing, docs-synced, or review-ready claims in the commit body.
    - Record skipped or unavailable checks explicitly.
    - If no checks were run or provided, say so in the caveats instead of inventing confidence.
    - Treat platform-specific checks, pull request metadata, issue IDs, and CI context as optional aids, not required inputs.

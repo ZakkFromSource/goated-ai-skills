@@ -27,6 +27,7 @@ depends_on:
     - improve-codebase-architecture when existing-code repair or refactor ranking is the real task
     - prd-to-issues when the accepted blueprint should become implementation issue slices
     - tdd when a blueprint slice moves into implementation and behavior proof
+    - verification-before-completion before claiming a durable blueprint is complete, evidence-backed, or ready for issue breakdown
   fallback: If companion skills or durable project docs are unavailable, inspect the minimum relevant evidence directly, require an explicit clarified brief from the user, keep confidence lower, and separate blueprint facts from assumptions.
 adapters:
   codex: usable
@@ -114,6 +115,7 @@ Use project terms from target-project evidence for concrete names. Use this voca
    - Separate settled decisions, assumptions, open questions, and deferred alternatives.
    - Include RFC or ADR triggers when the architecture crosses public interfaces, data ownership, service/package boundaries, deployment topology, security posture, migration strategy, or multiple viable interface designs.
    - Recommend the single next workflow or action.
+   - Use `verification-before-completion` before claiming a durable blueprint is complete, evidence-backed, or ready for downstream slicing; for small inline advice or exploratory designs, verify only the claim being made and state uncertainty.
 
 ## Output Contract
 

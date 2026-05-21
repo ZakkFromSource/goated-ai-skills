@@ -23,6 +23,7 @@ depends_on:
     - tdd before this review when security-relevant behavior changed and should have regression proof
     - project-standards-calibration when local security, dependency, logging, privacy, or configuration standards affect the review
     - doc-sync after this review when security assumptions, public behavior, configuration, or threat-model docs may have drifted
+    - verification-before-completion before claiming the security review is complete, clean, or ready for closeout
   fallback: If companion skills, git history, project security docs, dependency metadata, or runnable checks are unavailable, inspect the smallest relevant local evidence, state lower confidence, and report residual risk instead of speculative findings.
 adapters:
   codex: usable
@@ -101,6 +102,7 @@ This is a review gate, not a full security audit, penetration test, dependency a
    - Recommend concrete remediation that matches the project architecture and framework defaults.
    - State assumptions, skipped checks, unavailable evidence, and residual risk.
    - Recommend implementation fixes for findings, `doc-sync` for changed security assumptions or public docs, and a fuller audit only when the reviewed scope leaves material unexamined risk.
+   - Use `verification-before-completion` before claiming no high-evidence findings, review completion, security-review readiness, or closeout readiness; for draft reviews or best-effort scans, verify only the claim being made and state residual risk.
 
 ## Output Contract
 

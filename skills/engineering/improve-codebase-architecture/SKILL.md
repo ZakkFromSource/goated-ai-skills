@@ -26,6 +26,7 @@ depends_on:
     - tdd when a selected improvement moves into implementation and test design
     - write-a-prd when a chosen direction needs product-level scope or stakeholder decisions
     - prd-to-issues when a chosen direction should become implementation slices
+    - verification-before-completion before claiming ranked opportunities are complete, evidence-backed, or ready for downstream work
   fallback: If companion skills or durable project docs are unavailable, inspect the minimum relevant project evidence directly, keep confidence lower, and separate facts from assumptions.
 adapters:
   codex: usable
@@ -105,6 +106,7 @@ Use the target project's own domain names for concrete modules and flows. Use th
    - Recommend `architecture-design-map` when a current-state diagram is missing and would reduce uncertainty.
    - Recommend `write-a-prd`, `prd-to-issues`, or an RFC when the chosen direction needs planning before implementation.
    - Recommend `tdd` when the next step is a focused implementation slice with behavior proof through the new or existing interface.
+   - Use `verification-before-completion` before claiming the ranking is complete, evidence-backed, or ready for downstream work; for lightweight scans, verify only the recommendation claim being made and state skipped areas.
 
 ## Output Contract
 

@@ -22,6 +22,7 @@ depends_on:
     - context-matrix-map when docs/agents/context-matrix.md exists or source discovery is needed
     - project-context-calibration when root CONTEXT.md exists or project language affects requirements
     - project-standards-calibration when project standards affect requirements, testing, or rollout
+    - verification-before-completion before claiming the PRD is fully checked or ready for issue breakdown
   fallback: If companion skills or project docs are unavailable, inspect the minimum relevant evidence and mark unverifiable assumptions in the PRD.
 adapters:
   codex: usable
@@ -93,6 +94,7 @@ Use this skill when the next useful artifact is a PRD that can feed `prd-to-issu
    - Re-read the PRD after writing.
    - Check that it includes problem, goals, non-goals, audience, requirements, acceptance criteria, risks, and open questions.
    - Check that the PRD can plausibly feed `prd-to-issues` without needing the future agent to reread the whole conversation.
+   - Use `verification-before-completion` before claiming the PRD is ready for `prd-to-issues` or fully checked; for drafts or proposal-only PRDs, verify only the readiness claim being made and state open questions.
 
 ## Output Contract
 

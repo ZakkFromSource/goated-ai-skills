@@ -23,6 +23,7 @@ depends_on:
     - project-standards-calibration when standards, commands, conventions, or enforcement levels may have changed
     - standards-and-spec-review before doc sync when spec fit or changed scope is unclear
     - code-security-review before doc sync when security assumptions, trust boundaries, or sensitive behavior changed
+    - verification-before-completion before claiming docs are synced, doc checks passed, or no documentation drift remains
     - handoff after doc sync when unfinished work or residual risk should be preserved for a future session
   fallback: If companion skills, git history, or durable docs are unavailable, inspect the smallest relevant local evidence, state lower confidence, and report unverifiable drift risk.
 adapters:
@@ -96,6 +97,7 @@ Use this skill after implementation or review work that could make docs stale. I
    - Recommend `code-security-review` when docs describe security-relevant behavior or trust boundaries that were not reviewed.
    - Recommend `project-context-calibration` or `project-standards-calibration` when durable context or standards need deeper curation.
    - Recommend `commit-message` or `handoff` only after doc sync obligations are handled or intentionally deferred.
+   - Use `verification-before-completion` before claiming docs are synced, doc checks passed, no required updates remain, or the change is ready for commit; for planning or review-only reports, verify only the documentation claim being made and state residual risk.
 
 ## Output Contract
 

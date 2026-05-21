@@ -23,6 +23,7 @@ depends_on:
     - tdd before this review when behavior was implemented and should have test evidence
     - code-security-review after this review when trust boundaries, user data, auth, persistence, execution, or unsafe configuration may be affected
     - doc-sync after this review when behavior, standards, specs, public interfaces, or docs may have drifted
+    - verification-before-completion before claiming the review is complete, clean, or ready for the next closeout step
   fallback: If companion skills, git history, project standards, or a source spec are unavailable, inspect the smallest relevant local evidence, state lower confidence, and separate assumptions from findings.
 adapters:
   codex: usable
@@ -95,6 +96,7 @@ This is a review gate, not an implementation workflow and not a security audit. 
    - Recommend `code-security-review` when the change may touch security-relevant behavior.
    - Recommend `doc-sync` when docs or durable artifacts may need updates.
    - Recommend commit-message or handoff only after review findings and required follow-up are addressed or intentionally accepted.
+   - Use `verification-before-completion` before claiming no findings, review completion, review readiness, or next-step readiness; for draft reviews or best-effort scans, verify only the claim being made and state residual risk.
 
 ## Output Contract
 
