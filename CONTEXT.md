@@ -29,8 +29,9 @@ These definitions are normative for this source repo. If another public doc uses
 - **Skill** - a reusable workflow packaged as a skill folder with a `SKILL.md` file and any local support files that materially improve its power, reuse, progressive disclosure, or installability.
 - **Skill folder** - a directory under `skills/<category>/<skill-name>/` that is copied or adapted as one installable unit.
 - **`SKILL.md`** - the primary workflow file for an installed skill. It should act as the router and operating procedure, not the whole knowledge base.
+- **Skill description** - the discovery-only `description` field in `SKILL.md` frontmatter. It should say when to load the skill using user requests, task conditions, symptoms, or project context; workflow details belong in the body.
 - **Support files** - local files inside a skill folder, such as `references/`, `scripts/`, or `assets/`. They are not discouraged; add them when they make the skill more capable, easier to use, easier to verify, or easier to install without bloating `SKILL.md`.
-- **`references/`** - support files inside a skill folder for detailed examples, templates, checklists, stack-specific notes, or longer decision guides. Use them when detail would help the skill but should not sit in the main workflow.
+- **`references/`** - support files inside a skill folder for detailed examples, prompt templates, checklists, stack-specific notes, anti-pattern catalogs, rationalization tables, or longer decision guides. Use them when detail would help the skill but should not sit in the main workflow.
 - **`scripts/`** - executable helpers inside a skill folder. Use them when a repeatable operation is safer, clearer, or more powerful as a maintained script than as prose instructions.
 - **`assets/`** - reusable assets inside a skill folder. Use them when examples, templates, fixtures, images, or other packaged materials improve the installed skill.
 - **Lean schema** - the required `SKILL.md` frontmatter and body convention for implemented skills: `name`, `category`, `classification`, `status`, `description`, `triggers`, `outputs`, `depends_on`, and `adapters`, with concise workflow sections such as Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References.
@@ -41,6 +42,8 @@ These definitions are normative for this source repo. If another public doc uses
 - **Category** - the public V1 skill grouping. Allowed V1 categories are `agent-workflows`, `engineering`, and `productivity`.
 - **Classification** - the portability label for a skill: `portable` means safe for any compatible agent or project; `domain-specific` means reusable with a named public domain or project assumption; `private` means intended for private forks or private deployments, not public main.
 - **Status** - the maturity label for a skill: `stable` means recommended for normal use; `wip` means experimental or still being sharpened; `deprecated` means kept for reference only.
+- **Discipline-heavy skill** - a skill that asks agents to resist shortcuts, verify claims, follow a strict process, or stop under pressure. These skills may need stop rules, proof gates, rationalization counters, red flags, or anti-pattern references.
+- **Delegated status enum** - explicit status values used by delegated workflows, such as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`, with controller behavior defined for each value.
 
 ### Artifacts
 
@@ -118,7 +121,10 @@ Skills should be:
 - specific enough to change agent behavior;
 - concise enough to avoid context bloat;
 - willing to use `references/`, `scripts/`, or `assets/` when they make the skill stronger without overloading `SKILL.md`;
+- clear that `description` is for discovery and triggers, while workflow details live in the body;
 - explicit about triggers, outputs, guardrails, dependencies, and delegation;
+- willing to use stop rules, proof gates, rationalization counters, red flags, or anti-pattern references when discipline-heavy behavior needs them;
+- clear about delegated status values and next controller actions when a workflow uses subagents;
 - portable unless classified otherwise;
-- honest about what they cannot verify.
+- honest about what they cannot verify;
 - opinionated about architecture where relevant: prefer deep modules, clear seams, strong locality, and tests through public interfaces over many shallow modules and tests tied to internals.

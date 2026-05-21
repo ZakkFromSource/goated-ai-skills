@@ -211,7 +211,7 @@ name: skill-name
 category: agent-workflows|engineering|productivity
 classification: portable|domain-specific|private
 status: stable|wip|deprecated
-description: Clear trigger-focused description.
+description: Clear trigger-focused description of when to use the skill, not a workflow summary.
 triggers:
   - user asks for ...
 outputs:
@@ -224,6 +224,10 @@ adapters:
   generic-agent: usable
 ---
 ```
+
+The `description` field is for skill discovery only. It should describe when to load the skill using user requests, task conditions, symptoms, or project context. Workflow steps, proof gates, outputs, review loops, and implementation detail belong in the body.
+
+GOATED keeps this richer schema even when source inspiration uses smaller frontmatter. `classification`, `status`, `outputs`, `depends_on`, and `adapters` remain required for implemented skills.
 
 Required body sections:
 
@@ -245,12 +249,15 @@ Each `SKILL.md` should act as the router and operating procedure, not the entire
 Rules:
 
 - Treat 300 lines as a soft review threshold.
-- Move detailed examples, checklists, templates, and stack-specific notes into `references/`.
-- Keep references one level deep from `SKILL.md`.
-- Directly link every reference from `SKILL.md`.
-- Tell the agent exactly when to read each reference.
-- Do not duplicate the same guidance in both `SKILL.md` and references.
+- Treat `references/`, `scripts/`, and `assets/` as first-class support files when they keep `SKILL.md` lean or make the installed skill more capable.
+- Move detailed examples, checklists, prompt templates, stack-specific notes, anti-pattern catalogs, rationalization tables, and long decision guides into directly linked `references/`.
+- Use `scripts/` for maintained executable helpers and `assets/` for reusable fixtures, templates, images, or packaged materials.
+- Keep support files one level deep from `SKILL.md`.
+- Directly link every support file from `SKILL.md`.
+- Tell the agent exactly when to read or use each support file.
+- Do not duplicate the same guidance in both `SKILL.md` and support files.
 - Do not require this source repo's root files once the skill is installed elsewhere.
+- For discipline-heavy skills, use stop rules, proof gates, rationalization counters or tables, red flags, or anti-pattern references when generic reminders would be easy to rationalize away.
 
 ## Subagent Requirements
 
@@ -263,6 +270,8 @@ Global rule:
 - Subagents must return evidence: file paths, commands, source docs, diff handles, or explicit assumptions.
 - The main agent must sanity-check and integrate subagent output.
 - If subagents are unavailable, the main agent runs the same workflow sequentially with a narrower context budget.
+- Delegated workflows may define explicit status enums such as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, and `BLOCKED`, as long as each status defines the controller's next action.
+- Longer implementer, reviewer, or controller prompt templates should live in directly linked `references/` files, with `SKILL.md` explaining when to use them.
 
 Good subagent use cases:
 

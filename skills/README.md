@@ -28,6 +28,8 @@ depends_on:
 adapters:
 ```
 
+`description` is for skill discovery only. It should say when to load the skill by naming user requests, task conditions, symptoms, or project context. Put workflow steps, proof gates, outputs, review loops, and implementation detail in the body, not in `description`.
+
 Valid `category` values for public V1 are:
 
 - `agent-workflows`
@@ -37,6 +39,8 @@ Valid `category` values for public V1 are:
 Use `portable`, `domain-specific`, or `private` for `classification`.
 
 Use `stable`, `wip`, or `deprecated` for `status`.
+
+GOATED keeps these richer schema fields even when source inspiration uses a smaller frontmatter shape. `classification`, `status`, `outputs`, `depends_on`, and `adapters` stay required for implemented skills.
 
 `depends_on` should name hard dependencies, soft dependencies, or graceful fallbacks explicitly. `adapters` should state whether the skill is usable in Codex, Claude Code, Hermes, OpenCode, or a generic agent framework, and should keep framework-specific notes small.
 
@@ -59,7 +63,9 @@ Installed skills must be self-contained. They can reference files inside their o
 
 ## Progressive Disclosure Contract
 
-`SKILL.md` is the router and operating procedure, not the whole knowledge base. Put detailed examples, templates, checklists, stack-specific notes, and long decision guides in directly linked support files inside the skill folder, usually `references/` and, when useful, `scripts/` or `assets/`.
+`SKILL.md` is the router and operating procedure, not the whole knowledge base. Treat `references/`, `scripts/`, and `assets/` as first-class support files when they keep `SKILL.md` lean or make the installed skill more capable.
+
+Put detailed examples, checklists, stack-specific notes, long decision guides, reusable prompt templates, and anti-pattern catalogs in directly linked `references/`. Use `scripts/` for maintained executable helpers and `assets/` for reusable fixtures, templates, images, or packaged materials.
 
 When a skill has support files:
 
@@ -68,11 +74,17 @@ When a skill has support files:
 - tell the agent when to read or use each support file;
 - avoid duplicating the same guidance in both places.
 
+## Discipline Contract
+
+Discipline-heavy skills should include concrete stop rules, proof gates, rationalization counters or tables, red flags, or anti-pattern references when generic reminders would be easy to rationalize away.
+
 ## Delegation Contract
 
 Every skill should be subagent-aware and single-agent-compatible.
 
 The main agent owns user intent, orchestration, final judgment, and final communication. Subagents may handle bounded independent work when available, but they must return evidence such as file paths, commands, source docs, diff handles, or explicit assumptions. If subagents are unavailable, the main agent should run the same workflow sequentially with a narrower context budget.
+
+Delegated workflows may define explicit status enums such as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, and `BLOCKED`. Each status must say what the controller does next. Longer implementer, reviewer, or controller prompt templates belong in directly linked `references/` files, with `SKILL.md` explaining when to use them.
 
 ## Implementation Boundary
 

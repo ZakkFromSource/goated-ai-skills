@@ -22,7 +22,7 @@ Add `writing-plans` under `skills/engineering/` as the GOATED skill for turning 
 
 ## Blocked by
 
-- `issues/033-update-skill-authoring-contract-superpowers-conventions.md`
+- `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
 - `issues/036-add-verification-before-completion-skill.md`
 - `issues/archive/012-prd-to-issues.md`
 

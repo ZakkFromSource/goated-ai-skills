@@ -22,7 +22,7 @@ Add `verification-before-completion` under `skills/engineering/` as the shared c
 
 ## Blocked by
 
-- `issues/033-update-skill-authoring-contract-superpowers-conventions.md`
+- `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
 
 ## User stories addressed
 

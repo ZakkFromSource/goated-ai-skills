@@ -22,7 +22,7 @@ Implement `caveman` under `skills/productivity/`. The skill should provide a use
 
 ## Blocked by
 
-- `issues/033-update-skill-authoring-contract-superpowers-conventions.md`
+- `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
 
 ## User stories addressed
 
@@ -33,5 +33,5 @@ Implement `caveman` under `skills/productivity/`. The skill should provide a use
 
 - Use the upstream skill as inspiration: https://github.com/mattpocock/skills/blob/main/skills/productivity/caveman/SKILL.md
 - Keep the public skill name `caveman`.
-- Implement after the authoring-contract updates in `issues/033-update-skill-authoring-contract-superpowers-conventions.md` are complete.
+- Implement after the authoring-contract updates in `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md` are complete.
 - Do not let brevity override GOATED output contracts, review findings, user confirmations, uncertainty, or security/safety language.

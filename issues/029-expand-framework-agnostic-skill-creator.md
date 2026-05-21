@@ -28,7 +28,7 @@ Rename and expand `framework-agnostic-skill-porting` into `framework-agnostic-sk
 
 - `issues/archive/008-framework-agnostic-skill-porting.md`
 - `issues/archive/023-upgrade-framework-agnostic-skill-porting-source-audit.md`
-- `issues/033-update-skill-authoring-contract-superpowers-conventions.md`
+- `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
 
 ## User stories addressed
 

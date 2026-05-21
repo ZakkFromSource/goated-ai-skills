@@ -22,7 +22,7 @@ Upgrade the existing `tdd` skill with the strongest portable Superpowers TDD con
 
 ## Blocked by
 
-- `issues/033-update-skill-authoring-contract-superpowers-conventions.md`
+- `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
 - `issues/036-add-verification-before-completion-skill.md`
 - `issues/archive/013-tdd.md`
 

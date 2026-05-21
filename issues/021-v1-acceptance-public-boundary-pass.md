@@ -55,7 +55,7 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/030-defer-triage-workflow.md`
 - `issues/031-add-caveman-skill.md`
 - `issues/032-v1-additions-doc-sync-and-acceptance-recheck.md`
-- `issues/033-update-skill-authoring-contract-superpowers-conventions.md`
+- `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
 - `issues/034-add-using-goated-ai-skills-router.md`
 - `issues/035-decide-runtime-bootstrap-and-adapter-automation.md`
 - `issues/036-add-verification-before-completion-skill.md`

@@ -21,7 +21,7 @@ Upgrade `prd-to-issues` so generated issue handoffs carry enough context for fut
 
 ## Blocked by
 
-- `issues/033-update-skill-authoring-contract-superpowers-conventions.md`
+- `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
 - `issues/038-add-writing-plans-skill.md`
 - `issues/archive/012-prd-to-issues.md`
 
