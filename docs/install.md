@@ -33,6 +33,8 @@ Layer 2: Target Project Delivery
 
 Installed skills should be self-contained. They may reference files inside their own skill folder, but should not depend on this source repo at runtime.
 
+Use `using-goated-ai-skills` as the portable router when an installed stack needs to choose the right GOATED workflow. It is docs-first guidance for skill selection, not runtime bootstrap, hook installation, automatic loading, or adapter manifest generation.
+
 ## Codex Notes
 
 For Codex-style skill systems, copy skill folders into the configured skills directory or project skill location supported by your environment. Keep the folder name and `SKILL.md` together.

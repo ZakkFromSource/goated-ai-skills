@@ -12,14 +12,14 @@ Add a portable `using-goated-ai-skills` router skill under `skills/agent-workflo
 
 ## Acceptance criteria
 
-- [ ] `skills/agent-workflows/using-goated-ai-skills/SKILL.md` exists and follows the lean schema.
-- [ ] The router distinguishes source-repo maintenance, target-project onboarding, target-project delivery, skill installation/adaptation, tiny one-off tasks, and explicit user overrides.
-- [ ] The workflow tells agents to obey user and target-project instructions before GOATED routing advice.
-- [ ] Tiny one-off tasks can proceed without full onboarding or planning ceremony.
-- [ ] The skill routes PRD-level, architecture, cross-file, repeated, or public-facing work toward `session-start-progressive-disclosure` and `grill-with-docs`.
-- [ ] The skill includes adapter notes for Codex, Claude Code, Hermes, OpenCode, and generic agents without depending on runtime bootstrap/plugin automation.
-- [ ] The skill is self-contained after installation and does not require this source repo's root files.
-- [ ] Runtime bootstrap, automatic skill loading, hook installation, and adapter manifest generation are explicitly out of scope for this issue.
+- [x] `skills/agent-workflows/using-goated-ai-skills/SKILL.md` exists and follows the lean schema.
+- [x] The router distinguishes source-repo maintenance, target-project onboarding, target-project delivery, skill installation/adaptation, tiny one-off tasks, and explicit user overrides.
+- [x] The workflow tells agents to obey user and target-project instructions before GOATED routing advice.
+- [x] Tiny one-off tasks can proceed without full onboarding or planning ceremony.
+- [x] The skill routes PRD-level, architecture, cross-file, repeated, or public-facing work toward `session-start-progressive-disclosure` and `grill-with-docs`.
+- [x] The skill includes adapter notes for Codex, Claude Code, Hermes, OpenCode, and generic agents without depending on runtime bootstrap/plugin automation.
+- [x] The skill is self-contained after installation and does not require this source repo's root files.
+- [x] Runtime bootstrap, automatic skill loading, hook installation, and adapter manifest generation are explicitly out of scope for this issue.
 
 ## Blocked by
 

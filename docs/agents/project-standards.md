@@ -38,7 +38,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Existing implemented skills use adapter maps for Codex, Claude Code, Hermes, OpenCode, and generic agents. | review-enforced | Implemented `SKILL.md` frontmatter across all three categories | High |
 | Skill bodies commonly include Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References. | review-enforced | Implemented `SKILL.md` headings across all three categories | High |
 | Issue handoffs use numbered filenames and standard sections such as Parent PRD, Type, What to build, Acceptance criteria, Blocked by, and User stories addressed. | review-enforced | `issues/*.md`, `issues/archive/*.md` heading scan | High |
-| Completed implementation issues move under `issues/archive/`. | review-enforced | Archived issues `001` through `020` and `022` through `026`; active issue list retains `021` and `027` through `043` | High |
+| Completed implementation issues move under `issues/archive/`. | review-enforced | Archived issues `001` through `020`, `022` through `026`, `029`, `033`, and `034`; active issue list retains `021`, `027`, `028`, `030` through `032`, and `035` through `043` | High |
 | Docs-only changes currently rely on manual markdown review. | review-enforced | No manifest, CI, formatter, linter, or test config found in this pass | High |
 
 ## User-Confirmed Preferences
@@ -77,4 +77,4 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 - Date: 2026-05-21
 - Updated by: Codex
-- Evidence used: installed `project-standards-calibration` and `doc-sync`; `docs/agents/context-matrix.md`; `AGENT.md`; `AGENTS.md`; `CLAUDE.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `skills/README.md`; category READMEs; implemented `SKILL.md` frontmatter across all three categories; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; active issues `021`, `027` through `032`, and `034` through `043`; archived issues `001` through `020`, `022` through `026`, and `033`; issue scans; manifest/config discovery; test/spec discovery; `git status --short`.
+- Evidence used: installed `project-standards-calibration` and `doc-sync`; `docs/agents/context-matrix.md`; `AGENT.md`; `AGENTS.md`; `CLAUDE.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `skills/README.md`; category READMEs; implemented `SKILL.md` frontmatter across all three categories; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; active issues `021`, `027`, `028`, `030` through `032`, and `035` through `043`; archived issues `001` through `020`, `022` through `026`, `029`, `033`, and `034`; issue scans; manifest/config discovery; test/spec discovery; `git status --short`.

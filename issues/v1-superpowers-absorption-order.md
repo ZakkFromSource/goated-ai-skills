@@ -12,8 +12,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 2. `issues/archive/029-expand-framework-agnostic-skill-creator.md`
    - Upgrade the skill creation path early so later skills can use the improved authoring and evaluation contract. ✅
 
-3. `issues/034-add-using-goated-ai-skills-router.md`
-   - Add the portable router skill after the authoring contract is clear.
+3. `issues/archive/034-add-using-goated-ai-skills-router.md`
+   - Add the portable router skill after the authoring contract is clear. Done.
 
 4. `issues/035-decide-runtime-bootstrap-and-adapter-automation.md`
    - Make the HITL runtime decision after the router exists conceptually, before anyone tries to automate it.

@@ -21,7 +21,7 @@ Decide whether GOATED V1 should ever include runtime bootstrap or adapter automa
 
 ## Blocked by
 
-- `issues/034-add-using-goated-ai-skills-router.md`
+- `issues/archive/034-add-using-goated-ai-skills-router.md`
 
 ## User stories addressed
 
