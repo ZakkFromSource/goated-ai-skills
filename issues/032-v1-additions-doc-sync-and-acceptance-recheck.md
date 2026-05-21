@@ -32,7 +32,7 @@ Run documentation synchronization and a final acceptance recheck after the V1 ad
 - `issues/031-add-caveman-skill.md`
 - `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
 - `issues/archive/034-add-using-goated-ai-skills-router.md`
-- `issues/035-decide-runtime-bootstrap-and-adapter-automation.md`
+- `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md`
 - `issues/036-add-verification-before-completion-skill.md`
 - `issues/037-wire-verification-through-goated-stack.md`
 - `issues/038-add-writing-plans-skill.md`

@@ -13,10 +13,10 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
    - Upgrade the skill creation path early so later skills can use the improved authoring and evaluation contract. ✅
 
 3. `issues/archive/034-add-using-goated-ai-skills-router.md`
-   - Add the portable router skill after the authoring contract is clear. Done.
+   - Add the portable router skill after the authoring contract is clear. Done. ✅
 
-4. `issues/035-decide-runtime-bootstrap-and-adapter-automation.md`
-   - Make the HITL runtime decision after the router exists conceptually, before anyone tries to automate it.
+4. `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md`
+   - Make the HITL runtime decision after the router exists conceptually, before anyone tries to automate it. Done. ✅
 
 5. `issues/036-add-verification-before-completion-skill.md`
    - Add the shared closeout gate before wiring it through other skills.
@@ -62,7 +62,7 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 
 ## Notes For Future Agents
 
-- Treat `035` and `043` as decision/research issues, not implementation permission for runtime automation.
+- Treat archived issue `035` as the accepted narrow-adapter-note decision, and treat `043` as research rather than implementation permission for runtime automation.
 - Keep worktree lifecycle, finish-branch lifecycle, marketplace manifests, release-note machinery, strong PR gates, and full adapter automation out of V1 unless a later PRD changes scope.
 - Preserve GOATED's lean schema and public boundary in every new skill.
 - If this order conflicts with a newer issue or PRD, read the newer source and surface the conflict before editing.

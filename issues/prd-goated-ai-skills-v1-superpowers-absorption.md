@@ -33,13 +33,13 @@ GOATED should absorb the portable parts of these conventions without copying Sup
 - Upgrade `prd-to-issues` so generated issue handoffs include enough context for agents with no session history.
 - Add `receiving-code-review`.
 - Upgrade `diagnose`, `tdd`, and `framework-agnostic-skill-creator` with the strongest relevant Superpowers conventions.
-- Keep runtime bootstrap/plugin automation and skill-trigger eval harnesses behind HITL decision or research issues.
+- Keep runtime bootstrap/plugin automation out of V1 per ADR 0001, and keep skill-trigger eval harnesses behind research issue `043`.
 
 ## Non-Goals
 
 - Do not copy Superpowers text, tone, or repo architecture wholesale.
 - Do not weaken GOATED's lean schema fields: `depends_on`, `outputs`, `adapters`, `classification`, and `status` stay required.
-- Do not implement runtime bootstrap/plugin automation in V1 unless the HITL decision issue explicitly approves it.
+- Do not implement runtime bootstrap/plugin automation in V1; ADR 0001 allows only narrow adapter notes.
 - Do not implement marketplace manifests, version/drift manifests, release-note machinery, worktree lifecycle, finish-branch lifecycle, strong PR gates, or full adapter automation in this V1 scope.
 - Do not add standalone V1 skills for Superpowers `brainstorming`, `dispatching-parallel-agents`, `executing-plans`, `requesting-code-review`, `using-git-worktrees`, or `finishing-a-development-branch`.
 - Do not make issue handoffs so verbose that they become stale implementation transcripts; detailed executable steps belong in `writing-plans` after source inspection.
@@ -65,7 +65,7 @@ GOATED should absorb the portable parts of these conventions without copying Sup
 | Update `framework-agnostic-skill-creator` issue | Must | Fold in Superpowers `writing-skills` and Matt Pocock `write-a-skill`; require a skill-evaluation reference. |
 | Codify Superpowers conventions | Must | Trigger-only descriptions, delegated status enums, prompt templates, rationalization tables, proof gates, and support-file pragmatism. |
 | Add `using-goated-ai-skills` router | Must | Portable router skill with project/user-instruction respect and tiny-task escape hatches; no runtime bootstrap automation. |
-| Decide runtime bootstrap and adapter automation | HITL | Evaluate whether V1 should ever override docs-first runtime constraints. |
+| Decide runtime bootstrap and adapter automation | Done | Resolved by `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md` and ADR 0001: V1 allows narrow adapter notes only. |
 | Add `verification-before-completion` | Must | Shared closeout gate requiring fresh command or artifact evidence before success claims. |
 | Wire verification across the stack | Must | Relevant engineering skills should soft-depend on verification before completion. |
 | Add `writing-plans` | Must | Expand approved issues into executable implementation plans at the moment of implementation. |
@@ -130,17 +130,22 @@ GOATED should absorb the portable parts of these conventions without copying Sup
 
 | Risk | Impact | Mitigation |
 | --- | --- | --- |
-| Runtime scope creep | V1 stops being docs-first and portable | Keep automation behind `035` until maintainer approval. |
+| Runtime scope creep | V1 stops being docs-first and portable | Keep runtime automation out of V1 per ADR 0001; future automation requires a new scoped PRD or issue. |
 | Superpowers tone or assumptions overwrite GOATED style | Skills become less framework-agnostic or too dogmatic | Rewrite conventions in GOATED language and preserve user/project instruction precedence. |
 | Issue handoffs become bulky plans | Future agents follow stale steps | Put exact executable steps in `writing-plans` after current source inspection. |
 | Trigger eval harnesses produce flaky confidence | Agents over-trust nondeterministic tests | Keep harnesses in research issue `043` before implementation. |
 | Schema drift | New skills lose GOATED metadata richness | Make lean schema preservation explicit in every relevant issue. |
 
+## Resolved Decisions
+
+| Decision | Outcome | Source |
+| --- | --- | --- |
+| Should V1 ever include runtime bootstrap/plugin automation that changes agent behavior beyond docs-first installation? | No. V1 allows narrow adapter notes only; runtime automation requires future scoped work. | `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md` and `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md` |
+
 ## Open Questions
 
 | Question | Owner | Needed before |
 | --- | --- | --- |
-| Should V1 ever include runtime bootstrap/plugin automation that changes agent behavior beyond docs-first installation? | Maintainer via `035` | Any bootstrap or adapter automation implementation. |
 | Which skill-trigger eval harness style, if any, is worth adding to GOATED? | Maintainer via `043` | Any trigger harness implementation. |
 
 ## Source Evidence
@@ -148,6 +153,8 @@ GOATED should absorb the portable parts of these conventions without copying Sup
 - User-approved implementation plan in this session.
 - `AGENT.md`
 - `CONTEXT.md`
+- `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md`
+- `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md`
 - `issues/prd-goated-ai-skills-v1-public-core.md`
 - `issues/prd-goated-ai-skills-v1-additions.md`
 - Superpowers repo: https://github.com/obra/superpowers

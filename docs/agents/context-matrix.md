@@ -27,7 +27,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | `issues/archive/*.md` | Completed implementation handoffs and blocker history. | Before modifying an implemented skill or tracing why an existing artifact exists. | Read the specific archived issue tied to the artifact or blocker chain. |
 | `issues/*.md` excluding `issues/archive/` and PRDs | Active future implementation handoffs. | Before implementing the specific planned skill or acceptance pass. | Read only the issue for the current task unless blockers require more. |
 | `AGENTS.md` and `CLAUDE.md` | Thin framework adapter files. | Before changing agent-specific source-repo instructions. | They should route to `AGENT.md`, not duplicate the full workflow. |
-| `docs/adr/README.md` | ADR storage policy. | Before adding or changing architectural decision records. | No accepted ADRs were present in this pass. |
+| `docs/adr/README.md` | ADR storage policy. | Before adding or changing architectural decision records. | ADR 0001 records the accepted V1 runtime bootstrap and adapter automation decision. |
 | `.gitignore` | Defines ignored local and scratch artifacts. | Before adding local/session artifacts or generated output paths. | `.local/` is intentionally ignored. |
 
 ## Only-If-Needed Sources
@@ -47,7 +47,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | --- | --- | --- | --- |
 | Maintainer and adapter guidance | `AGENT.md`, `AGENTS.md`, `CLAUDE.md` | Source-repo rules and thin framework adapters. | Any repo planning, edits, review, or automation. |
 | Public context and root docs | `CONTEXT.md`, `README.md` | Domain language, source repo boundary, root layout, V1 model, and public/private boundary. | Any public docs, product model, or skill-library work. |
-| Install and decision docs | `docs/install.md`, `docs/adr/` | Docs-first installation model and future ADR location. | Install/adaptation changes or accepted architecture decisions. |
+| Install and decision docs | `docs/install.md`, `docs/adr/` | Docs-first installation model, deferred automation notes, and accepted ADRs. | Install/adaptation changes or accepted architecture decisions. |
 | Agent context artifacts | `docs/agents/` | Durable routing and standards artifacts for agents working in this repo. | Serious future sessions after these artifacts exist. |
 | Product and issue handoffs | `issues/`, `issues/archive/` | V1 PRD, active planned issues, and completed implementation issues. | Implementing a specific skill, tracing blockers, or validating V1 acceptance. |
 | Skill library | `skills/` | Public category indexes and implemented installable skill folders. | Creating, editing, reviewing, or installing skills. |
@@ -70,9 +70,10 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Source | Scope | Status | Notes |
 | --- | --- | --- | --- |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Public core product model, skill schema, V1 skill set, onboarding and delivery workflows. | Draft reference PRD. | Primary spec until superseded by accepted ADRs or updated PRDs. |
-| `issues/archive/*.md` | Completed scaffold, skill implementation, and follow-up upgrade handoffs. | Archived. | As of 2026-05-21, issues `001` through `020`, `022` through `026`, `029`, `033`, and `034` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
-| `issues/*.md` excluding `issues/archive/` and PRDs | Planned future V1 implementation slices and final acceptance pass. | Active issue handoffs. | As of 2026-05-21, active handoffs are `021`, `027`, `028`, `030` through `032`, and `035` through `043`; read the current issue before implementing or reviewing that slice. |
-| `docs/adr/README.md` | ADR placement and policy. | Placeholder. | No ADR content was present in this pass. |
+| `issues/archive/*.md` | Completed scaffold, skill implementation, and follow-up upgrade handoffs. | Archived. | As of 2026-05-21, issues `001` through `020`, `022` through `026`, `029`, and `033` through `035` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
+| `issues/*.md` excluding `issues/archive/` and PRDs | Planned future V1 implementation slices and final acceptance pass. | Active issue handoffs. | As of 2026-05-21, active handoffs are `021`, `027`, `028`, `030` through `032`, and `036` through `043`; read the current issue before implementing or reviewing that slice. |
+| `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md` | Accepted V1 runtime bootstrap and adapter automation decision. | Accepted ADR. | V1 allows narrow adapter notes only; runtime bootstrap, plugin manifests, hooks, installers, automatic loading, and adapter automation require future scoped work. |
+| `docs/adr/README.md` | ADR placement and policy. | ADR index. | Read before adding or changing architectural decision records. |
 | `docs/agents/context-matrix.md` | Future-agent read order for this repo. | Maintained routing artifact. | Refresh when repo structure, issue state, skill inventory, or source-evidence paths change. |
 | `docs/agents/project-standards.md` | Future-agent standards profile for this repo. | Maintained standards artifact. | Refresh when documented standards, inferred conventions, commands, or issue state change. |
 
@@ -89,4 +90,4 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 - Date: 2026-05-21
 - Updated by: Codex
-- Evidence used: installed `session-start-progressive-disclosure`, `context-matrix-map`, `project-standards-calibration`, and `doc-sync`; `AGENT.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/agents/project-standards.md`; category READMEs under `skills/`; implemented skill inventory under `skills/`; `docs/adr/README.md`; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; active issues `021`, `027`, `028`, `030` through `032`, and `035` through `043`; archived issues `001` through `020`, `022` through `026`, `029`, `033`, and `034`; `rg --files`; targeted issue and stale-wording scans with `rg -n`; `git rev-parse --show-toplevel`; `git status --short`; manifest and test discovery `rg` commands.
+- Evidence used: installed `session-start-progressive-disclosure`, `context-matrix-map`, `project-standards-calibration`, and `doc-sync`; `AGENT.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/agents/project-standards.md`; category READMEs under `skills/`; implemented skill inventory under `skills/`; `docs/adr/README.md`; `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md`; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; active issues `021`, `027`, `028`, `030` through `032`, and `036` through `043`; archived issues `001` through `020`, `022` through `026`, `029`, and `033` through `035`; `rg --files`; targeted issue and stale-wording scans with `rg -n`; `git rev-parse --show-toplevel`; `git status --short`; manifest and test discovery `rg` commands.

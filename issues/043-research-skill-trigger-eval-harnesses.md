@@ -22,7 +22,7 @@ Research whether GOATED should add skill-trigger evaluation harnesses, and if so
 ## Blocked by
 
 - `issues/archive/034-add-using-goated-ai-skills-router.md`
-- `issues/035-decide-runtime-bootstrap-and-adapter-automation.md`
+- `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md`
 
 ## User stories addressed
 
