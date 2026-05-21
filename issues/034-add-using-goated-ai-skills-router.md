@@ -24,7 +24,7 @@ Add a portable `using-goated-ai-skills` router skill under `skills/agent-workflo
 ## Blocked by
 
 - `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
-- `issues/029-expand-framework-agnostic-skill-creator.md`
+- `issues/archive/029-expand-framework-agnostic-skill-creator.md`
 - `issues/archive/006-agent-instructions-integrator.md`
 
 ## User stories addressed

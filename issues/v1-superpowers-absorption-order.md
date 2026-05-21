@@ -7,10 +7,10 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 ## Recommended Order
 
 1. `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
-   - Establish the shared conventions before new skill work depends on them.
+   - Establish the shared conventions before new skill work depends on them. ✅
 
-2. `issues/029-expand-framework-agnostic-skill-creator.md`
-   - Upgrade the skill creation path early so later skills can use the improved authoring and evaluation contract.
+2. `issues/archive/029-expand-framework-agnostic-skill-creator.md`
+   - Upgrade the skill creation path early so later skills can use the improved authoring and evaluation contract. ✅
 
 3. `issues/034-add-using-goated-ai-skills-router.md`
    - Add the portable router skill after the authoring contract is clear.
