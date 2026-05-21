@@ -152,7 +152,7 @@ Private or domain-specific workflows may live in private forks or private deploy
 `.local/` is ignored and can contain private planning notes such as:
 
 - future private taxonomy notes;
-- local handoffs;
+- temporary research notes;
 - scratch notes while designing public-safe skills.
 
 No content inside `.local/` should be required for public repo behavior.
@@ -296,14 +296,14 @@ docs/agents/architecture-plan.md
 docs/architecture/<slug>-architecture-plan.md
 ```
 
-Ignored session/private artifacts:
+Session/private artifacts:
 
 ```text
-.local/handoffs/
+<os-temp>/goated-handoffs/<project-name>/
 .local/scratch/
 ```
 
-Durable project facts should be tracked. Session-private or temporary artifacts should be ignored.
+Durable project facts should be tracked. Temporary handoffs should live outside the workspace in OS temp unless the user explicitly requests a tracked handoff. Other session-private workspace artifacts should be ignored.
 
 ## V1 Skill Set
 
@@ -348,7 +348,7 @@ Durable project facts should be tracked. Session-private or temporary artifacts 
 `handoff`
 
 - Writes compact continuity notes for future agents or sessions.
-- Defaults to `.local/handoffs/` inside the target project.
+- Defaults to the OS temp directory under `goated-handoffs/<project-name>/`.
 - References existing artifacts instead of duplicating PRDs, issues, ADRs, diffs, or commits.
 
 `framework-agnostic-skill-porting`
@@ -476,7 +476,7 @@ Expected outputs:
 - optional architecture map;
 - optional project-wide architecture plan;
 - synchronized docs;
-- optional local handoff under `.local/handoffs/`.
+- optional temporary handoff under OS temp `goated-handoffs/<project-name>/`.
 
 ## Target Project Delivery
 
@@ -513,7 +513,7 @@ Expected outputs:
 - security review;
 - synchronized docs;
 - commit message;
-- optional local handoff.
+- optional temporary handoff.
 
 ## Review Gate Design
 
@@ -579,10 +579,10 @@ The skill should not ask users about discoverable facts. It should inspect the t
 
 ## Handoff Storage Policy
 
-`handoff` should write to this target-project path by default:
+`handoff` should write to this OS temp path by default:
 
 ```text
-.local/handoffs/
+<os-temp>/goated-handoffs/<project-name>/
 ```
 
 Handoffs should:
@@ -591,7 +591,7 @@ Handoffs should:
 - reference existing artifacts by path;
 - avoid duplicating PRDs, issues, ADRs, diffs, or commit messages;
 - include recommended next skills;
-- stay out of public commits unless the user explicitly requests a tracked handoff.
+- stay out of the project workspace unless the user explicitly requests a tracked handoff.
 
 ## Prototype Policy
 
@@ -679,7 +679,7 @@ The V1 implementation is complete when:
 - `plan-codebase-architecture` clearly defines project-wide and feature-specific architecture plan defaults;
 - `standards-and-spec-review` clearly defines its soft dependency behavior;
 - `code-security-review` does not claim full audit coverage;
-- `handoff` defaults to `.local/handoffs/` inside the target project;
+- `handoff` defaults to OS temp under `goated-handoffs/<project-name>/`;
 - public main contains no private names, handles, sensitive personal domains, client context, or private workflow assumptions.
 
 ## Open Questions

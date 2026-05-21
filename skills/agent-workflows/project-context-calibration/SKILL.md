@@ -83,7 +83,7 @@ Use this skill during target-project onboarding, before repeated delivery work, 
    - Avoid broad glossary building when the terms do not affect agent work.
 
 6. Calibrate durable artifact definitions:
-   - Define durable project artifacts that future agents should recognize, such as `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, PRDs, ADRs, issue handoffs, public docs, and local handoffs when the project uses them.
+   - Define durable project artifacts that future agents should recognize, such as `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, PRDs, ADRs, issue handoffs, public docs, and temporary or tracked handoffs when the project uses them.
    - For each artifact, capture its purpose, default path or convention, whether it is tracked or local, and what it should not replace.
    - Keep standards and enforcement rules in `docs/agents/project-standards.md`, not in `CONTEXT.md`.
 

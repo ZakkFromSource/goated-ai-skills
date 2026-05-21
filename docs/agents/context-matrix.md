@@ -36,7 +36,8 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | --- | --- | --- | --- |
 | `skills/*/*/SKILL.md` | Actual installable workflow bodies. | Before editing, reviewing, installing, or adapting the named skill. | Do not bulk-read all skills when one skill is relevant. |
 | `.out-of-scope/` | Public deferred ideas and future upgrades. | When deciding whether a requested idea belongs in V1 public core. | Sample only the relevant file; issue `030` owns the concrete triage deferral update. |
-| `.local/` | Ignored private notes, handoffs, or scratch work. | Only when the user explicitly points to it or the active workflow requires private/local context. | Do not read by default; public behavior must not depend on it. |
+| `.local/` | Ignored private notes or scratch work. | Only when the user explicitly points to it or the active workflow requires private/local workspace context. | Public behavior must not depend on `.local/`. |
+| OS temp `goated-handoffs/<project-name>/` | Temporary handoff notes written outside the project workspace. | Only when the user points to an existing handoff or the active workflow needs temporary handoff context. | Resolve the absolute OS temp path through the active environment; temp files may be cleaned by the OS. |
 | `.git/` | Git metadata. | Use through git commands only. | Do not treat it as normal context. |
 | Installed skill copies outside this repo, such as `C:/Users/.../.codex/skills/*` | Runtime copies used by an agent framework. | When the user asks to test installed behavior or compare source and installed copies. | Verify against source if manual copies may have drifted. |
 
@@ -50,7 +51,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Agent context artifacts | `docs/agents/` | Durable routing and standards artifacts for agents working in this repo. | Serious future sessions after these artifacts exist. |
 | Product and issue handoffs | `issues/`, `issues/archive/` | V1 PRD, active planned issues, and completed implementation issues. | Implementing a specific skill, tracing blockers, or validating V1 acceptance. |
 | Skill library | `skills/` | Public category indexes and implemented installable skill folders. | Creating, editing, reviewing, or installing skills. |
-| Local/private and deferred areas | `.local/`, `.out-of-scope/` | Ignored private notes and public deferred ideas. | Only when explicitly relevant; avoid `.local/` by default. |
+| Local/private and deferred areas | `.local/`, OS temp `goated-handoffs/<project-name>/`, `.out-of-scope/` | Ignored private notes, temporary handoffs, and public deferred ideas. | Only when explicitly relevant; avoid `.local/` by default. |
 
 ## Tests And Commands
 

@@ -57,8 +57,8 @@ These definitions are normative for this source repo. If another public doc uses
 - **Architecture plan** - a durable target-project artifact, normally `docs/agents/architecture-plan.md` for project-wide setup or `docs/architecture/<slug>-architecture-plan.md` for feature-specific work, that turns clarified intent into planned modules, interfaces, dependency seams, test surfaces, and implementation slice order.
 - **Agent instruction artifact** - a file or configuration entry that tells a specific agent framework how to use installed skills and target-project artifacts.
 - **Durable artifact** - tracked project knowledge that should survive across sessions, such as PRDs, ADRs, project context files, context matrices, standards profiles, architecture plans, and public docs.
-- **Local/session artifact** - ignored, private, or temporary workspace context, such as `.local/handoffs/`, `.local/scratch/`, `.scratch/`, `tmp/`, or `temp/`.
-- **Handoff** - a compact continuity note for a future agent or session. Handoffs should reference existing artifacts instead of duplicating PRDs, issues, ADRs, diffs, or commits.
+- **Local/session artifact** - ignored, private, or temporary context, such as OS temp `goated-handoffs/<project-name>/`, `.local/scratch/`, `.scratch/`, `tmp/`, or `temp/`.
+- **Handoff** - a compact continuity note for a future agent or session. Handoffs default to OS temp under `goated-handoffs/<project-name>/` and should reference existing artifacts instead of duplicating PRDs, issues, ADRs, diffs, or commits.
 
 ### Operating Principles
 

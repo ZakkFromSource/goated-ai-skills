@@ -86,7 +86,7 @@ session-start-progressive-disclosure
 -> handoff optional
 ```
 
-Durable target-project artifacts should be tracked, including root `CONTEXT.md` and agent artifacts under `docs/agents/`. Session/private artifacts should use ignored `.local/`.
+Durable target-project artifacts should be tracked, including root `CONTEXT.md` and agent artifacts under `docs/agents/`. Handoffs default to OS temp under `goated-handoffs/<project-name>/`; other session/private workspace artifacts should use ignored `.local/`.
 
 ## Target Project Delivery Workflow
 

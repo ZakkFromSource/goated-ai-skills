@@ -12,7 +12,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Read `CONTEXT.md` and the relevant PRD or issue before changing files in this repo. | review-enforced | `AGENT.md`, `docs/agents/context-matrix.md` | For non-trivial docs, product model, skill, or issue changes, load the narrow task-specific source after root context. |
 | Preserve the distinction between source repo, installed skills, and target projects. | review-enforced | `AGENT.md`, `CONTEXT.md`, `README.md` | Do not make installed skills depend on root repo guidance. |
 | Keep public main public-safe. | review-enforced | `AGENT.md`, `CONTEXT.md`, `README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | No private names, handles, credentials, client data, sensitive personal domains, or private workflow assumptions. |
-| Use `.local/` for private planning and session-local notes; do not make public behavior depend on it. | tooling-enforced | `.gitignore`, `AGENT.md`, `README.md`, `docs/install.md` | Git ignores `.local/`; public-safety still requires review judgment. |
+| Use OS temp `goated-handoffs/<project-name>/` for default handoffs and `.local/` for private planning or session-local workspace notes; do not make public behavior depend on either. | review-enforced | `.gitignore`, `AGENT.md`, `README.md`, `docs/install.md`, `skills/agent-workflows/handoff/SKILL.md` | Git ignores `.local/`; OS temp is outside the project workspace and may be cleaned by the OS. Public-safety still requires review judgment. |
 | Add new skill folders and `SKILL.md` files only for a specific approved implementation issue. | review-enforced | `AGENT.md`, `README.md`, `skills/README.md` | Category indexes alone are not approval to create a skill. |
 | Keep V1 installation docs-first; installer automation is out of scope for V1. | review-enforced | `docs/install.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | Completed skill folders are copied, installed, or adapted manually. |
 | Keep installed skill folders self-contained after installation. | review-enforced | `AGENT.md`, `README.md`, `skills/README.md`, `docs/install.md` | A copied skill can reference its own folder, not this repo's root files. |
@@ -24,7 +24,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Use explicit discipline gates where workflow pressure makes shortcuts likely. | review-enforced | `CONTEXT.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-superpowers-absorption.md` | Discipline-heavy skills may use stop rules, proof gates, rationalization counters, red flags, or anti-pattern references. |
 | Make workflows subagent-aware and single-agent-compatible. | review-enforced | `AGENT.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | Subagents must return evidence; the main agent owns final judgment. Delegated workflows should use status enums such as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, and `BLOCKED` when subagent results can change the controller's next action; simple evidence scans can use lighter evidence, assumption, uncertainty, and inspected-path requirements. |
 | Use progressive disclosure instead of broad context loading. | review-enforced | `AGENT.md`, `skills/README.md`, `docs/agents/context-matrix.md` | Load root guidance, then relevant issue/category/skill sources only as needed. |
-| Store durable target-project context in tracked files such as root `CONTEXT.md` and agent artifacts under `docs/agents/`; keep session/private artifacts ignored under `.local/`. | tooling-enforced | `.gitignore`, `AGENT.md`, `README.md`, `docs/install.md` | `docs/agents/` and root Markdown files are tracked by default; `.local/` is ignored. |
+| Store durable target-project context in tracked files such as root `CONTEXT.md` and agent artifacts under `docs/agents/`; keep default handoffs in OS temp and other session/private workspace artifacts ignored under `.local/`. | review-enforced | `.gitignore`, `AGENT.md`, `README.md`, `docs/install.md`, `skills/agent-workflows/handoff/SKILL.md` | `docs/agents/` and root Markdown files are tracked by default; `.local/` is ignored, while OS temp is outside the workspace. |
 
 ## Inferred Conventions
 
@@ -60,7 +60,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 | Command | Purpose | Enforcement | Source |
 | --- | --- | --- | --- |
-| `.gitignore` patterns for `.local/`, `.scratch/`, `tmp/`, `temp/`, logs, and temp files | Keep local, scratch, and private artifacts out of normal tracked work. | tooling-enforced | `.gitignore` |
+| `.gitignore` patterns for `.local/`, `.scratch/`, `tmp/`, `temp/`, logs, and temp files | Keep local, scratch, and private workspace artifacts out of normal tracked work. | tooling-enforced | `.gitignore` |
 | `git status --short` | Check worktree state before and after edits. | review-enforced | Used during context and standards creation. |
 | `rg --files` | Discover source files without bulk-reading. | review-enforced | Used by `docs/agents/context-matrix.md` and this pass. |
 | `rg -n` targeted scans | Find headings, schema references, and documented standards. | review-enforced | Used for issue and standards discovery. |

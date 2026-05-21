@@ -16,7 +16,8 @@ Layer 1: Target Project Onboarding
 
 - Run the installed onboarding skills inside a project before durable, cross-file, PRD-level, architectural, or repeated work.
 - Use onboarding to create durable target-project artifacts such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, and `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful.
-- Use ignored `.local/` in the target project for private handoffs, scratch notes, and temporary artifacts.
+- Use the OS temp directory for handoffs by default, under `goated-handoffs/<project-name>/`.
+- Use ignored `.local/` in the target project for private scratch notes and other temporary workspace artifacts.
 
 Layer 2: Target Project Delivery
 
@@ -56,7 +57,7 @@ For OpenCode-style workflows, place copied or adapted skills wherever OpenCode e
 
 ## Target Project Artifacts
 
-Installed skills should use these defaults inside a target project:
+Installed skills should use these defaults around a target project:
 
 ```text
 CONTEXT.md                         tracked durable project context and language
@@ -64,11 +65,11 @@ docs/agents/context-matrix.md      tracked durable context map
 docs/agents/project-standards.md   tracked durable standards profile
 docs/agents/architecture-plan.md   tracked project-wide architecture blueprint when useful
 docs/architecture/                 tracked feature-specific architecture blueprints when useful
-.local/handoffs/                   ignored handoff notes
+<os-temp>/goated-handoffs/<project-name>/ temporary handoff notes
 .local/scratch/                    ignored temporary notes or experiments
 ```
 
-Durable project facts should be tracked. Session-private or temporary artifacts should be ignored.
+Durable project facts should be tracked. Temporary handoffs should live outside the workspace in OS temp unless the user explicitly requests a tracked handoff. Session-private workspace artifacts should be ignored.
 
 ## Out Of Scope For V1
 

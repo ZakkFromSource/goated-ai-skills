@@ -48,7 +48,7 @@ Use this skill after implementation or review work that could make docs stale. I
 - Changed files, diffs, commits, staged changes, unstaged changes, generated files, migrations, config changes, or supplied patch.
 - Tests, command output, manual verification notes, TDD evidence, standards/spec review, security review, prototype verdicts, or architecture notes.
 - Existing durable docs such as `README.md`, `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, ADRs, feature docs, API docs, schema docs, runbooks, changelogs, or design docs.
-- Existing local/session artifacts such as `.local/handoffs/`, scratch notes, or temporary plans when they help identify context but should not become source-of-truth docs.
+- Existing local/session artifacts such as OS temp handoffs under `goated-handoffs/<project-name>/`, scratch notes, or temporary plans when they help identify context but should not become source-of-truth docs.
 
 ## Workflow
 

@@ -45,7 +45,7 @@ CONTEXT.md             Public context for this skill library.
 docs/install.md        Docs-first install and adaptation guidance.
 docs/adr/              Architectural Decision Records.
 .out-of-scope/         Public future ideas and deferred upgrades.
-.local/                Ignored private notes and handoffs for local work.
+.local/                Ignored private notes and scratch work for local source-repo work.
 skills/                Public skill categories and implemented skill folders.
 issues/                PRDs and future issue handoff docs.
 ```
@@ -89,7 +89,7 @@ session-start-progressive-disclosure
 -> handoff optional
 ```
 
-Durable target-project artifacts should be tracked, such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, and `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful. Session/private artifacts should go in ignored `.local/`, such as `.local/handoffs/`.
+Durable target-project artifacts should be tracked, such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, and `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful. Handoffs default to the OS temp directory under `goated-handoffs/<project-name>/`; other session/private workspace artifacts can use ignored `.local/`.
 
 ## Target Project Delivery
 
