@@ -42,7 +42,7 @@ If the environment supports repo instructions, use a thin adapter that routes Co
 
 For Claude Code-style workflows, adapt each skill into the supported command, skill, or instruction format for that environment. If a project instruction file is used, keep it short and route to the installed skills.
 
-Use `agent-instructions-integrator` once implemented to help create the correct target-project routing instructions.
+Use `agent-instructions-integrator` to help create the correct target-project routing instructions.
 
 ## Hermes Notes
 

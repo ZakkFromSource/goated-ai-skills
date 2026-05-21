@@ -4,7 +4,7 @@ This folder contains public skill categories for GOATED AI Skills V1.
 
 Skill folders and `SKILL.md` files are added only when a specific approved implementation issue calls for them.
 
-When implemented, skill folders are intended to be copied, installed, or adapted into a user's chosen agent framework. A skill folder should remain useful after installation without depending on this repo's root files.
+Implemented skill folders are intended to be copied, installed, or adapted into a user's chosen agent framework. A skill folder should remain useful after installation without depending on this repo's root files.
 
 ## Categories
 
@@ -14,7 +14,7 @@ When implemented, skill folders are intended to be copied, installed, or adapted
 
 ## Lean Schema
 
-When skill implementation begins, every `SKILL.md` must use YAML frontmatter with these required fields:
+Every implemented `SKILL.md` must use YAML frontmatter with these required fields:
 
 ```yaml
 name:
@@ -59,13 +59,13 @@ Installed skills must be self-contained. They can reference files inside their o
 
 ## Progressive Disclosure Contract
 
-`SKILL.md` is the router and operating procedure, not the whole knowledge base. Put detailed examples, templates, checklists, stack-specific notes, and long decision guides in directly linked `references/` files inside the skill folder.
+`SKILL.md` is the router and operating procedure, not the whole knowledge base. Put detailed examples, templates, checklists, stack-specific notes, and long decision guides in directly linked support files inside the skill folder, usually `references/` and, when useful, `scripts/` or `assets/`.
 
-When a skill has references:
+When a skill has support files:
 
-- keep references one level down from `SKILL.md`;
-- link each reference directly from `SKILL.md`;
-- tell the agent when to read each reference;
+- keep support files one level down from `SKILL.md`;
+- link each support file directly from `SKILL.md`;
+- tell the agent when to read or use each support file;
 - avoid duplicating the same guidance in both places.
 
 ## Delegation Contract

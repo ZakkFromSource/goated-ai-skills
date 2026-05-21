@@ -8,16 +8,17 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 | Standard | Enforcement | Source | Notes |
 | --- | --- | --- | --- |
-| Read `AGENT.md`, `CONTEXT.md`, and the relevant PRD or issue before changing this repo. | review-enforced | `AGENT.md` | Applies before planning, editing, reviewing, or automation. |
+| Read `AGENT.md` before planning, editing, reviewing, or automation in this repo. | review-enforced | `AGENT.md`, `AGENTS.md`, `CLAUDE.md` | Thin adapters route contributors to the maintainer contract. |
+| Read `CONTEXT.md` and the relevant PRD or issue before changing files in this repo. | review-enforced | `AGENT.md`, `docs/agents/context-matrix.md` | For non-trivial docs, product model, skill, or issue changes, load the narrow task-specific source after root context. |
 | Preserve the distinction between source repo, installed skills, and target projects. | review-enforced | `AGENT.md`, `CONTEXT.md`, `README.md` | Do not make installed skills depend on root repo guidance. |
 | Keep public main public-safe. | review-enforced | `AGENT.md`, `CONTEXT.md`, `README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | No private names, handles, credentials, client data, sensitive personal domains, or private workflow assumptions. |
 | Use `.local/` for private planning and session-local notes; do not make public behavior depend on it. | tooling-enforced | `.gitignore`, `AGENT.md`, `README.md`, `docs/install.md` | Git ignores `.local/`; public-safety still requires review judgment. |
 | Add new skill folders and `SKILL.md` files only for a specific approved implementation issue. | review-enforced | `AGENT.md`, `README.md`, `skills/README.md` | Category indexes alone are not approval to create a skill. |
 | Keep V1 installation docs-first; installer automation is out of scope for V1. | review-enforced | `docs/install.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | Completed skill folders are copied, installed, or adapted manually. |
 | Keep installed skill folders self-contained after installation. | review-enforced | `AGENT.md`, `README.md`, `skills/README.md`, `docs/install.md` | A copied skill can reference its own folder, not this repo's root files. |
-| Use the lean skill schema for implemented `SKILL.md` files. | review-enforced | `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | Required frontmatter includes name, category, classification, status, description, triggers, outputs, depends_on, and adapters. |
+| Use the lean skill schema for implemented `SKILL.md` files. | review-enforced | `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md`, implemented skill inventory | Required frontmatter includes name, category, classification, status, description, triggers, outputs, depends_on, and adapters. |
 | Use only public V1 categories unless a future public-safe category is intentionally added. | review-enforced | `CONTEXT.md`, `skills/README.md`, `README.md` | Current public categories are `agent-workflows`, `engineering`, and `productivity`. |
-| Keep `SKILL.md` lean and move detailed examples, templates, and stack-specific notes into directly linked `references/`. | review-enforced | `AGENT.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | The 300-line threshold is a soft review threshold, not an automated check. |
+| Keep `SKILL.md` lean and move detailed examples, templates, stack-specific notes, scripts, and reusable assets into directly linked support files. | review-enforced | `AGENT.md`, `CONTEXT.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | The 300-line threshold is a soft review threshold, not an automated check. Current support files are `references/`; `scripts/` and `assets/` are allowed when useful. |
 | Make dependency behavior explicit. | review-enforced | `AGENT.md`, `skills/README.md` | Name hard dependencies, soft dependencies, and graceful fallbacks when relevant. |
 | Keep root adapter files thin and routed to `AGENT.md`. | review-enforced | `AGENT.md`, `AGENTS.md`, `CLAUDE.md`, `docs/install.md` | Do not paste full workflows into adapter files. |
 | Make workflows subagent-aware and single-agent-compatible. | review-enforced | `AGENT.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | Subagents must return evidence; the main agent owns final judgment. |
@@ -30,13 +31,13 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | --- | --- | --- | --- |
 | Markdown is the primary artifact format. | review-enforced | Root docs, issue files, category READMEs, implemented skills, and `docs/agents/context-matrix.md` | High |
 | Use ATX headings, concise paragraphs, bullet lists, and fenced code blocks for examples or directory layouts. | review-enforced | `README.md`, `docs/install.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | High |
-| Use kebab-case names for skill folders and implemented skill names. | review-enforced | `skills/agent-workflows/session-start-progressive-disclosure`, `context-matrix-map`, `project-standards-calibration` | High |
-| Implemented skills live at `skills/<category>/<skill-name>/SKILL.md`. | review-enforced | `skills/README.md`, existing `skills/agent-workflows/*/SKILL.md` files | High |
-| Existing implemented skills use structured `depends_on` with `hard`, `soft`, and `fallback` entries. | review-enforced | Existing `skills/agent-workflows/*/SKILL.md` frontmatter | Medium |
-| Existing implemented skills use adapter maps for Codex, Claude Code, Hermes, OpenCode, and generic agents. | review-enforced | Existing `skills/agent-workflows/*/SKILL.md` frontmatter | High |
-| Skill bodies commonly include Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References. | review-enforced | Existing `skills/agent-workflows/*/SKILL.md` headings | High |
+| Use kebab-case names for skill folders and implemented skill names. | review-enforced | Implemented skill folders under `skills/agent-workflows/`, `skills/engineering/`, and `skills/productivity/` | High |
+| Implemented skills live at `skills/<category>/<skill-name>/SKILL.md`. | review-enforced | `skills/README.md`, implemented skill inventory across all three categories | High |
+| Existing implemented skills use structured `depends_on` with `hard`, `soft`, and `fallback` entries. | review-enforced | Implemented `SKILL.md` frontmatter across all three categories | High |
+| Existing implemented skills use adapter maps for Codex, Claude Code, Hermes, OpenCode, and generic agents. | review-enforced | Implemented `SKILL.md` frontmatter across all three categories | High |
+| Skill bodies commonly include Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References. | review-enforced | Implemented `SKILL.md` headings across all three categories | High |
 | Issue handoffs use numbered filenames and standard sections such as Parent PRD, Type, What to build, Acceptance criteria, Blocked by, and User stories addressed. | review-enforced | `issues/*.md`, `issues/archive/*.md` heading scan | High |
-| Completed implementation issues move under `issues/archive/`. | review-enforced | Archived issues `001` through `005` | Medium |
+| Completed implementation issues move under `issues/archive/`. | review-enforced | Archived issues `001` through `020` and `022` through `026`; active issue list retains `021` and `027` through `043` | High |
 | Docs-only changes currently rely on manual markdown review. | review-enforced | No manifest, CI, formatter, linter, or test config found in this pass | High |
 
 ## User-Confirmed Preferences
@@ -50,7 +51,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Question | Why it matters | Current default | Needed before |
 | --- | --- | --- | --- |
 | Should the repo add markdown linting or formatting tools later? | Tooling would change which standards can be called tooling-enforced. | Manual markdown review only. | Adding automated docs checks, CI, or formatter expectations. |
-| Should category README files list planned skills before implementation? | The PRD names this as an open question and it affects public docs shape. | Keep category READMEs lightweight and avoid creating skill folders without issues. | Expanding category indexes or generated catalog docs. |
+| Should category README files list planned skills before implementation? | The PRD names this as an open question and it affects public docs shape. | List implemented skills only; avoid making planned issues look complete. | Expanding category indexes or generated catalog docs. |
 | Should future generated indexes be public docs, local-only artifacts, or both? | Generated indexes could affect install docs and repo maintenance. | No generated indexes in V1. | Designing any generated index workflow. |
 | Should installer automation live in this repo or framework-specific adapters later? | It affects V1 out-of-scope boundaries and future ownership. | No installer tooling in V1. | Starting installer automation work. |
 
@@ -73,6 +74,6 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 ## Last Updated
 
-- Date: 2026-05-18
+- Date: 2026-05-21
 - Updated by: Codex
-- Evidence used: installed `project-standards-calibration`; `docs/agents/context-matrix.md`; `AGENT.md`; `AGENTS.md`; `CLAUDE.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `skills/README.md`; existing `skills/agent-workflows/*/SKILL.md` files; `.gitignore`; `issues/prd-goated-ai-skills-v1-public-core.md`; `issues/022-project-context-calibration.md`; issue heading scans; manifest/config discovery; test/spec discovery; `git rev-parse --show-toplevel`; `git status --short`.
+- Evidence used: installed `project-standards-calibration` and `doc-sync`; `docs/agents/context-matrix.md`; `AGENT.md`; `AGENTS.md`; `CLAUDE.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `skills/README.md`; category READMEs; implemented `SKILL.md` frontmatter across all three categories; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; active issues `021` and `027` through `043`; archived issues `001` through `020` and `022` through `026`; issue scans; manifest/config discovery; test/spec discovery; `git status --short`.

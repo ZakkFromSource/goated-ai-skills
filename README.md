@@ -6,7 +6,9 @@ This repo is not a project template that users are expected to clone into every 
 
 ## Current State
 
-This repo currently contains the V1 scaffold, PRD, local implementation issue handoffs, and any skills completed through approved issues. New skill folders and `SKILL.md` files should be added only when a specific approved implementation issue calls for them.
+This repo currently contains the V1 scaffold, PRDs, active and archived implementation issue handoffs, and the implemented WIP skill folders completed so far through approved issues. The V1 additions and Superpowers absorption issues remain active, and final V1 acceptance is not complete.
+
+New skill folders and `SKILL.md` files should be added only when a specific approved implementation issue calls for them.
 
 ## Source Repo Boundary
 
@@ -48,7 +50,7 @@ skills/                Public skill categories and implemented skill folders.
 issues/                PRDs and future issue handoff docs.
 ```
 
-## Planned Skill Categories
+## Public Skill Categories
 
 - `skills/agent-workflows/` - installable operating patterns for session starts, target project onboarding, context calibration, standards calibration, instruction integration, handoffs, and skill porting.
 - `skills/engineering/` - installable workflows for PRDs, prototyping, TDD, reviews, security checks, doc sync, commits, architecture maps, architecture plans, and refactoring.

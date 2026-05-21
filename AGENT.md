@@ -8,7 +8,7 @@ GOATED AI Skills is a public source library for installable, self-contained AI s
 2. skill folders installed into an agent framework;
 3. target projects where installed skills are used.
 
-Current state: this repo contains the V1 scaffold, PRD, local implementation issue handoffs, and any skills completed through approved issues. New skill folders and `SKILL.md` files should be added only when a specific approved implementation issue calls for them.
+Current state: this repo contains the V1 scaffold, PRDs, active and archived implementation issue handoffs, and implemented WIP skill folders completed so far through approved issues. The V1 additions and Superpowers absorption issues remain active, and final V1 acceptance is not complete. New skill folders and `SKILL.md` files should be added only when a specific approved implementation issue calls for them.
 
 ## Core Posture
 
@@ -69,9 +69,9 @@ The main agent owns user intent, orchestration, final judgment, and final commun
 
 If subagents are unavailable, run the same workflow sequentially with a narrower context budget.
 
-## Planned Target Project Onboarding
+## Target Project Onboarding Workflow
 
-When the V1 skills are implemented and installed into an agent framework, use this workflow inside a target project before serious/repeated work:
+When the relevant V1 skills are installed into an agent framework, use this workflow inside a target project before serious/repeated work:
 
 ```text
 session-start-progressive-disclosure
@@ -88,9 +88,9 @@ session-start-progressive-disclosure
 
 Durable target-project artifacts should be tracked, including root `CONTEXT.md` and agent artifacts under `docs/agents/`. Session/private artifacts should use ignored `.local/`.
 
-## Planned Target Project Delivery
+## Target Project Delivery Workflow
 
-When the V1 skills are implemented and installed into an agent framework, use this workflow inside a target project for delivery work:
+When the relevant V1 skills are installed into an agent framework, use this workflow inside a target project for delivery work:
 
 ```text
 session-start-progressive-disclosure
