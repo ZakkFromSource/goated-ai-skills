@@ -10,7 +10,7 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 
 - GOATED lacks a dedicated bug and performance diagnosis workflow before TDD begins.
 - `architecture-design-map` can better handle quick "zoom out" requests without durable-map ceremony.
-- `framework-agnostic-skill-porting` should cover both new skill creation and existing workflow porting.
+- `framework-agnostic-skill-creator` should cover both new skill creation and existing workflow porting.
 - `triage` is useful but belongs outside V1 because it depends on issue tracker state and remote mutation.
 - A compact communication mode can be a portable productivity skill when it preserves accuracy and safety.
 
@@ -24,7 +24,7 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 
 - Add a GOATED-native `diagnose` engineering skill.
 - Fold `zoom-out` behavior into `architecture-design-map` as a quick inline mode.
-- Rename and expand `framework-agnostic-skill-porting` into `framework-agnostic-skill-creator`.
+- Expand `framework-agnostic-skill-creator` as the active skill creation and porting workflow.
 - Record `triage` as deferred/out of scope for V1.
 - Add a public `caveman` productivity skill with GOATED guardrails.
 
@@ -52,7 +52,7 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 
 - [ ] `diagnose` is implemented under `skills/engineering/` and follows the lean schema.
 - [ ] `architecture-design-map` includes a quick zoom-out mode without becoming a refactor or planning skill.
-- [ ] `framework-agnostic-skill-creator` replaces the current porting skill as the active public workflow name.
+- [x] `framework-agnostic-skill-creator` replaces the current porting skill as the active public workflow name.
 - [ ] `triage` is recorded as deferred/out of scope for V1.
 - [ ] `caveman` is implemented under `skills/productivity/` and follows the lean schema.
 - [ ] Public docs and active issue blockers reflect the additions before final V1 acceptance.
@@ -79,7 +79,7 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 | --- | --- | --- |
 | Scope creep before V1 acceptance | Delays final acceptance and weakens the public core | Keep the additions split into small issues and defer tracker workflows. |
 | External-source copying | License or attribution drift | Rewrite in GOATED-native wording and include MIT attribution where substantial wording is reused. |
-| Skill rename drift | Active docs may point to old `framework-agnostic-skill-porting` name | Include a dedicated issue for rename/docs cleanup. |
+| Skill rename drift | Active docs may point to the former porting-only workflow name | Include a dedicated issue for rename/docs cleanup. |
 | Brevity mode hides important context | Unsafe or misleading output | Make `caveman` guardrails explicit and require normal clarity for warnings and confirmations. |
 
 ## Open Questions
@@ -93,7 +93,7 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 - User-approved plan in this session.
 - `issues/prd-goated-ai-skills-v1-public-core.md`
 - `issues/021-v1-acceptance-public-boundary-pass.md`
-- `skills/agent-workflows/framework-agnostic-skill-porting/SKILL.md`
+- `skills/agent-workflows/framework-agnostic-skill-creator/SKILL.md`
 - `skills/engineering/architecture-design-map/SKILL.md`
 - Upstream diagnose: https://github.com/mattpocock/skills/tree/main/skills/engineering/diagnose
 - Upstream zoom-out: https://github.com/mattpocock/skills/blob/main/skills/engineering/zoom-out/SKILL.md

@@ -14,15 +14,15 @@ Rename and expand `framework-agnostic-skill-porting` into `framework-agnostic-sk
 
 ## Acceptance criteria
 
-- [ ] The folder is renamed from `skills/agent-workflows/framework-agnostic-skill-porting/` to `skills/agent-workflows/framework-agnostic-skill-creator/`.
-- [ ] Frontmatter and heading use `framework-agnostic-skill-creator`.
-- [ ] The skill has two explicit modes: create from clarified intent and port from source material.
-- [ ] Port mode keeps `references/source-package-audit.md` as a required reference when source packages include adjacent support files.
-- [ ] Create mode includes guidance for trigger-focused descriptions, script-vs-prose decisions, support-file splitting, and final review checks.
-- [ ] Create mode folds in Superpowers `writing-skills` conventions, including trigger-only descriptions, pressure scenarios, and support-file pragmatism.
-- [ ] The skill adds or updates `references/skill-evaluation.md` with TDD-for-skills guidance: RED baseline, pressure scenarios, rationalization capture, and GREEN verification.
-- [ ] Active docs and context references use "skill creation and porting" rather than presenting porting as the whole workflow.
-- [ ] Archived historical issues may keep their old names, but active runtime docs should point to the new skill name.
+- [x] The folder is renamed from `skills/agent-workflows/framework-agnostic-skill-porting/` to `skills/agent-workflows/framework-agnostic-skill-creator/`.
+- [x] Frontmatter and heading use `framework-agnostic-skill-creator`.
+- [x] The skill has two explicit modes: create from clarified intent and port from source material.
+- [x] Port mode keeps `references/source-package-audit.md` as a required reference when source packages include adjacent support files.
+- [x] Create mode includes guidance for trigger-focused descriptions, script-vs-prose decisions, support-file splitting, and final review checks.
+- [x] Create mode folds in Superpowers `writing-skills` conventions, including trigger-only descriptions, pressure scenarios, and support-file pragmatism.
+- [x] The skill adds or updates `references/skill-evaluation.md` with TDD-for-skills guidance: RED baseline, pressure scenarios, rationalization capture, and GREEN verification.
+- [x] Active docs and context references use "skill creation and porting" rather than presenting porting as the whole workflow.
+- [x] Archived historical issues may keep their old names, but active runtime docs should point to the new skill name.
 
 ## Blocked by
 

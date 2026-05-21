@@ -37,5 +37,5 @@ Add a portable `using-goated-ai-skills` router skill under `skills/agent-workflo
 - Use `grill-with-docs` before implementation to confirm the router fits the current V1 workflow docs.
 - Superpowers source inspiration: https://github.com/obra/superpowers/blob/main/skills/using-superpowers/SKILL.md
 - Keep the GOATED router portable. It should describe routing behavior, not install hooks or enforce runtime activation.
-- Implement after `framework-agnostic-skill-porting` has been renamed and expanded so the router can reference the current public skill name.
+- Implement after `framework-agnostic-skill-creator` is available so the router can reference the current public skill name.
 - Make clear that installed skills are copied/adapted artifacts and should not depend on this source repo's issue files.

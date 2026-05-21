@@ -351,9 +351,9 @@ Durable project facts should be tracked. Temporary handoffs should live outside 
 - Defaults to the OS temp directory under `goated-handoffs/<project-name>/`.
 - References existing artifacts instead of duplicating PRDs, issues, ADRs, diffs, or commits.
 
-`framework-agnostic-skill-porting`
+`framework-agnostic-skill-creator`
 
-- Converts tool-specific or project-specific skills into the repo's neutral skill format.
+- Creates GOATED skills from clarified intent and converts tool-specific or project-specific skills into the repo's neutral skill format.
 - Separates universal workflow from tool-specific adapters.
 - Identifies hidden assumptions, portability limits, and private/domain-specific content.
 

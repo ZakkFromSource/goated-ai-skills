@@ -52,7 +52,7 @@ issues/                PRDs and future issue handoff docs.
 
 ## Public Skill Categories
 
-- `skills/agent-workflows/` - installable operating patterns for session starts, target project onboarding, context calibration, standards calibration, instruction integration, handoffs, and skill porting.
+- `skills/agent-workflows/` - installable operating patterns for session starts, target project onboarding, context calibration, standards calibration, instruction integration, handoffs, and skill creation and porting.
 - `skills/engineering/` - installable workflows for PRDs, prototyping, TDD, reviews, security checks, doc sync, commits, architecture maps, architecture plans, and refactoring.
 - `skills/productivity/` - installable productivity workflows that are public-safe and portable.
 

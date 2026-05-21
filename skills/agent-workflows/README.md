@@ -1,6 +1,6 @@
 # Agent Workflows
 
-Skills in this category define reusable operating patterns for installed agent workflows: session starts, target-project context maps, context calibration, standards calibration, instruction integration, handoffs, and skill porting.
+Skills in this category define reusable operating patterns for installed agent workflows: session starts, target-project context maps, context calibration, standards calibration, instruction integration, handoffs, and skill creation and porting.
 
 They should be portable by default, avoid assuming one instruction-file convention, and document adapter notes only when a specific agent framework requires them.
 
@@ -12,4 +12,4 @@ They should be portable by default, avoid assuming one instruction-file conventi
 - `project-standards-calibration` - records documented, inferred, and user-confirmed project standards.
 - `agent-instructions-integrator` - routes agent instruction artifacts to installed skills and durable project artifacts.
 - `handoff` - writes compact continuity notes for future agents or sessions.
-- `framework-agnostic-skill-porting` - converts existing workflows into GOATED skill shape until issue `029` renames and expands it.
+- `framework-agnostic-skill-creator` - creates GOATED skills from clarified intent and ports existing workflows into GOATED shape.
