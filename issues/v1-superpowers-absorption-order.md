@@ -21,8 +21,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 5. `issues/archive/036-add-verification-before-completion-skill.md`
    - Add the shared closeout gate before wiring it through other skills. Done. ✅
 
-6. `issues/037-wire-verification-through-goated-stack.md`
-   - Update already implemented relevant skills to soft-depend on the verification gate.
+6. `issues/archive/037-wire-verification-through-goated-stack.md`
+   - Update already implemented relevant skills to soft-depend on the verification gate. Done.
 
 7. `issues/038-add-writing-plans-skill.md`
    - Add the executable-plan contract after verification exists, so plans know what proof to request.
