@@ -3,7 +3,7 @@ name: plan-codebase-architecture
 category: engineering
 classification: portable
 status: wip
-description: Plan source-grounded codebase or feature architecture before implementation begins. Use when a clarified project brief, PRD, issue, or grill-with-docs result needs an architecture blueprint with deep modules, clear interfaces, real seams, dependency strategy, test surfaces, slice order, risks, and RFC or ADR triggers.
+description: Use when a clarified brief, PRD, issue, or grill result needs a source-grounded architecture blueprint before implementation, especially for deep modules, clear interfaces, real seams, dependencies, test surfaces, slice order, risks, or ADR/RFC triggers.
 triggers:
   - user asks to plan codebase architecture, feature architecture, module design, system design, or an architecture blueprint before implementation
   - a new target project needs a project-wide architecture plan after onboarding context and standards are known
@@ -174,11 +174,14 @@ When subagents are available, use them for bounded evidence gathering or competi
 
 Require every subagent result to include:
 
+- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
 - paths inspected;
 - commands run or deliberately skipped;
 - exact source evidence found;
 - assumptions, contradictions, confidence, and residual uncertainty;
 - candidate blueprint inputs, not unsupervised implementation or final artifact edits.
+
+Handle delegated status this way: `DONE` means integrate evidence, risks, or alternative blueprint inputs into the main architecture judgment; `DONE_WITH_CONCERNS` means inspect concerns about overdesign, false seams, weak test surfaces, unsupported assumptions, or implementation-order risk before choosing the blueprint; `NEEDS_CONTEXT` means provide the missing PRD, issue, ADR, source path, dependency constraint, test evidence, or user decision and re-dispatch; `BLOCKED` means narrow the architecture scope, split a competing design pass, defer an unresolved decision, use stronger model/tooling, or escalate to the user.
 
 If subagents are unavailable, perform the same passes sequentially with a narrower context budget.
 

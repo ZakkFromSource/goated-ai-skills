@@ -43,7 +43,7 @@ These definitions are normative for this source repo. If another public doc uses
 - **Classification** - the portability label for a skill: `portable` means safe for any compatible agent or project; `domain-specific` means reusable with a named public domain or project assumption; `private` means intended for private forks or private deployments, not public main.
 - **Status** - the maturity label for a skill: `stable` means recommended for normal use; `wip` means experimental or still being sharpened; `deprecated` means kept for reference only.
 - **Discipline-heavy skill** - a skill that asks agents to resist shortcuts, verify claims, follow a strict process, or stop under pressure. These skills may need stop rules, proof gates, rationalization counters, red flags, or anti-pattern references.
-- **Delegated status enum** - explicit status values used by delegated workflows, such as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`, with controller behavior defined for each value.
+- **Delegated status enum** - explicit status values used by delegated workflows, such as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`, with controller behavior defined for each value. Use them when a subagent result can change the controller's next action; simple evidence scans can keep lighter evidence, assumption, uncertainty, and inspected-path requirements.
 
 ### Artifacts
 
@@ -124,7 +124,7 @@ Skills should be:
 - clear that `description` is for discovery and triggers, while workflow details live in the body;
 - explicit about triggers, outputs, guardrails, dependencies, and delegation;
 - willing to use stop rules, proof gates, rationalization counters, red flags, or anti-pattern references when discipline-heavy behavior needs them;
-- clear about delegated status values and next controller actions when a workflow uses subagents;
+- clear about delegated status values and next controller actions when subagent results can change the workflow;
 - portable unless classified otherwise;
 - honest about what they cannot verify;
 - opinionated about architecture where relevant: prefer deep modules, clear seams, strong locality, and tests through public interfaces over many shallow modules and tests tied to internals.

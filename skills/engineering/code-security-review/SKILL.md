@@ -3,7 +3,7 @@ name: code-security-review
 category: engineering
 classification: portable
 status: wip
-description: Static security review gate for high-evidence bugs, trust-boundary issues, data leaks, auth problems, injection paths, unsafe config, and exploitable patterns. Use after implementation or when a user asks for a security review of a diff, PR, patch, or source area.
+description: Use when reviewing a diff, PR, patch, source area, auth flow, trust boundary, or data path for security issues and exploitable behavior.
 triggers:
   - user asks for a security review, static security scan, vuln review, exploitability review, trust-boundary review, auth review, or data-leak review
   - implementation work touches user data, auth, permissions, persistence, network calls, file handling, command execution, secrets, config, dependencies, or sandboxing
@@ -159,11 +159,14 @@ When subagents are available, use them only for bounded evidence gathering or in
 
 Require every subagent result to include:
 
+- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
 - paths inspected;
 - commands run or deliberately skipped;
 - evidence found with source paths and line references when possible;
 - assumptions, confidence, and residual risk;
 - candidate findings with severity, impact, recommended fix, and false-positive notes.
+
+Handle delegated status this way: `DONE` means integrate high-evidence findings or no-finding coverage into the security judgment; `DONE_WITH_CONCERNS` means inspect concerns about exploitability, false-positive control, severity, scope, or unverified trust boundaries before reporting; `NEEDS_CONTEXT` means provide the missing diff, fixed point, policy, route, config, dependency, or runtime assumption and re-dispatch; `BLOCKED` means narrow the trust path, split the review, choose a safer verification route, use stronger model/tooling, or escalate to the user.
 
 If subagents are unavailable, perform the same work sequentially with a narrower context budget.
 

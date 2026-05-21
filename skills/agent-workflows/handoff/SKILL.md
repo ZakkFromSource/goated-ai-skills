@@ -3,7 +3,7 @@ name: handoff
 category: agent-workflows
 classification: portable
 status: wip
-description: Write compact continuity notes for future agents or sessions, defaulting to ignored target-project local storage while referencing existing artifacts instead of duplicating them.
+description: Use when a session needs a handoff, continuity note, restart note, resume note, or unfinished context for a future agent.
 triggers:
   - user asks for a handoff, continuity note, restart note, or resume note
   - agent is ending an onboarding or delivery session with unfinished context

@@ -3,7 +3,7 @@ name: agent-instructions-integrator
 category: agent-workflows
 classification: portable
 status: wip
-description: Create or update a target project's agent instruction artifact so it routes agents to installed GOATED skills and durable project artifacts without assuming one universal instruction filename.
+description: Use when integrating installed GOATED skills into a target project, creating or updating agent instructions, or routing agents to durable project artifacts.
 triggers:
   - user asks to integrate installed GOATED skills into a target project
   - user asks to create, update, or repair agent instructions for a project

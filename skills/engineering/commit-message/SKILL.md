@@ -3,7 +3,7 @@ name: commit-message
 category: engineering
 classification: portable
 status: wip
-description: Draft concise, information-rich commit commands from local diffs, originating specs, and verified checks without staging, committing, or pushing.
+description: Use when the user asks for a commit message, commit summary, git commit text, or closeout message for local changes.
 triggers:
   - user asks for a commit message, commit summary, git commit text, or closeout message for local changes
   - implementation, review, doc-sync, or verification work is complete and the next step is committing

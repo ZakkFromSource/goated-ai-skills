@@ -3,7 +3,7 @@ name: prd-to-issues
 category: engineering
 classification: portable
 status: wip
-description: Break a scoped PRD into approved local vertical-slice issue handoffs with acceptance criteria, blockers, and user stories. Use when a target-project PRD is ready to become dependency-ordered Markdown issue files for AFK or HITL implementation.
+description: Use when a scoped PRD, product spec, roadmap item, or approved plan is ready to become dependency-ordered vertical-slice local issue handoffs with acceptance criteria, blockers, and user stories.
 triggers:
   - user asks to turn a PRD, product requirements document, product spec, implementation spec, roadmap item, or plan into issues
   - user wants local issue handoffs, implementation tickets, work slices, or agent-ready tasks from a scoped PRD

@@ -3,7 +3,7 @@ name: context-matrix-map
 category: agent-workflows
 classification: portable
 status: wip
-description: Build a source-grounded target-project context matrix that tells future agents what to read first, second, and only if needed without bulk-reading the whole project.
+description: Use when onboarding a project for durable agent work, creating a context/source map, or deciding what future agents should read first.
 triggers:
   - user asks to onboard a project for durable or repeated agent work
   - user asks for a context map, repo map, source map, or future-agent read order

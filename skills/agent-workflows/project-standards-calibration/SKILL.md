@@ -3,7 +3,7 @@ name: project-standards-calibration
 category: agent-workflows
 classification: portable
 status: wip
-description: Scan a target project for documented and inferred standards, ask only about preferences that cannot be inferred safely, and write a durable standards profile for future agents.
+description: Use when onboarding a project, capturing project standards, or separating documented conventions from inferred preferences.
 triggers:
   - user asks to onboard a project for durable or repeated agent work
   - user asks to capture, calibrate, audit, or document project standards

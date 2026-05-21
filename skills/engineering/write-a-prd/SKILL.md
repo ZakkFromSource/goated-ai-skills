@@ -3,7 +3,7 @@ name: write-a-prd
 category: engineering
 classification: portable
 status: wip
-description: Turn fuzzy intent, a client brief, roadmap item, or feature idea into a scoped target-project PRD that can later feed prd-to-issues.
+description: Use when fuzzy intent, a client brief, roadmap item, or feature idea needs a scoped PRD before issue breakdown or implementation.
 triggers:
   - user asks for a PRD, product requirements document, product spec, implementation spec, or feature brief
   - user wants to turn unclear intent, a roadmap item, client brief, or feature idea into a concrete plan

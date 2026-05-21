@@ -3,7 +3,7 @@ name: prototype
 category: engineering
 classification: portable
 status: wip
-description: Create target-project-local throwaway artifacts to answer one focused product or technical question before PRD creation or during focused issue exploration.
+description: Use when a product or technical question needs a disposable prototype, spike, mockup, variant, or cheap evidence before committing to direction.
 triggers:
   - user asks to prototype, spike, sanity-check, mock up, try variants, or explore an idea cheaply
   - a PRD, issue, or implementation decision depends on one risky product, UI, data, state, or technical question
@@ -154,11 +154,14 @@ When subagents are available, use them only for bounded work that can return evi
 
 Require every subagent result to include:
 
+- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
 - paths inspected or changed;
 - commands run or deliberately skipped;
 - the stated prototype question it served;
 - evidence for the verdict;
 - cleanup recommendation and remaining artifacts.
+
+Handle delegated status this way: `DONE` means integrate the artifact, evidence, or verdict into the prototype decision; `DONE_WITH_CONCERNS` means inspect concerns about fidelity, scope, cleanup, or user-inspection readiness before relying on the result; `NEEDS_CONTEXT` means provide the missing prototype question, route, fixture, command, design constraint, or cleanup rule and re-dispatch; `BLOCKED` means narrow the prototype, switch branch or host, choose a safer disposable artifact, or escalate to the user.
 
 If subagents are unavailable, perform the same work sequentially with a narrower context budget.
 

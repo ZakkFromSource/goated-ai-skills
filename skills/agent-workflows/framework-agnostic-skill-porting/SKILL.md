@@ -3,7 +3,7 @@ name: framework-agnostic-skill-porting
 category: agent-workflows
 classification: portable
 status: wip
-description: Convert tool-specific or project-specific workflows into the neutral GOATED skill format while separating universal behavior from adapter notes and private assumptions.
+description: Use when porting, adapting, sanitizing, or publishing an existing skill, command, prompt, workflow, or agent instruction for portable GOATED use.
 triggers:
   - user asks to port, adapt, generalize, sanitize, or publish an existing skill, command, prompt, workflow, or agent instruction
   - a source workflow is tied to one agent framework, project, issue tracker, folder layout, or private operating convention
@@ -187,12 +187,15 @@ When subagents are available, use them only for bounded independent passes, such
 
 Require every subagent result to include:
 
+- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
 - source paths or links inspected;
 - skipped paths or links with reasons;
 - behavior, mechanics, assumptions, and risks found;
 - direct evidence or concise excerpts where safe;
 - confidence and unresolved questions;
 - recommendation, not direct publication.
+
+Handle delegated status this way: `DONE` means integrate the audit, privacy check, schema check, or portability recommendation into the porting judgment; `DONE_WITH_CONCERNS` means inspect concerns about private content, dependency assumptions, adapter leakage, attribution, or self-contained runtime behavior before publishing or editing; `NEEDS_CONTEXT` means provide the missing source artifact, install target, category, classification, adapter constraint, or public/private rule and re-dispatch; `BLOCKED` means narrow the source package, split the audit, keep the result private, or escalate to the user before creating tracked output.
 
 If subagents are unavailable, perform the same passes sequentially with a narrower context budget.
 

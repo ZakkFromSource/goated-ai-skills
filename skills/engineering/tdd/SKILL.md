@@ -3,7 +3,7 @@ name: tdd
 category: engineering
 classification: portable
 status: wip
-description: Test-driven development with a behavior-first red-green-refactor loop. Use when building or fixing target-project behavior, changing public interfaces, adding regression coverage, or when the user mentions TDD, red-green-refactor, test-first development, integration tests, or behavior-driven tests.
+description: Use when implementing or fixing target-project behavior, changing public interfaces, adding regression coverage, or doing test-first development.
 triggers:
   - user asks to implement a focused issue, feature, behavior change, or bug fix with test-first proof
   - user mentions TDD, red-green-refactor, test-first development, integration tests, behavior tests, or regression tests
@@ -145,11 +145,14 @@ When subagents are available, use them only for bounded work that can return evi
 
 Require every subagent result to include:
 
+- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
 - paths inspected or changed;
 - commands run or deliberately skipped;
 - behavior and public interface under test;
 - red or green evidence when relevant;
 - assumptions, residual risk, and confidence.
+
+Handle delegated status this way: `DONE` means integrate the evidence and continue the TDD cycle; `DONE_WITH_CONCERNS` means inspect concerns before trusting the implementation, test, or review result, then fix, re-dispatch, or report residual risk; `NEEDS_CONTEXT` means provide the missing behavior, public interface, fixture, command, or spec detail and re-dispatch; `BLOCKED` means narrow the slice, choose a safer proof path, use a more capable model or tool, or escalate to the user before continuing.
 
 If subagents are unavailable, perform the same work sequentially with a narrower context budget.
 

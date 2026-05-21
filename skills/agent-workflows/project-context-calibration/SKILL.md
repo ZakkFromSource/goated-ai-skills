@@ -3,7 +3,7 @@ name: project-context-calibration
 category: agent-workflows
 classification: portable
 status: wip
-description: Create or refresh a target project's root CONTEXT.md so future agents share project boundaries, domain language, durable artifact definitions, and reusable architecture vocabulary.
+description: Use when onboarding a project, creating or refreshing project context, or aligning future agents on project boundaries and vocabulary.
 triggers:
   - user asks to onboard a project for durable or repeated agent work
   - user asks to create, refresh, calibrate, or curate a project context file

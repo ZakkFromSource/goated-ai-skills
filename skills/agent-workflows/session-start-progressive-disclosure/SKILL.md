@@ -3,7 +3,7 @@ name: session-start-progressive-disclosure
 category: agent-workflows
 classification: portable
 status: wip
-description: Start an agent session by reading the smallest useful context, classifying whether the work is source-repo maintenance, skill installation/adaptation, target-project onboarding, or target-project delivery, and producing a concise orientation before deeper work begins.
+description: Use when starting a new agent session, orienting to unfamiliar work, or deciding what context to load before planning or implementation.
 triggers:
   - user starts a new session or asks the agent to orient itself
   - user asks for durable, cross-file, PRD-level, architectural, or repeated work

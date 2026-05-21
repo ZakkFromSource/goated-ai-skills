@@ -3,7 +3,7 @@ name: doc-sync
 category: engineering
 classification: portable
 status: wip
-description: Identify and handle documentation drift after behavior, interface, architecture, standards, configuration, or test changes.
+description: Use when behavior, interfaces, architecture, standards, configuration, tests, or public docs may have documentation drift.
 triggers:
   - implementation work changed behavior, public interfaces, architecture, standards, configuration, tests, docs, or user-visible workflows
   - user asks to sync docs, update docs, check documentation drift, or list required documentation updates
@@ -147,12 +147,15 @@ When subagents are available, use them only for bounded documentation review pas
 
 Require every subagent result to include:
 
+- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
 - paths inspected;
 - commands run or deliberately skipped;
 - exact source evidence found;
 - doc status for each checked artifact: required update, already covered, recommended follow-up, or skipped;
 - assumptions, confidence, and residual drift risk;
 - suggested edits or findings, not unsupervised broad rewrites.
+
+Handle delegated status this way: `DONE` means integrate doc status, suggested edits, and residual drift risk into the final doc-sync decision; `DONE_WITH_CONCERNS` means inspect concerns about source-of-truth conflicts, stale docs, incomplete coverage, or risky suggested wording before editing or reporting; `NEEDS_CONTEXT` means provide the missing diff, changed behavior, schema, command output, doc family, or source artifact and re-dispatch; `BLOCKED` means narrow the doc family, defer broad edits, choose a safer recommendation-only path, or escalate to the user.
 
 If subagents are unavailable, perform the same checks sequentially with a narrower context budget.
 

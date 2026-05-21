@@ -3,7 +3,7 @@ name: standards-and-spec-review
 category: engineering
 classification: portable
 status: wip
-description: Review changes since a fixed point along two separate axes: project standards compliance and spec or issue fit. Use after implementation, before closeout, when a user asks whether a change follows project conventions, satisfies an issue or PRD, missed requirements, or added unrequested scope.
+description: Use when reviewing changes since a fixed point along separate standards and spec/issue-fit axes, including issue acceptance, missed requirements, or unrequested scope.
 triggers:
   - user asks for a standards review, spec review, issue-fit review, acceptance review, or closeout review
   - implementation work is complete and needs a review gate before security review, doc sync, commit, or handoff
@@ -153,11 +153,14 @@ When subagents are available, use them only for bounded evidence gathering or in
 
 Require every subagent result to include:
 
+- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
 - paths inspected;
 - commands run or deliberately skipped;
 - evidence found with source paths;
 - assumptions, confidence, and residual risk;
 - candidate findings separated into standards and spec concerns.
+
+Handle delegated status this way: `DONE` means merge the candidate evidence and findings into the main review judgment; `DONE_WITH_CONCERNS` means inspect concerns about fixed point, standard source, spec source, confidence, or axis separation before reporting; `NEEDS_CONTEXT` means provide the missing diff, baseline, spec, standards artifact, command output, or source path and re-dispatch; `BLOCKED` means narrow the review scope, choose a clearer fixed point, split standards and spec passes, or escalate to the user.
 
 If subagents are unavailable, perform the same work sequentially with a narrower context budget.
 

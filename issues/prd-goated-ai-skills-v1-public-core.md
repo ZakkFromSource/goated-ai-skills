@@ -270,7 +270,7 @@ Global rule:
 - Subagents must return evidence: file paths, commands, source docs, diff handles, or explicit assumptions.
 - The main agent must sanity-check and integrate subagent output.
 - If subagents are unavailable, the main agent runs the same workflow sequentially with a narrower context budget.
-- Delegated workflows may define explicit status enums such as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, and `BLOCKED`, as long as each status defines the controller's next action.
+- Delegated workflows should define explicit status enums such as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, and `BLOCKED` when a subagent result can change the controller's next action, such as implementation, review, verification, blocking, re-dispatch, or competing design paths. Simple evidence scans can use lighter evidence, assumption, uncertainty, and inspected-path requirements.
 - Longer implementer, reviewer, or controller prompt templates should live in directly linked `references/` files, with `SKILL.md` explaining when to use them.
 
 Good subagent use cases:

@@ -3,7 +3,7 @@ name: improve-codebase-architecture
 category: engineering
 classification: portable
 status: wip
-description: Explore source-grounded architecture improvement opportunities, especially shallow modules, tightly coupled concepts, hard-to-test areas, and places where deeper modules would improve testability and AI navigability. Use when a user asks to improve architecture, find refactoring opportunities, consolidate modules, make code more testable, or write architecture RFCs.
+description: Use when looking for source-grounded architecture improvement opportunities, refactor direction, shallow modules, tightly coupled concepts, hard-to-test areas, deeper modules, clearer seams, or more testable and agent-navigable code structure.
 triggers:
   - user asks to improve architecture, codebase architecture, module structure, boundaries, seams, layering, or refactor direction
   - user asks for architecture improvement opportunities before committing to a refactor
@@ -163,12 +163,15 @@ When subagents are available, use them for bounded independent exploration, such
 
 Require every subagent result to include:
 
+- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
 - paths inspected;
 - commands run or deliberately skipped;
 - exact source evidence found;
 - candidate friction, dependency/seam shape, and confidence;
 - assumptions, contradictions, and residual uncertainty;
 - no final user-facing architecture recommendation unless specifically asked.
+
+Handle delegated status this way: `DONE` means integrate the opportunity evidence, dependency/seam assessment, or interface alternative into the main ranking; `DONE_WITH_CONCERNS` means inspect concerns about speculative evidence, false seams, migration risk, test-surface weakness, or overbroad refactor direction before recommending; `NEEDS_CONTEXT` means provide the missing source area, caller/test evidence, architecture doc, dependency constraint, or user goal and re-dispatch; `BLOCKED` means narrow the candidate, split exploration by module or dependency, defer the recommendation, use stronger model/tooling, or escalate to the user.
 
 If subagents are unavailable, perform the same passes sequentially with a narrower context budget.
 

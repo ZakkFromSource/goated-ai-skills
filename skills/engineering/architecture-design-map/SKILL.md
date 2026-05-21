@@ -3,7 +3,7 @@ name: architecture-design-map
 category: engineering
 classification: portable
 status: wip
-description: Produce source-grounded architecture maps for target projects using Mermaid by default. Use when a user asks for an architecture map, diagram, system map, module map, dependency map, flow map, runtime topology, or durable architecture-map artifact; keep the work descriptive, evidence-based, and separate from architecture planning or refactor recommendations.
+description: Use when the user asks for a source-grounded architecture map, diagram, system map, module map, dependency map, flow map, runtime topology, or descriptive architecture artifact, not an architecture plan or refactor recommendation.
 triggers:
   - user asks for an architecture map, diagram, system map, module map, dependency map, flow map, or runtime topology
   - user asks to create or refresh docs/agents/architecture-map.md

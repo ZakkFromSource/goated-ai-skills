@@ -3,7 +3,7 @@ name: grill-me
 category: productivity
 classification: portable
 status: wip
-description: Interview the user one question at a time about a user-supplied topic, idea, exploratory question, brainstorming thread, lightweight plan, or general decision when project docs and source evidence are not required.
+description: Use when the user wants to be grilled, challenged, interviewed, or walked through a non-docs-grounded idea, topic, plan, choice, or decision.
 triggers:
   - user says "grill me" about an idea, topic, question, plan, choice, or brainstorming thread
   - user asks to be challenged, interviewed, pressure-tested, or walked through a decision one question at a time

@@ -3,7 +3,7 @@ name: grill-with-docs
 category: engineering
 classification: portable
 status: wip
-description: Pressure-test important target-project work against available docs, standards, ADRs, and project facts before implementation begins.
+description: Use when important target-project work needs docs-grounded clarification, pressure testing, success criteria, or scope decisions before implementation.
 triggers:
   - user asks to be grilled, challenged, pressure-tested, or interviewed about a plan, PRD, architecture choice, workflow change, or ambiguous feature
   - target-project onboarding is starting
