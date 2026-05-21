@@ -12,13 +12,13 @@ Add `verification-before-completion` under `skills/engineering/` as the shared c
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/verification-before-completion/SKILL.md` exists and follows the lean schema.
-- [ ] The skill requires fresh evidence before success claims, such as command output, test results, inspected diffs, rendered artifacts, screenshots, or source reads.
-- [ ] The workflow distinguishes verified facts, assumptions, skipped checks, known failures, and residual risk.
-- [ ] The skill prevents stale proof reuse by requiring evidence gathered after the relevant change or review scope is known.
-- [ ] The skill covers subagent reports by requiring the main agent to sanity-check or reproduce important evidence before final claims.
-- [ ] The output contract includes a concise verification summary with command names, results, skipped checks, and remaining risk.
-- [ ] The skill is self-contained after installation and does not require this source repo's root files.
+- [x] `skills/engineering/verification-before-completion/SKILL.md` exists and follows the lean schema.
+- [x] The skill requires fresh evidence before success claims, such as command output, test results, inspected diffs, rendered artifacts, screenshots, or source reads.
+- [x] The workflow distinguishes verified facts, assumptions, skipped checks, known failures, and residual risk.
+- [x] The skill prevents stale proof reuse by requiring evidence gathered after the relevant change or review scope is known.
+- [x] The skill covers subagent reports by requiring the main agent to sanity-check or reproduce important evidence before final claims.
+- [x] The output contract includes a concise verification summary with command names, results, skipped checks, and remaining risk.
+- [x] The skill is self-contained after installation and does not require this source repo's root files.
 
 ## Blocked by
 

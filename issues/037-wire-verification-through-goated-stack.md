@@ -21,7 +21,7 @@ Update relevant GOATED skills so they soft-depend on `verification-before-comple
 
 ## Blocked by
 
-- `issues/036-add-verification-before-completion-skill.md`
+- `issues/archive/036-add-verification-before-completion-skill.md`
 
 ## User stories addressed
 

@@ -18,8 +18,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 4. `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md`
    - Make the HITL runtime decision after the router exists conceptually, before anyone tries to automate it. Done. ✅
 
-5. `issues/036-add-verification-before-completion-skill.md`
-   - Add the shared closeout gate before wiring it through other skills.
+5. `issues/archive/036-add-verification-before-completion-skill.md`
+   - Add the shared closeout gate before wiring it through other skills. Done. ✅
 
 6. `issues/037-wire-verification-through-goated-stack.md`
    - Update already implemented relevant skills to soft-depend on the verification gate.

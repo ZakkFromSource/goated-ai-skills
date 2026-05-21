@@ -24,7 +24,7 @@ Add `subagent-driven-development` under `skills/engineering/` as the GOATED work
 
 ## Blocked by
 
-- `issues/036-add-verification-before-completion-skill.md`
+- `issues/archive/036-add-verification-before-completion-skill.md`
 - `issues/038-add-writing-plans-skill.md`
 - `issues/archive/014-standards-and-spec-review.md`
 - `issues/archive/015-code-security-review.md`

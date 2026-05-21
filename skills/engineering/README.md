@@ -14,6 +14,7 @@ They should prefer observable behavior, source-grounded evidence, and clear clos
 - `standards-and-spec-review` - reviews changes against project standards and originating specs.
 - `code-security-review` - performs focused static security review of risky changes.
 - `doc-sync` - identifies and handles documentation drift.
+- `verification-before-completion` - gates completion, correctness, readiness, and success claims on fresh evidence.
 - `commit-message` - drafts concise commit commands from local diffs and evidence.
 - `architecture-design-map` - produces source-grounded architecture maps.
 - `plan-codebase-architecture` - plans source-grounded architecture before implementation.
