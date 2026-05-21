@@ -2,6 +2,8 @@
 
 `issues/prd-goated-ai-skills-v1-additions.md`
 
+`issues/prd-goated-ai-skills-v1-superpowers-absorption.md`
+
 ## Type
 
 AFK
@@ -17,6 +19,8 @@ Rename and expand `framework-agnostic-skill-porting` into `framework-agnostic-sk
 - [ ] The skill has two explicit modes: create from clarified intent and port from source material.
 - [ ] Port mode keeps `references/source-package-audit.md` as a required reference when source packages include adjacent support files.
 - [ ] Create mode includes guidance for trigger-focused descriptions, script-vs-prose decisions, support-file splitting, and final review checks.
+- [ ] Create mode folds in Superpowers `writing-skills` conventions, including trigger-only descriptions, pressure scenarios, and support-file pragmatism.
+- [ ] The skill adds or updates `references/skill-evaluation.md` with TDD-for-skills guidance: RED baseline, pressure scenarios, rationalization capture, and GREEN verification.
 - [ ] Active docs and context references use "skill creation and porting" rather than presenting porting as the whole workflow.
 - [ ] Archived historical issues may keep their old names, but active runtime docs should point to the new skill name.
 
@@ -24,6 +28,7 @@ Rename and expand `framework-agnostic-skill-porting` into `framework-agnostic-sk
 
 - `issues/archive/008-framework-agnostic-skill-porting.md`
 - `issues/archive/023-upgrade-framework-agnostic-skill-porting-source-audit.md`
+- `issues/033-update-skill-authoring-contract-superpowers-conventions.md`
 
 ## User stories addressed
 
@@ -32,6 +37,10 @@ Rename and expand `framework-agnostic-skill-porting` into `framework-agnostic-sk
 
 ## Implementation notes
 
+- Use `grill-with-docs` before implementation to confirm current authoring-contract language and public-boundary rules.
 - Harvest useful heuristics from upstream write-a-skill: https://github.com/mattpocock/skills/tree/main/skills/productivity/write-a-skill
+- Harvest useful Superpowers skill-writing guidance from:
+  - https://github.com/obra/superpowers/tree/main/skills/writing-skills
+  - https://github.com/obra/superpowers/blob/main/skills/test-driven-development/SKILL.md
 - Preserve GOATED's lean schema, public-boundary checks, dependency classification, adapter notes, delegation contract, and self-contained skill validation.
 - Do not add a standalone `write-a-skill` skill.

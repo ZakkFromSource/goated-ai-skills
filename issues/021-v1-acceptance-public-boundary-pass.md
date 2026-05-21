@@ -2,6 +2,10 @@
 
 `issues/prd-goated-ai-skills-v1-public-core.md`
 
+`issues/prd-goated-ai-skills-v1-additions.md`
+
+`issues/prd-goated-ai-skills-v1-superpowers-absorption.md`
+
 ## Type
 
 HITL
@@ -18,6 +22,7 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - [ ] Implemented skills include clear triggers, outputs, guardrails, and delegation notes where useful.
 - [ ] `agent-instructions-integrator`, Target Project Onboarding, and Target Project Delivery are documented consistently.
 - [ ] Review skills keep standards/spec review separate from security review.
+- [ ] Superpowers absorption work is complete or explicitly deferred, and any runtime automation or trigger-harness decisions have maintainer approval.
 - [ ] Public main contains no private names, handles, credentials, client context, or sensitive personal workflow assumptions.
 - [ ] Maintainer has reviewed any open PRD questions that became blockers during implementation.
 
@@ -41,7 +46,7 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/archive/016-doc-sync.md`
 - `issues/archive/017-commit-message.md`
 - `issues/archive/018-architecture-design-map.md`
-- `issues/019-improve-codebase-architecture.md`
+- `issues/archive/019-improve-codebase-architecture.md`
 - `issues/archive/020-grill-me.md`
 - `issues/archive/022-project-context-calibration.md`
 - `issues/027-add-diagnose-skill.md`
@@ -50,6 +55,17 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/030-defer-triage-workflow.md`
 - `issues/031-add-caveman-skill.md`
 - `issues/032-v1-additions-doc-sync-and-acceptance-recheck.md`
+- `issues/033-update-skill-authoring-contract-superpowers-conventions.md`
+- `issues/034-add-using-goated-ai-skills-router.md`
+- `issues/035-decide-runtime-bootstrap-and-adapter-automation.md`
+- `issues/036-add-verification-before-completion-skill.md`
+- `issues/037-wire-verification-through-goated-stack.md`
+- `issues/038-add-writing-plans-skill.md`
+- `issues/039-add-subagent-driven-development-skill.md`
+- `issues/040-upgrade-prd-to-issues-zero-context-handoffs.md`
+- `issues/041-upgrade-tdd-superpowers-contracts.md`
+- `issues/042-add-receiving-code-review-skill.md`
+- `issues/043-research-skill-trigger-eval-harnesses.md`
 
 ## User stories addressed
 
