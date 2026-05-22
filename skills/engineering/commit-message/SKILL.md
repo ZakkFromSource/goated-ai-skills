@@ -10,8 +10,9 @@ triggers:
   - a target-project change needs a concise subject plus optional body explaining what changed, why, and what was verified
   - an agent needs to summarize staged, unstaged, committed, or supplied patch changes for a human-controlled commit
 outputs:
-  - separate copy-pasteable `git add -- ...` and `git commit -m ...` command blocks for the selected scope
+  - single copy-pasteable command block combining `git add -- ... && git commit -m ...` for selected changes, or commit-only command when selected changes are already staged
   - commit message preview with an imperative subject and optional body that accurately summarizes the change
+  - commit scope section listing included files and any not-included files with reasons
   - optional commit plan for obvious independent change groups
   - compact notes for verification evidence, skipped checks, scope warnings, unrelated-change notes, and private-detail sanitization
 depends_on:
@@ -38,7 +39,7 @@ adapters:
 
 Draft clear copy-pasteable commit commands from the actual change set and its verified context. The message should help future readers understand what changed, why it changed, how it was checked, and what remains uncertain.
 
-This skill is read-only. It prepares shell-ready `git add -- ...` and `git commit -m ...` commands for the user or a separate publishing workflow; it does not run staging, commit, push, tag, or publish commands.
+This skill is read-only. It prepares a shell-ready `git add -- ... && git commit -m ...` command for the user or a separate publishing workflow; it does not run staging, commit, push, tag, or publish commands.
 
 ## Inputs
 
@@ -87,10 +88,10 @@ This skill is read-only. It prepares shell-ready `git add -- ...` and `git commi
    - Add a body only when it helps: multi-part changes, non-obvious rationale, migration notes, verification details, caveats, or reviewer context.
    - Keep body paragraphs shell-safe and concise because each paragraph becomes an additional `-m` argument.
    - Rewrite unsafe wording before output instead of dropping command output. Prefer removing embedded quotes, backticks, shell metacharacters, and fragile punctuation from the subject/body.
-   - For unstaged, untracked, deleted, or all-dirty scopes, prepare one or more `git add -- ...` commands that stage exactly the selected paths.
-   - For staged-only scopes, do not emit a `git add` code block. State exactly: `No git add command needed; selected changes are already staged.`
+   - For unstaged, untracked, deleted, or all-dirty scopes, prepare a single combined `git add -- ... && git commit -m ...` command that stages exactly the selected paths and commits only if staging succeeds.
+   - For staged-only scopes, do not include a `git add -- ...` segment. State exactly: `No git add command needed; selected changes are already staged.`
    - Always prepare a `git commit -m "Subject"` command for each successful draft. Add body paragraphs with additional `-m "Body paragraph"` flags on the same physical command line.
-   - When the user asks for a commit message, return the command blocks first. Do not make the user extract the usable commands from notes, previews, or prose.
+   - When the user asks for a commit message, return the command block first. Do not make the user extract the usable command from notes, previews, or prose.
 
 6. Sanitize public text:
    - Do not include secrets, tokens, private user data, sensitive logs, credentials, or ignored scratch content in commit text.
@@ -102,27 +103,47 @@ This skill is read-only. It prepares shell-ready `git add -- ...` and `git commi
    - Ensure the subject matches the actual diff, not just the original plan.
    - Ensure the body does not claim checks, reviews, security coverage, or doc updates that did not happen.
    - Ensure known caveats are visible, especially skipped verification, unrelated changes, partial scope, generated files not inspected, or lower-confidence intent.
-   - Keep verification notes and caveats outside the copy-pasteable command blocks.
-   - Put `git add -- ...` and `git commit -m ...` commands in separate code blocks.
+   - Keep verification notes and caveats outside the copy-pasteable command block.
+   - Put selected staging and commit operations in one `Git Command` code block.
    - Put each command on its own single physical line; do not use shell-specific line continuations such as PowerShell backticks or Bash backslashes.
-   - Use project-relative paths in `git add -- ...` commands and quote paths that contain spaces or shell-sensitive characters.
-   - If a safe `git add -- ...` command would be too long or hard to review, split it into multiple one-line `git add -- "path"` commands inside the same `Git Add` block.
+   - Use project-relative paths in the `git add -- ...` segment and quote paths that contain spaces or shell-sensitive characters.
+   - If a safe combined command would be too long or hard to review, split the selected scope into separate named commit groups or state the blocker rather than hiding files or emitting unclear staging commands.
    - Ensure quote wrapping or escaping is safe for every command shown. When message quote safety is uncertain, rewrite the message into safe wording before omitting command output.
    - Omit command blocks only when a safe command cannot be produced after rewriting and path review; state the blocker plainly and provide the closest safe preview.
    - If the safest output is multiple commit groups, list them in the order the user should run them.
 
 ## Output Contract
 
-Return copy-pasteable commands as the primary output. For a single clear unstaged, untracked, deleted, or all-dirty commit, start with separate command blocks:
+Return copy-pasteable commands as the primary output. For a single clear unstaged, untracked, deleted, or all-dirty commit, start with one combined command block:
 
 ````markdown
-## Git Add
+## Git Command
 
 ```powershell
-git add -- "path/or/group"
+git add -- "path/or/group" && git commit -m "Subject" -m "Optional body paragraph"
 ```
 
-## Git Commit
+## Commit Message Preview
+
+```text
+Subject
+
+Optional body paragraph
+```
+
+## Commit Scope
+
+Included files:
+- `path/or/group`: reason included
+
+Not included:
+- None
+````
+
+For staged-only scope, state `No git add command needed; selected changes are already staged.` before the `Git Command` block and emit only:
+
+````markdown
+## Git Command
 
 ```powershell
 git commit -m "Subject" -m "Optional body paragraph"
@@ -135,11 +156,19 @@ Subject
 
 Optional body paragraph
 ```
+
+## Commit Scope
+
+Included files:
+- `path/or/group`: already staged and selected for this commit
+
+Not included:
+- None
 ````
 
-For staged-only scope, omit the `Git Add` code block and state `No git add command needed; selected changes are already staged.` before the `Git Commit` block.
+Always include `Commit Scope` after the preview. Use `Included files` for paths selected for the command. Use `Not included` with `None` when there are no excluded dirty files, or list each excluded path with a reason such as unrelated dirty work, untracked scratch file, outside requested scope, already staged outside requested scope, or not inspected enough to safely include.
 
-After the command blocks and preview, include compact notes only when they help the user avoid overclaiming or committing the wrong scope:
+After the command block, preview, and scope, include compact notes only when they help the user avoid overclaiming or committing the wrong scope:
 
 ```markdown
 Notes:
@@ -147,7 +176,7 @@ Notes:
 - Caveats: <skipped checks, unrelated changes, partial scope, assumptions, private-detail sanitization notes, or "None">
 ```
 
-When the scope is ambiguous or contains unrelated change sets, return separate candidate command groups and name the scope each one covers before recommending a default. Keep every `git add` and `git commit -m` command directly copy-pasteable.
+When the scope is ambiguous or contains unrelated change sets, return separate candidate command groups and name the scope each one covers before recommending a default. Keep every combined command directly copy-pasteable.
 
 For obvious independent change groups, return a commit plan shaped like this:
 
@@ -155,15 +184,10 @@ For obvious independent change groups, return a commit plan shaped like this:
 ## Commit Plan
 
 1. <Group name>
-   - Included files: <paths or path groups>
    - Rationale: <why these files belong together>
-   - Git Add:
+   - Git Command:
      ```powershell
-     git add -- "path/or/group"
-     ```
-   - Git Commit:
-     ```powershell
-     git commit -m "Subject" -m "Optional body paragraph"
+     git add -- "path/or/group" && git commit -m "Subject" -m "Optional body paragraph"
      ```
    - Commit Message Preview:
      ```text
@@ -171,6 +195,12 @@ For obvious independent change groups, return a commit plan shaped like this:
 
      Optional body paragraph
      ```
+   - Commit Scope:
+     Included files:
+     - `path/or/group`: reason included
+
+     Not included:
+     - <excluded dirty files with reasons, or "None">
    - Verification: <commands, checks, review gates, CI, manual verification, or "No verification evidence provided or run">
    - Caveats: <skipped checks, unrelated dirty files not included, uncertain grouping, shell-safety limits, or "None">
 ````
@@ -204,8 +234,8 @@ If subagents are unavailable, perform the same checks sequentially with a narrow
 - Do not silently collapse unrelated work into one tidy commit. Split obvious clusters or call out the risk.
 - Do not run mutating commands such as formatters, generators, migrations, autofixers, or cleanup scripts while drafting a message unless the user separately asks for implementation work.
 - Do not draft from the originating issue alone; inspect the local diff or supplied patch before writing the final message.
-- Do not omit `git add` or `git commit -m` commands merely because the prose preview is available.
-- Do not emit `git add` or `git commit -m` commands unless paths and message quotes are safe for the displayed command; rewrite unsafe message wording first.
+- Do not omit the combined `Git Command` or staged-only commit command merely because the prose preview is available.
+- Do not emit `git add -- ... && git commit -m ...` or staged-only `git commit -m ...` commands unless paths and message quotes are safe for the displayed command; rewrite unsafe message wording first.
 - Do not use shell-specific line continuation characters in generated commit commands unless the user explicitly requests a specific shell format.
 - Do not emit a `git commit -m '...'` or `git commit -m "..."` command containing unescaped matching quote characters that would break shell parsing.
 - Do not claim tests, CI, reviews, doc sync, security review, or standards review passed unless there is evidence.
