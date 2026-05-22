@@ -3,18 +3,21 @@ name: architecture-design-map
 category: engineering
 classification: portable
 status: wip
-description: Use when the user asks for a source-grounded architecture map, diagram, system map, module map, dependency map, flow map, runtime topology, or descriptive architecture artifact, not an architecture plan or refactor recommendation.
+description: Use when the user asks for a source-grounded architecture or design map, detailed diagram, system map, module map, dependency map, flow map, runtime topology, or quick zoom-out orientation, not an architecture plan or refactor recommendation.
 triggers:
-  - user asks for an architecture map, diagram, system map, module map, dependency map, flow map, or runtime topology
+  - user asks for an architecture map, design map, detailed diagram, system map, module map, dependency map, flow map, or runtime topology
   - user asks to create or refresh docs/agents/architecture-map.md
   - target-project onboarding would benefit from a durable descriptive architecture map
   - future agents need a visual map without mistaking speculation for project fact
+  - user asks to zoom out, go up a layer, or explain how an unfamiliar code area fits into the project
+  - user is focused on a file, symbol, feature, route, module, or subsystem and needs surrounding modules, callers, importers, or project terms
 outputs:
-  - Mermaid-first architecture diagram
+  - Mermaid-first architecture or design diagram for detailed maps
   - concise explanation of what the map shows
   - source references for diagram nodes, edges, flows, seams, and important claims
   - uncertainty notes for weak, inferred, stale, missing, or conflicting evidence
   - tracked target-project docs/agents/architecture-map.md for serious onboarding or durable documentation
+  - quick inline module/caller map and recommended next files when zoom-out orientation is the right scope
 depends_on:
   hard: []
   soft:
@@ -37,7 +40,9 @@ adapters:
 
 ## Purpose
 
-Create descriptive, source-grounded architecture maps for target projects. Use Mermaid by default, attach source evidence to every meaningful diagram claim, and mark uncertainty instead of inventing missing structure.
+Create descriptive, source-grounded architecture and design maps for target projects. Use Mermaid by default for detailed maps, attach source evidence to every meaningful diagram claim, and mark uncertainty instead of inventing missing structure.
+
+This skill has two common modes. The primary mode is a detailed architecture/design map for a project, subsystem, flow, runtime topology, or durable target-project artifact. The lightweight mode is quick inline zoom-out for orienting around unfamiliar code by going up one layer to surrounding modules, callers, importers, and project vocabulary.
 
 This skill maps architecture that exists in code or is explicitly documented. It does not plan new architecture, improve architecture, rank refactor opportunities, design interfaces, or produce before/after refactor proposals.
 
@@ -63,24 +68,30 @@ Use project domain terms from target-project evidence when naming map nodes. Use
 
 1. Confirm the target-project boundary and map mode:
    - Identify the project root from the user's request, current directory, repository metadata, or local manifests.
-   - Classify the request as an existing-code map, docs-backed map, partial/mixed map, or quick inline explanation.
+   - Classify the request as a detailed existing-code map, docs-backed map, partial/mixed map, runtime or flow map, or quick inline zoom-out.
+   - Keep detailed maps as the default for broad architecture/design requests, durable artifacts, system diagrams, and flow/topology questions.
+   - Use quick inline zoom-out only when the user is unfamiliar with a focused code area and wants to go up one layer to see relevant modules, callers, importers, and project vocabulary.
    - Keep installed-skill instructions separate from target-project artifacts.
    - Ask only when the target root, requested map scope, or output destination cannot be inferred safely.
 
 2. Choose durable artifact versus inline response:
    - Write `docs/agents/architecture-map.md` by default for target-project onboarding, repeated work, broad architecture documentation, or user-requested persistence.
-   - Answer inline for quick one-off map requests, narrow explanations, or exploratory questions where a durable artifact would add ceremony.
+   - Answer inline for quick one-off map requests, narrow explanations, or exploratory questions where a durable artifact would add ceremony; inline responses may still be detailed when the requested scope needs it.
+   - For quick inline zoom-out, do not create or update a durable architecture-map artifact unless the user explicitly asks for persistence.
    - When refreshing an existing architecture map, read it first and preserve accurate sourced facts.
 
 3. Gather source evidence before diagramming:
    - Use `docs/agents/context-matrix.md` when present to choose first-read and second-read sources.
    - Read architecture docs, ADRs, context files, standards profiles, README files, manifests, entrypoints, routes, schemas, config, deployment definitions, and representative tests as relevant to the requested map.
+   - For quick inline zoom-out, inspect the focused file, symbol, feature, route, module, or subsystem plus its imports, exports, nearby callers or importers, entrypoints, representative tests, and available glossary or context terms.
    - For code maps, trace actual imports, calls, routes, data flow, configuration, or runtime links rather than relying on folder names alone.
    - For docs-backed maps, diagram only relationships explicitly described by durable docs or user-provided evidence.
+   - When caller or importer evidence is missing in a quick zoom-out pass, say it was not found or not inspected instead of inventing surrounding context.
    - Record missing, stale, inferred, or conflicting sources as uncertainty.
 
 4. Select the smallest useful map type:
    - Use a module map for ownership, dependencies, or major subsystems.
+   - Use a compact module/caller map for quick inline zoom-out around a focused code area.
    - Use a flowchart or sequence diagram for user journeys, request handling, async flows, jobs, or event paths.
    - Use a layered or runtime topology map for tiers, processes, services, deployment units, databases, queues, and third-party integrations.
    - Use an entity or schema-adjacent map only when architecture depends on data ownership or persistence shape.
@@ -106,7 +117,7 @@ Use project domain terms from target-project evidence when naming map nodes. Use
 
 ## Output Contract
 
-Write `docs/agents/architecture-map.md` with this shape when a durable artifact is appropriate:
+Write `docs/agents/architecture-map.md` with this shape when a durable detailed map is appropriate:
 
 ````markdown
 # Architecture Map
@@ -143,13 +154,21 @@ flowchart LR
 - Evidence used: <brief list of paths and commands>
 ````
 
-For inline output, return the same core pieces without the `Last Updated` section unless useful:
+For inline detailed-map output, return the same core pieces without the `Last Updated` section unless useful:
 
 - Mermaid diagram.
 - Concise explanation.
 - Source references.
 - Uncertainty notes.
 - Optional next-step routing, such as `doc-sync` for durable doc drift or `improve-codebase-architecture` for refactor opportunities.
+
+For quick inline zoom-out, keep the response concise and orientation-focused:
+
+- Focus: the file, symbol, feature, route, module, or subsystem inspected.
+- Module/caller map: the relevant modules, callers, importers, entrypoints, tests, or project terms, using Mermaid when it improves clarity or compact bullets when the scope is tiny.
+- Source references: paths, commands, docs, or user-provided evidence for each important relationship.
+- Uncertainty notes: missing, uninspected, inferred, stale, or conflicting caller/importer evidence.
+- Recommended next files to inspect: source-grounded files that would improve orientation, not refactor or implementation recommendations.
 
 ## Delegation
 
@@ -179,6 +198,8 @@ If subagents are unavailable, perform the same scans sequentially with a narrowe
 - Do not create decorative, aspirational, speculative, or marketing-style diagrams unsupported by project evidence.
 - Do not plan new architecture, improve architecture, rank refactor opportunities, design interfaces, or produce before/after refactor proposals.
 - Do not treat folder layout alone as architecture; verify with docs, imports, entrypoints, routes, runtime config, tests, or other project evidence.
+- During quick inline zoom-out, do not turn orientation into refactor recommendations, architecture planning, implementation advice, or claims based only on folder names.
+- During quick inline zoom-out, do not claim callers, importers, entrypoints, tests, or project terms exist unless they were inspected or clearly labeled as unverified.
 - Do not hide uncertainty. Mark inferred, stale, missing, or conflicting evidence clearly.
 - Do not claim a relationship exists because it would be sensible; show evidence or label it as an assumption.
 - Do not include private notes, ignored local scratch files, credentials, client data, sensitive personal context, secrets, or real user data in tracked architecture maps.
