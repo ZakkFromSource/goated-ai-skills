@@ -65,7 +65,7 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/archive/040-upgrade-prd-to-issues-zero-context-handoffs.md`
 - `issues/archive/041-upgrade-tdd-superpowers-contracts.md`
 - `issues/archive/042-add-receiving-code-review-skill.md`
-- `issues/043-research-skill-trigger-eval-harnesses.md`
+- `issues/archive/043-research-skill-trigger-eval-harnesses.md`
 
 ## User stories addressed
 

@@ -33,7 +33,7 @@ GOATED should absorb the portable parts of these conventions without copying Sup
 - Upgrade `prd-to-issues` so generated issue handoffs include enough context for agents with no session history.
 - Add `receiving-code-review`.
 - Upgrade `diagnose`, `tdd`, and `framework-agnostic-skill-creator` with the strongest relevant Superpowers conventions.
-- Keep runtime bootstrap/plugin automation out of V1 per ADR 0001, and keep skill-trigger eval harnesses behind research issue `043`.
+- Keep runtime bootstrap/plugin automation out of V1 per ADR 0001, and keep live skill-trigger eval harnesses behind a future PRD after archived issue `043`.
 
 ## Non-Goals
 
@@ -73,7 +73,7 @@ GOATED should absorb the portable parts of these conventions without copying Sup
 | Upgrade `prd-to-issues` | Must | Handoffs must carry enough context for agents with no access to the original session. |
 | Upgrade `tdd` | Must | Add stronger red/green proof, rationalization guardrails, and anti-pattern references. |
 | Add `receiving-code-review` | Must | Verify feedback before obeying it, clarify unclear items, and push back technically when needed. |
-| Research skill-trigger eval harnesses | HITL | Compare static checks, prompt transcripts, live harnesses, and nondeterminism risks before implementation. |
+| Research skill-trigger eval harnesses | Done | Resolved by `issues/archive/043-research-skill-trigger-eval-harnesses.md`: V1 keeps docs-only/static guidance and manual scenario examples; future harness work requires a future PRD after usage evidence. |
 | Update V1 recheck issues | Must | `032` and `021` should include the new PRD and issue blockers. |
 
 ## Source Fit Matrix
@@ -141,12 +141,13 @@ GOATED should absorb the portable parts of these conventions without copying Sup
 | Decision | Outcome | Source |
 | --- | --- | --- |
 | Should V1 ever include runtime bootstrap/plugin automation that changes agent behavior beyond docs-first installation? | No. V1 allows narrow adapter notes only; runtime automation requires future scoped work. | `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md` and `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md` |
+| Which skill-trigger eval harness style, if any, is worth adding to GOATED? | No live harness for V1. Keep docs-only/static guidance and manual scenario examples now; revisit future trigger-evaluation tooling through a future PRD after real usage reveals recurring failures. | `issues/archive/043-research-skill-trigger-eval-harnesses.md` |
 
 ## Open Questions
 
 | Question | Owner | Needed before |
 | --- | --- | --- |
-| Which skill-trigger eval harness style, if any, is worth adding to GOATED? | Maintainer via `043` | Any trigger harness implementation. |
+| None currently. | Not applicable | Not applicable |
 
 ## Source Evidence
 

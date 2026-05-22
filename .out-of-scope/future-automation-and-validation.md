@@ -15,7 +15,7 @@ These ideas are intentionally out of scope for V1.
 - Adapter repair scripts.
 - Adapter sync, release, version, or drift automation.
 - Cross-agent compatibility test suites.
-- Skill-trigger evaluation harnesses or trigger-test frameworks.
+- Skill-trigger evaluation harnesses or trigger-test frameworks; revisit through a future PRD after real usage reveals recurring trigger-selection or skill-compliance failures, per [archived issue 043](../issues/archive/043-research-skill-trigger-eval-harnesses.md).
 - Installer tooling.
 - Full security audit workflows.
 - Dependency, secret, and SAST scanner integrations.
