@@ -29,7 +29,7 @@ Implement `diagnose` under `skills/engineering/`. The skill should guide bug and
 - `issues/archive/013-tdd.md`
 - `issues/archive/019-improve-codebase-architecture.md`
 - `issues/archive/036-add-verification-before-completion-skill.md`
-- `issues/041-upgrade-tdd-superpowers-contracts.md`
+- `issues/archive/041-upgrade-tdd-superpowers-contracts.md`
 
 ## User stories addressed
 
