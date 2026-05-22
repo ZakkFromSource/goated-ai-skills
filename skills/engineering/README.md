@@ -1,6 +1,6 @@
 # Engineering
 
-Skills in this category support target-project delivery: intent clarification, PRDs, prototyping, TDD, review, security checks, documentation synchronization, commit messages, architecture maps, architecture plans, and refactoring.
+Skills in this category support target-project delivery: intent clarification, PRDs, prototyping, just-in-time implementation plans, TDD, review, security checks, documentation synchronization, commit messages, architecture maps, architecture plans, and refactoring.
 
 They should prefer observable behavior, source-grounded evidence, and clear closeout criteria.
 Use `verification-before-completion` as the soft final evidence gate before claiming engineering work is complete, correct, review-ready, documentation-synced, or ready for the next lifecycle step.
@@ -10,6 +10,7 @@ Use `verification-before-completion` as the soft final evidence gate before clai
 - `grill-with-docs` - pressure-tests important work against available docs and project facts.
 - `write-a-prd` - turns unclear intent into a scoped target-project PRD.
 - `prd-to-issues` - breaks scoped PRDs into local issue handoffs.
+- `writing-plans` - turns approved issues or scoped tasks into just-in-time executable implementation plans.
 - `prototype` - creates local throwaway artifacts to answer one focused question.
 - `tdd` - guides behavior-first red, green, refactor work.
 - `standards-and-spec-review` - reviews changes against project standards and originating specs.

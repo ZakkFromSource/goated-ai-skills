@@ -21,7 +21,7 @@ Layer 1: Target Project Onboarding
 
 Layer 2: Target Project Delivery
 
-- Use the installed delivery skills inside the target project for PRDs, architecture plans, issues, prototypes, TDD, review, security checks, docs, commit messages, and handoffs.
+- Use the installed delivery skills inside the target project for PRDs, architecture plans, issues, prototypes, just-in-time implementation plans, TDD, review, security checks, docs, commit messages, and handoffs.
 
 ## Generic Install Pattern
 

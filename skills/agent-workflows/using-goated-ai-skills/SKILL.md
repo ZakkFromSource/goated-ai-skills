@@ -75,6 +75,7 @@ Use this router at the start of installed-skill work, when a user asks which ski
 4. Use a compact next-skill map when the first route is clear:
    - Fuzzy feature idea, client brief, or roadmap item -> `write-a-prd`.
    - Approved PRD, product spec, or scoped plan -> `prd-to-issues`.
+   - Approved issue, scoped task, or implementation slice ready for executable steps -> `writing-plans`.
    - Implementation, bug fix, public interface change, or regression coverage -> `tdd`.
    - Architecture blueprint needed before implementation -> `plan-codebase-architecture`.
    - Descriptive architecture map, module map, or dependency map -> `architecture-design-map`.

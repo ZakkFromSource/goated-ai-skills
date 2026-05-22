@@ -100,6 +100,7 @@ session-start-progressive-disclosure
 -> plan-codebase-architecture optional
 -> prd-to-issues
 -> prototype optional per focused issue
+-> writing-plans
 -> tdd
 -> standards-and-spec-review
 -> code-security-review
