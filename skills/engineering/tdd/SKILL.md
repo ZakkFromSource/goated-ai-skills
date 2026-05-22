@@ -11,10 +11,11 @@ triggers:
   - a public interface, module seam, adapter, or user-facing workflow is changing and should be protected by tests
 outputs:
   - identified observable behavior, public test surface, and first focused failing test
-  - red evidence showing the test fails for the expected reason before implementation
-  - green evidence showing the implementation passes the focused test and relevant existing checks
+  - red evidence showing a feasible behavior test fails for the expected reason before implementation
+  - green evidence separating the focused passing test from broader nearby or project checks
   - per-cycle notes showing one test, one minimal implementation, and no speculative scope
   - refactor notes after green, including interface friction, deep-module opportunities, and tests rerun
+  - rationalization guardrail notes for skipped tests, post-hoc tests, over-mocking, test rewrites, and weak proof
   - residual risk, test gaps, skipped checks, and weak or missing test infrastructure fallback notes
 depends_on:
   hard: []
@@ -73,19 +74,23 @@ Bad tests are coupled to implementation. They mock internal collaborators, test 
    - Read [Test Design](references/test-design.md) when test shape, naming, public-interface proof, or good-vs-bad test judgment matters.
    - Read [Mocking And Seams](references/mocking-and-seams.md) before introducing mocks, fakes, ports, dependency injection, or adapter seams.
    - Read [Deep Modules](references/deep-modules.md) when the interface feels wide, setup-heavy, shallow, or awkward to test.
+   - Read [Testing Anti-Patterns](references/testing-anti-patterns.md) when tempted to skip RED, write tests after, change tests to match current behavior, over-mock, or claim completion from weak proof.
 
 3. RED: write one focused failing test:
    - Write one test for one observable behavior through the chosen public interface.
+   - When a behavior test is feasible, do not implement production behavior until RED evidence exists.
    - Run the smallest useful test command and confirm it fails for the expected reason.
    - If it passes before implementation, the test is not proving the missing behavior; tighten the setup or choose a better behavior.
+   - If no feasible behavior test exists, use the infrastructure fallback and do not describe fallback proof as RED evidence.
    - Capture red evidence: command, failing test name, and failure reason.
 
 4. GREEN: implement only enough code to pass:
    - Change production code only for the current failing behavior.
    - Keep implementation scoped to the current issue, current public interface, and current test.
    - Do not anticipate future tests, add speculative features, or broaden the change because adjacent cleanup is tempting.
+   - Do not change a failing test to match broken behavior; change the test only when RED evidence shows the test is invalid or the requirement changed.
    - Run the focused test until it passes, then run relevant nearby or existing checks that protect the touched area.
-   - Capture green evidence: command, passing result, and any additional checks run or skipped.
+   - Capture green evidence in two parts: focused command and passing result first, then broader checks run or skipped.
 
 5. Repeat vertically:
    - Add the next behavior only after the current test is green.
@@ -103,7 +108,7 @@ Bad tests are coupled to implementation. They mock internal collaborators, test 
    - Summarize test intent, red evidence, green evidence, refactor notes, and residual risk.
    - Note weak or missing test infrastructure honestly.
    - Recommend follow-up only when it is directly connected to untested behavior, missing infrastructure, or acceptance risk.
-   - Use `verification-before-completion` before making completion, correctness, passing, or review-ready claims; for drafts, analysis-only work, or fallback proof, verify only the claim being made and report residual risk.
+   - Pass the TDD evidence packet to `verification-before-completion` before making completion, correctness, passing, or review-ready claims; for drafts, analysis-only work, or fallback proof, verify only the claim being made and report residual risk.
 
 ## Output Contract
 
@@ -112,8 +117,8 @@ During or after TDD work, report:
 - Behavior: the observable behavior or regression protected.
 - Public interface: the interface, command, route, component, service, adapter, or workflow used as the test surface.
 - Test intent: the focused behavior test added or changed, with why it proves the requirement.
-- Red evidence: command, failing test name, and expected failure reason before implementation.
-- Green evidence: command, passing test/check result, and relevant existing checks run after implementation.
+- Red evidence: command, failing test name, and expected failure reason before implementation, or an explicit fallback reason when RED is not feasible.
+- Green evidence: focused command and passing result, plus separate broader nearby or existing checks run after implementation.
 - Cycle notes: confirmation that work proceeded one vertical slice at a time, or an explicit reason when it could not.
 - Refactor notes: cleanup performed after green, interface friction found, deep-module opportunities addressed or deferred, and tests rerun.
 - Files changed: production code, tests, fixtures, docs, or config touched.
@@ -195,7 +200,11 @@ One test, one implementation, repeat. Each test responds to what you learned fro
 - Do not introduce ports, adapters, or dependency injection unless there is a real seam where behavior varies across production and test.
 - Do not broaden scope beyond the current issue, current failing test, and public interface under change.
 - Do not refactor while red.
+- Do not treat tests written after implementation as TDD unless you also prove they would have failed against the missing or broken behavior.
+- Do not weaken, delete, or rewrite a behavior test just to make current implementation pass.
+- Do not add production methods, flags, or hooks that exist only for tests; use test utilities or a real public interface.
 - Do not pretend tests are stronger than they are. If infrastructure is weak, use the smallest honest proof and report residual risk.
+- Do not claim work is complete from focused GREEN alone; route the actual claim through `verification-before-completion`.
 - Do not create broad test infrastructure, fixture frameworks, package-manager changes, CI changes, or new dependencies unless the current issue explicitly calls for that foundation.
 - Do not delete or rewrite existing tests just because they are awkward. Replace obsolete implementation-detail tests only when the new public-interface proof covers the behavior.
 - Do not include private notes, credentials, client data, sensitive personal context, ignored scratch content, or real user data in tests or fixtures.
@@ -206,3 +215,4 @@ One test, one implementation, repeat. Each test responds to what you learned fro
 - [Mocking And Seams](references/mocking-and-seams.md) - read before mocking dependencies, adding test doubles, or designing injection points.
 - [Deep Modules](references/deep-modules.md) - read when public interfaces feel shallow, wide, leaky, or hard to test.
 - [Refactor After Green](references/refactor-after-green.md) - read after tests pass and before non-trivial cleanup or module deepening.
+- [Testing Anti-Patterns](references/testing-anti-patterns.md) - read when rationalizing skipped RED proof, post-hoc tests, test rewrites, over-mocking, or completion without matching evidence.
