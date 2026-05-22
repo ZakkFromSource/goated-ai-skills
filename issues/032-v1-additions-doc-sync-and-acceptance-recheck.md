@@ -36,7 +36,7 @@ Run documentation synchronization and a final acceptance recheck after the V1 ad
 - `issues/archive/036-add-verification-before-completion-skill.md`
 - `issues/archive/037-wire-verification-through-goated-stack.md`
 - `issues/archive/038-add-writing-plans-skill.md`
-- `issues/039-add-subagent-driven-development-skill.md`
+- `issues/archive/039-add-subagent-driven-development-skill.md`
 - `issues/040-upgrade-prd-to-issues-zero-context-handoffs.md`
 - `issues/041-upgrade-tdd-superpowers-contracts.md`
 - `issues/042-add-receiving-code-review-skill.md`

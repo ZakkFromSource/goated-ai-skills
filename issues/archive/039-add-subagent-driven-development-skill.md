@@ -12,15 +12,15 @@ Add `subagent-driven-development` under `skills/engineering/` as the GOATED work
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/subagent-driven-development/SKILL.md` exists and follows the lean schema.
-- [ ] The workflow uses a fresh implementer per task when subagents are available and a sequential fallback when they are not.
-- [ ] The workflow includes spec review, quality review, and final review phases before completion claims.
-- [ ] Delegated work statuses include `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, and `BLOCKED`.
-- [ ] Implementer and reviewer prompt templates live under `skills/engineering/subagent-driven-development/references/`.
-- [ ] The skill requires subagents to return evidence such as changed paths, commands, test results, assumptions, and concerns.
-- [ ] The main agent remains responsible for orchestration, integration, conflict resolution, and final user communication.
-- [ ] The workflow routes closeout through `verification-before-completion`.
-- [ ] The skill is self-contained after installation and does not require this source repo's root files.
+- [x] `skills/engineering/subagent-driven-development/SKILL.md` exists and follows the lean schema.
+- [x] The workflow uses a fresh implementer per task when subagents are available and a sequential fallback when they are not.
+- [x] The workflow includes spec review, quality review, and final review phases before completion claims.
+- [x] Delegated work statuses include `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, and `BLOCKED`.
+- [x] Implementer and reviewer prompt templates live under `skills/engineering/subagent-driven-development/references/`.
+- [x] The skill requires subagents to return evidence such as changed paths, commands, test results, assumptions, and concerns.
+- [x] The main agent remains responsible for orchestration, integration, conflict resolution, and final user communication.
+- [x] The workflow routes closeout through `verification-before-completion`.
+- [x] The skill is self-contained after installation and does not require this source repo's root files.
 
 ## Blocked by
 

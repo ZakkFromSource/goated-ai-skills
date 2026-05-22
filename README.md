@@ -104,6 +104,7 @@ session-start-progressive-disclosure
 -> prd-to-issues
 -> prototype optional per focused issue
 -> writing-plans
+-> subagent-driven-development optional for larger, riskier, or parallelizable implementation
 -> tdd
 -> standards-and-spec-review
 -> code-security-review

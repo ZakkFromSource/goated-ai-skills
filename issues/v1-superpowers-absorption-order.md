@@ -1,6 +1,6 @@
 # V1 Superpowers Absorption Issue Order
 
-Last updated: 2026-05-21.
+Last updated: 2026-05-22.
 
 Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-absorption.md`. For each issue, future agents should read the issue itself, inspect the current source files named there, and use `grill-with-docs` before implementation when the work is more than a tiny mechanical edit.
 
@@ -27,8 +27,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 7. `issues/archive/038-add-writing-plans-skill.md`
    - Add the executable-plan contract after verification exists, so plans know what proof to request. Done.
 
-8. `issues/039-add-subagent-driven-development-skill.md`
-   - Add subagent-driven development after planning and verification contracts exist.
+8. `issues/archive/039-add-subagent-driven-development-skill.md`
+   - Add subagent-driven development after planning and verification contracts exist. Done.
 
 9. `issues/040-upgrade-prd-to-issues-zero-context-handoffs.md`
    - Upgrade issue handoffs to route future implementers to `grill-with-docs` and `writing-plans`.
