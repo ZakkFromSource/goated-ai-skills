@@ -12,13 +12,13 @@ Add `receiving-code-review` under `skills/engineering/` as the workflow for hand
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/receiving-code-review/SKILL.md` exists and follows the lean schema.
-- [ ] The workflow requires understanding each review comment before editing.
-- [ ] The workflow distinguishes accepted feedback, rejected feedback with technical rationale, unclear feedback that needs clarification, and non-actionable commentary.
-- [ ] The workflow implements one actionable item at a time when practical and verifies each fix before moving on.
-- [ ] The workflow routes security-relevant feedback to `code-security-review` and spec/behavior feedback to `standards-and-spec-review` or `tdd` as appropriate.
-- [ ] The workflow routes closeout through `verification-before-completion`.
-- [ ] The skill is self-contained after installation and does not require this source repo's root files.
+- [x] `skills/engineering/receiving-code-review/SKILL.md` exists and follows the lean schema.
+- [x] The workflow requires understanding each review comment before editing.
+- [x] The workflow distinguishes accepted feedback, rejected feedback with technical rationale, unclear feedback that needs clarification, and non-actionable commentary.
+- [x] The workflow implements one actionable item at a time when practical and verifies each fix before moving on.
+- [x] The workflow routes security-relevant feedback to `code-security-review` and spec/behavior feedback to `standards-and-spec-review` or `tdd` as appropriate.
+- [x] The workflow routes closeout through `verification-before-completion`.
+- [x] The skill is self-contained after installation and does not require this source repo's root files.
 
 ## Blocked by
 

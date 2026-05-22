@@ -38,8 +38,8 @@ Run documentation synchronization and a final acceptance recheck after the V1 ad
 - `issues/archive/038-add-writing-plans-skill.md`
 - `issues/archive/039-add-subagent-driven-development-skill.md`
 - `issues/archive/040-upgrade-prd-to-issues-zero-context-handoffs.md`
-- `issues/041-upgrade-tdd-superpowers-contracts.md`
-- `issues/042-add-receiving-code-review-skill.md`
+- `issues/archive/041-upgrade-tdd-superpowers-contracts.md`
+- `issues/archive/042-add-receiving-code-review-skill.md`
 - `issues/043-research-skill-trigger-eval-harnesses.md`
 
 ## User stories addressed

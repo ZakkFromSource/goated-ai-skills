@@ -39,8 +39,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 11. `issues/archive/027-add-diagnose-skill.md`
     - Implement diagnose with Superpowers `systematic-debugging` inspiration and clear routing to TDD. Done.
 
-12. `issues/042-add-receiving-code-review-skill.md`
-    - Add review feedback handling after verification exists.
+12. `issues/archive/042-add-receiving-code-review-skill.md`
+    - Add review feedback handling after verification exists. Done.
 
 13. `issues/043-research-skill-trigger-eval-harnesses.md`
     - Research trigger harnesses after the router and runtime decision issue are in place.
