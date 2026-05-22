@@ -30,8 +30,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 8. `issues/archive/039-add-subagent-driven-development-skill.md`
    - Add subagent-driven development after planning and verification contracts exist. Done.
 
-9. `issues/040-upgrade-prd-to-issues-zero-context-handoffs.md`
-   - Upgrade issue handoffs to route future implementers to `grill-with-docs` and `writing-plans`.
+9. `issues/archive/040-upgrade-prd-to-issues-zero-context-handoffs.md`
+   - Upgrade issue handoffs to route future implementers to `grill-with-docs` and `writing-plans`. Done.
 
 10. `issues/041-upgrade-tdd-superpowers-contracts.md`
     - Strengthen TDD after verification is available and before diagnose relies on the improved loop.

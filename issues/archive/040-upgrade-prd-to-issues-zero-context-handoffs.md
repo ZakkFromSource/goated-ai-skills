@@ -12,12 +12,12 @@ Upgrade `prd-to-issues` so generated issue handoffs carry enough context for fut
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/prd-to-issues/SKILL.md` is updated to require issue handoffs to include enough context for a fresh agent to start from the issue and linked sources.
-- [ ] Issue handoffs should include parent PRD path, relevant source links, recommended first-read docs, blockers, acceptance criteria, expected proof, and important scope exclusions when applicable.
-- [ ] The workflow routes future implementers to `grill-with-docs` before implementation and to `writing-plans` for exact executable steps.
-- [ ] The workflow warns against relying on hidden chat history, `.local/` notes, or unlinked upstream sources.
-- [ ] The workflow still avoids bloated implementation transcripts, stale command inventories, and full code snippets unless they prevent a likely mistake.
-- [ ] The skill remains self-contained after installation and does not require this source repo's root files.
+- [x] `skills/engineering/prd-to-issues/SKILL.md` is updated to require issue handoffs to include enough context for a fresh agent to start from the issue and linked sources.
+- [x] Issue handoffs should include parent PRD path, relevant source links, recommended first-read docs, blockers, acceptance criteria, expected proof, and important scope exclusions when applicable.
+- [x] The workflow routes future implementers to `grill-with-docs` before implementation and to `writing-plans` for exact executable steps.
+- [x] The workflow warns against relying on hidden chat history, `.local/` notes, or unlinked upstream sources.
+- [x] The workflow still avoids bloated implementation transcripts, stale command inventories, and full code snippets unless they prevent a likely mistake.
+- [x] The skill remains self-contained after installation and does not require this source repo's root files.
 
 ## Blocked by
 
