@@ -13,6 +13,7 @@ Use `verification-before-completion` as the soft final evidence gate before clai
 - `writing-plans` - turns approved issues or scoped tasks into just-in-time executable implementation plans.
 - `subagent-driven-development` - coordinates fresh implementer and reviewer agents while preserving main-agent ownership.
 - `prototype` - creates local throwaway artifacts to answer one focused question.
+- `diagnose` - investigates bugs, flakes, failures, and performance regressions through repro, hypotheses, instrumentation, and root-cause proof before fixes.
 - `tdd` - guides behavior-first red, green, refactor work.
 - `standards-and-spec-review` - reviews changes against project standards and originating specs.
 - `code-security-review` - performs focused static security review of risky changes.

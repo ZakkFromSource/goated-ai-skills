@@ -34,7 +34,7 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
    - Upgrade issue handoffs to route future implementers to `grill-with-docs` and `writing-plans`. Done.
 
 10. `issues/041-upgrade-tdd-superpowers-contracts.md`
-    - Strengthen TDD after verification is available and before diagnose relies on the improved loop.
+    - Strengthen TDD after verification is available and before diagnose relies on the improved loop. Done.
 
 11. `issues/027-add-diagnose-skill.md`
     - Implement diagnose with Superpowers `systematic-debugging` inspiration and clear routing to TDD.
