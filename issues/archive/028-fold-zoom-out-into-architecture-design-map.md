@@ -12,12 +12,12 @@ Update `architecture-design-map` so it handles quick "zoom out" requests as an i
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/architecture-design-map/SKILL.md` includes triggers for "zoom out", "go up a layer", and unfamiliar-code orientation.
-- [ ] The workflow distinguishes quick inline zoom-out from durable architecture-map creation.
-- [ ] The quick mode inspects the focused file, symbol, feature, or subsystem plus nearby callers/importers before summarizing.
-- [ ] The output contract covers a concise module/caller map, source references, uncertainty notes, and recommended next files to inspect.
-- [ ] Guardrails prohibit refactor recommendations, architecture planning, or folder-name-only claims during quick zoom-out mode.
-- [ ] The skill remains self-contained after installation.
+- [x] `skills/engineering/architecture-design-map/SKILL.md` includes triggers for "zoom out", "go up a layer", and unfamiliar-code orientation.
+- [x] The workflow distinguishes quick inline zoom-out from durable architecture-map creation.
+- [x] The quick mode inspects the focused file, symbol, feature, or subsystem plus nearby callers/importers before summarizing.
+- [x] The output contract covers a concise module/caller map, source references, uncertainty notes, and recommended next files to inspect.
+- [x] Guardrails prohibit refactor recommendations, architecture planning, or folder-name-only claims during quick zoom-out mode.
+- [x] The skill remains self-contained after installation.
 
 ## Blocked by
 

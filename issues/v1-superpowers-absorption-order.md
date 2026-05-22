@@ -45,8 +45,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 13. `issues/archive/043-research-skill-trigger-eval-harnesses.md`
     - Research trigger harnesses after the router and runtime decision issue are in place. Done; archived.
 
-14. `issues/028-fold-zoom-out-into-architecture-design-map.md`
-    - This existing addition is mostly independent and can be implemented earlier if needed, but should finish before `032`.
+14. `issues/archive/028-fold-zoom-out-into-architecture-design-map.md`
+    - This existing addition is mostly independent and finished before `032`. Done.
 
 15. `issues/030-defer-triage-workflow.md`
     - This existing deferral can be handled anytime before `032`.

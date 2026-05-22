@@ -26,7 +26,7 @@ Run documentation synchronization and a final acceptance recheck after the V1 ad
 ## Blocked by
 
 - `issues/027-add-diagnose-skill.md`
-- `issues/028-fold-zoom-out-into-architecture-design-map.md`
+- `issues/archive/028-fold-zoom-out-into-architecture-design-map.md`
 - `issues/archive/029-expand-framework-agnostic-skill-creator.md`
 - `issues/030-defer-triage-workflow.md`
 - `issues/031-add-caveman-skill.md`
