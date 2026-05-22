@@ -7,6 +7,7 @@ description: Use before claiming work is complete, correct, fixed, passing, revi
 triggers:
   - user asks whether implementation, review, testing, docs, or closeout work is done
   - an agent is about to say work is complete, correct, fixed, passing, clean, reviewed, ready, or synced
+  - an agent is about to close, archive, move, rename, or mark an issue, ticket, or handoff complete
   - command, test, build, lint, rendered artifact, screenshot, source read, diff, CI, or manual smoke-test evidence is needed before a success claim
   - subagent or tool reports need sanity-checking before the main agent relies on them
   - checks failed, were skipped, or cannot run and the final response needs honest residual risk
@@ -15,6 +16,7 @@ outputs:
   - fresh evidence gathered after the relevant change, review scope, or claim is known
   - verified facts separated from assumptions, skipped checks, known failures, and residual risk
   - subagent or tool reports that were independently sanity-checked or marked unverified
+  - issue lifecycle actions allowed, withheld, or downgraded based on verified acceptance and required review evidence
   - concise verification summary with evidence names, results, skipped checks, remaining risk, and next step
 depends_on:
   hard: []
@@ -41,6 +43,8 @@ Gate completion, correctness, readiness, and success claims on fresh evidence.
 
 Use this skill at closeout, before commit or PR summaries, before moving to another task, or whenever wording would imply that work is complete, correct, passing, reviewed, fixed, synced, or safe. The goal is not ceremony. The goal is that the final claim matches what was actually checked.
 
+Treat issue lifecycle actions as completion claims. Closing, archiving, moving, renaming, or marking an issue, ticket, or handoff complete is allowed only when the completion claim is freshly verified and any required user, maintainer, PR, or project-defined review is complete.
+
 This skill does not replace implementation, TDD, standards/spec review, security review, doc sync, or handoff. It verifies the claim being made and routes missing proof to the right workflow.
 
 ## Inputs
@@ -55,6 +59,7 @@ This skill does not replace implementation, TDD, standards/spec review, security
 
 1. Name the claim before proving it:
    - Write the claim as a concrete sentence, such as "the focused tests pass", "issue acceptance is covered", "docs are synced", or "the implementation is ready for review".
+   - If the next action would close, archive, move, rename, or mark an issue complete, name that lifecycle action as the claim.
    - If the user asked only for a draft, analysis, or best-effort scan, verify only the claims you actually intend to make.
    - Do not use vague substitutes such as "looks good" when you mean a stronger claim.
 
@@ -67,6 +72,7 @@ This skill does not replace implementation, TDD, standards/spec review, security
    - Tests passing require test output for the relevant test command, suite, or CI job.
    - Build, lint, format, type, migration, generated-artifact, or docs claims require the corresponding command output or artifact inspection.
    - Bug-fix and feature-completion claims require proof of the original behavior or acceptance criteria, not just a code diff.
+   - Issue closure or archive claims require acceptance criteria checked against current behavior and evidence that any required user, maintainer, PR, or project-defined review is complete.
    - Review-ready claims require inspected diffs, source reads, review gates, or artifact checks that match the requested review scope.
    - Documentation-sync claims require changed facts and relevant docs to have been checked.
    - Read [Evidence Map](references/evidence-map.md) when choosing proof, handling non-command evidence, or resisting shortcut rationalizations.
@@ -89,6 +95,7 @@ This skill does not replace implementation, TDD, standards/spec review, security
    - **Known failures** are failing commands, broken artifacts, rejected claims, or review findings.
    - **Residual risk** is what remains uncertain after the evidence gathered.
    - Allow only the part of the claim supported by verified facts. Downgrade or withhold unsupported claims.
+   - If required review is still pending, report the work as ready for review, partially verified, or otherwise residual-risk-bearing, and leave the issue active.
 
 7. Route missing proof:
    - Use `tdd` when behavior or regression proof is missing and a testable implementation path exists.
@@ -150,6 +157,7 @@ If subagents are unavailable, perform the same verification sequentially with a 
 ## Guardrails
 
 - Do not claim completion, correctness, passing checks, review readiness, docs sync, security confidence, or successful implementation without fresh matching evidence.
+- Do not close, archive, move, rename, or mark an issue, ticket, or handoff complete unless all required acceptance and review evidence supports that lifecycle action.
 - Do not reuse stale proof as if it proves the current scope.
 - Do not treat a passing partial check as proof for a broader claim.
 - Do not treat code changes, clean-looking diffs, or generated summaries as proof that behavior works.

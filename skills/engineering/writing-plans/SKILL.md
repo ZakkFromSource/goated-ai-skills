@@ -93,6 +93,7 @@ This skill keeps durable issues concise. Issues, PRDs, tickets, and roadmap note
    - Name the command or manual check for each meaningful proof step, plus the evidence expected from it.
    - For TDD work, include red, green, refactor, and rerun checkpoints rather than a single bulk test phase.
    - Include review steps: standards/spec review, security review when relevant, documentation sync, and final verification.
+   - Do not include issue closure, archive moves, completion status edits, or similar lifecycle cleanup unless the plan first satisfies verification and any required review gate for that action.
    - Include stop conditions for missing source evidence, unexpected test results, broad scope drift, unsafe commands, unclear product choices, or repeated verification failures.
    - Keep steps ordered so each one produces evidence needed by the next.
 
@@ -175,6 +176,7 @@ If subagents are unavailable, perform the same checks sequentially with a smalle
 - Do not skip TDD planning for behavior changes just because the edit looks small.
 - Do not route to subagents in a way that makes the main agent lose ownership of integration, review, or final claims.
 - Do not prescribe branch, worktree, commit, PR, issue tracker, or agent-tool mechanics unless the target project or user request provides them.
+- Do not plan to close, archive, move, rename, or mark an issue complete as routine cleanup before acceptance evidence and any required review are verified.
 - Do not include private notes, credentials, client data, sensitive personal context, ignored scratch content, or real user data in tracked plans.
 - Do not require this source repo's root files, issue files, `.local/` research, or chat history after installation. The skill may rely only on its own files and target-project evidence.
 

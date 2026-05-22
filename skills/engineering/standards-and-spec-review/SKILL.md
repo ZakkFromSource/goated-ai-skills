@@ -82,6 +82,7 @@ This is a review gate, not an implementation workflow and not a security audit. 
 5. Review the diff on two axes:
    - Standards axis: look for deviations from documented standards, local conventions, naming/layout patterns, schema or API conventions, test style, docs style, dependency behavior, and required verification.
    - Spec axis: look for missed acceptance criteria, behavior mismatches, partial implementation, unrequested scope, changed public contracts, missing tests or docs required by the spec, and stale issue assumptions.
+   - When the diff includes issue closure, archive moves, renames, or completion-status edits, treat that lifecycle movement as part of spec fit and check whether acceptance and required review evidence support it.
    - Keep findings in the correct axis. If a concern is both a standards and spec issue, report it once in the primary axis and cross-reference the other axis briefly.
 
 6. Report only evidence-backed findings:

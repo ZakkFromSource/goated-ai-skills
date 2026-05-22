@@ -10,6 +10,7 @@ Read this reference when choosing evidence for a completion claim, when the work
 | Build, lint, typecheck, or format is clean | The matching command output or tool report for the relevant scope | A different check passing, clean-looking code, editor hints |
 | Bug is fixed | Reproduction or regression proof for the original symptom, plus relevant surrounding checks | Code changed, plausible reasoning, unrelated tests |
 | Feature or issue is complete | Acceptance criteria checked against current behavior, source, artifacts, docs, and relevant tests | Passing tests that do not cover acceptance, implementation notes alone |
+| Issue or ticket can be archived or marked complete | Acceptance criteria checked against current behavior, source, artifacts, docs, relevant tests, and any required user, maintainer, PR, or project-defined review | Implementation done locally, ready for review, partial verification, or no explicit review evidence |
 | Review-ready | Current diff or patch inspected, relevant review gates run or intentionally skipped, known risks reported | "Looks good", uninspected generated output, stale review notes |
 | Docs are synced | Changed facts identified and relevant docs checked or updated | Updating one doc without checking affected docs, assuming docs are irrelevant |
 | Rendered output is correct | Rendered artifact, screenshot, preview, generated file, or exported output inspected after the latest change | Source text only when rendering can change layout or behavior |

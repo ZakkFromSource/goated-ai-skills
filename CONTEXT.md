@@ -49,7 +49,7 @@ These definitions are normative for this source repo. If another public doc uses
 
 - **PRD** - a product requirements document that scopes a product or delivery outcome clearly enough to feed issue breakdown.
 - **Issue handoff** - a local Markdown issue file under `issues/` that describes a planned implementation slice, acceptance criteria, blockers, and user stories for future agent work.
-- **Archived issue** - a completed implementation issue moved under `issues/archive/` with acceptance criteria checked off.
+- **Archived issue** - a completed implementation issue moved under `issues/archive/` after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete.
 - **ADR** - an architectural decision record stored under `docs/adr/` when a durable architecture decision needs to be recorded.
 - **Context matrix** - a durable target-project artifact, normally `docs/agents/context-matrix.md`, that tells future agents what to read first, second, and only if needed.
 - **Project context file** - a durable target-project artifact, normally root `CONTEXT.md`, that defines project boundaries, domain language, durable artifact meanings, and shared architecture vocabulary for that target project. This is distinct from this source repo's root `CONTEXT.md`.

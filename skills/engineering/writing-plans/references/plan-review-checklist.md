@@ -35,6 +35,7 @@ Use this checklist before executing a non-trivial, risky, delegated, resumable, 
 - Security review is included when trust boundaries, auth, permissions, user data, persistence, unsafe execution, or sensitive configuration may be affected.
 - Doc sync is included when behavior, interfaces, architecture, standards, configuration, tests, or docs may change.
 - Verification-before-completion is the final claim gate.
+- Issue closure, archive moves, completion status edits, or similar lifecycle cleanup are absent unless acceptance evidence and any required review are explicitly planned first.
 
 ## Placeholder Sweep
 
