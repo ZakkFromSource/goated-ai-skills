@@ -12,10 +12,10 @@ Record the upstream `triage` workflow as deferred/out of scope for V1. It is use
 
 ## Acceptance criteria
 
-- [ ] `.out-of-scope/future-automation-and-validation.md` records issue-tracker triage workflows as deferred beyond V1.
-- [ ] The deferred note mentions remote issue tracker state, label mapping, generated comments, closing issues, and reporter follow-up as reasons to defer.
-- [ ] No `triage` skill folder is added in V1.
-- [ ] Any useful future concepts are described as V1.1/post-V1 possibilities, not current acceptance blockers after this issue is complete.
+- [x] `.out-of-scope/future-automation-and-validation.md` records issue-tracker triage workflows as deferred beyond V1.
+- [x] The deferred note mentions remote issue tracker state, label mapping, generated comments, closing issues, and reporter follow-up as reasons to defer.
+- [x] No `triage` skill folder is added in V1.
+- [x] Any useful future concepts are described as V1.1/post-V1 possibilities, not current acceptance blockers after this issue is complete.
 
 ## Blocked by
 

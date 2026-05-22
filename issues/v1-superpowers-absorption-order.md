@@ -48,8 +48,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 14. `issues/archive/028-fold-zoom-out-into-architecture-design-map.md`
     - This existing addition is mostly independent and finished before `032`. Done.
 
-15. `issues/030-defer-triage-workflow.md`
-    - This existing deferral can be handled anytime before `032`.
+15. `issues/archive/030-defer-triage-workflow.md`
+    - This existing deferral was handled before `032`. Done.
 
 16. `issues/031-add-caveman-skill.md`
     - This existing addition can be handled anytime after the authoring contract is stable.

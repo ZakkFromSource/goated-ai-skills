@@ -21,6 +21,7 @@ These ideas are intentionally out of scope for V1.
 - Dependency, secret, and SAST scanner integrations.
 - Generated pipeline diagrams from metadata.
 - Remote issue tracker variants for local-first planning skills, such as publishing `prd-to-issues` slices to GitHub Issues, Linear, Jira, or similar systems.
+- Issue-tracker triage workflows for GitHub Issues, Linear, Jira, or similar systems, per [archived issue 030](../issues/archive/030-defer-triage-workflow.md). Defer to V1.1/post-V1 because they depend on remote issue tracker state, label mapping between canonical workflow states and tracker-specific labels, generated comments, closing issues, and reporter follow-up detection; future exploration can preserve concepts such as issue classification, attention buckets, durable agent briefs, needs-info notes, and out-of-scope memory without making them V1 acceptance blockers.
 
 ## Why Deferred
 

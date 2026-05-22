@@ -52,7 +52,7 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/027-add-diagnose-skill.md`
 - `issues/archive/028-fold-zoom-out-into-architecture-design-map.md`
 - `issues/archive/029-expand-framework-agnostic-skill-creator.md`
-- `issues/030-defer-triage-workflow.md`
+- `issues/archive/030-defer-triage-workflow.md`
 - `issues/031-add-caveman-skill.md`
 - `issues/032-v1-additions-doc-sync-and-acceptance-recheck.md`
 - `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
