@@ -6,7 +6,7 @@
 
 A compact operating system for serious AI agent work.
 
-GOATED AI Skills is a public source library of installable, framework-agnostic AI skill folders. Copy the skills into Codex, Claude Code, Hermes, OpenCode, or another tool-calling agent workflow, then use them inside your own projects to onboard context, plan work, implement with discipline, review changes, sync docs, and hand off cleanly.
+GOATED AI Skills is a open source library of installable, framework-agnostic AI skill folders. Copy the skills into Codex, Claude Code, Hermes, OpenCode, or another tool-calling agent workflow, then use them inside your own projects to onboard context, plan work, implement with discipline, review changes, sync docs, provide clean handoff points and more.
 
 This is not a prompt dump. It is a reusable skill stack for people who want their agents to work with context, standards, proof, and a bias towards quality over quickly producing slop.
 
@@ -169,6 +169,15 @@ issues/                PRDs and archived implementation issue handoffs.
 Public main is for portable public-core workflows. It should not depend on private notes, private project names, credentials, client data, handles, sensitive personal domains, or private workflow assumptions.
 
 Private forks or private deployments can add private or domain-specific skills using the same conventions, then sanitize anything intended for public contribution later.
+
+## Inspiration
+
+Some GOATED AI Skills were inspired by ideas from two public agent-skill projects:
+
+- [`mattpocock/skills`](https://github.com/mattpocock/skills), especially its practical, composable approach to engineering-focused agent skills.
+- [`obra/superpowers`](https://github.com/obra/superpowers), especially its agentic software-development methodology, verification discipline, and skill-driven workflow model.
+
+GOATED AI Skills is an independent, framework-agnostic library that adapts those inspirations into its own portable approach to serious agent work. Each skill folder is meant to be self-contained enough to copy, adapt, and use on its own, while the full stack is carefully designed to work together as a cohesive workflow across onboarding, delivery, review, documentation, and handoff.
 
 ## Maintainer Notes
 
