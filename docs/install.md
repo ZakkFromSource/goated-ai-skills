@@ -35,6 +35,10 @@ Installed skills should be self-contained. They may reference files inside their
 
 Use `using-goated-ai-skills` as the portable router when an installed stack needs to choose the right GOATED workflow. It is docs-first guidance for skill selection, not runtime bootstrap, hook installation, automatic loading, or adapter manifest generation.
 
+## Next: How To Use The Stack
+
+After the skill folders are copied or adapted into your agent framework, read [how-to-use.md](how-to-use.md) for the human operator manual. It explains the onboarding and delivery pipelines, what each current skill does, and how to prompt the stack during real project work.
+
 ## Codex Notes
 
 For Codex-style skill systems, copy skill folders into the configured skills directory or project skill location supported by your environment. Keep the folder name and `SKILL.md` together.

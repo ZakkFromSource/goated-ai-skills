@@ -24,7 +24,7 @@ GOATED AI Skills has three layers:
 2. **Target Project Onboarding** - installed skills prepare a user's project for serious agent work by mapping sources, calibrating project context and standards, and integrating with the chosen agent instructions.
 3. **Target Project Delivery** - installed skills help perform real project work through planning, architecture blueprints, prototyping, PRDs, issues, TDD, review, docs, commit messages, and handoff.
 
-Start with [docs/install.md](docs/install.md) for installation and adaptation guidance.
+Start with [docs/install.md](docs/install.md) for installation and adaptation guidance. After installation, use [docs/how-to-use.md](docs/how-to-use.md) as the human operator manual for the installed skill stack.
 
 ## Design Principles
 
@@ -43,6 +43,7 @@ AGENTS.md              Thin adapter for agents contributing to this repo.
 CLAUDE.md              Thin adapter for Claude-style contributors to this repo.
 CONTEXT.md             Public context for this skill library.
 docs/install.md        Docs-first install and adaptation guidance.
+docs/how-to-use.md     Human operator manual for using the installed skill stack.
 docs/adr/              Architectural Decision Records.
 .out-of-scope/         Public future ideas and deferred upgrades.
 .local/                Ignored private notes and scratch work for local source-repo work.

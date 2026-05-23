@@ -52,6 +52,12 @@ Use context in layers:
 
 Do not bulk-read the repo when a targeted read will do. Do not create actual skill folders or `SKILL.md` files unless the current task explicitly calls for skill implementation.
 
+## GOATED Skill Routing
+
+Use `skills/agent-workflows/using-goated-ai-skills/SKILL.md` as the portable router for choosing a GOATED skill path. It distinguishes source-repo maintenance, skill installation/adaptation, target-project onboarding, target-project delivery, tiny one-off tasks, and explicit user overrides while respecting user and project instructions.
+
+This file remains the maintainer contract for this source repo. When documenting or configuring installed skill usage, point agents and thin adapters to the installed `using-goated-ai-skills` router instead of duplicating full onboarding or delivery workflows here.
+
 ## Subagent Policy
 
 Workflows in this repo should be subagent-aware and single-agent-compatible.
@@ -71,45 +77,13 @@ If subagents are unavailable, run the same workflow sequentially with a narrower
 
 ## Target Project Onboarding Workflow
 
-When the relevant V1 skills are installed into an agent framework, use this workflow inside a target project before serious/repeated work:
-
-```text
-session-start-progressive-disclosure
--> grill-with-docs
--> context-matrix-map
--> project-context-calibration
--> project-standards-calibration
--> agent-instructions-integrator
--> architecture-design-map optional
--> plan-codebase-architecture optional
--> doc-sync
--> handoff optional
-```
+When the relevant V1 skills are installed into an agent framework, start with the installed `using-goated-ai-skills` router. It will choose the onboarding path, skip unnecessary ceremony for tiny one-off tasks, and point to the next relevant installed skill.
 
 Durable target-project artifacts should be tracked, including root `CONTEXT.md` and agent artifacts under `docs/agents/`. Handoffs default to OS temp under `goated-handoffs/<project-name>/`; other session/private workspace artifacts should use ignored `.local/`.
 
 ## Target Project Delivery Workflow
 
-When the relevant V1 skills are installed into an agent framework, use this workflow inside a target project for delivery work:
-
-```text
-session-start-progressive-disclosure
--> grill-with-docs when gated mandatory
--> prototype optional
--> write-a-prd
--> plan-codebase-architecture optional
--> prd-to-issues
--> prototype optional per focused issue
--> writing-plans
--> subagent-driven-development optional for larger, riskier, or parallelizable implementation
--> tdd
--> standards-and-spec-review
--> code-security-review
--> doc-sync
--> verification-before-completion
--> commit-message
--> handoff optional
-```
+When the relevant V1 skills are installed into an agent framework, start with the installed `using-goated-ai-skills` router for delivery work. It will classify the request, apply user and project instruction precedence, and point to the next relevant installed skill instead of requiring agents to memorize the full stack.
 
 ## Public Boundary
 
