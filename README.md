@@ -8,15 +8,15 @@ A compact operating system for serious AI agent work.
 
 GOATED AI Skills is a open source library of installable, framework-agnostic AI skill folders. Copy the skills into Codex, Claude Code, Hermes, OpenCode, or another tool-calling agent workflow, then use them inside your own projects to onboard context, plan work, implement with discipline, review changes, sync docs, provide clean handoff points and more.
 
-This is not a prompt dump. It is a reusable skill stack for people who want their agents to work with context, standards, proof, and a bias towards quality over quickly producing slop.
+This is not a prompt dump. It is a reusable skill stack for people who want their agents to work with context, standards, proof, and a bias towards quality over quickly producing slop, whilst still taking advantage of the power of AI assisted engineering.
 
 ## Why This Exists
 
 The typical agent workflow helps you ship code fast, and gets messy even faster.
 
-One project has a good PRD prompt. Another has a review checklist. A third has a handoff habit, a context map, a test-driven development loop, or a way to keep docs from drifting. Most of that knowledge lives in scattered snippets, tool-specific setup, old chat history, or somebody's private repo.
+One project has a good PRD prompt. Another has a review checklist. A third has a handoff habit, a context map, a test-driven development loop, or a way to keep docs from drifting. Most of that knowledge lives in scattered snippets, tool-specific setup, old chat history, or some private repo.
 
-GOATED AI Skills packages those workflows as self-contained skill folders that can travel between agent frameworks and target projects. The goal is simple: give your agents a reliable set of skills for doing real work without forcing every project to reinvent the wheel.
+GOATED AI Skills packages those workflows as self-contained skill folders that can travel between agent frameworks and target projects. The goal is simple: give your agents a reliable set of skills for doing real work without forcing every project to reinvent the wheel. This allows you to easily switch between projects, whilst maintaining a consistent agentic AI assisted workflow, without spending hours setting it up from scratch every single time.
 
 ## Quick Start
 
@@ -34,7 +34,7 @@ V1 is docs-first. There is no installer script, automatic framework detection, r
 
 ## What You Get
 
-GOATED AI Skills helps agents move from "I can edit files" to "I can carry out work responsibly."
+GOATED AI Skills helps agents move from "I can edit files and hope it's what you want" to "I can carry out work responsibly, with full knowledge of what you expect from me."
 
 - **Progressive disclosure**: load the smallest useful context first, then go deeper only when the task needs it.
 - **Target-project onboarding**: create durable project context, source maps, standards profiles, and thin agent instruction adapters.
@@ -105,7 +105,7 @@ The V1 public core is complete, and all current public-core skills are portable,
 
 Use these as human-readable maps. Installed agents should still begin with `using-goated-ai-skills` so user and project instructions can choose the right path.
 
-### Onboard A Target Project
+### Onboard a Target Project
 
 ```text
 session-start-progressive-disclosure
@@ -120,7 +120,7 @@ session-start-progressive-disclosure
 -> handoff optional
 ```
 
-### Deliver A Real Change
+### Deliver a Real Change
 
 ```text
 session-start-progressive-disclosure
