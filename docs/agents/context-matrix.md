@@ -49,7 +49,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Public context and root docs | `CONTEXT.md`, `README.md` | Domain language, source repo boundary, root layout, V1 model, and public/private boundary. | Any public docs, product model, or skill-library work. |
 | Install and decision docs | `docs/install.md`, `docs/adr/` | Docs-first installation model, deferred automation notes, and accepted ADRs. | Install/adaptation changes or accepted architecture decisions. |
 | Agent context artifacts | `docs/agents/` | Durable routing and standards artifacts for agents working in this repo. | Serious future sessions after these artifacts exist. |
-| Product and issue handoffs | `issues/`, `issues/archive/` | V1 PRD, active planned issues, and completed implementation issues. | Implementing a specific skill, tracing blockers, or validating V1 acceptance. |
+| Product and issue handoffs | `issues/`, `issues/archive/` | V1 PRDs, archived issue handoffs, and any future active implementation issues. | Implementing a specific skill, tracing blockers, validating acceptance history, or adding future issues. |
 | Skill library | `skills/` | Public category indexes and implemented installable skill folders. | Creating, editing, reviewing, or installing skills. |
 | Local/private and deferred areas | `.local/`, OS temp `goated-handoffs/<project-name>/`, `.out-of-scope/` | Ignored private notes, temporary handoffs, and public deferred ideas. | Only when explicitly relevant; avoid `.local/` by default. |
 
@@ -70,8 +70,8 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Source | Scope | Status | Notes |
 | --- | --- | --- | --- |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Public core product model, skill schema, V1 skill set, onboarding and delivery workflows. | Draft reference PRD. | Primary spec until superseded by accepted ADRs or updated PRDs. |
-| `issues/archive/*.md` | Completed scaffold, skill implementation, follow-up upgrade, and doc-sync handoffs. | Archived. | As of 2026-05-23, issues `001` through `020` and `022` through `043` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
-| `issues/*.md` excluding `issues/archive/` and PRDs | Planned future V1 implementation slices and final acceptance pass. | Active issue handoffs. | As of 2026-05-23, the active handoff is `021`; read the current issue before implementing or reviewing that slice. |
+| `issues/archive/*.md` | Completed scaffold, skill implementation, follow-up upgrade, doc-sync, and final acceptance handoffs. | Archived. | As of 2026-05-23, issues `001` through `043` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
+| `issues/*.md` excluding `issues/archive/` and PRDs | Future implementation or acceptance handoffs if added after V1. | No active handoffs currently. | As of 2026-05-23, no top-level implementation handoff remains; read any future active issue before implementing or reviewing that slice. |
 | `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md` | Accepted V1 runtime bootstrap and adapter automation decision. | Accepted ADR. | V1 allows narrow adapter notes only; runtime bootstrap, plugin manifests, hooks, installers, automatic loading, and adapter automation require future scoped work. |
 | `docs/adr/README.md` | ADR placement and policy. | ADR index. | Read before adding or changing architectural decision records. |
 | `docs/agents/context-matrix.md` | Future-agent read order for this repo. | Maintained routing artifact. | Refresh when repo structure, issue state, skill inventory, or source-evidence paths change. |
@@ -83,11 +83,11 @@ Use this map to choose the smallest useful context before working in the GOATED 
 - No package manifest, build script, lint command, formatter command, or test runner was found in the discovery pass.
 - `.local/` was intentionally not read because it is ignored private/local workspace context.
 - `.out-of-scope/` was sampled only for the future automation and validation deferral file; read it narrowly for scope or deferred-feature questions.
-- Active issue `021` and issue `032` closeout evidence were sampled for doc-sync drift, but future work should still open the specific issue and blocker chain for the requested change.
+- Archived issue `021` and issue `032` closeout evidence were sampled for doc-sync drift, but future work should still open the specific issue and blocker chain for the requested change.
 - Installed Codex skill copies can drift from source after manual copying; compare file hashes when testing installation behavior.
 
 ## Last Updated
 
 - Date: 2026-05-23
 - Updated by: Codex
-- Evidence used: installed `session-start-progressive-disclosure`, `context-matrix-map`, `project-standards-calibration`, and `doc-sync`; `AGENT.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/agents/project-standards.md`; category READMEs under `skills/`; implemented skill inventory under `skills/`; `docs/adr/README.md`; `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md`; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; active issue `021`; issue `032` closeout evidence; archived issues `001` through `020` and `022` through `043`; `rg --files`; targeted issue and stale-wording scans with `rg -n`; `git rev-parse --show-toplevel`; `git status --short`; manifest and test discovery `rg` commands.
+- Evidence used: installed `session-start-progressive-disclosure`, `context-matrix-map`, `project-standards-calibration`, and `doc-sync`; `AGENT.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/agents/project-standards.md`; category READMEs under `skills/`; implemented skill inventory under `skills/`; `docs/adr/README.md`; `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md`; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; archived issue `021`; issue `032` closeout evidence; archived issues `001` through `043`; `rg --files`; targeted issue and stale-wording scans with `rg -n`; `git rev-parse --show-toplevel`; `git status --short`; manifest and test discovery `rg` commands.

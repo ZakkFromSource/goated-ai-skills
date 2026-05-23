@@ -492,10 +492,13 @@ session-start-progressive-disclosure
 -> plan-codebase-architecture optional
 -> prd-to-issues
 -> prototype optional per focused issue
+-> writing-plans
+-> subagent-driven-development optional for larger, riskier, or parallelizable implementation
 -> tdd
 -> standards-and-spec-review
 -> code-security-review
 -> doc-sync
+-> verification-before-completion
 -> commit-message
 -> handoff optional
 ```
@@ -507,11 +510,14 @@ Expected outputs:
 - scoped PRD;
 - optional feature-specific architecture plan;
 - vertical-slice issues;
+- just-in-time implementation plan;
 - behavior-focused tests;
 - implemented change;
+- delegated implementation/review evidence when useful;
 - standards/spec review;
 - security review;
 - synchronized docs;
+- fresh verification evidence before completion claims;
 - commit message;
 - optional temporary handoff.
 

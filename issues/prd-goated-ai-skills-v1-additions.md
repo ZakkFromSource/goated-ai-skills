@@ -55,7 +55,7 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 - [x] `framework-agnostic-skill-creator` replaces the current porting skill as the active public workflow name.
 - [x] `triage` is recorded as deferred/out of scope for V1.
 - [x] `caveman` is implemented under `skills/productivity/` and follows the lean schema.
-- [x] Public docs and active issue blockers reflect the additions before final V1 acceptance.
+- [x] Public docs and issue blockers reflect the additions before final V1 acceptance.
 
 ## Implementation Notes
 
@@ -71,7 +71,7 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 - Confirm renamed links and active references resolve.
 - Check that new and edited skills are self-contained after installation.
 - Run a public-boundary pass for private names, credentials, client context, sensitive assumptions, and source repo/runtime confusion.
-- Re-check this PRD, generated issue handoffs, `issues/021-v1-acceptance-public-boundary-pass.md`, and affected docs before V1 acceptance.
+- Re-check this PRD, generated issue handoffs, `issues/archive/021-v1-acceptance-public-boundary-pass.md`, and affected docs before V1 acceptance.
 
 ## Risks And Mitigations
 
@@ -92,7 +92,7 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 
 - User-approved plan in this session.
 - `issues/prd-goated-ai-skills-v1-public-core.md`
-- `issues/021-v1-acceptance-public-boundary-pass.md`
+- `issues/archive/021-v1-acceptance-public-boundary-pass.md`
 - `skills/agent-workflows/framework-agnostic-skill-creator/SKILL.md`
 - `skills/engineering/architecture-design-map/SKILL.md`
 - Upstream diagnose: https://github.com/mattpocock/skills/tree/main/skills/engineering/diagnose

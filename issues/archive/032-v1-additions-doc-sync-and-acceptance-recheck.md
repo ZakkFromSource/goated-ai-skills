@@ -10,7 +10,7 @@ HITL
 
 ## What to build
 
-Run documentation synchronization and a final acceptance recheck after the V1 additions and Superpowers absorption issues are implemented or explicitly deferred. This issue prepares the repo to return to `issues/021-v1-acceptance-public-boundary-pass.md`.
+Run documentation synchronization and a final acceptance recheck after the V1 additions and Superpowers absorption issues are implemented or explicitly deferred. This issue prepares the repo to return to `issues/archive/021-v1-acceptance-public-boundary-pass.md`.
 
 ## Acceptance criteria
 
@@ -21,7 +21,7 @@ Run documentation synchronization and a final acceptance recheck after the V1 ad
 - [x] `issues/prd-goated-ai-skills-v1-superpowers-absorption.md`, `issues/v1-superpowers-absorption-order.md`, and issues `033` through `043` are consistent with the final implemented or deferred scope.
 - [x] Superpowers absorption docs preserve the V1 docs-first distribution model unless a HITL decision explicitly changed it.
 - [x] Public docs contain no private names, handles, credentials, client context, sensitive personal domains, or private workflow assumptions.
-- [x] `issues/021-v1-acceptance-public-boundary-pass.md` can be resumed with this additions issue set resolved or explicitly deferred.
+- [x] `issues/archive/021-v1-acceptance-public-boundary-pass.md` can be resumed with this additions issue set resolved or explicitly deferred.
 
 ## Blocked by
 

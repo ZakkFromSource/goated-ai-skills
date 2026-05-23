@@ -124,7 +124,7 @@ GOATED should absorb the portable parts of these conventions without copying Sup
 - Verify every upstream source link is present in this PRD or in relevant issue notes.
 - Run targeted searches for stale or ambiguous names: `framework-agnostic-skill-porting`, `using-superpowers`, `writing-plans`, `verification-before-completion`, and new issue paths.
 - Run a public-boundary review for private names, credentials, client context, sensitive personal domains, and source-repo/runtime confusion.
-- Re-read `issues/archive/032-v1-additions-doc-sync-and-acceptance-recheck.md` and `issues/021-v1-acceptance-public-boundary-pass.md` after blocker updates.
+- Re-read `issues/archive/032-v1-additions-doc-sync-and-acceptance-recheck.md` and `issues/archive/021-v1-acceptance-public-boundary-pass.md` after blocker updates.
 
 ## Risks And Mitigations
 

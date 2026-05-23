@@ -57,8 +57,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 17. `issues/archive/032-v1-additions-doc-sync-and-acceptance-recheck.md`
     - Run after all V1 additions and Superpowers absorption issues are complete or explicitly deferred. Done.
 
-18. `issues/021-v1-acceptance-public-boundary-pass.md`
-    - Final V1 public-boundary and acceptance pass.
+18. `issues/archive/021-v1-acceptance-public-boundary-pass.md`
+    - Final V1 public-boundary and acceptance pass. Done.
 
 ## Notes For Future Agents
 
