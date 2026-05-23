@@ -1,6 +1,6 @@
 # V1 Superpowers Absorption Issue Order
 
-Last updated: 2026-05-22.
+Last updated: 2026-05-23.
 
 Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-absorption.md`. For each issue, future agents should read the issue itself, inspect the current source files named there, and use `grill-with-docs` before implementation when the work is more than a tiny mechanical edit.
 
@@ -51,8 +51,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 15. `issues/archive/030-defer-triage-workflow.md`
     - This existing deferral was handled before `032`. Done.
 
-16. `issues/031-add-caveman-skill.md`
-    - This existing addition can be handled anytime after the authoring contract is stable.
+16. `issues/archive/031-add-caveman-skill.md`
+    - This existing addition can be handled anytime after the authoring contract is stable. Done.
 
 17. `issues/032-v1-additions-doc-sync-and-acceptance-recheck.md`
     - Run after all V1 additions and Superpowers absorption issues are complete or explicitly deferred.

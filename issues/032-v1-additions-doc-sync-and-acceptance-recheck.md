@@ -29,7 +29,7 @@ Run documentation synchronization and a final acceptance recheck after the V1 ad
 - `issues/archive/028-fold-zoom-out-into-architecture-design-map.md`
 - `issues/archive/029-expand-framework-agnostic-skill-creator.md`
 - `issues/archive/030-defer-triage-workflow.md`
-- `issues/031-add-caveman-skill.md`
+- `issues/archive/031-add-caveman-skill.md`
 - `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
 - `issues/archive/034-add-using-goated-ai-skills-router.md`
 - `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md`

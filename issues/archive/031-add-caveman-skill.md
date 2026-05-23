@@ -12,13 +12,13 @@ Implement `caveman` under `skills/productivity/`. The skill should provide a use
 
 ## Acceptance criteria
 
-- [ ] `skills/productivity/caveman/SKILL.md` exists and follows the lean schema.
-- [ ] The skill activates on explicit compact-mode requests such as "caveman mode", "use caveman", "less tokens", or "be brief".
-- [ ] The skill defines when compact mode persists and how the user exits it.
-- [ ] The workflow compresses prose without changing code blocks, exact errors, technical terms, warnings, assumptions, or required output formats.
-- [ ] Examples use simple Python and PostgreSQL, replacing upstream examples.
-- [ ] Guardrails require normal clarity for destructive confirmations, security warnings, multi-step instructions that could be misread, and user confusion.
-- [ ] MIT attribution is included if substantial upstream wording is reused.
+- [x] `skills/productivity/caveman/SKILL.md` exists and follows the lean schema.
+- [x] The skill activates on explicit compact-mode requests such as "caveman mode", "use caveman", "less tokens", or "be brief".
+- [x] The skill defines when compact mode persists and how the user exits it.
+- [x] The workflow compresses prose without changing code blocks, exact errors, technical terms, warnings, assumptions, or required output formats.
+- [x] Examples use simple Python and PostgreSQL, replacing upstream examples.
+- [x] Guardrails require normal clarity for destructive confirmations, security warnings, multi-step instructions that could be misread, and user confusion.
+- [x] MIT attribution is included if substantial upstream wording is reused.
 
 ## Blocked by
 
@@ -35,3 +35,4 @@ Implement `caveman` under `skills/productivity/`. The skill should provide a use
 - Keep the public skill name `caveman`.
 - Implement after the authoring-contract updates in `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md` are complete.
 - Do not let brevity override GOATED output contracts, review findings, user confirmations, uncertainty, or security/safety language.
+- The installable skill intentionally omits upstream attribution, license text, and reference links per maintainer instruction; public project attribution will be handled separately before publication.
