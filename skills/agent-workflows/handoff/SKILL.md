@@ -22,6 +22,7 @@ depends_on:
     - context-matrix-map when a target project has docs/agents/context-matrix.md
     - project-context-calibration when project language or boundaries affected the work
     - project-standards-calibration when standards affected the work
+    - verification-before-completion before claiming the handoff is complete, checked, or ready for a future session
   fallback: If companion skills or durable artifacts are unavailable, write a compact note with explicit gaps and lower confidence.
 adapters:
   codex: usable
@@ -97,6 +98,7 @@ Use this skill at the end of onboarding, delivery, review, planning, or interrup
 7. Finalize and report:
    - Re-read the handoff for concision and source references.
    - Confirm it does not duplicate long artifacts.
+   - Use `verification-before-completion` before claiming the handoff is complete, checked, or ready for a future session.
    - Report the absolute handoff path and the most important next step.
 
 ## Output Contract

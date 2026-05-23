@@ -6,7 +6,7 @@ This repo is not a project template that users are expected to clone into every 
 
 ## Current State
 
-This repo currently contains the V1 scaffold, PRDs, archived implementation issue handoffs, and the implemented WIP skill folders completed so far through approved issues. The V1 additions, Superpowers absorption issue set, and final V1 acceptance pass are complete or explicitly deferred.
+This repo currently contains the completed V1 public-core skill set, PRDs, archived implementation issue handoffs, and implemented skill folders that still intentionally declare `status: wip`. The V1 additions, Superpowers absorption issue set, and final V1 acceptance pass are complete.
 
 New skill folders and `SKILL.md` files should be added only when a specific approved implementation issue calls for them.
 
@@ -75,7 +75,7 @@ Every implemented skill should declare a status:
 
 ## Target Project Onboarding
 
-After the skill pack is installed into an agent framework, use this workflow inside a target project before durable, cross-file, PRD-level, architectural, or repeated work. Tiny one-off tasks can skip it.
+The sequence below is a human summary of the onboarding route. Installed agents and target-project adapters should start with the installed `using-goated-ai-skills` router, not this root README; the router will choose when this path applies. Tiny one-off tasks can skip the full route.
 
 ```text
 session-start-progressive-disclosure
@@ -94,7 +94,7 @@ Durable target-project artifacts should be tracked, such as root `CONTEXT.md`, `
 
 ## Target Project Delivery
 
-Use this workflow inside a target project after the relevant skills are installed and, for serious work, after onboarding.
+The sequence below is a human summary of the delivery route after the relevant skills are installed and, for serious work, after onboarding. Installed agents should still start with the installed `using-goated-ai-skills` router so user and project instructions can choose or skip steps safely.
 
 ```text
 session-start-progressive-disclosure

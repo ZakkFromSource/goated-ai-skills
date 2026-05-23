@@ -21,6 +21,7 @@ depends_on:
     - session-start-progressive-disclosure before calibrating a new or unfamiliar target project
     - context-matrix-map when a target project already has or needs docs/agents/context-matrix.md
     - project-context-calibration when root CONTEXT.md exists or project language affects standards
+    - verification-before-completion before claiming the standards profile is complete, checked, or ready for future agents
   fallback: If companion skills are unavailable, inspect the minimum relevant project files directly and state lower confidence.
 adapters:
   codex: usable
@@ -90,6 +91,7 @@ Use this skill during target-project onboarding, before repeated delivery work, 
    - Do not turn the profile into a full architecture map, context matrix, security review, or onboarding tutorial.
    - Defer missing context-map work to `context-matrix-map`.
    - Defer code-quality findings from a specific diff to `standards-and-spec-review` or `code-security-review`.
+   - Use `verification-before-completion` before claiming the standards profile is complete, checked, or ready for future agents.
 
 ## Output Contract
 

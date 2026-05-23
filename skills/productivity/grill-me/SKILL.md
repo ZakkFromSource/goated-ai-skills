@@ -8,7 +8,7 @@ triggers:
   - user says "grill me" about an idea, topic, question, plan, choice, or brainstorming thread
   - user asks to be challenged, interviewed, pressure-tested, or walked through a decision one question at a time
   - user wants to explore assumptions, tradeoffs, options, implications, or next moves using only conversation context and user-provided notes
-  - user needs lightweight alignment before deciding whether to keep brainstorming, make a choice, write a PRD, prototype, implement, or switch to a docs-grounded grill
+  - user needs lightweight alignment before deciding whether to keep brainstorming, make a choice, use `write-a-prd`, use `prototype`, create an implementation plan, implement, or switch to a docs-grounded grill
 outputs:
   - clarified topic, central question, and desired outcome
   - assumptions, tradeoffs, options, and tensions surfaced during the interview
@@ -20,6 +20,7 @@ depends_on:
     - grill-with-docs when engineering/project context, domain language, docs, standards, ADRs, code behavior, tests, schemas, or source evidence matter
     - write-a-prd when the user wants the clarified topic turned into a scoped PRD
     - prototype when the user wants to resolve a specific unknown through a disposable experiment
+    - writing-plans when the clarified topic is already scoped enough for an executable implementation plan
   fallback: If companion skills are unavailable, continue the lightweight interview and clearly label unsourced assumptions.
 adapters:
   codex: usable
@@ -81,7 +82,7 @@ Use `grill-with-docs` instead when engineering/project context matters, includin
 
 6. Stop at shared understanding:
    - Stop when the topic is resolved enough for the next action, or when a remaining blocker needs another stakeholder, more reflection, or project evidence.
-   - Recommend the next direct action or companion skill, such as continuing the brainstorm, making a choice, writing a PRD, prototyping, implementing, or switching to `grill-with-docs`.
+   - Recommend the next direct action or companion skill, such as continuing the brainstorm, making a choice, `write-a-prd`, `prototype`, `prd-to-issues`, `writing-plans`, implementing directly when tiny and clear, or switching to `grill-with-docs`.
    - If the user chooses to proceed with known ambiguity, name the residual risk clearly.
 
 ## Output Contract

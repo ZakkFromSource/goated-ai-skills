@@ -20,6 +20,7 @@ depends_on:
     - session-start-progressive-disclosure before mapping a new or unfamiliar target project
     - project-context-calibration after this map when project language needs a durable context file
     - project-standards-calibration after this map when standards need a durable profile
+    - verification-before-completion before claiming the context matrix is complete, evidence-backed, or ready for future agents
   fallback: If companion skills are unavailable, inspect the minimum relevant project files directly and state lower confidence.
 adapters:
   codex: usable
@@ -90,6 +91,7 @@ Use this skill during target-project onboarding or when a project lacks a reliab
    - Do not keep exploring to explain every module.
    - Defer architecture diagrams, standards profiles, security review, or detailed delivery planning to companion skills.
    - If the project is too large to map in one pass, write a partial matrix with clear gaps and recommended next scans.
+   - Use `verification-before-completion` before claiming the matrix is complete, evidence-backed, or ready for future agents.
 
 ## Output Contract
 

@@ -27,6 +27,7 @@ depends_on:
     - project-standards-calibration when standards influence architecture artifact location or diagram style
     - grill-with-docs when source evidence conflicts or map scope needs a product decision
     - doc-sync after writing a durable architecture-map artifact
+    - verification-before-completion before claiming a durable map is complete, evidence-backed, or ready for downstream work
   fallback: If companion skills or durable project docs are unavailable, inspect the minimum relevant project evidence directly and state lower confidence.
 adapters:
   codex: usable
@@ -114,6 +115,7 @@ Use project domain terms from target-project evidence when naming map nodes. Use
    - For durable output, write or update `docs/agents/architecture-map.md` unless the user requested another path.
    - For inline output, include the Mermaid diagram, explanation, source references, and uncertainty notes directly in the response.
    - Do not update `CONTEXT.md`, ADRs, standards, or source code from this skill unless the user separately asks; route follow-up documentation drift to `doc-sync`.
+   - Use `verification-before-completion` before claiming a durable map is complete, evidence-backed, or ready for downstream work.
 
 ## Output Contract
 

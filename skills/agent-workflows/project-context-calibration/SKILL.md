@@ -23,6 +23,7 @@ depends_on:
     - grill-with-docs when project language, boundaries, or artifact definitions require user decisions
     - project-standards-calibration after this context file when standards need a separate durable profile
     - agent-instructions-integrator after this context file when agent routing should reference root CONTEXT.md
+    - verification-before-completion before claiming the context file is complete, evidence-backed, or ready for future agents
   fallback: If companion skills or project docs are unavailable, inspect the minimum relevant local evidence directly and mark lower-confidence gaps in CONTEXT.md.
 adapters:
   codex: usable
@@ -105,6 +106,7 @@ Use this skill during target-project onboarding, before repeated delivery work, 
    - Defer standards, coding conventions, and enforcement levels to `project-standards-calibration`.
    - Defer diagrams and source-grounded architecture maps to `architecture-design-map`.
    - Defer refactor recommendations to architecture improvement or delivery-specific workflows.
+   - Use `verification-before-completion` before claiming the context file is complete, evidence-backed, or ready for future agents.
 
 ## Output Contract
 

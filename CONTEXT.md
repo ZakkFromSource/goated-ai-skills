@@ -14,11 +14,14 @@ These definitions are normative for this source repo. If another public doc uses
 - **Skill pack distribution** - Layer 0 of the product model: users clone, download, copy, install, or adapt skill folders from this repo into their own agent workflow.
 - **Agent framework** - the tool or environment that discovers and runs skills, commands, prompts, or instructions, such as Codex, Claude Code, Hermes, OpenCode, or a generic tool-calling agent.
 - **Installed skill** - a copied or installed skill folder inside a user's chosen agent framework. It must remain useful without loading this repo's root `AGENT.md`, `README.md`, or `CONTEXT.md`.
+- **Installed skill stack** - the set of copied or installed GOATED skill folders available to an agent framework for one user or target project. The stack is routed by installed skill files, not by this source repo's root docs.
 - **Target project** - a project where installed skills are used to do onboarding or delivery work. In public docs this usually means a user's downstream project; when this repo is the work target, source repo maintenance rules still win.
 
 ### V1 Workflow Model
 
 - **Docs-first installation** - the V1 installation model: users manually copy, install, or adapt completed skill folders using documentation instead of installer automation.
+- **Portable router** - an installed skill, currently `using-goated-ai-skills`, that classifies the task surface and points to the next GOATED skill or direct action without requiring runtime bootstrap, hooks, generated manifests, or source-repo root docs.
+- **Human operator manual** - a public guide for people installing, adapting, or using the skill stack, such as `docs/how-to-use.md`. It summarizes routes and references but is not a runtime dependency for installed agents.
 - **Target Project Onboarding** - preparing a target project for serious agent work by mapping sources, calibrating project context and standards, and routing the chosen agent framework to installed skills and durable project artifacts.
 - **Target Project Delivery** - moving one target-project change from clarified intent through planning, architecture blueprinting when useful, implementation, verification, documentation, and handoff.
 - **Public core workflow** - the portable V1 workflow set intended for public main, spanning onboarding and delivery without private project assumptions.
@@ -39,6 +42,7 @@ These definitions are normative for this source repo. If another public doc uses
 - **Output** - the artifact, decision, summary, change, or verification result a skill is expected to produce.
 - **Dependency** - another skill, project artifact, command, source, or workflow step the current skill requires, prefers, or can gracefully work without. Skill frontmatter should distinguish hard dependencies, soft dependencies, and fallback behavior when relevant.
 - **Skill adapter** - a small framework-specific note or compatibility marker for using a skill in Codex, Claude Code, Hermes, OpenCode, or a generic agent environment. In `SKILL.md` frontmatter this appears as `adapters`.
+- **Thin adapter** - a short target-project or framework instruction layer that points agents to installed skills and durable project artifacts without copying full skill bodies or treating one framework's filename convention as universal.
 - **Category** - the public V1 skill grouping. Allowed V1 categories are `agent-workflows`, `engineering`, and `productivity`.
 - **Classification** - the portability label for a skill: `portable` means safe for any compatible agent or project; `domain-specific` means reusable with a named public domain or project assumption; `private` means intended for private forks or private deployments, not public main.
 - **Status** - the maturity label for a skill: `stable` means recommended for normal use; `wip` means experimental or still being sharpened; `deprecated` means kept for reference only.
@@ -49,6 +53,9 @@ These definitions are normative for this source repo. If another public doc uses
 
 - **PRD** - a product requirements document that scopes a product or delivery outcome clearly enough to feed issue breakdown.
 - **Issue handoff** - a local Markdown issue file under `issues/` that describes a planned implementation slice, acceptance criteria, blockers, and user stories for future agent work.
+- **Fresh-agent-ready issue** - a local issue handoff containing enough linked context, first reads, acceptance criteria, proof expectations, blockers, and exclusions for a future agent to start without hidden chat history, ignored notes, or unlinked upstream context.
+- **AFK issue** - an issue slice that can proceed without a required human decision, design review, credential, external access, or approval gate.
+- **HITL issue** - an issue slice that requires human-in-the-loop input before or during implementation, such as a product decision, design review, credential, external access, or approval.
 - **Archived issue** - a completed implementation issue moved under `issues/archive/` after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete.
 - **ADR** - an architectural decision record stored under `docs/adr/` when a durable architecture decision needs to be recorded.
 - **Context matrix** - a durable target-project artifact, normally `docs/agents/context-matrix.md`, that tells future agents what to read first, second, and only if needed.

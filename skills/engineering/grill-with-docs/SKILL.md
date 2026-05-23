@@ -23,6 +23,7 @@ depends_on:
     - project-context-calibration when project language, boundaries, or architecture vocabulary need durable capture
     - project-standards-calibration when standards affect the decision
     - doc-sync when settled decisions require documentation follow-up after the grill
+    - verification-before-completion before claiming the grill brief is complete, checked, or ready for implementation
   fallback: If project docs or companion skills are unavailable, inspect the minimum relevant local evidence and state lower confidence before asking questions.
 adapters:
   codex: usable
@@ -97,7 +98,8 @@ Use this skill before costly or ambiguous work so the agent and user reach share
 
 7. Stop at shared understanding:
    - Stop when implementation can begin safely, the next skill should take over, or a blocker needs user or stakeholder input.
-   - Recommend the next direct action or skill, such as `write-a-prd`, `context-matrix-map`, `project-context-calibration`, `project-standards-calibration`, `architecture-design-map`, `tdd`, or `doc-sync`.
+   - Recommend the next direct action or skill, such as `context-matrix-map`, `project-context-calibration`, `project-standards-calibration`, `prototype`, `write-a-prd`, `prd-to-issues`, `writing-plans`, `plan-codebase-architecture`, `architecture-design-map`, `tdd`, or `doc-sync`.
+   - Use `verification-before-completion` before claiming the brief is complete, checked, or ready for implementation.
    - If the user decides to proceed with known ambiguity, name the risk clearly.
 
 ## Output Contract

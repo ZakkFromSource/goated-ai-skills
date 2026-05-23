@@ -346,7 +346,7 @@ Use prompts like these after the skill folders are installed.
 ### Onboard a project
 
 ```text
-Use GOATED AI Skills to onboard this project for serious future agent work. Start with session-start-progressive-disclosure, then grill-with-docs if needed, and create the durable context, standards, and instruction-routing artifacts the stack expects.
+Use GOATED AI Skills to onboard this project for serious future agent work. Start with using-goated-ai-skills, let it route to session-start-progressive-disclosure and grill-with-docs as needed, and create the durable context, standards, and instruction-routing artifacts the stack expects.
 ```
 
 ### Start a delivery change
@@ -384,6 +384,8 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If a claim sounds like "done", "correct", "passing", "synced", or "ready", use `verification-before-completion` first.
 
 ## Source References
+
+These references are for humans maintaining, installing, or adapting the library. Installed agents should rely on their local installed `SKILL.md` files and start with installed `using-goated-ai-skills`; they should not require this source repo's root docs at runtime.
 
 - [README.md](../README.md) - public distribution model, three-layer use model, and pipeline summaries.
 - [CONTEXT.md](../CONTEXT.md) - domain language for source repo, installed skills, target projects, artifacts, and operating principles.
