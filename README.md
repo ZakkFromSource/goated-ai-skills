@@ -1,81 +1,111 @@
+<p align="center">
+  <img src="docs/assets/goated-ai-skills-banner.png" alt="GOATED AI Skills banner" width="100%">
+</p>
+
 # GOATED AI Skills
 
-GOATED AI Skills is a public source library for installable, framework-agnostic AI skills. The intended use is to clone, download, copy, or adapt the skill folders into an existing agentic workflow, then use those skills inside the user's own projects.
+A compact operating system for serious AI agent work.
 
-This repo is not a project template that users are expected to clone into every codebase. It is the distribution home and maintainer workspace for the skills.
+GOATED AI Skills is a public source library of installable, framework-agnostic AI skill folders. Copy the skills into Codex, Claude Code, Hermes, OpenCode, or another tool-calling agent workflow, then use them inside your own projects to onboard context, plan work, implement with discipline, review changes, sync docs, and hand off cleanly.
 
-## Current State
+This is not a prompt dump. It is a reusable skill stack for people who want their agents to work with context, standards, proof, and a bias towards quality over quickly producing slop.
 
-This repo currently contains the completed V1 public-core skill set, PRDs, archived implementation issue handoffs, and implemented skill folders that still intentionally declare `status: wip`. The V1 additions, Superpowers absorption issue set, and final V1 acceptance pass are complete.
+## Why This Exists
 
-New skill folders and `SKILL.md` files should be added only when a specific approved implementation issue calls for them.
+The typical agent workflow helps you ship code fast, and gets messy even faster.
 
-## Source Repo Boundary
+One project has a good PRD prompt. Another has a review checklist. A third has a handoff habit, a context map, a test-driven development loop, or a way to keep docs from drifting. Most of that knowledge lives in scattered snippets, tool-specific setup, old chat history, or somebody's private repo.
 
-Use this repo as the public distribution home for reusable skill folders. Do not treat its root instructions, docs, or `.local/` notes as runtime requirements for installed skills. Once copied into an agent framework, each skill folder must carry the guidance it needs inside its own folder.
+GOATED AI Skills packages those workflows as self-contained skill folders that can travel between agent frameworks and target projects. The goal is simple: give your agents a reliable set of skills for doing real work without forcing every project to reinvent the wheel.
 
-Private planning may live in ignored `.local/`, but public behavior must not depend on it.
+## Quick Start
 
-## Quick Use Model
+1. Clone or download this repo.
+2. Choose the skill folders you want from [`skills/`](skills/), or copy the full stack for the complete workflow.
+3. Copy each selected folder intact into your agent framework's skill, command, prompt, or workflow location.
+4. If you prefer, ask your AI agent to follow [`docs/install.md`](docs/install.md) and copy or install the skills for your framework.
+5. Keep each skill's `SKILL.md` together with any local `references/`, `scripts/`, or `assets/`.
+6. Add a short routing note to your agent instructions, such as `AGENTS.md`, `CLAUDE.md`, or another framework-specific adapter. Point it at the installed `using-goated-ai-skills` file, or at [`skills/agent-workflows/using-goated-ai-skills/SKILL.md`](skills/agent-workflows/using-goated-ai-skills/SKILL.md) if the agent will read from this cloned repo directly.
+7. When the stack is installed, start with `using-goated-ai-skills` so your agent can route the request.
 
-GOATED AI Skills has three layers:
+For install details, read [`docs/install.md`](docs/install.md). For the operator manual after installation, read [`docs/how-to-use.md`](docs/how-to-use.md).
 
-1. **Skill Pack Distribution** - users clone, download, copy, or install skill folders from this repo into Codex, Claude Code, Hermes, OpenCode, or another agent framework.
-2. **Target Project Onboarding** - installed skills prepare a user's project for serious agent work by mapping sources, calibrating project context and standards, and integrating with the chosen agent instructions.
-3. **Target Project Delivery** - installed skills help perform real project work through planning, architecture blueprints, prototyping, PRDs, issues, TDD, review, docs, commit messages, and handoff.
+V1 is docs-first. There is no installer script, automatic framework detection, runtime bootstrap, hook setup, or generated skill index in the current public core.
 
-Start with [docs/install.md](docs/install.md) for installation and adaptation guidance. After installation, use [docs/how-to-use.md](docs/how-to-use.md) as the human operator manual for the installed skill stack.
+## What You Get
 
-## Design Principles
+GOATED AI Skills helps agents move from "I can edit files" to "I can carry out work responsibly."
 
-- Skills are portable by default and explicit when they are not.
-- Installed skills must be self-contained and must not require this repo's root `AGENT.md`, `README.md`, or `CONTEXT.md` at runtime.
-- `SKILL.md` stays lean; deeper examples, templates, and checklists live in directly linked `references/`.
-- Every skill is subagent-aware but single-agent-compatible.
-- Public main stays free of private project names, handles, credentials, sensitive personal domains, client context, and private workflow assumptions.
-- Private forks or private deployments can add private/domain-specific skills using the same classification system.
+- **Progressive disclosure**: load the smallest useful context first, then go deeper only when the task needs it.
+- **Target-project onboarding**: create durable project context, source maps, standards profiles, and thin agent instruction adapters.
+- **Delivery workflows**: clarify intent, draft PRDs, break work into issues, plan architecture, prototype ideas, and write implementation plans.
+- **Implementation discipline**: use test-driven development, focused diagnosis, subagent-aware execution, standards review, security review, doc sync, and verification before completion claims.
+- **Clean continuity**: write commit messages and handoffs that help the next session resume with clarity.
+- **Portable skill design**: keep installed skills self-contained so they do not depend on this repo's root files at runtime.
 
-## Root Layout
+## The Three-Layer Model
 
-```text
-AGENT.md               Maintainer/contributor guidance for this repo.
-AGENTS.md              Thin adapter for agents contributing to this repo.
-CLAUDE.md              Thin adapter for Claude-style contributors to this repo.
-CONTEXT.md             Public context for this skill library.
-docs/install.md        Docs-first install and adaptation guidance.
-docs/how-to-use.md     Human operator manual for using the installed skill stack.
-docs/adr/              Architectural Decision Records.
-.out-of-scope/         Public future ideas and deferred upgrades.
-.local/                Ignored private notes and scratch work for local source-repo work.
-skills/                Public skill categories and implemented skill folders.
-issues/                PRDs and future issue handoff docs.
-```
+GOATED AI Skills keeps three contexts separate on purpose.
 
-## Public Skill Categories
+### 1. Skill Pack Distribution
 
-- `skills/agent-workflows/` - installable operating patterns for session starts, target project onboarding, context calibration, standards calibration, instruction integration, handoffs, and skill creation and porting.
-- `skills/engineering/` - installable workflows for PRDs, prototyping, implementation plans, TDD, reviews, security checks, doc sync, commits, architecture maps, architecture plans, and refactoring.
-- `skills/productivity/` - installable productivity workflows that are public-safe and portable.
+This repository is the public distribution home for reusable skill folders. Users clone, download, copy, install, or adapt skills from here into their chosen agent framework.
 
-Future private or domain-specific categories belong in a private fork or private deployment until intentionally sanitized for public use.
+### 2. Target Project Onboarding
 
-## Classifications And Status
+Installed skills prepare a user's actual project for durable agent work. Onboarding can map sources, define project language, capture standards, integrate agent instructions, and create architecture context when useful.
 
-Every implemented skill should declare a classification:
+### 3. Target Project Delivery
 
-- `portable` - safe for any compatible agent or project.
-- `domain-specific` - reusable pattern with a named public domain or project assumption.
-- `private` - intended for private forks or private deployments, not public main.
+Installed skills help move one real change through the work cycle: clarify, plan, implement, test, review, document, verify, commit, and hand off.
 
-Every implemented skill should declare a status:
+Tiny one-off tasks can still stay tiny. The stack is there when the work is cross-file, public-facing, architectural, repeated, or standards-sensitive.
 
-- `stable` - recommended for normal use.
-- `wip` - experimental or still being sharpened.
-- `deprecated` - kept for reference only.
+## Skill Catalog
 
-## Target Project Onboarding
+The V1 public core is complete, and all current public-core skills are portable, implemented, and self-contained. The implemented skills still intentionally declare `status: wip` while the workflows are sharpened.
 
-The sequence below is a human summary of the onboarding route. Installed agents and target-project adapters should start with the installed `using-goated-ai-skills` router, not this root README; the router will choose when this path applies. Tiny one-off tasks can skip the full route.
+### Agent Workflows
+
+- [`using-goated-ai-skills`](skills/agent-workflows/using-goated-ai-skills/SKILL.md): classify the request and choose the next GOATED skill or direct-action path.
+- [`session-start-progressive-disclosure`](skills/agent-workflows/session-start-progressive-disclosure/SKILL.md): start sessions by loading only the context that matters.
+- [`context-matrix-map`](skills/agent-workflows/context-matrix-map/SKILL.md): create a durable source map that tells future agents what to read first, second, and only if needed.
+- [`project-context-calibration`](skills/agent-workflows/project-context-calibration/SKILL.md): create or refresh durable project context, including boundaries, language, artifacts, and architecture vocabulary.
+- [`project-standards-calibration`](skills/agent-workflows/project-standards-calibration/SKILL.md): separate documented standards, inferred conventions, preferences, and unresolved questions.
+- [`agent-instructions-integrator`](skills/agent-workflows/agent-instructions-integrator/SKILL.md): connect installed skills to a target project's thin agent instruction layer.
+- [`framework-agnostic-skill-creator`](skills/agent-workflows/framework-agnostic-skill-creator/SKILL.md): create, port, adapt, and sanitize skills into the GOATED shape.
+- [`handoff`](skills/agent-workflows/handoff/SKILL.md): preserve continuity for future agents or future sessions.
+
+### Engineering
+
+- [`grill-with-docs`](skills/engineering/grill-with-docs/SKILL.md): clarify, brainstorm options, and pressure-test important work against project docs, standards, and source facts before implementation.
+- [`diagnose`](skills/engineering/diagnose/SKILL.md): investigate bugs, failing tests, build failures, regressions, and unexpected behavior before fixing them.
+- [`write-a-prd`](skills/engineering/write-a-prd/SKILL.md): turn fuzzy intent into a scoped product requirements document.
+- [`prd-to-issues`](skills/engineering/prd-to-issues/SKILL.md): break a PRD or approved plan into implementation-ready issue handoffs.
+- [`writing-plans`](skills/engineering/writing-plans/SKILL.md): produce just-in-time implementation plans with evidence, gates, and stop conditions.
+- [`plan-codebase-architecture`](skills/engineering/plan-codebase-architecture/SKILL.md): design source-grounded modules, interfaces, seams, test surfaces, and slice order.
+- [`architecture-design-map`](skills/engineering/architecture-design-map/SKILL.md): create source-grounded architecture maps, flow maps, and quick zoom-outs.
+- [`improve-codebase-architecture`](skills/engineering/improve-codebase-architecture/SKILL.md): find refactor opportunities that make code easier to understand and test.
+- [`prototype`](skills/engineering/prototype/SKILL.md): explore one product, UI, workflow, data, or technical idea with disposable, runnable evidence.
+- [`tdd`](skills/engineering/tdd/SKILL.md): use test-driven development to drive behavior changes through red, green, and refactor.
+- [`subagent-driven-development`](skills/engineering/subagent-driven-development/SKILL.md): coordinate bounded implementer and reviewer agents while one main agent owns integration.
+- [`receiving-code-review`](skills/engineering/receiving-code-review/SKILL.md): handle review feedback without blindly accepting or dismissing it.
+- [`standards-and-spec-review`](skills/engineering/standards-and-spec-review/SKILL.md): review changes against project standards and the originating spec as separate axes.
+- [`code-security-review`](skills/engineering/code-security-review/SKILL.md): inspect risky diffs and trust boundaries for high-evidence security issues.
+- [`doc-sync`](skills/engineering/doc-sync/SKILL.md): keep docs aligned with changed behavior, interfaces, architecture, tests, and workflows.
+- [`verification-before-completion`](skills/engineering/verification-before-completion/SKILL.md): require fresh evidence before claiming work is done, correct, synced, or ready.
+- [`commit-message`](skills/engineering/commit-message/SKILL.md): draft concise, information-rich commit messages from local diffs and checks.
+
+### Productivity
+
+- [`grill-me`](skills/productivity/grill-me/SKILL.md): challenge and clarify ideas, plans, choices, and decisions when project docs are not needed.
+- [`caveman`](skills/productivity/caveman/SKILL.md): keep replies compact without losing important warnings, uncertainty, or exactness.
+
+## Typical Routes
+
+Use these as human-readable maps. Installed agents should still begin with `using-goated-ai-skills` so user and project instructions can choose the right path.
+
+### Onboard A Target Project
 
 ```text
 session-start-progressive-disclosure
@@ -90,11 +120,7 @@ session-start-progressive-disclosure
 -> handoff optional
 ```
 
-Durable target-project artifacts should be tracked, such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, and `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful. Handoffs default to the OS temp directory under `goated-handoffs/<project-name>/`; other session/private workspace artifacts can use ignored `.local/`.
-
-## Target Project Delivery
-
-The sequence below is a human summary of the delivery route after the relevant skills are installed and, for serious work, after onboarding. Installed agents should still start with the installed `using-goated-ai-skills` router so user and project instructions can choose or skip steps safely.
+### Deliver A Real Change
 
 ```text
 session-start-progressive-disclosure
@@ -105,7 +131,7 @@ session-start-progressive-disclosure
 -> prd-to-issues
 -> prototype optional per focused issue
 -> writing-plans
--> subagent-driven-development optional for larger, riskier, or parallelizable implementation
+-> subagent-driven-development optional
 -> tdd
 -> standards-and-spec-review
 -> code-security-review
@@ -115,14 +141,42 @@ session-start-progressive-disclosure
 -> handoff optional
 ```
 
-`grill-with-docs` is gated mandatory for onboarding, PRDs, architecture changes, cross-file work, unclear requests, and public-facing behavior. Tiny mechanical edits can skip it.
+## Source Repo, Installed Skills, Target Projects
 
-## V1 Acceptance
+This repo is the source library and maintainer workspace for GOATED AI Skills. It is not a project template that users are expected to clone into every codebase.
 
-- Public docs distinguish source repo, installed skills, and target projects.
-- Root files explain the distribution model clearly.
-- `.local/` is ignored.
-- Actual skill implementation proceeds only through specific approved implementation issues.
-- Implemented skills follow the lean schema once created.
-- New `SKILL.md` files are created only by their approved implementation issues.
-- Public main contains no private names, handles, sensitive personal domains, client context, or private workflow assumptions.
+Once copied into an agent framework, each installed skill folder must carry the guidance it needs inside its own folder. Installed skills should not require this repo's root [`AGENT.md`](AGENT.md), [`README.md`](README.md), or [`CONTEXT.md`](CONTEXT.md) at runtime.
+
+Target projects are the user's downstream projects where installed skills do the work: onboarding, planning, architecture, implementation, review, docs, and handoff.
+
+## Repo Map
+
+```text
+AGENT.md               Maintainer and contributor guidance for this source repo.
+AGENTS.md              Thin adapter for agents contributing to this repo.
+CLAUDE.md              Thin adapter for Claude-style contributors to this repo.
+CONTEXT.md             Public context and domain language for GOATED AI Skills.
+docs/install.md        Docs-first installation and adaptation guidance.
+docs/how-to-use.md     Human operator manual for the installed skill stack.
+docs/adr/              Architectural decision records.
+docs/assets/           Public README and documentation assets.
+skills/                Public skill categories and implemented skill folders.
+issues/                PRDs and archived implementation issue handoffs.
+```
+
+## Public Boundary
+
+Public main is for portable public-core workflows. It should not depend on private notes, private project names, credentials, client data, handles, sensitive personal domains, or private workflow assumptions.
+
+Private forks or private deployments can add private or domain-specific skills using the same conventions, then sanitize anything intended for public contribution later.
+
+## Maintainer Notes
+
+GOATED AI Skills is currently led and curated by its creator. Ideas, questions, and thoughtful feedback are welcome, but this repo is not accepting unsolicited pull requests right now.
+
+
+For suggestions, please use GitHub Discussions. That keeps the project open to outside input while leaving implementation, scope, and quality decisions with the maintainer.
+
+If you want to understand the project model before suggesting a change, read [`CONTEXT.md`](CONTEXT.md), [`docs/install.md`](docs/install.md), and [`docs/how-to-use.md`](docs/how-to-use.md). For skill schema and category conventions, read [`skills/README.md`](skills/README.md).
+
+Maintainer-approved work may be tracked separately when an idea is ready to become scoped repo work.
