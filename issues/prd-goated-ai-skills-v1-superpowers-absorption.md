@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft reference PRD, last updated 2026-05-21.
+Draft reference PRD, rechecked 2026-05-23.
 
 ## Problem
 
@@ -100,19 +100,19 @@ GOATED should absorb the portable parts of these conventions without copying Sup
 
 ## Acceptance Criteria
 
-- [ ] `issues/prd-goated-ai-skills-v1-superpowers-absorption.md` exists and includes prior findings, upstream links, and a source-fit matrix.
-- [ ] `issues/v1-superpowers-absorption-order.md` exists and gives a dependency-aware issue tackling order.
-- [ ] Issues `033` through `043` exist, follow the local issue template, and include enough context for agents with no session history.
-- [ ] Existing issues `027`, `029`, `032`, and `021` are updated to account for this PRD and blocker graph.
-- [ ] Every implementation issue routes future agents to `grill-with-docs` before implementation unless the issue is only a tiny mechanical edit.
-- [ ] New skill issues preserve GOATED's lean schema and self-contained installed behavior.
-- [ ] Runtime bootstrap/plugin automation and skill-trigger eval harnesses are HITL decision or research work, not automatic V1 implementation.
-- [ ] Public docs and issue text contain no private names, handles, credentials, client context, sensitive personal domains, or source-repo/runtime confusion.
+- [x] `issues/prd-goated-ai-skills-v1-superpowers-absorption.md` exists and includes prior findings, upstream links, and a source-fit matrix.
+- [x] `issues/v1-superpowers-absorption-order.md` exists and gives a dependency-aware issue tackling order.
+- [x] Issues `033` through `043` exist, follow the local issue template, and include enough context for agents with no session history.
+- [x] Existing issues `027`, `029`, `032`, and `021` are updated to account for this PRD and blocker graph.
+- [x] Every implementation issue routes future agents to `grill-with-docs` before implementation unless the issue is only a tiny mechanical edit.
+- [x] New skill issues preserve GOATED's lean schema and self-contained installed behavior.
+- [x] Runtime bootstrap/plugin automation and skill-trigger eval harnesses are HITL decision or research work, not automatic V1 implementation.
+- [x] Public docs and issue text contain no private names, handles, credentials, client context, sensitive personal domains, or source-repo/runtime confusion.
 
 ## Implementation Notes
 
 - Future agents should treat this PRD as the source of scope, but they must still read the specific issue being implemented and inspect the current source files before editing.
-- Superpowers is MIT-licensed. Rewrite in GOATED-native language and include attribution if substantial upstream wording, templates, or structure are reused.
+- Superpowers is MIT-licensed. Rewrite in GOATED-native language; if substantial upstream wording, templates, or structure are reused, record the reuse for project-level attribution before publication rather than making installed skill folders depend on upstream links.
 - Support files are encouraged when they keep `SKILL.md` focused: prompt templates, long checklists, scenario examples, adapter notes, and evaluation references belong under `references/` inside the relevant skill folder.
 - Issues should provide source links and acceptance criteria, but detailed file-by-file steps should be produced by `writing-plans` after source inspection.
 - All new installed skills must remain useful after copying out of this source repo. They must not require this root `AGENT.md`, `CONTEXT.md`, issue files, or `.local/` research artifacts at runtime.
@@ -124,7 +124,7 @@ GOATED should absorb the portable parts of these conventions without copying Sup
 - Verify every upstream source link is present in this PRD or in relevant issue notes.
 - Run targeted searches for stale or ambiguous names: `framework-agnostic-skill-porting`, `using-superpowers`, `writing-plans`, `verification-before-completion`, and new issue paths.
 - Run a public-boundary review for private names, credentials, client context, sensitive personal domains, and source-repo/runtime confusion.
-- Re-read `issues/032-v1-additions-doc-sync-and-acceptance-recheck.md` and `issues/021-v1-acceptance-public-boundary-pass.md` after blocker updates.
+- Re-read `issues/archive/032-v1-additions-doc-sync-and-acceptance-recheck.md` and `issues/021-v1-acceptance-public-boundary-pass.md` after blocker updates.
 
 ## Risks And Mitigations
 

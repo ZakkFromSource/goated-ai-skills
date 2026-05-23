@@ -14,15 +14,15 @@ Implement `diagnose` under `skills/engineering/`. The skill should guide bug and
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/diagnose/SKILL.md` exists and follows the lean schema.
-- [ ] The workflow builds or requests a fast enough feedback loop before hypothesis testing.
-- [ ] The workflow includes repro confirmation, ranked falsifiable hypotheses, targeted instrumentation, root-cause reporting, cleanup, and residual-risk notes.
-- [ ] The workflow absorbs useful Superpowers `systematic-debugging` discipline: observe before fixing, compare expectations to reality, test one hypothesis at a time, and prove root cause.
-- [ ] Performance regressions route through measurement, profiling, query plans, or bisection before fixes.
-- [ ] Regression proof routes to `tdd` when a correct seam exists and records architecture follow-up when no correct seam exists.
-- [ ] The workflow routes closeout through `verification-before-completion` when that skill is available.
-- [ ] Guardrails cover secrets/logs, production instrumentation, destructive repros, debug-log cleanup, and temporary artifacts.
-- [ ] The skill is self-contained after installation and does not require this source repo's root files.
+- [x] `skills/engineering/diagnose/SKILL.md` exists and follows the lean schema.
+- [x] The workflow builds or requests a fast enough feedback loop before hypothesis testing.
+- [x] The workflow includes repro confirmation, ranked falsifiable hypotheses, targeted instrumentation, root-cause reporting, cleanup, and residual-risk notes.
+- [x] The workflow absorbs useful Superpowers `systematic-debugging` discipline: observe before fixing, compare expectations to reality, test one hypothesis at a time, and prove root cause.
+- [x] Performance regressions route through measurement, profiling, query plans, or bisection before fixes.
+- [x] Regression proof routes to `tdd` when a correct seam exists and records architecture follow-up when no correct seam exists.
+- [x] The workflow routes closeout through `verification-before-completion` when that skill is available.
+- [x] Guardrails cover secrets/logs, production instrumentation, destructive repros, debug-log cleanup, and temporary artifacts.
+- [x] The skill is self-contained after installation and does not require this source repo's root files.
 
 ## Blocked by
 

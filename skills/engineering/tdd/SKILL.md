@@ -208,6 +208,7 @@ One test, one implementation, repeat. Each test responds to what you learned fro
 - Do not create broad test infrastructure, fixture frameworks, package-manager changes, CI changes, or new dependencies unless the current issue explicitly calls for that foundation.
 - Do not delete or rewrite existing tests just because they are awkward. Replace obsolete implementation-detail tests only when the new public-interface proof covers the behavior.
 - Do not include private notes, credentials, client data, sensitive personal context, ignored scratch content, or real user data in tests or fixtures.
+- Do not require this source repo's root files, issue files, `.local` notes, upstream sources, or hidden chat history after installation. The skill may rely only on its own files and target-project evidence.
 
 ## References
 

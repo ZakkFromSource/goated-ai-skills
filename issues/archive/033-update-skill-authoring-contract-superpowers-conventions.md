@@ -36,4 +36,4 @@ Update the GOATED skill authoring contract so future skills consistently absorb 
 - Start from `AGENT.md`, `CONTEXT.md`, `skills/README.md`, and relevant category READMEs. Do not bulk rewrite unrelated docs.
 - Superpowers source inspiration: https://github.com/obra/superpowers
 - Preserve GOATED's schema; Superpowers' two-field frontmatter is intentionally not adopted.
-- Rewrite in GOATED-native language. Do not Include attribution if substantial upstream wording or template material is reused. But make note of what was used in the chat, the user will provide attributions in the project information itself at a later date when V1 is complete and ready to make public.
+- Rewrite in GOATED-native language. Do not add attribution text to installable skill bodies during this issue unless the maintainer explicitly requests it for that artifact; if substantial upstream wording or template material is reused, record what was used so project-level attribution can be handled before publication.

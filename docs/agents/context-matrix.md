@@ -21,7 +21,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | --- | --- | --- | --- |
 | `docs/install.md` | Defines docs-first install and adaptation guidance. | Before changing install docs or copying/adapting skills into an agent framework. | V1 installer scripts are out of scope. |
 | `skills/README.md` | Defines skill schema, category rules, progressive disclosure, and delegation conventions. | Before creating or editing a skill folder. | Do not create skill folders from the index alone; use the approved issue. |
-| `skills/agent-workflows/README.md` | Defines the agent-workflows category and implemented WIP skills. | Before editing onboarding, session, handoff, instruction-integration, or skill-porting workflows. | Keep workflows portable and adapter notes small; issue `029` owns the future creator rename. |
+| `skills/agent-workflows/README.md` | Defines the agent-workflows category and implemented WIP skills. | Before editing onboarding, session, handoff, instruction-integration, or skill-creator workflows. | Keep workflows portable and adapter notes small; archived issue `029` completed the creator rename. |
 | `skills/engineering/README.md` | Defines the engineering category and implemented WIP skills. | Before implementing or reviewing delivery, testing, review, docs, architecture, or refactor skills. | Future additions still require approved implementation issues. |
 | `skills/productivity/README.md` | Defines the productivity category and implemented WIP skills. | Before implementing or reviewing productivity workflows. | Private or domain-specific workflows belong outside public main until sanitized. |
 | `issues/archive/*.md` | Completed implementation handoffs and blocker history. | Before modifying an implemented skill or tracing why an existing artifact exists. | Read the specific archived issue tied to the artifact or blocker chain. |
@@ -58,7 +58,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Command or path | Purpose | When to use | Evidence |
 | --- | --- | --- | --- |
 | `git rev-parse --show-toplevel` | Confirm the repository boundary. | When the current working directory or target project root is ambiguous. | Ran on 2026-05-21 and returned this repo root. |
-| `rg --files` | Discover repo files without bulk-reading them. | At the start of mapping, source routing, or targeted scans. | Ran on 2026-05-22 during `subagent-driven-development` implementation; showed root docs, active/archived issues, docs, and 24 implemented skill folders. |
+| `rg --files` | Discover repo files without bulk-reading them. | At the start of mapping, source routing, or targeted scans. | Ran on 2026-05-23 during issue `032` doc sync; showed root docs, active/archived issues, docs, and 27 implemented skill folders. |
 | Issue and PRD scans with `rg -n` | Sample issue and PRD headings, blockers, current names, and implementation summaries. | When deciding which issue to open first or checking documentation drift. | Ran on 2026-05-21 for issue discovery and interim doc sync. |
 | `git status --short` | Check local worktree state. | Before and after edits. | Ran on 2026-05-21 before interim doc-sync edits; output was empty. |
 | `rg --files -g 'package.json' -g 'pyproject.toml' -g 'pubspec.yaml' -g 'Cargo.toml' -g 'Makefile' -g '*.sln' -g '*.csproj' -g '*.fsproj' -g 'go.mod' -g 'requirements.txt'` | Look for build or package entrypoints. | Before claiming build, lint, format, or test commands exist. | Ran on 2026-05-21; no matches found. |
@@ -70,8 +70,8 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Source | Scope | Status | Notes |
 | --- | --- | --- | --- |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Public core product model, skill schema, V1 skill set, onboarding and delivery workflows. | Draft reference PRD. | Primary spec until superseded by accepted ADRs or updated PRDs. |
-| `issues/archive/*.md` | Completed scaffold, skill implementation, and follow-up upgrade handoffs. | Archived. | As of 2026-05-22, issues `001` through `020`, `022` through `030`, and `033` through `043` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
-| `issues/*.md` excluding `issues/archive/` and PRDs | Planned future V1 implementation slices and final acceptance pass. | Active issue handoffs. | As of 2026-05-22, active handoffs are `021`, `031`, and `032`; read the current issue before implementing or reviewing that slice. |
+| `issues/archive/*.md` | Completed scaffold, skill implementation, follow-up upgrade, and doc-sync handoffs. | Archived. | As of 2026-05-23, issues `001` through `020` and `022` through `043` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
+| `issues/*.md` excluding `issues/archive/` and PRDs | Planned future V1 implementation slices and final acceptance pass. | Active issue handoffs. | As of 2026-05-23, the active handoff is `021`; read the current issue before implementing or reviewing that slice. |
 | `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md` | Accepted V1 runtime bootstrap and adapter automation decision. | Accepted ADR. | V1 allows narrow adapter notes only; runtime bootstrap, plugin manifests, hooks, installers, automatic loading, and adapter automation require future scoped work. |
 | `docs/adr/README.md` | ADR placement and policy. | ADR index. | Read before adding or changing architectural decision records. |
 | `docs/agents/context-matrix.md` | Future-agent read order for this repo. | Maintained routing artifact. | Refresh when repo structure, issue state, skill inventory, or source-evidence paths change. |
@@ -83,11 +83,11 @@ Use this map to choose the smallest useful context before working in the GOATED 
 - No package manifest, build script, lint command, formatter command, or test runner was found in the discovery pass.
 - `.local/` was intentionally not read because it is ignored private/local workspace context.
 - `.out-of-scope/` was sampled only for the future automation and validation deferral file; read it narrowly for scope or deferred-feature questions.
-- Active issue bodies were sampled for interim doc-sync drift, but future work should still open the specific issue and blocker chain for the requested change.
+- Active issue `021` and issue `032` closeout evidence were sampled for doc-sync drift, but future work should still open the specific issue and blocker chain for the requested change.
 - Installed Codex skill copies can drift from source after manual copying; compare file hashes when testing installation behavior.
 
 ## Last Updated
 
-- Date: 2026-05-22
+- Date: 2026-05-23
 - Updated by: Codex
-- Evidence used: installed `session-start-progressive-disclosure`, `context-matrix-map`, `project-standards-calibration`, and `doc-sync`; `AGENT.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/agents/project-standards.md`; category READMEs under `skills/`; implemented skill inventory under `skills/`; `docs/adr/README.md`; `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md`; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; active issues `021`, `031`, and `032`; archived issues `001` through `020`, `022` through `030`, and `033` through `043`; `rg --files`; targeted issue and stale-wording scans with `rg -n`; `git rev-parse --show-toplevel`; `git status --short`; manifest and test discovery `rg` commands.
+- Evidence used: installed `session-start-progressive-disclosure`, `context-matrix-map`, `project-standards-calibration`, and `doc-sync`; `AGENT.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/agents/project-standards.md`; category READMEs under `skills/`; implemented skill inventory under `skills/`; `docs/adr/README.md`; `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md`; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; active issue `021`; issue `032` closeout evidence; archived issues `001` through `020` and `022` through `043`; `rg --files`; targeted issue and stale-wording scans with `rg -n`; `git rev-parse --show-toplevel`; `git status --short`; manifest and test discovery `rg` commands.

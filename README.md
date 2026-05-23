@@ -6,7 +6,7 @@ This repo is not a project template that users are expected to clone into every 
 
 ## Current State
 
-This repo currently contains the V1 scaffold, PRDs, active and archived implementation issue handoffs, and the implemented WIP skill folders completed so far through approved issues. The V1 additions and Superpowers absorption issues remain active, and final V1 acceptance is not complete.
+This repo currently contains the V1 scaffold, PRDs, active and archived implementation issue handoffs, and the implemented WIP skill folders completed so far through approved issues. The V1 additions and Superpowers absorption issue set is complete or explicitly deferred, and final V1 acceptance is not complete.
 
 New skill folders and `SKILL.md` files should be added only when a specific approved implementation issue calls for them.
 

@@ -12,13 +12,13 @@ Upgrade the existing `tdd` skill with the strongest portable Superpowers TDD con
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/tdd/SKILL.md` is updated without losing GOATED's current lean schema or deep-module testing guidance.
-- [ ] The workflow requires clear RED evidence before implementation when a behavior test is feasible.
-- [ ] The workflow requires GREEN evidence after implementation and distinguishes passing targeted tests from broader verification.
-- [ ] The workflow includes rationalization guardrails for skipping tests, changing tests to match broken behavior, over-mocking, and calling work complete without proof.
-- [ ] Long anti-patterns, rationalization tables, or examples live under `skills/engineering/tdd/references/` instead of bloating `SKILL.md`.
-- [ ] The workflow routes final proof through `verification-before-completion`.
-- [ ] The skill remains self-contained after installation and does not require this source repo's root files.
+- [x] `skills/engineering/tdd/SKILL.md` is updated without losing GOATED's current lean schema or deep-module testing guidance.
+- [x] The workflow requires clear RED evidence before implementation when a behavior test is feasible.
+- [x] The workflow requires GREEN evidence after implementation and distinguishes passing targeted tests from broader verification.
+- [x] The workflow includes rationalization guardrails for skipping tests, changing tests to match broken behavior, over-mocking, and calling work complete without proof.
+- [x] Long anti-patterns, rationalization tables, or examples live under `skills/engineering/tdd/references/` instead of bloating `SKILL.md`.
+- [x] The workflow routes final proof through `verification-before-completion`.
+- [x] The skill remains self-contained after installation and does not require this source repo's root files.
 
 ## Blocked by
 

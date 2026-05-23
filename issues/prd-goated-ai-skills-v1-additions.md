@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft reference PRD, last updated 2026-05-21.
+Draft reference PRD, rechecked 2026-05-23.
 
 ## Problem
 
@@ -50,12 +50,12 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 
 ## Acceptance Criteria
 
-- [ ] `diagnose` is implemented under `skills/engineering/` and follows the lean schema.
-- [ ] `architecture-design-map` includes a quick zoom-out mode without becoming a refactor or planning skill.
+- [x] `diagnose` is implemented under `skills/engineering/` and follows the lean schema.
+- [x] `architecture-design-map` includes a quick zoom-out mode without becoming a refactor or planning skill.
 - [x] `framework-agnostic-skill-creator` replaces the current porting skill as the active public workflow name.
-- [ ] `triage` is recorded as deferred/out of scope for V1.
-- [ ] `caveman` is implemented under `skills/productivity/` and follows the lean schema.
-- [ ] Public docs and active issue blockers reflect the additions before final V1 acceptance.
+- [x] `triage` is recorded as deferred/out of scope for V1.
+- [x] `caveman` is implemented under `skills/productivity/` and follows the lean schema.
+- [x] Public docs and active issue blockers reflect the additions before final V1 acceptance.
 
 ## Implementation Notes
 
@@ -78,7 +78,7 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 | Risk | Impact | Mitigation |
 | --- | --- | --- |
 | Scope creep before V1 acceptance | Delays final acceptance and weakens the public core | Keep the additions split into small issues and defer tracker workflows. |
-| External-source copying | License or attribution drift | Rewrite in GOATED-native wording and include MIT attribution where substantial wording is reused. |
+| External-source copying | License or attribution drift | Rewrite in GOATED-native wording and record project-level MIT attribution before publication if substantial wording is reused. |
 | Skill rename drift | Active docs may point to the former porting-only workflow name | Include a dedicated issue for rename/docs cleanup. |
 | Brevity mode hides important context | Unsafe or misleading output | Make `caveman` guardrails explicit and require normal clarity for warnings and confirmations. |
 
@@ -86,7 +86,7 @@ The current V1 skill stack covers onboarding, planning, TDD, reviews, docs, arch
 
 | Question | Owner | Needed before |
 | --- | --- | --- |
-| Should substantial upstream wording be reused, or only summarized and attributed? | Implementing agent | Finalizing each adapted skill. |
+| None currently. | Not applicable | Not applicable. |
 
 ## Source Evidence
 

@@ -49,12 +49,12 @@ Run the final V1 acceptance and public-boundary pass after the foundation and sk
 - `issues/archive/019-improve-codebase-architecture.md`
 - `issues/archive/020-grill-me.md`
 - `issues/archive/022-project-context-calibration.md`
-- `issues/027-add-diagnose-skill.md`
+- `issues/archive/027-add-diagnose-skill.md`
 - `issues/archive/028-fold-zoom-out-into-architecture-design-map.md`
 - `issues/archive/029-expand-framework-agnostic-skill-creator.md`
 - `issues/archive/030-defer-triage-workflow.md`
 - `issues/archive/031-add-caveman-skill.md`
-- `issues/032-v1-additions-doc-sync-and-acceptance-recheck.md`
+- `issues/archive/032-v1-additions-doc-sync-and-acceptance-recheck.md`
 - `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
 - `issues/archive/034-add-using-goated-ai-skills-router.md`
 - `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md`

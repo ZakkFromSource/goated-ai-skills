@@ -7,19 +7,19 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 ## Recommended Order
 
 1. `issues/archive/033-update-skill-authoring-contract-superpowers-conventions.md`
-   - Establish the shared conventions before new skill work depends on them. ✅
+   - Establish the shared conventions before new skill work depends on them. Done.
 
 2. `issues/archive/029-expand-framework-agnostic-skill-creator.md`
-   - Upgrade the skill creation path early so later skills can use the improved authoring and evaluation contract. ✅
+   - Upgrade the skill creation path early so later skills can use the improved authoring and evaluation contract. Done.
 
 3. `issues/archive/034-add-using-goated-ai-skills-router.md`
-   - Add the portable router skill after the authoring contract is clear. Done. ✅
+   - Add the portable router skill after the authoring contract is clear. Done.
 
 4. `issues/archive/035-decide-runtime-bootstrap-and-adapter-automation.md`
-   - Make the HITL runtime decision after the router exists conceptually, before anyone tries to automate it. Done. ✅
+   - Make the HITL runtime decision after the router exists conceptually, before anyone tries to automate it. Done.
 
 5. `issues/archive/036-add-verification-before-completion-skill.md`
-   - Add the shared closeout gate before wiring it through other skills. Done. ✅
+   - Add the shared closeout gate before wiring it through other skills. Done.
 
 6. `issues/archive/037-wire-verification-through-goated-stack.md`
    - Update already implemented relevant skills to soft-depend on the verification gate. Done.
@@ -54,8 +54,8 @@ Use this document after reading `issues/prd-goated-ai-skills-v1-superpowers-abso
 16. `issues/archive/031-add-caveman-skill.md`
     - This existing addition can be handled anytime after the authoring contract is stable. Done.
 
-17. `issues/032-v1-additions-doc-sync-and-acceptance-recheck.md`
-    - Run after all V1 additions and Superpowers absorption issues are complete or explicitly deferred.
+17. `issues/archive/032-v1-additions-doc-sync-and-acceptance-recheck.md`
+    - Run after all V1 additions and Superpowers absorption issues are complete or explicitly deferred. Done.
 
 18. `issues/021-v1-acceptance-public-boundary-pass.md`
     - Final V1 public-boundary and acceptance pass.

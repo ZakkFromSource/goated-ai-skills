@@ -38,7 +38,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Existing implemented skills use adapter maps for Codex, Claude Code, Hermes, OpenCode, and generic agents. | review-enforced | Implemented `SKILL.md` frontmatter across all three categories | High |
 | Skill bodies commonly include Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References. | review-enforced | Implemented `SKILL.md` headings across all three categories | High |
 | Issue handoffs use numbered filenames and standard sections such as Parent PRD, Type, What to build, Acceptance criteria, Blocked by, and User stories addressed. | review-enforced | `issues/*.md`, `issues/archive/*.md` heading scan | High |
-| Completed implementation issues move under `issues/archive/` only after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete. | review-enforced | `CONTEXT.md`; archived issues `001` through `020`, `022` through `030`, and `033` through `043`; active issue list retains `021`, `031`, and `032` | High |
+| Completed implementation issues move under `issues/archive/` only after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete. | review-enforced | `CONTEXT.md`; archived issues `001` through `020` and `022` through `043`; active issue list retains `021` | High |
 | Docs-only changes currently rely on manual markdown review. | review-enforced | No manifest, CI, formatter, linter, or test config found in this pass | High |
 
 ## User-Confirmed Preferences
@@ -75,6 +75,6 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 ## Last Updated
 
-- Date: 2026-05-22
+- Date: 2026-05-23
 - Updated by: Codex
-- Evidence used: installed `project-standards-calibration` and `doc-sync`; `docs/agents/context-matrix.md`; `AGENT.md`; `AGENTS.md`; `CLAUDE.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md`; `skills/README.md`; category READMEs; implemented `SKILL.md` frontmatter across all three categories; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; active issues `021`, `031`, and `032`; archived issues `001` through `020`, `022` through `030`, and `033` through `043`; issue scans; manifest/config discovery; test/spec discovery; `git status --short`.
+- Evidence used: installed `project-standards-calibration` and `doc-sync`; `docs/agents/context-matrix.md`; `AGENT.md`; `AGENTS.md`; `CLAUDE.md`; `CONTEXT.md`; `README.md`; `docs/install.md`; `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md`; `skills/README.md`; category READMEs; implemented `SKILL.md` frontmatter across all three categories; `.gitignore`; `.out-of-scope/future-automation-and-validation.md`; V1 PRDs; active issue `021`; issue `032` closeout evidence; archived issues `001` through `020` and `022` through `043`; issue scans; manifest/config discovery; test/spec discovery; `git status --short`.

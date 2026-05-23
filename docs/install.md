@@ -2,7 +2,7 @@
 
 GOATED AI Skills is distributed as a public source library of skill folders. V1 installation is docs-first: copy, install, or adapt the skill folders into the agent framework you already use.
 
-Only completed skill folders are installable. Local implementation issue handoffs define the order for creating the remaining V1 skills. This document defines the intended installation model for V1.
+Only completed skill folders are installable. V1 skill implementation issues are complete or explicitly deferred; future skill additions require a new approved issue or PRD. This document defines the intended installation model for V1.
 
 ## Three Layers
 
