@@ -39,7 +39,7 @@ adapters:
 
 Review a completed or in-progress change against two independent contracts:
 
-- **Standards**: whether the change follows the target project's documented standards, inferred conventions, and user-confirmed preferences.
+- **Standards**: whether the change follows the target project's documented standards, inferred conventions, and user-confirmed preferences, while respecting enforcement strength.
 - **Spec**: whether the change satisfies the originating issue, PRD, ticket, or explicit request without missing requirements or adding unrequested scope.
 
 This is a review gate, not an implementation workflow and not a security audit. It should produce high-signal findings backed by files, commands, docs, diffs, test evidence, or explicit assumptions.
@@ -72,7 +72,7 @@ This is a review gate, not an implementation workflow and not a security audit. 
    - Read `docs/agents/project-standards.md` when present and treat it as the strongest local standards profile.
    - If it is missing, inspect the minimum relevant docs, agent instructions, contributor guidance, configs, tests, and nearby files needed to infer standards.
    - State lower confidence when standards are inferred without a standards profile.
-   - Separate documented standards, inferred conventions, and user-confirmed preferences when citing evidence.
+   - Separate documented standards, inferred conventions, and user-confirmed preferences when citing evidence. Treat `preference-only` entries as review evidence only when they do not conflict with tooling-enforced checks, documented standards, stronger project instructions, or clearly sourced local conventions.
 
 4. Gather spec evidence:
    - Read the originating issue, PRD, ticket, accepted plan, acceptance criteria, and relevant user instructions.
@@ -175,6 +175,7 @@ If subagents are unavailable, perform the same work sequentially with a narrower
 - Do not run mutating commands such as formatters, generators, migrations, codemods, or auto-fixers as part of review unless the user explicitly asks for implementation.
 - Do not treat missing `docs/agents/project-standards.md` as a failure by itself; fall back to discovered evidence and state lower confidence.
 - Do not invent project standards from ecosystem habits, personal taste, or generic best practices without local evidence.
+- Do not let user-confirmed `preference-only` entries outweigh tooling-enforced checks, documented standards, stronger project instructions, or clearly sourced local conventions.
 - Do not treat every supporting edit as unrequested scope; explain the contract, behavior, maintenance, or verification impact.
 - Do not silently choose a fixed point when multiple plausible baselines would change the review result.
 - Do not broaden the review into implementation, refactoring, architecture redesign, doc-sync, commit writing, or handoff unless the user separately requests that work.

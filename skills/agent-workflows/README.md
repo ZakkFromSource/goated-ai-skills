@@ -10,7 +10,7 @@ They should be portable by default, avoid assuming one instruction-file conventi
 - `session-start-progressive-disclosure` - starts sessions with the smallest useful context and routes the next workflow step.
 - `context-matrix-map` - creates source-grounded context maps for future agents.
 - `project-context-calibration` - creates or refreshes durable project context language.
-- `project-standards-calibration` - records documented, inferred, and user-confirmed project standards.
+- `project-standards-calibration` - records documented standards, inferred conventions, user-confirmed preferences, and unresolved questions.
 - `agent-instructions-integrator` - routes agent instruction artifacts to installed skills and durable project artifacts.
 - `handoff` - writes compact continuity notes for future agents or sessions.
 - `framework-agnostic-skill-creator` - creates GOATED skills from clarified intent and ports existing workflows into GOATED shape.

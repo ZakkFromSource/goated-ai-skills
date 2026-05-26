@@ -3,7 +3,7 @@ name: project-standards-calibration
 category: agent-workflows
 classification: portable
 status: wip
-description: Use when onboarding a project, capturing project standards, or separating documented conventions from inferred preferences.
+description: Use when onboarding a project, capturing project standards, or separating documented standards, inferred conventions, and user-confirmed preferences.
 triggers:
   - user asks to onboard a project for durable or repeated agent work
   - user asks to capture, calibrate, audit, or document project standards
@@ -14,7 +14,7 @@ outputs:
   - documented standards with source evidence
   - inferred conventions separated from documented rules
   - user-confirmed preferences and unresolved questions
-  - enforcement levels for standards and conventions
+  - enforcement levels for standards, conventions, and preferences
 depends_on:
   hard: []
   soft:
@@ -76,9 +76,18 @@ Use this skill during target-project onboarding, before repeated delivery work, 
    - Do not mark a rule tooling-enforced unless the tool or command is identified.
 
 5. Ask only about non-discoverable preferences:
-   - Ask after the evidence pass, not before.
+   - Ask after the documented standards, tooling, and inferred convention evidence pass, not before.
    - Ask one focused question at a time when a user preference or ambiguous tradeoff materially changes future work.
    - Include the recommended default and the evidence behind it.
+   - For code style, first decide whether contributor docs, style guides, stronger project instructions, formatter or linter configuration, or clearly consistent inferred conventions already settle the style. If they do, record that source instead of asking a preference question.
+   - When code style remains materially undecided, ask one posture-focused question with `Balanced/intermediate` as the recommended default because it preserves readability while still allowing idiomatic local patterns. Offer these choices:
+     - `Beginner-friendly`: clear names, straightforward structure, and helpful comments, useful when newer contributors or future agents need code that explains itself.
+     - `Balanced/intermediate`: readable first, idiomatic local patterns, and abstractions when they reduce real repetition or complexity.
+     - `Advanced/terse`: denser abstractions allowed when justified, fewer comments, and stronger reliance on local conventions.
+     - `No durable preference`: follow documented standards, tooling, and inferred conventions case by case.
+   - Store a selected code-style posture under `User-Confirmed Preferences` with `preference-only` enforcement. If the user chooses `No durable preference`, record that opt-out as a `preference-only` preference so future agents do not keep re-asking.
+   - If the user skips the code-style question or cannot answer, record an unresolved question instead of assuming a posture.
+   - Do not store programming level or stack familiarity as a durable label; use it only as conversational context if it helps the user choose a posture.
    - Do not ask about facts that can be discovered from project files or commands.
 
 6. Write or refresh the standards profile:
@@ -149,6 +158,8 @@ After writing the file, report:
 - preferences or unresolved questions that still need the user;
 - evidence paths and commands used.
 
+When the optional code-style posture is captured, the `User-Confirmed Preferences` row must use `preference-only` enforcement and its notes must say that documented standards, formatters, linters, contributor docs, existing style guides, stronger project instructions, and tooling-enforced checks override the preference.
+
 ## Delegation
 
 The main agent owns the target-project boundary, standard classification, user questions, final artifact, and user communication.
@@ -174,9 +185,11 @@ If subagents are unavailable, perform the same scans sequentially with a narrowe
 
 - Do not ask the user about discoverable facts.
 - Do not ask preference questions before inspecting available project evidence.
+- Do not ask a code-style posture question when project docs, tooling, or strong inferred conventions already settle the style; record that evidence instead.
 - Do not treat common ecosystem habits as project standards without local evidence.
 - Do not merge documented standards, inferred conventions, and user preferences into one undifferentiated list.
 - Do not mark a standard tooling-enforced unless a specific tool, command, config, check, or test evidence supports it.
+- Do not let a `preference-only` code-style posture override documented standards, formatter or linter behavior, contributor docs, existing style guides, stronger project instructions, or tooling-enforced checks.
 - Do not include ignored local scratch files, private notes, credentials, client data, or sensitive personal context unless the user explicitly requests a private artifact.
 - Do not turn this profile into a broad architecture essay, exhaustive command catalog, style lecture, or review of a specific diff.
 - Prefer "unknown", "not found in this pass", or an unresolved question over guessing.

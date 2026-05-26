@@ -158,10 +158,11 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 
 #### `project-standards-calibration`
 
-- **Purpose**: Captures documented, inferred, and user-confirmed project standards separately.
+- **Purpose**: Captures documented standards, inferred conventions, user-confirmed preferences, and unresolved standards questions separately.
 - **Use when**: Onboarding a project or clarifying conventions, commands, enforcement levels, preferences, and unresolved standards questions.
 - **Typical input**: Docs, config, scripts, tests, observed conventions, and user-confirmed preferences.
 - **Typical output**: `docs/agents/project-standards.md` by default.
+- **Onboarding note**: If project evidence does not already decide code style, the skill can capture a user-confirmed code-style posture as `preference-only`; documented standards and tooling still win.
 - **Pipeline role**: Onboarding step that prevents standards from being rediscovered or guessed.
 
 #### `agent-instructions-integrator`
