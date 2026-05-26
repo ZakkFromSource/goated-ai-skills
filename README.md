@@ -37,7 +37,7 @@ V1 is docs-first. There is no installer script, automatic framework detection, r
 GOATED AI Skills helps agents move from "I can edit files and hope it's what you want" to "I can carry out work responsibly, with full knowledge of what you expect from me."
 
 - **Progressive disclosure**: load the smallest useful context first, then go deeper only when the task needs it.
-- **Target-project onboarding**: create durable project context, source maps, standards profiles, and thin agent instruction adapters.
+- **Target-project onboarding**: create durable project context, source maps, standards profiles, optional PRDs under `docs/prds/` when product scope, roadmap intent, or acceptance criteria need durable capture, and thin agent instruction adapters.
 - **Delivery workflows**: clarify intent, draft PRDs, break work into issues, plan architecture, prototype ideas, and write implementation plans.
 - **Implementation discipline**: use test-driven development, focused diagnosis, subagent-aware execution, standards review, security review, doc sync, and verification before completion claims.
 - **Clean continuity**: write commit messages and handoffs that help the next session resume with clarity.
@@ -53,7 +53,7 @@ This repository is the public distribution home for reusable skill folders. User
 
 ### 2. Target Project Onboarding
 
-Installed skills prepare a user's actual project for durable agent work. Onboarding can map sources, define project language, capture standards, integrate agent instructions, and create architecture context when useful.
+Installed skills prepare a user's actual project for durable agent work. Onboarding can map sources, define project language, capture standards, integrate agent instructions, capture project-level product scope, roadmap intent, or acceptance criteria in `docs/prds/` when needed, and create architecture context when useful.
 
 ### 3. Target Project Delivery
 
@@ -114,6 +114,7 @@ session-start-progressive-disclosure
 -> project-context-calibration
 -> project-standards-calibration
 -> agent-instructions-integrator
+-> write-a-prd optional when product scope needs durable capture
 -> architecture-design-map optional
 -> plan-codebase-architecture optional
 -> doc-sync

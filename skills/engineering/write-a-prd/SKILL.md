@@ -7,6 +7,7 @@ description: Use when fuzzy intent, a client brief, roadmap item, or feature ide
 triggers:
   - user asks for a PRD, product requirements document, product spec, implementation spec, or feature brief
   - user wants to turn unclear intent, a roadmap item, client brief, or feature idea into a concrete plan
+  - target-project onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria that need durable PRD capture
   - target-project delivery needs a scoped artifact before issue breakdown or implementation
   - a future agent needs enough product and technical context to split work into vertical-slice issues
 outputs:
@@ -38,7 +39,7 @@ adapters:
 
 Create a scoped product requirements document that turns fuzzy intent into an implementation-ready planning artifact.
 
-Use this skill when the next useful artifact is a PRD that can feed `prd-to-issues`. The PRD should clarify the problem, target audience, goals, requirements, risks, and acceptance criteria without turning into a sprawling backlog or implementation transcript.
+Use this skill when the next useful artifact is a PRD that can feed `prd-to-issues`, including when target-project onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria that should be settled before architecture planning. The PRD should clarify the problem, target audience, goals, requirements, risks, and acceptance criteria without turning into a sprawling backlog or implementation transcript.
 
 ## Inputs
 
@@ -189,6 +190,7 @@ If subagents are unavailable, perform the same evidence gathering sequentially w
 
 - Do not write a PRD before exploring discoverable project facts.
 - Do not ask the user questions that project docs, code, tests, configs, or existing planning artifacts can answer.
+- Do not treat target-project onboarding as requiring a PRD; use this skill only when a PRD is the next useful artifact.
 - Do not turn the PRD into an unbounded backlog, architecture essay, or implementation issue list.
 - Do not include unrelated refactors, nice-to-haves, or speculative future phases as requirements.
 - Do not publish private notes, credentials, client data, sensitive personal context, or ignored scratch content into a tracked PRD.

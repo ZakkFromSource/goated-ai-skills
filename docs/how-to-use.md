@@ -26,7 +26,7 @@ Current V1 notes:
 The stack has three layers:
 
 1. **Skill Pack Distribution**: clone, download, copy, install, or adapt the skill folders into your chosen agent framework.
-2. **Target Project Onboarding**: prepare a target project for durable, repeated, cross-file, PRD-level, architectural, or public-facing work.
+2. **Target Project Onboarding**: prepare a target project for durable, repeated, cross-file, PRD-level, architectural, or public-facing work, including optional PRD capture when onboarding uncovers project-level product scope.
 3. **Target Project Delivery**: move one target-project change from intent through planning, implementation, review, documentation, verification, and handoff.
 
 Use `using-goated-ai-skills` as the router when you or your agent are unsure which path applies.
@@ -45,7 +45,7 @@ flowchart TB
 
 ## Pipeline 1: Target Project Onboarding
 
-Run onboarding before serious or repeated work in a target project. The purpose is to help future agents know what to read, what the project means by its terms, which standards apply, and how installed skills should be routed.
+Run onboarding before serious or repeated work in a target project. The purpose is to help future agents know what to read, what the project means by its terms, which standards apply, and how installed skills should be routed. If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria needed before architecture planning or issue breakdown, route through `write-a-prd`; otherwise skip the PRD step.
 
 ```mermaid
 flowchart LR
@@ -54,10 +54,13 @@ flowchart LR
   C --> D["project-context-calibration"]
   D --> E["project-standards-calibration"]
   E --> F["agent-instructions-integrator"]
-  F --> G["architecture-design-map optional"]
-  G --> H["plan-codebase-architecture optional"]
-  H --> I["doc-sync"]
-  I --> J["handoff optional"]
+  F --> G{"Need product scope, roadmap, or acceptance criteria?"}
+  G -->|yes| H["write-a-prd optional"]
+  G -->|no| I["architecture-design-map optional"]
+  H --> I
+  I --> J["plan-codebase-architecture optional"]
+  J --> K["doc-sync"]
+  K --> L["handoff optional"]
 ```
 
 Typical flow:
@@ -66,14 +69,16 @@ Typical flow:
 2. Use `grill-with-docs` to clarify goals, success criteria, terminology, and scope against existing project facts.
 3. Create durable context artifacts with `context-matrix-map`, `project-context-calibration`, and `project-standards-calibration`.
 4. Use `agent-instructions-integrator` to connect the target project's agent instructions to installed skills and durable artifacts.
-5. Add `architecture-design-map` or `plan-codebase-architecture` only when the project needs architecture orientation or a project-wide blueprint.
-6. Run `doc-sync` and optional `handoff` so the onboarding result is discoverable later.
+5. Add `write-a-prd` only when onboarding needs durable project-level product scope, roadmap intent, or acceptance criteria, usually before architecture planning or issue breakdown.
+6. Add `architecture-design-map` or `plan-codebase-architecture` only when the project needs current-state architecture orientation or a project-wide blueprint.
+7. Run `doc-sync` and optional `handoff` so the onboarding result is discoverable later.
 
 Expected durable target-project artifacts often include:
 
 - `CONTEXT.md`
 - `docs/agents/context-matrix.md`
 - `docs/agents/project-standards.md`
+- `docs/prds/` only when onboarding needs durable product scope, roadmap intent, or acceptance criteria
 - `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful
 - OS temp handoffs under `goated-handoffs/<project-name>/` when continuity is needed but a tracked file is not
 
@@ -199,7 +204,7 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Use when**: A feature idea, roadmap item, client brief, or product change needs durable scope before issue breakdown.
 - **Typical input**: Clarified intent, audience, goals, non-goals, requirements, constraints, and source evidence.
 - **Typical output**: Tracked target-project PRD under `docs/prds/` by default.
-- **Pipeline role**: Delivery planning step before issue breakdown.
+- **Pipeline role**: Delivery planning step before issue breakdown, or optional onboarding decision point when project-level product scope needs durable capture.
 
 #### `prd-to-issues`
 
@@ -303,7 +308,7 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Use when**: You need a module map, dependency map, flow map, runtime topology, or quick zoom-out orientation.
 - **Typical input**: Focused source area, imports/callers, architecture docs, routes, schemas, tests, and context artifacts.
 - **Typical output**: Mermaid-first map, explanation, source references, and uncertainty notes.
-- **Pipeline role**: Optional onboarding or delivery orientation step.
+- **Pipeline role**: Optional current-state onboarding or delivery orientation step, not a PRD prerequisite or planning substitute.
 
 #### `plan-codebase-architecture`
 
@@ -379,6 +384,7 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If the request is unfamiliar or cross-file, start with `session-start-progressive-disclosure`.
 - If the request needs product or scope clarity, use `grill-with-docs`.
 - If the request is fuzzy and user-facing, use `write-a-prd` before implementation planning.
+- If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria, use `write-a-prd` before architecture planning; otherwise skip PRD creation.
 - If architecture shape matters, use `plan-codebase-architecture`; if you only need a descriptive map, use `architecture-design-map`.
 - If behavior changes, route implementation through `tdd`.
 - If a claim sounds like "done", "correct", "passing", "synced", or "ready", use `verification-before-completion` first.

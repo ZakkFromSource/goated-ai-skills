@@ -67,13 +67,13 @@ Use this router at the start of installed-skill work, when a user asks which ski
 3. Choose the route:
    - For source repo maintenance, follow that repo's maintainer instructions first, then use the relevant GOATED authoring, review, doc-sync, or handoff skill only when it applies.
    - For installation/adaptation, use `session-start-progressive-disclosure` if the environment is unfamiliar, then `agent-instructions-integrator` for project routing or `framework-agnostic-skill-creator` for creating, porting, or adapting skills.
-   - For onboarding, start with `session-start-progressive-disclosure`, then use `grill-with-docs` before durable onboarding decisions.
+   - For onboarding, start with `session-start-progressive-disclosure`, then use `grill-with-docs` before durable onboarding decisions; route to `write-a-prd` only when onboarding itself needs project-level product scope, roadmap intent, or acceptance criteria before architecture planning or issue breakdown.
    - For delivery, start with `session-start-progressive-disclosure`; use `grill-with-docs` when the request is PRD-level, architectural, cross-file, repeated, public-facing, unclear, or standards-sensitive.
    - For tiny one-off tasks, proceed directly with the smallest useful context and skip full onboarding, grilling, or planning ceremony.
    - For explicit overrides, follow the override and record any skipped GOATED step and residual risk.
 
 4. Use a compact next-skill map when the first route is clear:
-   - Fuzzy feature idea, client brief, or roadmap item -> `write-a-prd`.
+   - Fuzzy feature idea, client brief, roadmap item, or onboarding-discovered product scope, roadmap intent, or acceptance criteria -> `write-a-prd`.
    - Approved PRD, product spec, or scoped plan -> `prd-to-issues`.
    - Approved issue, scoped task, or implementation slice ready for executable steps -> `writing-plans`.
    - Implementation, bug fix, public interface change, or regression coverage -> `tdd`.
@@ -141,6 +141,7 @@ These notes are compatibility guidance, not bootstrap automation.
 
 - Do not override direct user instructions or applicable target-project instructions with GOATED defaults.
 - Do not require full onboarding for tiny one-off tasks.
+- Do not make `write-a-prd` or `docs/prds/` mandatory for every onboarding run, and do not imply automatic PRD generation.
 - Do not skip `session-start-progressive-disclosure` and `grill-with-docs` for serious, repeated, cross-file, PRD-level, architectural, unclear, standards-sensitive, or public-facing work.
 - Do not implement runtime bootstrap, automatic skill loading, hook installation, adapter manifest generation, installer scripts, or framework detection automation from this router.
 - Do not assume one instruction filename, command syntax, tool name, or skill registry is universal.
