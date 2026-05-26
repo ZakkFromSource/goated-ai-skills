@@ -76,8 +76,9 @@ Use this router at the start of installed-skill work, when a user asks which ski
    - Fuzzy feature idea, client brief, roadmap item, or onboarding-discovered product scope, roadmap intent, or acceptance criteria -> `write-a-prd`.
    - Approved PRD, product spec, or scoped plan -> `prd-to-issues`.
    - Approved issue, scoped task, or implementation slice ready for executable steps -> `writing-plans`.
+   - Broad implementation or refactor request that is not yet a focused vertical slice -> `prd-to-issues`, `writing-plans`, or `plan-codebase-architecture` before direct execution.
    - Implementation, bug fix, public interface change, or regression coverage -> `tdd`.
-   - Architecture blueprint needed before implementation -> `plan-codebase-architecture`.
+   - Architecture blueprint needed before implementation, especially when deep modules or small public interfaces are at stake -> `plan-codebase-architecture`.
    - Descriptive architecture map, module map, or dependency map -> `architecture-design-map`.
    - Review of a diff, patch, or issue fit -> `standards-and-spec-review`; use `code-security-review` for security-relevant paths.
    - Behavior, interface, standards, or public docs may have drifted -> `doc-sync`.
@@ -93,6 +94,7 @@ Use this router at the start of installed-skill work, when a user asks which ski
    - "I already know the workflow" does not replace checking the current installed skill when a non-tiny task depends on it.
    - "I need to inspect everything first" is usually a sign to use `session-start-progressive-disclosure`.
    - "The user said implement" does not skip clarification when project instructions, public behavior, architecture, or cross-file scope make intent unclear.
+   - Broad horizontal work, speculative scaffolding, or deep module and public interface decisions should not be routed through the tiny one-off path.
 
 7. Report the route briefly, then continue:
    - Name the selected task surface and next skill or direct action.

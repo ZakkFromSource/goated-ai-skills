@@ -107,7 +107,7 @@ Use this skill before PRD creation, during issue exploration, or before committi
 8. Clean up or hand off before final closeout:
    - Delete the prototype when it has served its purpose and no user review is pending.
    - Absorb only the validated idea into production code, then treat that production work as normal implementation with appropriate tests, docs, and review.
-   - For logic prototypes, delete the throwaway driver and lift only the validated pure logic shape if it still fits production needs.
+   - For logic/API prototypes, keep a small useful interface around the validated behavior, delete the throwaway driver, and avoid carrying production-like scaffolding forward.
    - For UI prototypes, delete losing variants and the switcher; fold the chosen design into the real route or promote the winning throwaway route into a real route deliberately.
    - If the user still needs to inspect it, leave an explicit handoff note with the question, entrypoint, verdict status, cleanup owner, and cleanup trigger.
    - Do not close the work as complete while prototype artifacts remain unexplained.

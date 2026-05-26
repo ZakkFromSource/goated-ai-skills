@@ -79,6 +79,7 @@ Use this skill after core onboarding artifacts exist, or when a target project n
 5. Route to installed skills:
    - Point agents to the installed skill location or framework registry when known.
    - Make installed `using-goated-ai-skills` the default first GOATED skill for serious project work; it can route onward to `session-start-progressive-disclosure` when context discovery is needed.
+   - For serious implementation or architecture work, keep the adapter as a router: send agents through installed `using-goated-ai-skills` so it can choose PRD, issue slicing, planning, TDD, or architecture skills for vertical slices, deep modules, and work that depends on public interfaces.
    - Name the relevant installed GOATED skills instead of pasting their full contents.
    - Include the onboarding route in brief: context matrix, standards profile, instruction routing, optional handoff.
    - Include the delivery route only as a compact pointer to the installed delivery skills, not a full workflow dump.

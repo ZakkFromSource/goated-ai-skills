@@ -93,6 +93,7 @@ Use this skill at the end of onboarding, delivery, review, planning, or interrup
 6. Capture blockers and next moves:
    - Blockers, risks, unresolved questions, and missing inputs.
    - Recommended next skills, such as `session-start-progressive-disclosure`, `context-matrix-map`, `project-context-calibration`, `project-standards-calibration`, `doc-sync`, `standards-and-spec-review`, `code-security-review`, or `commit-message`.
+   - Next slice or module focus when it is relevant to resuming the work.
    - A short resume plan with the next one to three actions.
 
 7. Finalize and report:
