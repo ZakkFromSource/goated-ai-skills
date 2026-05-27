@@ -12,7 +12,7 @@ triggers:
 outputs:
   - tracked target-project docs/agents/context-matrix.md by default
   - first-read, second-read, and only-if-needed source tiers
-  - source-grounded map of docs, code areas, tests, commands, ADRs, and context packs
+  - source-grounded map of docs, code areas, tests, commands, ADRs, external-doc lookup notes, and context packs
   - explicit assumptions, gaps, and verification commands used
 depends_on:
   hard: []
@@ -45,7 +45,7 @@ Use this skill during target-project onboarding or when a project lacks a reliab
 - Existing agent instruction files, if present.
 - Existing root `CONTEXT.md`, if present.
 - Existing project docs, ADRs, issue or PRD folders, test layout, build metadata, and command definitions.
-- Existing `docs/agents/` artifacts or context packs, if present.
+- Existing `docs/agents/` artifacts, external-doc lookup notes, or context packs, if present.
 
 ## Workflow
 
@@ -56,7 +56,7 @@ Use this skill during target-project onboarding or when a project lacks a reliab
 
 2. Discover candidate sources without bulk-reading:
    - List top-level files and directories.
-   - Search for likely instruction files, README files, docs indexes, ADRs, issue folders, PRDs, context packs, package manifests, build scripts, test folders, and config files.
+   - Search for likely instruction files, README files, docs indexes, ADRs, issue folders, PRDs, context packs, optional `docs/agents/external-docs/` lookup notes, package manifests, build scripts, test folders, and config files.
    - Prefer fast file discovery commands and targeted file opens over recursive reading.
    - Do not open generated output, dependency folders, lockfiles, binary assets, or large data dumps unless they are the only source for a required fact.
 
@@ -70,6 +70,7 @@ Use this skill during target-project onboarding or when a project lacks a reliab
    - **First-read**: sources future agents should read at the start of most serious sessions.
    - **Second-read**: sources to read after the task surface is known or before changing a relevant area.
    - **Only-if-needed**: deep references, large docs, historical specs, generated files, specialized commands, or narrow subsystems.
+   - Put external-doc lookup notes in the lowest useful tier, usually **Only-if-needed**, unless a captured source is central to most serious work in the target project.
    - Put each source in the lowest-context tier that still keeps future agents safe.
 
 5. Cover the required source types:
@@ -79,7 +80,7 @@ Use this skill during target-project onboarding or when a project lacks a reliab
    - Tests and verification commands.
    - Build, run, lint, format, or release commands.
    - ADRs, PRDs, issues, or decision records.
-   - Agent instructions and existing context packs under paths such as `docs/agents/`.
+   - Agent instructions, external-doc lookup notes, and existing context packs under paths such as `docs/agents/`.
 
 6. Write or update the default tracked artifact:
    - Use `docs/agents/context-matrix.md` unless the user requested another tracked path.
@@ -129,7 +130,7 @@ One short paragraph describing how future agents should use this map.
 | Command or path | Purpose | When to use | Evidence |
 | --- | --- | --- | --- |
 
-## Decisions And Context Packs
+## Decisions, External Docs, And Context Packs
 
 | Source | Scope | Status | Notes |
 | --- | --- | --- | --- |
@@ -180,6 +181,7 @@ If subagents are unavailable, perform the same scans sequentially with a narrowe
 - Do not rank sources by personal preference; tier them by when future agents need them.
 - Do not include private notes, ignored local scratch files, credentials, client data, or sensitive personal context unless the user explicitly requests a private artifact.
 - Do not assume every project has GOATED artifacts, ADRs, tests, or agent instruction files.
+- Do not assume every project has external-doc lookup notes; when present, treat them as dated optional evidence and re-check external sources when freshness matters.
 - Do not claim commands work unless they were discovered from project files or actually run.
 - Keep entries brief, evidence-based, and path-oriented.
 - Prefer "unknown" or "not found in this pass" over guessing.

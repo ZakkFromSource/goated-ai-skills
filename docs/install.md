@@ -15,7 +15,7 @@ Layer 0: Skill Pack Distribution
 Layer 1: Target Project Onboarding
 
 - Run the installed onboarding skills inside a project before durable, cross-file, PRD-level, architectural, or repeated work.
-- Use onboarding to create durable target-project artifacts such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, PRDs under `docs/prds/` only when project-level product scope, roadmap intent, or acceptance criteria need durable capture, and `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful.
+- Use onboarding to create durable target-project artifacts such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, optional `docs/agents/external-docs/` lookup notes when external docs materially inform work, PRDs under `docs/prds/` only when project-level product scope, roadmap intent, or acceptance criteria need durable capture, and `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful.
 - Use the OS temp directory for handoffs by default, under `goated-handoffs/<project-name>/`.
 - Use ignored `.local/` in the target project for private scratch notes and other temporary workspace artifacts.
 
@@ -69,6 +69,7 @@ Installed skills should use these defaults around a target project:
 CONTEXT.md                         tracked durable project context and language
 docs/agents/context-matrix.md      tracked durable context map
 docs/agents/project-standards.md   tracked durable standards profile
+docs/agents/external-docs/         optional dated, attributed external-doc lookup notes
 docs/prds/                         tracked PRDs only when product scope, roadmap intent, or acceptance criteria need durable capture
 docs/agents/architecture-plan.md   tracked project-wide architecture blueprint when useful
 docs/architecture/                 tracked feature-specific architecture blueprints when useful

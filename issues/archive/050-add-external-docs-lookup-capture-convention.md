@@ -33,14 +33,13 @@ The convention should store concise, dated, attributed lookup notes or source li
 
 ## Acceptance criteria
 
-- [ ] A portable convention is added for external-doc lookup capture, with Context7 as an example rather than a hard dependency.
-- [ ] The convention recommends target-project storage such as `docs/agents/external-docs/<library-or-service>.md` when the target project has no better convention.
-- [ ] Captured notes include date, lookup tool/source, library/service name, version when known, source URL or library id, query/topic, concise relevant summary, and freshness caveats.
-- [ ] Guardrails prohibit raw large documentation dumps, credentials, private prompts, proprietary code, client data, sensitive context, and copyright-risk copying.
-- [ ] The convention tells agents to prefer source links and summaries over bulk pasted docs, and to re-check external docs when freshness matters.
-- [ ] `context-matrix-map` recognizes captured external-doc notes as optional project evidence when present.
-- [ ] `doc-sync` or a linked reference explains when to create/update these notes after external documentation materially informs implementation, PRDs, architecture, or troubleshooting.
-- [ ] No wording implies automatic Context7 usage, MCP installation, background caching, or rate-limit circumvention.
+- [x] A portable convention is added for external-doc lookup capture, with Context7 as an example rather than a hard dependency.
+- [x] The convention recommends target-project storage such as `docs/agents/external-docs/<library-or-service>.md` when the target project has no better convention.
+- [x] Captured notes include date, lookup tool/source, library/service name, version when known, source URL or library id, query/topic, concise relevant summary, and freshness caveats.
+- [x] The convention tells agents to prefer source links and summaries over bulk pasted docs, and to re-check external docs when freshness matters.
+- [x] `context-matrix-map` recognizes captured external-doc notes as optional project evidence when present.
+- [x] `doc-sync` or a linked reference explains when to create/update these notes after external documentation materially informs implementation, PRDs, architecture, or troubleshooting.
+- [x] No wording implies automatic Context7 usage, MCP installation, background caching, or rate-limit circumvention.
 
 ## Expected proof
 
@@ -68,4 +67,3 @@ The convention should store concise, dated, attributed lookup notes or source li
 - Do not add a Context7-specific hard dependency.
 - Do not implement MCP detection, automated caching, generated indexes, or background refresh.
 - Do not store raw vendor documentation or long copyrighted excerpts.
-

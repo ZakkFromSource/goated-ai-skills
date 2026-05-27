@@ -37,7 +37,7 @@ V1 is docs-first. There is no installer script, automatic framework detection, r
 GOATED AI Skills helps agents move from "I can edit files and hope it's what you want" to "I can carry out work responsibly, with full knowledge of what you expect from me."
 
 - **Progressive disclosure**: load the smallest useful context first, then go deeper only when the task needs it.
-- **Target-project onboarding**: create durable project context, source maps, standards profiles, optional PRDs under `docs/prds/` when product scope, roadmap intent, or acceptance criteria need durable capture, and thin agent instruction adapters.
+- **Target-project onboarding**: create durable project context, source maps, standards profiles, optional external-doc lookup notes, optional PRDs under `docs/prds/` when product scope, roadmap intent, or acceptance criteria need durable capture, and thin agent instruction adapters.
 - **Delivery workflows**: clarify intent, draft PRDs, break work into issues, plan architecture, prototype ideas, and write implementation plans.
 - **Implementation discipline**: use test-driven development, focused diagnosis, subagent-aware execution, standards review, security review, doc sync, and verification before completion claims.
 - **Clean continuity**: write commit messages and handoffs that help the next session resume with clarity.
@@ -53,7 +53,7 @@ This repository is the public distribution home for reusable skill folders. User
 
 ### 2. Target Project Onboarding
 
-Installed skills prepare a user's actual project for durable agent work. Onboarding can map sources, define project language, capture standards, integrate agent instructions, capture project-level product scope, roadmap intent, or acceptance criteria in `docs/prds/` when needed, and create architecture context when useful.
+Installed skills prepare a user's actual project for durable agent work. Onboarding can map sources, define project language, capture standards, preserve concise external-doc lookup notes when external documentation materially informs work, integrate agent instructions, capture project-level product scope, roadmap intent, or acceptance criteria in `docs/prds/` when needed, and create architecture context when useful.
 
 ### 3. Target Project Delivery
 
@@ -69,7 +69,7 @@ The V1 public core is complete, and all current public-core skills are portable,
 
 - [`using-goated-ai-skills`](skills/agent-workflows/using-goated-ai-skills/SKILL.md): classify the request and choose the next GOATED skill or direct-action path.
 - [`session-start-progressive-disclosure`](skills/agent-workflows/session-start-progressive-disclosure/SKILL.md): start sessions by loading only the context that matters.
-- [`context-matrix-map`](skills/agent-workflows/context-matrix-map/SKILL.md): create a durable source map that tells future agents what to read first, second, and only if needed.
+- [`context-matrix-map`](skills/agent-workflows/context-matrix-map/SKILL.md): create a durable source map that tells future agents what to read first, second, and only if needed, including optional external-doc lookup notes when present.
 - [`project-context-calibration`](skills/agent-workflows/project-context-calibration/SKILL.md): create or refresh durable project context, including boundaries, language, artifacts, and architecture vocabulary.
 - [`project-standards-calibration`](skills/agent-workflows/project-standards-calibration/SKILL.md): separate documented standards, inferred conventions, preferences, and unresolved questions.
 - [`agent-instructions-integrator`](skills/agent-workflows/agent-instructions-integrator/SKILL.md): connect installed skills to a target project's thin agent instruction layer.

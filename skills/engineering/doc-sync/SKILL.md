@@ -12,6 +12,7 @@ triggers:
 outputs:
   - changed-behavior summary grounded in diffs, specs, tests, commands, or source evidence
   - relevant docs discovered and checked before updates are proposed
+  - external documentation lookup notes created or recommended when external sources materially informed the work
   - documentation updates made during implementation sessions or recommended during planning and review-only sessions
   - skipped docs with reasons, already-covered docs, and residual drift risk
 depends_on:
@@ -48,6 +49,7 @@ Use this skill after implementation or review work that could make docs stale. I
 - Target-project root path.
 - Changed files, diffs, commits, staged changes, unstaged changes, generated files, migrations, config changes, or supplied patch.
 - Tests, command output, manual verification notes, TDD evidence, standards/spec review, security review, prototype verdicts, or architecture notes.
+- External documentation lookups, source links, library ids, or attributed notes when vendor or package docs materially informed the work.
 - Existing durable docs such as `README.md`, `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, ADRs, feature docs, API docs, schema docs, runbooks, changelogs, or design docs.
 - Existing local/session artifacts such as OS temp handoffs under `goated-handoffs/<project-name>/`, scratch notes, or temporary plans when they help identify context but should not become source-of-truth docs.
 
@@ -68,7 +70,7 @@ Use this skill after implementation or review work that could make docs stale. I
 
 3. Discover relevant docs with progressive disclosure:
    - Use `docs/agents/context-matrix.md` when present to choose likely docs first.
-   - Check root docs, docs indexes, feature docs, API docs, ADRs, standards profiles, schema docs, runbooks, changelogs, issue handoffs, and nearby package or command docs only as relevant to the changed facts.
+   - Check root docs, docs indexes, feature docs, API docs, ADRs, standards profiles, schema docs, runbooks, changelogs, issue handoffs, existing external-doc lookup notes, and nearby package or command docs only as relevant to the changed facts.
    - Search docs for changed names, commands, APIs, routes, flags, schema terms, feature names, standards, and architecture vocabulary.
    - Do not bulk-read generated output, dependency folders, old build artifacts, large logs, or unrelated historical notes.
 
@@ -83,6 +85,7 @@ Use this skill after implementation or review work that could make docs stale. I
    - In implementation mode, make minimal, source-grounded edits to required durable docs in the same session.
    - In planning or review-only mode, report required and recommended doc updates without editing files.
    - Preserve each doc's purpose and level of detail. Update facts, links, commands, status, acceptance, and reading order; avoid turning doc sync into a rewrite or new planning exercise.
+   - When external documentation materially informed implementation, PRDs, architecture, troubleshooting, or docs, create or update a concise attributed lookup note using [External Docs Lookup Notes](references/external-docs-lookup-notes.md). Use `docs/agents/external-docs/<library-or-service>.md` when the target project has no better convention.
    - When a settled, hard-to-reverse decision needs durable capture and an ADR convention exists, recommend or update the relevant ADR according to that convention. If no convention exists, report the ADR need instead of inventing one.
    - If source behavior, specs, and docs conflict in a way that changes product intent, stop and ask which source should win.
 
@@ -168,6 +171,8 @@ If subagents are unavailable, perform the same checks sequentially with a narrow
 - Do not update a PRD, issue, or handoff to hide a mismatch between intended and implemented behavior. Report the mismatch or route it to the appropriate review skill.
 - Do not create new durable artifacts such as ADRs, context files, standards profiles, or docs indexes unless the current task or project convention clearly calls for them.
 - Do not bulk rewrite docs, reorganize documentation architecture, or modernize stale areas unrelated to the current change.
+- Do not paste raw vendor documentation, long copyrighted excerpts, private prompts, credentials, proprietary code, client data, sensitive context, or private workflow assumptions into external-doc lookup notes.
+- Do not imply automatic Context7 usage, MCP installation, background refresh, generated indexes, rate-limit workarounds, or any other tool-specific automation for external-doc lookup notes.
 - Do not include private notes, ignored scratch content, credentials, client data, sensitive personal context, secrets, or real user data in tracked docs.
 - Do not claim a doc check passed when the relevant file, command, or generated output was not inspected.
 - Do not require this source repo's root docs after installation. The skill may rely only on its own instructions and target-project evidence.
@@ -175,4 +180,4 @@ If subagents are unavailable, perform the same checks sequentially with a narrow
 
 ## References
 
-No external references are required. This skill is self-contained after installation.
+- [External Docs Lookup Notes](references/external-docs-lookup-notes.md) - read when external documentation materially informs target-project work and may need concise, dated, attributed capture.

@@ -78,6 +78,7 @@ Expected durable target-project artifacts often include:
 - `CONTEXT.md`
 - `docs/agents/context-matrix.md`
 - `docs/agents/project-standards.md`
+- `docs/agents/external-docs/` optional dated, attributed lookup notes when external docs materially inform work
 - `docs/prds/` only when onboarding needs durable product scope, roadmap intent, or acceptance criteria
 - `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful
 - OS temp handoffs under `goated-handoffs/<project-name>/` when continuity is needed but a tracked file is not
@@ -147,7 +148,7 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Purpose**: Creates a durable source map for future agents.
 - **Use when**: Onboarding a project for serious work or deciding what future agents should read first, second, or only if needed.
 - **Typical input**: Project docs, repo layout, manifests, tests, important source areas, and existing agent artifacts.
-- **Typical output**: `docs/agents/context-matrix.md` with source tiers, code areas, commands, decisions, gaps, and assumptions.
+- **Typical output**: `docs/agents/context-matrix.md` with source tiers, code areas, commands, decisions, optional external-doc lookup notes, gaps, and assumptions.
 - **Pipeline role**: Early onboarding artifact that keeps future sessions efficient.
 
 #### `project-context-calibration`
@@ -293,8 +294,8 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 
 - **Purpose**: Keeps durable docs aligned with changed behavior, interfaces, architecture, standards, configuration, tests, or workflows.
 - **Use when**: Implementation, review, architecture, standards, or public docs work may have created documentation drift.
-- **Typical input**: Changed facts, diffs, issue/PRD evidence, tests, commands, and relevant docs.
-- **Typical output**: Docs checked, updates made or recommended, skipped docs, and residual drift risk.
+- **Typical input**: Changed facts, diffs, issue/PRD evidence, tests, commands, external-doc lookup evidence, and relevant docs.
+- **Typical output**: Docs checked, updates made or recommended, external-doc lookup notes created or recommended, skipped docs, and residual drift risk.
 - **Pipeline role**: Closeout gate after implementation or documentation-affecting work.
 
 #### `verification-before-completion`
