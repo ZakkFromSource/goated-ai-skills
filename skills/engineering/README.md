@@ -9,7 +9,7 @@ Use `verification-before-completion` as the soft final evidence gate before clai
 
 - `grill-with-docs` - pressure-tests important work against available docs and project facts.
 - `write-a-prd` - turns unclear intent into a scoped target-project PRD.
-- `prd-to-issues` - breaks scoped PRDs into local issue handoffs.
+- `prd-to-issues` - breaks scoped PRDs into local issue handoffs and local order files for multi-issue sets.
 - `writing-plans` - turns approved issues or scoped tasks into just-in-time executable implementation plans.
 - `subagent-driven-development` - coordinates fresh implementer and reviewer agents while preserving main-agent ownership.
 - `prototype` - creates local throwaway artifacts to answer one focused question.

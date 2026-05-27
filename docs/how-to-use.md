@@ -110,7 +110,7 @@ Typical flow:
 1. Use `session-start-progressive-disclosure` to gather just enough context.
 2. Use `grill-with-docs` when the work is unclear, architectural, public-facing, cross-file, standards-sensitive, or PRD-level.
 3. Use `prototype` before committing to a risky product, UI, logic, or technical choice.
-4. Use `write-a-prd` for fuzzy ideas, then `prd-to-issues` to break the PRD into implementation-ready local issue handoffs.
+4. Use `write-a-prd` for fuzzy ideas, then `prd-to-issues` to break the PRD into implementation-ready local issue handoffs and a local recommended order file for multi-issue sets.
 5. Use `plan-codebase-architecture` when the module shape, interfaces, dependencies, or implementation slices need source-grounded architecture design before code.
 6. Use `writing-plans` immediately before implementation to produce exact steps, evidence, stop conditions, and review gates.
 7. Use `subagent-driven-development` for larger or riskier work when bounded implementer and reviewer agents are available.
@@ -212,7 +212,7 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Purpose**: Breaks a scoped PRD into dependency-ordered local issue handoffs.
 - **Use when**: A PRD, product spec, roadmap item, or approved plan is ready to become implementation slices.
 - **Typical input**: Approved PRD, user stories, acceptance criteria, blockers, dependencies, and source references.
-- **Typical output**: Local Markdown issue handoffs under `issues/` by default.
+- **Typical output**: Local Markdown issue handoffs under `issues/` by default, plus a refreshed local recommended order file for multi-issue breakdowns.
 - **Pipeline role**: Converts product intent into implementation-ready slices.
 
 #### `writing-plans`

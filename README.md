@@ -81,7 +81,7 @@ The V1 public core is complete, and all current public-core skills are portable,
 - [`grill-with-docs`](skills/engineering/grill-with-docs/SKILL.md): clarify, brainstorm options, and pressure-test important work against project docs, standards, and source facts before implementation.
 - [`diagnose`](skills/engineering/diagnose/SKILL.md): investigate bugs, failing tests, build failures, regressions, and unexpected behavior before fixing them.
 - [`write-a-prd`](skills/engineering/write-a-prd/SKILL.md): turn fuzzy intent into a scoped product requirements document.
-- [`prd-to-issues`](skills/engineering/prd-to-issues/SKILL.md): break a PRD or approved plan into implementation-ready issue handoffs.
+- [`prd-to-issues`](skills/engineering/prd-to-issues/SKILL.md): break a PRD or approved plan into implementation-ready issue handoffs and a local recommended order file for multi-issue sets.
 - [`writing-plans`](skills/engineering/writing-plans/SKILL.md): produce just-in-time implementation plans with evidence, gates, and stop conditions.
 - [`plan-codebase-architecture`](skills/engineering/plan-codebase-architecture/SKILL.md): design source-grounded modules, interfaces, seams, test surfaces, and slice order.
 - [`architecture-design-map`](skills/engineering/architecture-design-map/SKILL.md): create source-grounded architecture maps, flow maps, and quick zoom-outs.
