@@ -1,6 +1,6 @@
 # Engineering
 
-Skills in this category support target-project delivery: intent clarification, PRDs, prototyping, just-in-time implementation plans, TDD, review, security checks, documentation synchronization, commit messages, architecture maps, architecture plans, and refactoring.
+Skills in this category support target-project delivery: intent clarification, PRDs, prototyping, just-in-time implementation plans, TDD, review, security checks, documentation authoring and synchronization, commit messages, architecture maps, architecture plans, and refactoring.
 
 They should prefer observable behavior, source-grounded evidence, and clear closeout criteria.
 Use `verification-before-completion` as the soft final evidence gate before claiming engineering work is complete, correct, review-ready, documentation-synced, or ready for the next lifecycle step.
@@ -18,6 +18,7 @@ Use `verification-before-completion` as the soft final evidence gate before clai
 - `receiving-code-review` - handles review feedback by classifying, verifying, routing, and fixing accepted items one at a time.
 - `standards-and-spec-review` - reviews changes against project standards and originating specs.
 - `code-security-review` - performs focused static security review of risky changes.
+- `documentation-writer` - creates or substantially revises source-grounded durable manuals, guides, runbooks, product docs, and AI-facing guide docs.
 - `doc-sync` - identifies and handles documentation drift.
 - `verification-before-completion` - gates completion, correctness, readiness, and success claims on fresh evidence.
 - `commit-message` - drafts concise commit commands from local diffs and evidence.

@@ -1,6 +1,6 @@
 ## Parent PRD
 
-Planned parent PRD: `issues/prd-goated-ai-skills-documentation-writer.md`, to be created and approved by `issues/048-draft-documentation-writer-prd.md` before this issue starts.
+Parent PRD: `issues/prd-goated-ai-skills-documentation-writer.md`, created by archived issue `issues/archive/048-draft-documentation-writer-prd.md` and maintainer-approved on 2026-05-27.
 
 ## Type
 
@@ -19,7 +19,7 @@ The skill should create or update durable user-facing documentation such as manu
 - `skills/README.md`
 - `skills/engineering/README.md`
 - `issues/prd-goated-ai-skills-documentation-writer.md`
-- `issues/048-draft-documentation-writer-prd.md`
+- `issues/archive/048-draft-documentation-writer-prd.md`
 - `skills/engineering/doc-sync/SKILL.md`
 - `skills/engineering/write-a-prd/SKILL.md`
 - `skills/engineering/verification-before-completion/SKILL.md`
@@ -33,15 +33,15 @@ The skill should create or update durable user-facing documentation such as manu
 
 ## Acceptance criteria
 
-- [ ] `skills/engineering/documentation-writer/SKILL.md` exists and follows the lean schema.
-- [ ] The skill is scoped to manuals-first durable documentation, using the approved PRD's audience, goals, and non-goals.
-- [ ] The workflow gathers source evidence before writing docs and records assumptions, gaps, and unresolved product questions.
-- [ ] The workflow chooses target-project documentation locations from existing conventions first, with a safe default only when none exists.
-- [ ] The output contract covers created/updated docs, source evidence used, audience, scope, verification, doc-sync relationship, and remaining gaps.
-- [ ] The skill routes documentation drift after implementation to `doc-sync` instead of duplicating that workflow.
-- [ ] Delegation supports bounded source summarization, outline review, audience fit review, and documentation QA.
-- [ ] Guardrails prevent private data, credentials, raw transcripts, unverified product claims, and static-site generation unless approved by the PRD.
-- [ ] `README.md`, `docs/how-to-use.md`, and `skills/engineering/README.md` list the skill only after the implementation is complete.
+- [x] `skills/engineering/documentation-writer/SKILL.md` exists and follows the lean schema.
+- [x] The skill is scoped to manuals-first durable documentation, using the approved PRD's audience, goals, and non-goals.
+- [x] The workflow gathers source evidence before writing docs and records assumptions, gaps, and unresolved product questions.
+- [x] The workflow chooses target-project documentation locations from existing conventions first, with a safe default only when none exists.
+- [x] The output contract covers created/updated docs, source evidence used, audience, scope, verification, doc-sync relationship, and remaining gaps.
+- [x] The skill routes documentation drift after implementation to `doc-sync` instead of duplicating that workflow.
+- [x] Delegation supports bounded source summarization, outline review, audience fit review, and documentation QA.
+- [x] Guardrails prevent private data, credentials, raw transcripts, unverified product claims, and static-site generation unless approved by the PRD.
+- [x] `README.md`, `docs/how-to-use.md`, and `skills/engineering/README.md` list the skill only after the implementation is complete.
 
 ## Expected proof
 
@@ -52,8 +52,7 @@ The skill should create or update durable user-facing documentation such as manu
 
 ## Blocked by
 
-- `issues/048-draft-documentation-writer-prd.md`
-- Maintainer approval that `issues/prd-goated-ai-skills-documentation-writer.md` is ready for implementation.
+- None. The parent PRD exists, issue 048 is archived, and maintainer approval for issue 049 implementation was granted on 2026-05-27.
 
 ## User stories addressed
 
@@ -71,4 +70,3 @@ The skill should create or update durable user-facing documentation such as manu
 - Do not start before the PRD exists and is approved.
 - Do not implement webpage or static-site generation unless the approved PRD explicitly includes it.
 - Do not add private/domain-specific documentation assumptions to public main.
-

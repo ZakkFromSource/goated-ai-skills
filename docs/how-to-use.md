@@ -99,10 +99,11 @@ flowchart LR
   I --> J["tdd"]
   J --> K["standards-and-spec-review"]
   K --> L["code-security-review"]
-  L --> M["doc-sync"]
-  M --> N["verification-before-completion"]
-  N --> O["commit-message"]
-  O --> P["handoff optional"]
+  L --> M["documentation-writer optional"]
+  M --> N["doc-sync"]
+  N --> O["verification-before-completion"]
+  O --> P["commit-message"]
+  P --> Q["handoff optional"]
 ```
 
 Typical flow:
@@ -115,8 +116,9 @@ Typical flow:
 6. Use `writing-plans` immediately before implementation to produce exact steps, evidence, stop conditions, and review gates.
 7. Use `subagent-driven-development` for larger or riskier work when bounded implementer and reviewer agents are available.
 8. Use `tdd` for behavior changes, bug fixes, public interfaces, and regression coverage.
-9. Use `standards-and-spec-review`, `code-security-review`, `doc-sync`, and `verification-before-completion` before making strong completion claims.
-10. Use `commit-message` and optional `handoff` for closeout.
+9. Use `documentation-writer` when planned durable docs are part of the work, then use `doc-sync` when changed behavior or docs may have made other docs stale.
+10. Use `standards-and-spec-review`, `code-security-review`, `doc-sync`, and `verification-before-completion` before making strong completion claims.
+11. Use `commit-message` and optional `handoff` for closeout.
 
 ## Skill Reference
 
@@ -279,6 +281,14 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Typical output**: Security findings, trust-boundary map, reviewed files, skipped areas, and residual risk.
 - **Pipeline role**: Security gate for relevant delivery work.
 
+#### `documentation-writer`
+
+- **Purpose**: Creates or substantially revises durable documentation from source evidence and audience needs.
+- **Use when**: You need a manual, operator guide, runbook, troubleshooting guide, onboarding guide, product doc, or separate AI-facing guide.
+- **Typical input**: Documentation goal, audience, target-project docs conventions, source evidence, assumptions, and verification expectations.
+- **Typical output**: Created or updated docs, source evidence, audience, scope, AI-guide decision, verification, doc-sync relationship, and remaining gaps.
+- **Pipeline role**: Planned documentation authoring step before `doc-sync` checks whether related docs drifted.
+
 #### `doc-sync`
 
 - **Purpose**: Keeps durable docs aligned with changed behavior, interfaces, architecture, standards, configuration, tests, or workflows.
@@ -388,6 +398,7 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria, use `write-a-prd` before architecture planning; otherwise skip PRD creation.
 - If architecture shape matters, use `plan-codebase-architecture`; if you only need a descriptive map, use `architecture-design-map`.
 - If behavior changes, route implementation through `tdd`.
+- If planned durable documentation is the work, or part of the work, use `documentation-writer`; use `doc-sync` for drift checks after behavior or docs change.
 - If a claim sounds like "done", "correct", "passing", "synced", or "ready", use `verification-before-completion` first.
 
 ## Source References

@@ -59,7 +59,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Command or path | Purpose | When to use | Evidence |
 | --- | --- | --- | --- |
 | `git rev-parse --show-toplevel` | Confirm the repository boundary. | When the current working directory or target project root is ambiguous. | Ran on 2026-05-21 and returned this repo root. |
-| `rg --files` | Discover repo files without bulk-reading them. | At the start of mapping, source routing, or targeted scans. | Ran on 2026-05-23 during issue `032` doc sync; showed root docs, active/archived issues, docs, and 27 implemented skill folders. |
+| `rg --files` | Discover repo files without bulk-reading them. | At the start of mapping, source routing, or targeted scans. | Use targeted path and term scans when skill inventory, issue state, or docs surfaces change. |
 | Issue and PRD scans with `rg -n` | Sample issue and PRD headings, blockers, current names, and implementation summaries. | When deciding which issue to open first or checking documentation drift. | Ran on 2026-05-21 for issue discovery and interim doc sync. |
 | `git status --short` | Check local worktree state. | Before and after edits. | Ran on 2026-05-21 before interim doc-sync edits; output was empty. |
 | `rg --files -g 'package.json' -g 'pyproject.toml' -g 'pubspec.yaml' -g 'Cargo.toml' -g 'Makefile' -g '*.sln' -g '*.csproj' -g '*.fsproj' -g 'go.mod' -g 'requirements.txt'` | Look for build or package entrypoints. | Before claiming build, lint, format, or test commands exist. | Ran on 2026-05-21; no matches found. |
@@ -71,8 +71,8 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Source | Scope | Status | Notes |
 | --- | --- | --- | --- |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Public core product model, skill schema, V1 skill set, onboarding and delivery workflows. | Draft reference PRD. | Primary spec until superseded by accepted ADRs or updated PRDs. |
-| `issues/archive/*.md` | Completed scaffold, skill implementation, follow-up upgrade, doc-sync, and final acceptance handoffs. | Archived. | As of 2026-05-27, issues `001` through `047` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
-| `issues/*.md` excluding `issues/archive/` and PRDs | Future implementation or acceptance handoffs after V1. | Active post-V1 handoffs exist: `048` through `050`. | Read the specific active issue before implementing or reviewing that slice. |
+| `issues/archive/*.md` | Completed scaffold, skill implementation, follow-up upgrade, doc-sync, and final acceptance handoffs. | Archived. | As of 2026-05-27, issues `001` through `049` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
+| `issues/*.md` excluding `issues/archive/` and PRDs | Future implementation or acceptance handoffs after V1. | Active post-V1 handoff exists: `050`. | Read the specific active issue before implementing or reviewing that slice. |
 | `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md` | Accepted V1 runtime bootstrap and adapter automation decision. | Accepted ADR. | V1 allows narrow adapter notes only; runtime bootstrap, plugin manifests, hooks, installers, automatic loading, and adapter automation require future scoped work. |
 | `docs/adr/README.md` | ADR index, placement, and policy. | ADR index. | Lists ADR 0001 and should be read before adding or changing architectural decision records. |
 | `docs/agents/context-matrix.md` | Future-agent read order for this repo. | Maintained routing artifact. | Refresh when repo structure, issue state, skill inventory, or source-evidence paths change. |
@@ -91,4 +91,4 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 - Date: 2026-05-27
 - Updated by: Codex
-- Evidence used: prior 2026-05-23 matrix evidence; active post-V1 issues `048` through `050`; archived issue `047`; targeted stale-wording scans with `rg -n`; `git status --short`; issue-file heading review.
+- Evidence used: prior 2026-05-23 matrix evidence; active post-V1 issue `050`; archived issues `048` and `049`; issue 049 documentation-writer implementation; targeted stale-wording scans with `rg -n`; `git status --short`; issue-file heading review.

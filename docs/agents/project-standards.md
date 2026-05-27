@@ -38,7 +38,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Existing implemented skills use adapter maps for Codex, Claude Code, Hermes, OpenCode, and generic agents. | review-enforced | Implemented `SKILL.md` frontmatter across all three categories | High |
 | Skill bodies commonly include Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References. | review-enforced | Implemented `SKILL.md` headings across all three categories | High |
 | Issue handoffs use numbered filenames and standard sections such as Parent PRD, Type, What to build, Recommended first reads, Acceptance criteria, Expected proof, Blocked by, and User stories addressed. | review-enforced | `issues/*.md`, `issues/archive/*.md` heading scan | High |
-| Completed implementation issues move under `issues/archive/` only after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete. | review-enforced | `CONTEXT.md`; archived issues `001` through `047`; active post-V1 issues `048` through `050` | High |
+| Completed implementation issues move under `issues/archive/` only after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete. | review-enforced | `CONTEXT.md`; archived issues `001` through `049`; active post-V1 issue `050` | High |
 | Docs-only changes currently rely on manual markdown review. | review-enforced | No manifest, CI, formatter, linter, or test config found in this pass | High |
 
 ## User-Confirmed Preferences
@@ -52,7 +52,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Question | Why it matters | Current default | Needed before |
 | --- | --- | --- | --- |
 | Should the repo add markdown linting or formatting tools later? | Tooling would change which standards can be called tooling-enforced. | Manual markdown review only. | Adding automated docs checks, CI, or formatter expectations. |
-| Should category README files list planned skills before implementation? | The PRD names this as an open question and it affects public docs shape. | List implemented skills only; avoid making planned issues look complete. | Expanding category indexes or generated catalog docs. |
+| Should category README files list planned skills before implementation? | Planned-skill catalog entries can make incomplete work look installable. | List implemented skills only; avoid making planned issues look complete. | Expanding category indexes or generated catalog docs. |
 | Should future generated indexes be public docs, local-only artifacts, or both? | Generated indexes could affect install docs and repo maintenance. | No generated indexes in V1. | Designing any generated index workflow. |
 | Should installer automation live in this repo or framework-specific adapters later? | It affects V1 out-of-scope boundaries and future ownership. | No installer tooling in V1. | Starting installer automation work. |
 
@@ -77,4 +77,4 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 - Date: 2026-05-27
 - Updated by: Codex
-- Evidence used: prior 2026-05-23 standards evidence; active post-V1 issues `048` through `050`; archived issue `047`; targeted stale-wording scans with `rg -n`; `git status --short`; issue-file heading review.
+- Evidence used: prior 2026-05-23 standards evidence; active post-V1 issue `050`; archived issues `048` and `049`; issue 049 documentation-writer implementation; targeted stale-wording scans with `rg -n`; `git status --short`; issue-file heading review.
