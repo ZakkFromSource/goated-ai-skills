@@ -101,10 +101,11 @@ flowchart LR
   J --> K["standards-and-spec-review"]
   K --> L["code-security-review"]
   L --> M["documentation-writer optional"]
-  M --> N["doc-sync"]
-  N --> O["verification-before-completion"]
-  O --> P["commit-message"]
-  P --> Q["handoff optional"]
+  M --> N["documentation-cleanup optional"]
+  N --> O["doc-sync"]
+  O --> P["verification-before-completion"]
+  P --> Q["commit-message"]
+  Q --> R["handoff optional"]
 ```
 
 Typical flow:
@@ -117,9 +118,10 @@ Typical flow:
 6. Use `writing-plans` immediately before implementation to produce exact steps, evidence, stop conditions, and review gates.
 7. Use `subagent-driven-development` for larger or riskier work when bounded implementer and reviewer agents are available.
 8. Use `tdd` for behavior changes, bug fixes, public interfaces, and regression coverage.
-9. Use `documentation-writer` when planned durable docs are part of the work, then use `doc-sync` when changed behavior or docs may have made other docs stale.
-10. Use `standards-and-spec-review`, `code-security-review`, `doc-sync`, and `verification-before-completion` before making strong completion claims.
-11. Use `commit-message` and optional `handoff` for closeout.
+9. Use `documentation-writer` when planned durable docs are part of the work. Use `documentation-cleanup` when the docs tree, root routing docs, progress/status docs, or agent-facing docs need broader hygiene.
+10. Use `doc-sync` when changed behavior or docs may have made other docs stale.
+11. Use `standards-and-spec-review`, `code-security-review`, `doc-sync`, and `verification-before-completion` before making strong completion claims.
+12. Use `commit-message` and optional `handoff` for closeout.
 
 ## Skill Reference
 
@@ -290,6 +292,14 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Typical output**: Created or updated docs, source evidence, audience, scope, AI-guide decision, verification, doc-sync relationship, and remaining gaps.
 - **Pipeline role**: Planned documentation authoring step before `doc-sync` checks whether related docs drifted.
 
+#### `documentation-cleanup`
+
+- **Purpose**: Audits, tidies, consolidates, and optimizes documentation trees and agent-facing docs.
+- **Use when**: A project has bulky, duplicated, stale, unclear, or hard-to-navigate docs across `docs/`, `docs/agents/`, root routing docs, progress/status docs, or issue workbenches.
+- **Typical input**: Target-project root, docs folders, root README/context files, agent instruction adapters, progress/status docs, and local source-of-truth conventions.
+- **Typical output**: Documentation inventory, role classifications, cleanup findings, recommended actions, approval-needed moves/deletes/archives, optional gated edits, verification, and residual risk.
+- **Pipeline role**: Periodic documentation hygiene step. It stays separate from planned authoring (`documentation-writer`) and changed-behavior drift checks (`doc-sync`).
+
 #### `doc-sync`
 
 - **Purpose**: Keeps durable docs aligned with changed behavior, interfaces, architecture, standards, configuration, tests, or workflows.
@@ -407,7 +417,7 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria, use `write-a-prd` before architecture planning; otherwise skip PRD creation.
 - If architecture shape matters, use `plan-codebase-architecture`; if you only need a descriptive map, use `architecture-design-map`.
 - If behavior changes, route implementation through `tdd`.
-- If planned durable documentation is the work, or part of the work, use `documentation-writer`; use `doc-sync` for drift checks after behavior or docs change.
+- If planned durable documentation is the work, or part of the work, use `documentation-writer`; if docs structure or agent docs are messy, use `documentation-cleanup`; use `doc-sync` for drift checks after behavior or docs change.
 - If a claim sounds like "done", "correct", "passing", "synced", or "ready", use `verification-before-completion` first.
 
 ## Source References

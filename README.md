@@ -39,7 +39,7 @@ GOATED AI Skills helps agents move from "I can edit files and hope it's what you
 - **Progressive disclosure**: load the smallest useful context first, then go deeper only when the task needs it.
 - **Target-project onboarding**: create durable project context, source maps, standards profiles, optional external-doc lookup notes, optional PRDs under `docs/prds/` when product scope, roadmap intent, or acceptance criteria need durable capture, and thin agent instruction adapters.
 - **Delivery workflows**: clarify intent, draft PRDs, break work into issues, plan architecture, prototype ideas, and write implementation plans.
-- **Implementation discipline**: use test-driven development, focused diagnosis, subagent-aware execution, standards review, security review, doc sync, and verification before completion claims.
+- **Implementation discipline**: use test-driven development, focused diagnosis, subagent-aware execution, standards review, security review, documentation cleanup, doc sync, and verification before completion claims.
 - **Clean continuity**: write commit messages and handoffs that help the next session resume with clarity.
 - **Portable skill design**: keep installed skills self-contained so they do not depend on this repo's root files at runtime.
 
@@ -93,6 +93,7 @@ The V1 public core is complete, and all current public-core skills are portable,
 - [`standards-and-spec-review`](skills/engineering/standards-and-spec-review/SKILL.md): review changes against project standards and the originating spec as separate axes.
 - [`code-security-review`](skills/engineering/code-security-review/SKILL.md): inspect risky diffs and trust boundaries for high-evidence security issues.
 - [`documentation-writer`](skills/engineering/documentation-writer/SKILL.md): create source-grounded durable manuals, guides, runbooks, product docs, and AI-facing guide docs.
+- [`documentation-cleanup`](skills/engineering/documentation-cleanup/SKILL.md): audit and tidy docs trees, root routing docs, progress/status docs, and agent-facing docs through a role-aware, gated cleanup workflow.
 - [`doc-sync`](skills/engineering/doc-sync/SKILL.md): keep docs aligned with changed behavior, interfaces, architecture, tests, and workflows.
 - [`verification-before-completion`](skills/engineering/verification-before-completion/SKILL.md): require fresh evidence before claiming work is done, correct, synced, or ready.
 - [`commit-message`](skills/engineering/commit-message/SKILL.md): draft concise, information-rich commit messages from local diffs and checks.
@@ -139,6 +140,7 @@ session-start-progressive-disclosure
 -> standards-and-spec-review
 -> code-security-review
 -> documentation-writer optional when planned docs are part of scope
+-> documentation-cleanup optional when docs structure or agent docs need broader hygiene
 -> doc-sync
 -> verification-before-completion
 -> commit-message
