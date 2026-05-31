@@ -99,6 +99,7 @@ The V1 public core is complete, and all current public-core skills are portable,
 
 ### Productivity
 
+- [`goated-prompt`](skills/productivity/goated-prompt/SKILL.md): transform rough requests into GOATED-aware prompts or portable reusable prompts with calibrated context and prompt type.
 - [`grill-me`](skills/productivity/grill-me/SKILL.md): challenge and clarify ideas, plans, choices, and decisions when project docs are not needed.
 - [`caveman`](skills/productivity/caveman/SKILL.md): keep replies compact without losing important warnings, uncertainty, or exactness.
 

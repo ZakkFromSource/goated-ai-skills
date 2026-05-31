@@ -340,6 +340,14 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 
 ### Productivity
 
+#### `goated-prompt`
+
+- **Purpose**: Turns rough requests into GOATED-aware prompts or portable reusable prompts.
+- **Use when**: You want to improve, rewrite, optimize, or classify a prompt; make a request work with the GOATED workflow; or create a reusable prompt for a coding assistant or reasoning model.
+- **Typical input**: Raw request, rough prompt, existing output, intended recipient, constraints, success criteria, and any context the prompt should preserve.
+- **Typical output**: Detected mode and prompt type, optimized prompt in a code block, recommended GOATED route or model class, assumptions, and short rationale.
+- **Pipeline role**: Productivity aid for prompt quality and GOATED-aware request translation. It routes to `grill-with-docs`, `write-a-prd`, `writing-plans`, or `framework-agnostic-skill-creator` when those skills should own the next step.
+
 #### `caveman`
 
 - **Purpose**: Keeps replies compact when the user explicitly asks for brief, terse, or caveman-style communication.
