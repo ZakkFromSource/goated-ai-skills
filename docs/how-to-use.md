@@ -132,7 +132,7 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 #### `using-goated-ai-skills`
 
 - **Purpose**: Routes an installed GOATED skill stack to the right workflow while respecting user and project instructions.
-- **Use when**: You are unsure whether a request is onboarding, delivery, installation/adaptation, source-repo maintenance, tiny direct work, or an explicit override.
+- **Use when**: You are unsure whether a request is onboarding, delivery, installation/adaptation, source-repo maintenance, prompt-crafting, tiny direct work, or an explicit override.
 - **Typical input**: User request, current project boundary, applicable project instructions, and known installed skill list.
 - **Typical output**: Task-surface classification, instruction-precedence decision, selected skill path, and assumptions.
 - **Pipeline role**: First router for the whole stack.
@@ -390,6 +390,12 @@ Use GOATED AI Skills to onboard this project for serious future agent work. Star
 Use GOATED AI Skills for this feature idea. Clarify the intent against project docs, decide whether we need a PRD or prototype, then route through the delivery pipeline until there is an implementation-ready plan.
 ```
 
+### Craft or refine a prompt
+
+```text
+Use GOATED AI Skills to turn this rough request into a better prompt. Start with using-goated-ai-skills if the route is unclear, then use goated-prompt to choose the prompt type, calibrate context, name assumptions, and route to companion skills only when they should own the next step.
+```
+
 ### Implement a scoped issue
 
 ```text
@@ -411,6 +417,7 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 ## Practical Routing Rules
 
 - If the request is tiny, obvious, and low risk, use the smallest useful context and act directly.
+- If the request is to improve, rewrite, optimize, or create a reusable prompt, use `goated-prompt`; let it route onward only when another skill should own the next step.
 - If the request is unfamiliar or cross-file, start with `session-start-progressive-disclosure`.
 - If the request needs product or scope clarity, use `grill-with-docs`.
 - If the request is fuzzy and user-facing, use `write-a-prd` before implementation planning.

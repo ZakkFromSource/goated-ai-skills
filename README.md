@@ -147,6 +147,15 @@ session-start-progressive-disclosure
 -> handoff optional
 ```
 
+### Craft or Refine a Prompt
+
+```text
+using-goated-ai-skills when the route is unclear
+-> goated-prompt
+-> grill-me optional when lightweight intent clarity is needed
+-> grill-with-docs optional when project evidence or standards matter
+```
+
 ## Source Repo, Installed Skills, Target Projects
 
 This repo is the source library and maintainer workspace for GOATED AI Skills. It is not a project template that users are expected to clone into every codebase.

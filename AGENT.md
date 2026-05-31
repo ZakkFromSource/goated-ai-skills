@@ -54,7 +54,7 @@ Do not bulk-read the repo when a targeted read will do. Do not create actual ski
 
 ## GOATED Skill Routing
 
-Use `skills/agent-workflows/using-goated-ai-skills/SKILL.md` as the portable router for choosing a GOATED skill path. It distinguishes source-repo maintenance, skill installation/adaptation, target-project onboarding, target-project delivery, tiny one-off tasks, and explicit user overrides while respecting user and project instructions.
+Use `skills/agent-workflows/using-goated-ai-skills/SKILL.md` as the portable router for choosing a GOATED skill path. It distinguishes source-repo maintenance, skill installation/adaptation, target-project onboarding, target-project delivery, prompt-crafting requests, tiny one-off tasks, and explicit user overrides while respecting user and project instructions.
 
 This file remains the maintainer contract for this source repo. When documenting or configuring installed skill usage, point agents and thin adapters to the installed `using-goated-ai-skills` router instead of duplicating full onboarding or delivery workflows here.
 

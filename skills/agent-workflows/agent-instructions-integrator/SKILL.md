@@ -18,6 +18,7 @@ depends_on:
   hard: []
   soft:
     - using-goated-ai-skills when the installed stack needs a router entrypoint or task-surface classification
+    - goated-prompt when the adapter should route prompt-crafting, reusable prompt, or GOATED-aware prompt requests
     - session-start-progressive-disclosure before integrating an unfamiliar target project
     - context-matrix-map when routing should reference docs/agents/context-matrix.md
     - project-context-calibration when routing should reference root CONTEXT.md
@@ -80,6 +81,7 @@ Use this skill after core onboarding artifacts exist, or when a target project n
    - Point agents to the installed skill location or framework registry when known.
    - Make installed `using-goated-ai-skills` the default first GOATED skill for serious project work; it can route onward to `session-start-progressive-disclosure` when context discovery is needed.
    - For serious implementation or architecture work, keep the adapter as a router: send agents through installed `using-goated-ai-skills` so it can choose PRD, issue slicing, planning, TDD, or architecture skills for vertical slices, deep modules, and work that depends on public interfaces.
+   - For prompt-crafting requests, name installed `goated-prompt` as the owner of prompt improvement, reusable prompts, spec/task/planning/refinement prompts, and GOATED-aware request translation.
    - Name the relevant installed GOATED skills instead of pasting their full contents.
    - Include the onboarding route in brief: context matrix, standards profile, instruction routing, optional handoff.
    - Include the delivery route only as a compact pointer to the installed delivery skills, not a full workflow dump.
@@ -93,7 +95,7 @@ Use this skill after core onboarding artifacts exist, or when a target project n
 
 7. Verify the adapter:
    - Re-read the edited artifact.
-   - Check that it names the selected framework, selected artifact, installed `using-goated-ai-skills` routing, target-project artifact routing, and unresolved assumptions.
+   - Check that it names the selected framework, selected artifact, installed `using-goated-ai-skills` routing, prompt-crafting routing when included, target-project artifact routing, and unresolved assumptions.
    - Check that it does not paste full GOATED skill bodies or treat any one filename as universal.
    - Use `verification-before-completion` before claiming the adapter is complete, checked, or ready for use.
 
@@ -107,6 +109,7 @@ Update the selected target-project instruction artifact or configuration with a 
 - Framework: <Codex | Claude Code | Hermes | OpenCode | generic agent | other confirmed framework>
 - Installed skills: <path, registry, or "installed in framework; exact path not verified">
 - Start serious project work with installed `using-goated-ai-skills`; it will route to `session-start-progressive-disclosure` when context discovery is needed.
+- Use installed `goated-prompt` for prompt improvement, reusable prompts, and GOATED-aware request translation.
 - Use root `CONTEXT.md` for project language and boundaries when present.
 - Use `docs/agents/context-matrix.md` for source discovery when present.
 - Use `docs/agents/project-standards.md` for project standards when present.

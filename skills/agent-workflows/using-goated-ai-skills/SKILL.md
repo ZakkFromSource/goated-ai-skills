@@ -3,7 +3,7 @@ name: using-goated-ai-skills
 category: agent-workflows
 classification: portable
 status: wip
-description: Use when an installed GOATED skill stack needs to choose the right skill path for a user request, especially across source-repo maintenance, onboarding, delivery, installation, tiny tasks, or explicit overrides.
+description: Use when an installed GOATED skill stack needs to choose the right skill path for a user request, especially across source-repo maintenance, onboarding, delivery, installation, prompt-crafting, tiny tasks, or explicit overrides.
 triggers:
   - user asks which GOATED skill or workflow to use
   - user starts work in a project with GOATED skills installed
@@ -24,6 +24,7 @@ depends_on:
     - grill-with-docs when intent, scope, success criteria, project language, or public behavior needs docs-grounded clarification
     - framework-agnostic-skill-creator when creating, porting, adapting, sanitizing, or publishing GOATED skills
     - agent-instructions-integrator when a target project needs framework routing to installed skills and durable artifacts
+    - goated-prompt when the user wants prompt improvement, reusable prompts, spec/task/planning/refinement prompts, or GOATED-aware request translation
   fallback: If companion skills are unavailable, classify the task directly, obey user and project instructions, keep context loading narrow, and state lower confidence.
 adapters:
   codex: usable
@@ -59,6 +60,7 @@ Use this router at the start of installed-skill work, when a user asks which ski
 2. Classify the task surface:
    - **Source repo maintenance**: changing GOATED's public source repo, issue handoffs, docs, skill folders, or maintainer artifacts.
    - **Skill installation/adaptation**: copying, installing, adapting, or routing installed GOATED skills into an agent framework or target project.
+   - **Prompt crafting**: improving, rewriting, optimizing, or creating reusable prompts; translating rough requests into GOATED-aware prompts; or asking for spec, task, planning, or refinement prompts.
    - **Target Project Onboarding**: preparing a target project for durable, repeated, cross-file, PRD-level, architectural, or public-facing work.
    - **Target Project Delivery**: planning, implementing, reviewing, documenting, or handing off one target-project change.
    - **Tiny one-off task**: a small, obvious, low-risk request such as a typo fix, one-line rename, formatting-only edit, or direct command the user already specified.
@@ -67,6 +69,7 @@ Use this router at the start of installed-skill work, when a user asks which ski
 3. Choose the route:
    - For source repo maintenance, follow that repo's maintainer instructions first, then use the relevant GOATED authoring, review, doc-sync, or handoff skill only when it applies.
    - For installation/adaptation, use `session-start-progressive-disclosure` if the environment is unfamiliar, then `agent-instructions-integrator` for project routing or `framework-agnostic-skill-creator` for creating, porting, or adapting skills.
+   - For prompt crafting, use `goated-prompt`; let it name companion skill routes when the prompt needs docs-grounded clarification, PRD capture, implementation planning, execution, review, or skill creation.
    - For onboarding, start with `session-start-progressive-disclosure`, then use `grill-with-docs` before durable onboarding decisions; route to `write-a-prd` only when onboarding itself needs project-level product scope, roadmap intent, or acceptance criteria before architecture planning or issue breakdown.
    - For delivery, start with `session-start-progressive-disclosure`; use `grill-with-docs` when the request is PRD-level, architectural, cross-file, repeated, public-facing, unclear, or standards-sensitive.
    - For tiny one-off tasks, proceed directly with the smallest useful context and skip full onboarding, grilling, or planning ceremony.
@@ -74,6 +77,7 @@ Use this router at the start of installed-skill work, when a user asks which ski
 
 4. Use a compact next-skill map when the first route is clear:
    - Fuzzy feature idea, client brief, roadmap item, or onboarding-discovered product scope, roadmap intent, or acceptance criteria -> `write-a-prd`.
+   - Prompt improvement, reusable prompt, GOATED-aware prompt, spec prompt, task prompt, planning prompt, or refinement prompt -> `goated-prompt`.
    - Approved PRD, product spec, or scoped plan -> `prd-to-issues`.
    - Approved issue, scoped task, or implementation slice ready for executable steps -> `writing-plans`.
    - Broad implementation or refactor request that is not yet a focused vertical slice -> `prd-to-issues`, `writing-plans`, or `plan-codebase-architecture` before direct execution.
@@ -94,6 +98,7 @@ Use this router at the start of installed-skill work, when a user asks which ski
    - "I already know the workflow" does not replace checking the current installed skill when a non-tiny task depends on it.
    - "I need to inspect everything first" is usually a sign to use `session-start-progressive-disclosure`.
    - "The user said implement" does not skip clarification when project instructions, public behavior, architecture, or cross-file scope make intent unclear.
+   - "Write a prompt for this" is prompt-crafting work; route to `goated-prompt` unless the user asks the agent to execute the underlying task instead.
    - Broad horizontal work, speculative scaffolding, or deep module and public interface decisions should not be routed through the tiny one-off path.
 
 7. Report the route briefly, then continue:
@@ -107,7 +112,7 @@ Return a compact routing note before continuing when the route is not obvious:
 
 ```markdown
 **GOATED Skill Route**
-- Task surface: <source repo maintenance | installation/adaptation | onboarding | delivery | tiny one-off | explicit override>
+- Task surface: <source repo maintenance | installation/adaptation | prompt crafting | onboarding | delivery | tiny one-off | explicit override>
 - Instruction precedence: <user/project instruction applied, or "none beyond normal rules">
 - Route: <skill name(s) or direct action>
 - Reason: <one sentence>
