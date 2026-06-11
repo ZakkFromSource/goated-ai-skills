@@ -60,22 +60,16 @@ This is a review gate, not a full security audit, penetration test, dependency a
    - Use non-mutating commands by default. Do not format, generate, migrate, rewrite, auto-fix, or upgrade dependencies during the review unless the user separately asks for implementation.
 
 2. Build an evidence path before judging:
-   - For each security-relevant change, trace a concrete path from entry point to trust boundary to sensitive asset or dangerous sink.
-   - Entry points include HTTP routes, UI events, CLI arguments, background jobs, webhooks, RPCs, database policies, storage rules, realtime subscriptions, dependency hooks, file inputs, environment variables, and test or admin tools that can affect production behavior.
-   - Trust boundaries include user to server, tenant to tenant, unauthenticated to authenticated, user to admin, client to database, service to service, local file to parser, dependency to app, and app to shell or network.
-   - Sensitive assets include user data, tenant data, credentials, tokens, secrets, payment or billing state, audit logs, private files, permissions, admin actions, integrity-critical state, and availability-critical resources.
-   - Dangerous sinks include database writes or reads, policy definitions, HTML or script rendering, command execution, file paths, network requests, deserialization, cryptography, logging, analytics, storage buckets, queues, and privileged APIs.
+   - For each security-relevant change, TRACE a concrete path from reachable trigger or entry point to trust boundary to sensitive asset or dangerous sink.
+   - A finding needs a reachable trigger, crossed trust boundary, missing or broken guard, affected asset or sink, and impact.
+   - Read [Security Review Checklist](references/security-review-checklist.md) when the scope spans multiple surfaces or you need entry point, trust-boundary, asset, sink, risk-class, or severity examples.
+   - Use the checklist as coverage guidance, not as proof.
    - Do not proceed from a vague concern to a finding. If no path can be traced, keep it as residual risk or a validation note.
 
 3. Review high-risk classes:
-   - Broken access control, privilege escalation, IDOR, tenant isolation failures, auth bypass, confused deputy flows, forged identity, missing ownership checks, and unsafe admin/service-role use.
-   - Injection paths including SQL, NoSQL, command, template, LDAP, path traversal, SSRF, unsafe redirects, unsafe deserialization, and parser confusion.
-   - Web and client risks including XSS, CSRF, clickjacking-relevant config, insecure CORS, token exposure, unsafe storage, origin confusion, and user-controlled markup.
-   - Data handling risks including secrets in source, logs, analytics, telemetry, error messages, caches, test fixtures, screenshots, generated artifacts, URLs, or client bundles.
-   - Persistence and policy risks including permissive database policies, missing write checks, unsafe migrations, weak row ownership, insecure storage rules, public buckets, cache poisoning, replay under the wrong identity, and non-idempotent destructive operations.
-   - Execution and platform risks including sandbox escapes, unsafe eval, dynamic imports from untrusted input, shelling out with user input, path joins outside the intended root, insecure temp files, weak crypto, insecure randomness, unsafe defaults, and production debug flags.
-   - Dependency and supply-chain risks when the diff changes manifests, lockfiles, install scripts, build scripts, package sources, plugin loading, or CI secrets exposure. Report only when the changed evidence proves a concrete risk or vulnerable version path.
-   - Security-relevant reliability risks such as race conditions, time-of-check/time-of-use gaps, resource leaks, missing cleanup, retry storms, or optimistic updates when they can cause data corruption, authorization drift, repeated privileged writes, or denial of service.
+   - ANALYZE access control, injection and parser paths, web or client exposure, data handling, persistence and policy, execution and platform behavior, dependency or supply-chain changes, and security-relevant reliability.
+   - Use the local checklist to avoid missed classes in non-trivial reviews.
+   - Report only when changed evidence proves a concrete exploitability path, concrete exposure, or vulnerable version path.
 
 4. Validate context and false positives:
    - Report only findings with strong static evidence, roughly 80% confidence or higher.
@@ -87,11 +81,9 @@ This is a review gate, not a full security audit, penetration test, dependency a
    - Remove duplicate findings. When multiple paths share one root cause, report one finding with representative evidence and affected paths.
 
 5. Classify severity:
-   - `CRITICAL`: proven cross-user or cross-tenant data access, auth bypass, arbitrary code execution, secret exposure, destructive privileged action, payment or billing abuse, or production-wide compromise path.
-   - `HIGH`: exploitable data leak, privilege escalation, stored XSS, SSRF to sensitive resources, unsafe service-role use, policy bypass, sensitive token exposure, or repeatable integrity abuse.
-   - `MEDIUM`: bounded security flaw, missing context with a proven dangerous pattern, race condition or TOCTOU gap with security impact, partial policy gap, reflected XSS with constraints, or reliability bug that can be triggered to harm data integrity or availability.
-   - `LOW`: limited-impact security posture issue, defense-in-depth gap, or future-risk pattern tied to a changed security-relevant path.
-   - Omit `LOW` findings unless the user asked for broad bug scanning or the issue is directly tied to a significant reviewed path.
+   - Classify conservatively: `CRITICAL` for proven systemic, cross-user, cross-tenant, destructive, or code-execution compromise; `HIGH` for exploitable leak, escalation, policy bypass, sensitive token exposure, or repeatable integrity abuse; `MEDIUM` for bounded exploitability, dangerous patterns missing one external fact, or triggerable integrity or availability harm; `LOW` for limited posture, defense-in-depth, or future-risk issues tied to the reviewed path.
+   - Use the local checklist for severity examples when classification is uncertain.
+   - Omit `LOW` findings unless the user asked for broad scanning or the issue is directly tied to a significant reviewed path.
 
 6. Report and route next work:
    - Keep this review separate from standards/spec review. Do not report style, naming, test coverage, architecture, or unrequested-scope concerns unless they directly create exploitable risk.
@@ -184,12 +176,13 @@ If subagents are unavailable, perform the same work sequentially with a narrower
 - Do not treat missing project security docs, absent tests, or no dependency audit tooling as findings by themselves. Report them as residual risk unless they create a proven exploitable path.
 - Do not broaden into architecture redesign, dependency modernization, doc-sync, commit writing, or handoff unless the user separately requests that work.
 - Do not include private notes, ignored local scratch files, credentials, client data, sensitive personal context, or real user data in review output.
-- Do not require this source repo's root docs after installation. The skill may rely only on its own instructions and target-project evidence.
+- Do not require this source repo's root docs after installation. The skill may rely only on its own folder files and target-project evidence.
 
 ## References
 
-This skill is self-contained after installation. These external references are optional lookup aids, not runtime dependencies:
+This skill is self-contained after installation. The local checklist is packaged with the skill; external references are optional lookup aids, not runtime dependencies.
 
+- [Security Review Checklist](references/security-review-checklist.md) - read when a non-trivial review needs coverage guidance for entry points, trust boundaries, assets, sinks, high-risk classes, or severity examples.
 - [MITRE CWE List](https://cwe.mitre.org/data/index.html) - use for CWE IDs and weakness definitions when an exact CWE label matters.
 - [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/Glossary.html) - use for practical security topic guidance and remediation context.
 - [OWASP Top Ten](https://owasp.org/www-project-top-ten/) - use for broad web-application risk categories when they clarify a finding.
