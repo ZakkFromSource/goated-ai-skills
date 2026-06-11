@@ -5,8 +5,15 @@
 Thumbs.db
 *.log
 *.tmp
+__pycache__/
+*.pyc
 
 # Agent scratch output
 .scratch/
 tmp/
 temp/
+
+# Python tooling
+.venv/
+.pytest_cache/
+.ruff_cache/

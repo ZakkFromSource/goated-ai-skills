@@ -39,6 +39,14 @@ Use standard optional frontmatter only when the skill has a real need. `compatib
 
 Dependencies should name hard dependencies, soft dependencies, and graceful fallbacks explicitly in a body `## Dependencies` section. Adapter or compatibility notes should appear only when a specific skill has a real framework caveat; do not recreate generic "usable everywhere" maps.
 
+Before committing skill schema changes, run the local validator from the repo root:
+
+```bash
+uv run python scripts/validate_skills.py
+```
+
+The validator enforces mechanical schema, required-section, forbidden-file, relative-link, and narrow public-boundary checks for implemented skills. It reports docs/example schema drift separately without failing the command when implemented skills pass.
+
 ## Body Sections
 
 Prefer:

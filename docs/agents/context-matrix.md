@@ -62,17 +62,18 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | `rg --files` | Discover repo files without bulk-reading them. | At the start of mapping, source routing, or targeted scans. | Use targeted path and term scans when skill inventory, issue state, or docs surfaces change. |
 | Issue and PRD scans with `rg -n` | Sample issue and PRD headings, blockers, current names, and implementation summaries. | When deciding which issue to open first or checking documentation drift. | Ran on 2026-05-21 for issue discovery and interim doc sync. |
 | `git status --short` | Check local worktree state. | Before and after edits. | Ran on 2026-05-21 before interim doc-sync edits; output was empty. |
-| `rg --files -g 'package.json' -g 'pyproject.toml' -g 'pubspec.yaml' -g 'Cargo.toml' -g 'Makefile' -g '*.sln' -g '*.csproj' -g '*.fsproj' -g 'go.mod' -g 'requirements.txt'` | Look for build or package entrypoints. | Before claiming build, lint, format, or test commands exist. | Ran on 2026-05-21; no matches found. |
+| `rg --files -g 'package.json' -g 'pyproject.toml' -g 'pubspec.yaml' -g 'Cargo.toml' -g 'Makefile' -g '*.sln' -g '*.csproj' -g '*.fsproj' -g 'go.mod' -g 'requirements.txt'` | Look for build or package entrypoints. | Before claiming build, lint, format, or test commands exist. | Root `pyproject.toml` now exists for local validator tooling; no CI, formatter, linter, or test config is present. |
 | `rg --files -g '*test*' -g '*spec*'` | Look for test/spec files or folders. | Before claiming test layout exists. | Ran on 2026-05-21; only markdown reference/issue files matched, not executable tests. |
-| Manual markdown review | Validate docs-only changes. | For docs changes while no project test/build tooling is present. | Pair with targeted script checks when a skill adds executable helpers. |
+| `uv run python scripts/validate_skills.py` | Validate implemented skill schema, required sections, forbidden files, relative links, narrow public-boundary leaks, and report-only docs/schema drift. | Before claiming skill schema/tooling changes are valid, and before committing skill schema changes. | Added by issue `060`; uses `pyyaml` through `uv`. |
+| Manual markdown review | Validate docs-only changes. | For docs changes outside validator-covered skill checks. | Pair with targeted script checks when a skill adds executable helpers. |
 
 ## Decisions And Context Packs
 
 | Source | Scope | Status | Notes |
 | --- | --- | --- | --- |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Public core product model, skill schema, V1 skill set, onboarding and delivery workflows. | Draft reference PRD. | Primary spec until superseded by accepted ADRs or updated PRDs. |
-| `issues/archive/*.md` | Completed scaffold, skill implementation, follow-up upgrade, doc-sync, and final acceptance handoffs. | Archived. | As of 2026-06-11, issues `001` through `052` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
-| `issues/*.md` excluding `issues/archive/` and PRDs | Future implementation or acceptance handoffs after V1. | Active post-V1 handoffs include `053`, `054`, `055`, `056`, `057`, `058`, and `059`. | Read the specific active issue before implementing or reviewing that slice. |
+| `issues/archive/*.md` | Completed scaffold, skill implementation, follow-up upgrade, doc-sync, and final acceptance handoffs. | Archived. | As of 2026-06-11, issues `001` through `060` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
+| `issues/*.md` excluding `issues/archive/` and PRDs | Future implementation or acceptance handoffs after V1. | No active numbered implementation handoffs currently. | Read the specific active issue before implementing or reviewing that slice. |
 | `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md` | Accepted V1 runtime bootstrap and adapter automation decision. | Accepted ADR. | V1 allows narrow compatibility notes for real caveats only; runtime bootstrap, plugin manifests, hooks, installers, automatic loading, and adapter automation require future scoped work. |
 | `docs/adr/README.md` | ADR index, placement, and policy. | ADR index. | Lists ADR 0001 and should be read before adding or changing architectural decision records. |
 | `docs/agents/context-matrix.md` | Future-agent read order for this repo. | Maintained routing artifact. | Refresh when repo structure, issue state, skill inventory, or source-evidence paths change. |
@@ -81,7 +82,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 ## Gaps And Assumptions
 
 - This matrix maps the GOATED AI Skills source repo as the current target project; it does not describe a downstream project where skills have been installed.
-- No package manifest, build script, lint command, formatter command, or test runner was found in the discovery pass. Individual skill scripts may still need targeted command checks.
+- Root `pyproject.toml` and `uv.lock` now exist for local validator tooling. No CI workflow, formatter, linter, build script, or executable test suite is present.
 - `.local/` was intentionally not read because it is ignored private/local workspace context.
 - `.out-of-scope/` was sampled only for the future automation and validation deferral file; read it narrowly for scope or deferred-feature questions.
 - Archived issue `021` and issue `032` closeout evidence were sampled for doc-sync drift, but future work should still open the specific active issue and blocker chain for the requested change.
@@ -91,4 +92,4 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 - Date: 2026-06-11
 - Updated by: Codex
-- Evidence used: prior 2026-05-23 matrix evidence; active post-V1 issues `053`, `054`, `055`, `056`, `057`, `058`, and `059`; archived issues `050`, `051`, and `052`; documentation-cleanup implementation; targeted catalog and issue-state scans with `rg -n`; `git status --short`; issue-file heading review.
+- Evidence used: prior 2026-05-23 matrix evidence; archived post-V1 issues `053`, `054`, `055`, `056`, `057`, `058`, `059`, and `060`; local validator tooling in `pyproject.toml`, `uv.lock`, and `scripts/validate_skills.py`; documentation-cleanup implementation; targeted catalog and issue-state scans with `rg -n`; `git status --short`; issue-file heading review.

@@ -171,6 +171,9 @@ AGENT.md               Maintainer and contributor guidance for this source repo.
 AGENTS.md              Thin adapter for agents contributing to this repo.
 CLAUDE.md              Thin adapter for Claude-style contributors to this repo.
 CONTEXT.md             Public context and domain language for GOATED AI Skills.
+pyproject.toml         Local uv tooling configuration for maintainer checks.
+uv.lock                Locked Python tooling dependencies.
+scripts/               Source-repo maintenance scripts, including skill validation.
 docs/install.md        Docs-first installation and adaptation guidance.
 docs/how-to-use.md     Human operator manual for the installed skill stack.
 docs/adr/              Architectural decision records.
