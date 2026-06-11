@@ -20,16 +20,16 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before TDD work in an unfamiliar target project
-    - grill-with-docs when behavior, public interface, scope, project language, or testing priority is unclear
+    - session-start-progressive-disclosure for unfamiliar target projects
+    - grill-with-docs when behavior, public interface, scope, language, or testing priority is unclear
     - prd-to-issues when implementing a planned vertical issue slice
-    - prototype when a risky behavior or interface needs a disposable experiment before production tests
-    - project-standards-calibration when test, fixture, naming, or quality standards affect the implementation
+    - prototype when risky behavior or interfaces need disposable evidence before production tests
+    - project-standards-calibration when test, fixture, naming, or quality standards affect implementation
     - standards-and-spec-review after implementation when available
     - code-security-review after implementation when trust boundaries, persistence, auth, or user data are touched
-    - doc-sync after behavior, public interface, architecture, or testing docs may have changed
-    - verification-before-completion before claiming implementation is complete, correct, passing, or ready for review
-  fallback: If companion skills or project docs are unavailable, inspect the smallest relevant local evidence, use existing tests or commands where discoverable, and state lower confidence plus residual risk.
+    - doc-sync after behavior, public interface, architecture, or testing-doc changes
+    - verification-before-completion before complete/correct/passing/review-ready implementation claims
+  fallback: If companion skills or docs are unavailable, inspect minimal evidence, use discoverable tests/commands, and state lower confidence plus residual risk.
 adapters:
   codex: usable
   claude-code: usable

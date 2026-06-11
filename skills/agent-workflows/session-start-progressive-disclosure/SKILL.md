@@ -18,10 +18,10 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - context-matrix-map when a target project already has or needs a durable context map
-    - project-context-calibration when a target project already has or needs root CONTEXT.md
+    - context-matrix-map when a target project has or needs a durable context map
+    - project-context-calibration when a target project has or needs root CONTEXT.md
     - project-standards-calibration when project standards affect the work
-  fallback: If companion skills are unavailable, inspect the minimum relevant files directly and state lower confidence.
+  fallback: If companion skills are unavailable, inspect minimal relevant files and state lower confidence.
 adapters:
   codex: usable
   claude-code: usable

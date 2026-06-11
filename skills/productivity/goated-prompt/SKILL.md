@@ -19,13 +19,13 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - using-goated-ai-skills when the request should be routed through the installed GOATED stack
-    - grill-me when user intent, audience, tradeoffs, or success criteria need lightweight clarification without project docs
-    - grill-with-docs when project docs, standards, ADRs, source behavior, tests, schemas, or public-facing engineering facts matter
-    - write-a-prd when the optimized prompt should ask for a scoped PRD before implementation
-    - writing-plans when an approved issue or scoped task needs exact implementation steps rather than another prompt rewrite
+    - using-goated-ai-skills when the request should route through the installed GOATED stack
+    - grill-me for lightweight intent, audience, tradeoff, or success-criteria clarification
+    - grill-with-docs when docs, standards, ADRs, source behavior, tests, schemas, or public facts matter
+    - write-a-prd when the prompt should ask for a scoped PRD before implementation
+    - writing-plans when an approved issue or task needs exact implementation steps
     - framework-agnostic-skill-creator when the user wants the prompt turned into an installable GOATED skill
-  fallback: If companion skills or project evidence are unavailable, produce the best prompt from conversation context, state assumptions, and avoid claiming undiscovered project facts.
+  fallback: If companion skills or project evidence are unavailable, use conversation context, state assumptions, and avoid undiscovered project-fact claims.
 adapters:
   codex: usable
   claude-code: usable

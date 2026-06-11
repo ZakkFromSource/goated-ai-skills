@@ -17,18 +17,18 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before planning architecture in an unfamiliar target project
-    - grill-with-docs before durable blueprint writing when the brief, scope, constraints, or project language is unclear
-    - write-a-prd when product scope or acceptance criteria are not clarified enough for architecture planning
-    - context-matrix-map when docs/agents/context-matrix.md exists or source discovery is broad
-    - project-context-calibration when root CONTEXT.md exists or project language affects architecture terms
-    - project-standards-calibration when standards influence module layout, testing, persistence, or artifact locations
+    - session-start-progressive-disclosure for unfamiliar architecture planning
+    - grill-with-docs before durable blueprints when brief, scope, constraints, or language is unclear
+    - write-a-prd when product scope or acceptance criteria are not architecture-ready
+    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is broad
+    - project-context-calibration when root CONTEXT.md or language affects architecture terms
+    - project-standards-calibration when standards affect module layout, testing, persistence, or artifact locations
     - architecture-design-map when current architecture must be described before planning additions or changes
     - improve-codebase-architecture when existing-code repair or refactor ranking is the real task
     - prd-to-issues when the accepted blueprint should become implementation issue slices
     - tdd when a blueprint slice moves into implementation and behavior proof
-    - verification-before-completion before claiming a durable blueprint is complete, evidence-backed, or ready for issue breakdown
-  fallback: If companion skills or durable project docs are unavailable, inspect the minimum relevant evidence directly, require an explicit clarified brief from the user, keep confidence lower, and separate blueprint facts from assumptions.
+    - verification-before-completion before complete/evidence-backed/issue-breakdown-ready blueprint claims
+  fallback: If companion skills or durable docs are unavailable, inspect minimal evidence, require an explicit clarified brief, keep confidence lower, and separate blueprint facts from assumptions.
 adapters:
   codex: usable
   claude-code: usable

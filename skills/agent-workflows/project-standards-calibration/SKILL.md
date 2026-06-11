@@ -18,11 +18,11 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before calibrating a new or unfamiliar target project
-    - context-matrix-map when a target project already has or needs docs/agents/context-matrix.md
-    - project-context-calibration when root CONTEXT.md exists or project language affects standards
-    - verification-before-completion before claiming the standards profile is complete, checked, or ready for future agents
-  fallback: If companion skills are unavailable, inspect the minimum relevant project files directly and state lower confidence.
+    - session-start-progressive-disclosure for new or unfamiliar project calibration
+    - context-matrix-map when docs/agents/context-matrix.md exists or is needed
+    - project-context-calibration when root CONTEXT.md or project language affects standards
+    - verification-before-completion before complete/checked/future-agent claims
+  fallback: If companion skills are unavailable, inspect minimal project files and state lower confidence.
 adapters:
   codex: usable
   claude-code: usable

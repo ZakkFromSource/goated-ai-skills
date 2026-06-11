@@ -18,13 +18,13 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before drafting from an unfamiliar target project
-    - standards-and-spec-review before commit-message when spec fit or project standards remain unresolved
-    - code-security-review before commit-message when trust boundaries, auth, user data, persistence, unsafe execution, or security-sensitive config changed
-    - doc-sync before commit-message when behavior, interfaces, docs, standards, configuration, or tests may have drifted
-    - verification-before-completion before drafting commit wording that claims completion, passing checks, synced docs, or review readiness
-    - handoff after commit-message when unfinished work or residual risk should be preserved for a future session
-  fallback: If companion skills, git metadata, specs, or verification evidence are unavailable, inspect the smallest relevant local evidence, state lower confidence, and avoid inventing intent or checks.
+    - session-start-progressive-disclosure for unfamiliar target projects
+    - standards-and-spec-review when spec fit or standards remain unresolved
+    - code-security-review when trust boundaries, auth, user data, persistence, execution, or security config changed
+    - doc-sync when behavior, interfaces, docs, standards, configuration, or tests may drift
+    - verification-before-completion before commit wording claims completion, passing checks, synced docs, or review readiness
+    - handoff when unfinished work or residual risk needs future continuity
+  fallback: If companion skills, git metadata, specs, or verification evidence are unavailable, inspect minimal local evidence, state lower confidence, and avoid invented intent/checks.
 adapters:
   codex: usable
   claude-code: usable

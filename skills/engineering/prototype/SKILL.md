@@ -19,13 +19,13 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before prototyping in an unfamiliar target project
-    - grill-with-docs when the question is unclear, expensive, public-facing, cross-file, or affected by project docs and standards
+    - session-start-progressive-disclosure for unfamiliar target projects
+    - grill-with-docs when the question is unclear, expensive, public-facing, cross-file, or docs/standards-sensitive
     - write-a-prd when the prototype verdict should feed a broader product requirements document
     - prd-to-issues when the prototype is exploring one focused implementation issue
     - tdd when validated behavior is absorbed into production code after the prototype
-    - verification-before-completion before claiming the prototype verdict, cleanup, or production absorption is complete
-  fallback: If companion skills or project docs are unavailable, inspect the smallest relevant local evidence, state assumptions, and keep the prototype disposable.
+    - verification-before-completion before prototype verdict, cleanup, or absorption-complete claims
+  fallback: If companion skills or docs are unavailable, inspect minimal local evidence, state assumptions, and keep the prototype disposable.
 adapters:
   codex: usable
   claude-code: usable

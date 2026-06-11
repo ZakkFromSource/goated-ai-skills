@@ -18,13 +18,13 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before writing a PRD for an unfamiliar target project
-    - grill-with-docs when docs, standards, ADRs, project artifacts, domain language, or decision tradeoffs matter
-    - context-matrix-map when docs/agents/context-matrix.md exists or source discovery is needed
-    - project-context-calibration when root CONTEXT.md exists or project language affects requirements
+    - session-start-progressive-disclosure for unfamiliar target projects
+    - grill-with-docs when docs, standards, ADRs, artifacts, language, or tradeoffs matter
+    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is needed
+    - project-context-calibration when root CONTEXT.md or language affects requirements
     - project-standards-calibration when project standards affect requirements, testing, or rollout
-    - verification-before-completion before claiming the PRD is fully checked or ready for issue breakdown
-  fallback: If companion skills or project docs are unavailable, inspect the minimum relevant evidence and mark unverifiable assumptions in the PRD.
+    - verification-before-completion before fully-checked or issue-ready PRD claims
+  fallback: If companion skills or docs are unavailable, inspect minimal evidence and mark unverifiable PRD assumptions.
 adapters:
   codex: usable
   claude-code: usable

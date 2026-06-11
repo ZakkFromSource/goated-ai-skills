@@ -21,15 +21,15 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - grill-with-docs when feedback exposes unclear intent, scope, project language, tradeoffs, or public behavior
-    - writing-plans when accepted feedback is non-trivial, multi-step, risky, or needs an executable implementation route before edits
+    - grill-with-docs when feedback exposes unclear intent, scope, language, tradeoffs, or public behavior
+    - writing-plans when accepted feedback is non-trivial, multi-step, risky, or needs a route before edits
     - tdd when accepted feedback changes behavior, public interfaces, regressions, or testable workflows
-    - standards-and-spec-review when feedback concerns issue fit, acceptance criteria, project standards, unrequested scope, or spec interpretation
-    - code-security-review when feedback touches trust boundaries, auth, permissions, user data, persistence, unsafe execution, secrets, or security-sensitive configuration
-    - subagent-driven-development when a large or parallelizable feedback set needs delegated implementation or review while the main agent keeps ownership
+    - standards-and-spec-review when feedback concerns issue fit, acceptance, standards, unrequested scope, or spec interpretation
+    - code-security-review when feedback touches trust boundaries, auth, permissions, user data, persistence, execution, secrets, or security config
+    - subagent-driven-development when large or parallelizable feedback needs delegated implementation or review
     - doc-sync when accepted feedback changes behavior, interfaces, architecture, standards, configuration, tests, or public docs
-    - verification-before-completion before claiming feedback is fixed, resolved, clean, implemented, passing, ready, or complete
-  fallback: If companion skills, review tools, git history, tests, docs, or subagents are unavailable, inspect the smallest relevant source evidence, classify uncertainty explicitly, implement only safe accepted items, and downgrade unsupported claims.
+    - verification-before-completion before fixed/resolved/clean/implemented/passing/ready/complete feedback claims
+  fallback: If companion skills, review tools, git history, tests, docs, or subagents are unavailable, inspect minimal source evidence, classify uncertainty, implement only safe accepted items, and downgrade unsupported claims.
 adapters:
   codex: usable
   claude-code: usable

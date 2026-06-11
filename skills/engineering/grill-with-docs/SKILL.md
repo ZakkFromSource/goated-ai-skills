@@ -18,13 +18,13 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before grilling an unfamiliar target project
-    - context-matrix-map when docs/agents/context-matrix.md exists or onboarding should discover project sources
-    - project-context-calibration when project language, boundaries, or architecture vocabulary need durable capture
+    - session-start-progressive-disclosure for unfamiliar target projects
+    - context-matrix-map when docs/agents/context-matrix.md exists or source discovery is needed
+    - project-context-calibration when language, boundaries, or architecture vocabulary need durable capture
     - project-standards-calibration when standards affect the decision
     - doc-sync when settled decisions require documentation follow-up after the grill
-    - verification-before-completion before claiming the grill brief is complete, checked, or ready for implementation
-  fallback: If project docs or companion skills are unavailable, inspect the minimum relevant local evidence and state lower confidence before asking questions.
+    - verification-before-completion before complete/checked/implementation-ready grill claims
+  fallback: If docs or companion skills are unavailable, inspect minimal evidence and state lower confidence before asking questions.
 adapters:
   codex: usable
   claude-code: usable

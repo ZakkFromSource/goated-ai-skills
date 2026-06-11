@@ -21,11 +21,11 @@ depends_on:
   hard: []
   soft:
     - session-start-progressive-disclosure for serious, unfamiliar, cross-file, PRD-level, architectural, repeated, or public-facing work
-    - grill-with-docs when intent, scope, success criteria, project language, or public behavior needs docs-grounded clarification
+    - grill-with-docs for docs-grounded intent, scope, criteria, language, or public behavior
     - framework-agnostic-skill-creator when creating, porting, adapting, sanitizing, or publishing GOATED skills
-    - agent-instructions-integrator when a target project needs framework routing to installed skills and durable artifacts
-    - goated-prompt when the user wants prompt improvement, reusable prompts, spec/task/planning/refinement prompts, or GOATED-aware request translation
-  fallback: If companion skills are unavailable, classify the task directly, obey user and project instructions, keep context loading narrow, and state lower confidence.
+    - agent-instructions-integrator for target-project routing to installed skills and artifacts
+    - goated-prompt for prompt improvement, reusable prompts, and GOATED-aware request translation
+  fallback: If companion skills are unavailable, classify directly, obey user/project instructions, keep reads narrow, and state lower confidence.
 adapters:
   codex: usable
   claude-code: usable

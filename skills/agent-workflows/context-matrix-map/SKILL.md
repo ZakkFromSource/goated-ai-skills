@@ -17,11 +17,11 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before mapping a new or unfamiliar target project
-    - project-context-calibration after this map when project language needs a durable context file
-    - project-standards-calibration after this map when standards need a durable profile
-    - verification-before-completion before claiming the context matrix is complete, evidence-backed, or ready for future agents
-  fallback: If companion skills are unavailable, inspect the minimum relevant project files directly and state lower confidence.
+    - session-start-progressive-disclosure for new or unfamiliar project mapping
+    - project-context-calibration after mapping when language needs durable context
+    - project-standards-calibration after mapping when standards need durable profile
+    - verification-before-completion before complete/evidence-backed/future-agent claims
+  fallback: If companion skills are unavailable, inspect minimal project files and state lower confidence.
 adapters:
   codex: usable
   claude-code: usable

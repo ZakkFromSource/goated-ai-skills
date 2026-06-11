@@ -18,13 +18,13 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before reviewing an unfamiliar target project
+    - session-start-progressive-disclosure for unfamiliar target projects
     - project-standards-calibration when docs/agents/project-standards.md is missing, stale, or standards need durable capture
-    - tdd before this review when behavior was implemented and should have test evidence
-    - code-security-review after this review when trust boundaries, user data, auth, persistence, execution, or unsafe configuration may be affected
+    - tdd when implemented behavior should have test evidence
+    - code-security-review when trust boundaries, user data, auth, persistence, execution, or unsafe config may be affected
     - doc-sync after this review when behavior, standards, specs, public interfaces, or docs may have drifted
-    - verification-before-completion before claiming the review is complete, clean, or ready for the next closeout step
-  fallback: If companion skills, git history, project standards, or a source spec are unavailable, inspect the smallest relevant local evidence, state lower confidence, and separate assumptions from findings.
+    - verification-before-completion before complete/clean/closeout-ready review claims
+  fallback: If companion skills, git history, standards, or source spec are unavailable, inspect minimal local evidence, state lower confidence, and separate assumptions from findings.
 adapters:
   codex: usable
   claude-code: usable

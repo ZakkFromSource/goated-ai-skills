@@ -22,15 +22,15 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before diagnosing an unfamiliar target project
-    - grill-with-docs when reported behavior, expected behavior, scope, risk, or user impact is unclear
-    - tdd when the cause is proven and implementation or regression proof can use a correct public-interface seam
-    - improve-codebase-architecture when diagnosis exposes no correct seam, repeated failed fixes, false seams, or broader architecture and testability friction
-    - code-security-review when the symptom involves trust boundaries, auth, permissions, secrets, user data, persistence, execution, or unsafe configuration
-    - doc-sync when diagnosis changes documented behavior, runbooks, troubleshooting notes, architecture docs, or test guidance
-    - verification-before-completion before claiming the cause is proven, diagnosis is complete, fixed, passing, or ready for implementation
-    - handoff when repro, root cause, residual uncertainty, or blocked verification must be preserved for a future session
-  fallback: If companion skills, project docs, commands, profilers, production access, or subagents are unavailable, build or request the smallest safe feedback loop, state missing evidence, downgrade claims, and report residual risk.
+    - session-start-progressive-disclosure for unfamiliar target projects
+    - grill-with-docs when reported vs expected behavior, scope, risk, or user impact is unclear
+    - tdd when proven cause and fix/regression proof can use a public-interface seam
+    - improve-codebase-architecture when no correct seam, false seams, failed fixes, or testability friction appear
+    - code-security-review when symptoms touch trust boundaries, auth, permissions, secrets, user data, persistence, execution, or unsafe config
+    - doc-sync when diagnosis changes behavior docs, runbooks, architecture docs, or test guidance
+    - verification-before-completion before proven-cause, complete, fixed, passing, or implementation-ready claims
+    - handoff when repro, root cause, uncertainty, or blocked verification needs continuity
+  fallback: If companion skills, docs, commands, profilers, production access, or subagents are unavailable, build/request the smallest safe feedback loop, state missing evidence, downgrade claims, and report residual risk.
 adapters:
   codex: usable
   claude-code: usable

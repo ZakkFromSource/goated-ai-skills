@@ -18,12 +18,12 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure when a future agent will need to re-orient
+    - session-start-progressive-disclosure when a future agent needs re-orientation
     - context-matrix-map when a target project has docs/agents/context-matrix.md
-    - project-context-calibration when project language or boundaries affected the work
+    - project-context-calibration when language or boundaries affected the work
     - project-standards-calibration when standards affected the work
-    - verification-before-completion before claiming the handoff is complete, checked, or ready for a future session
-  fallback: If companion skills or durable artifacts are unavailable, write a compact note with explicit gaps and lower confidence.
+    - verification-before-completion before complete/checked/future-session handoff claims
+  fallback: If companion skills or durable artifacts are unavailable, write compact note with explicit gaps and lower confidence.
 adapters:
   codex: usable
   claude-code: usable

@@ -21,11 +21,11 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - grill-with-docs before creating or changing public-facing, cross-workflow, unclear, or high-impact skills
-    - session-start-progressive-disclosure before working in an unfamiliar target project or source package
-    - agent-instructions-integrator when the result needs target-project framework routing
-    - handoff when skill creation or porting work is interrupted or should be resumed later
-  fallback: If companion skills, source framework docs, or live subagents are unavailable, inspect the available artifacts directly, mark unverified assumptions, and produce a reviewable plan or artifact with explicit residual risk.
+    - grill-with-docs before public-facing, cross-workflow, unclear, or high-impact skill changes
+    - session-start-progressive-disclosure for unfamiliar target projects or source packages
+    - agent-instructions-integrator when target-project framework routing is needed
+    - handoff when skill creation or porting is interrupted or resumable
+  fallback: If companion skills, source-framework docs, or live subagents are unavailable, inspect available artifacts, mark unverified assumptions, and state residual risk.
 adapters:
   codex: usable
   claude-code: usable

@@ -22,11 +22,11 @@ depends_on:
   hard: []
   soft:
     - tdd when missing proof is behavior, regression, red/green, or test-surface evidence
-    - standards-and-spec-review when completion depends on issue fit, acceptance criteria, or project standards
-    - code-security-review when completion depends on security-relevant behavior, trust boundaries, auth, user data, persistence, execution, or unsafe configuration
-    - doc-sync when behavior, interfaces, docs, standards, configuration, or tests may have documentation drift
-    - handoff when residual risk, skipped checks, known failures, or unfinished verification should be preserved for a future session
-  fallback: If companion skills, commands, tools, artifacts, or runtime access are unavailable, inspect the smallest useful local evidence, state what is unverified, downgrade unsupported claims, and report residual risk.
+    - standards-and-spec-review when completion depends on issue fit, acceptance, or standards
+    - code-security-review when completion depends on security-relevant behavior, trust boundaries, auth, user data, persistence, execution, or unsafe config
+    - doc-sync when behavior, interfaces, docs, standards, configuration, or tests may drift
+    - handoff when residual risk, skipped checks, failures, or unfinished verification need continuity
+  fallback: If companion skills, commands, tools, artifacts, or runtime access are unavailable, inspect minimal evidence, state unverified facts, downgrade unsupported claims, and report residual risk.
 adapters:
   codex: usable
   claude-code: usable

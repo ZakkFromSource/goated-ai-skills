@@ -17,14 +17,14 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - using-goated-ai-skills when the installed stack needs a router entrypoint or task-surface classification
-    - goated-prompt when the adapter should route prompt-crafting, reusable prompt, or GOATED-aware prompt requests
-    - session-start-progressive-disclosure before integrating an unfamiliar target project
+    - using-goated-ai-skills for installed-stack entrypoint or task-surface routing
+    - goated-prompt for prompt-crafting, reusable prompt, or GOATED-aware routing
+    - session-start-progressive-disclosure for unfamiliar target projects
     - context-matrix-map when routing should reference docs/agents/context-matrix.md
     - project-context-calibration when routing should reference root CONTEXT.md
     - project-standards-calibration when routing should reference docs/agents/project-standards.md
-    - verification-before-completion before claiming the adapter is complete, checked, or ready for use
-  fallback: If companion skills or target-project artifacts are unavailable, create a minimal framework-specific router and state what could not be verified.
+    - verification-before-completion before complete/checked/ready adapter claims
+  fallback: If companion skills or target-project artifacts are unavailable, create a minimal framework router and state unverified gaps.
 adapters:
   codex: usable
   claude-code: usable

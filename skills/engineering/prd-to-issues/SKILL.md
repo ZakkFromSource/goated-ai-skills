@@ -20,16 +20,16 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before slicing an unfamiliar target project
-    - grill-with-docs when PRD scope, project language, standards, architecture, or approval tradeoffs are unclear
-    - write-a-prd when the PRD is missing, stale, ambiguous, or not ready for issue breakdown
-    - writing-plans after an issue is approved and a future implementer needs exact executable steps
-    - prototype when a risky issue slice depends on a disposable experiment verdict
-    - context-matrix-map when docs/agents/context-matrix.md exists or source discovery is needed
-    - project-context-calibration when root CONTEXT.md exists or project language affects issue wording
-    - project-standards-calibration when project standards affect issue scope, verification, or acceptance
-    - verification-before-completion before claiming the generated issue set is complete, checked, or ready for implementation
-  fallback: If companion skills or project docs are unavailable, inspect the minimum relevant local evidence, state lower confidence, and pause instead of writing issues from an unready PRD.
+    - session-start-progressive-disclosure for unfamiliar target projects
+    - grill-with-docs when PRD scope, language, standards, architecture, or approval tradeoffs are unclear
+    - write-a-prd when the PRD is missing, stale, ambiguous, or not issue-ready
+    - writing-plans after issue approval when implementers need exact steps
+    - prototype when an issue slice depends on a disposable experiment verdict
+    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is needed
+    - project-context-calibration when root CONTEXT.md or language affects issue wording
+    - project-standards-calibration when standards affect issue scope, verification, or acceptance
+    - verification-before-completion before complete/checked/implementation-ready issue-set claims
+  fallback: If companion skills or docs are unavailable, inspect minimal evidence, state lower confidence, and pause instead of writing issues from an unready PRD.
 adapters:
   codex: usable
   claude-code: usable

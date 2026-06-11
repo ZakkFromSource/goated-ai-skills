@@ -21,18 +21,18 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before planning work in an unfamiliar target project
+    - session-start-progressive-disclosure for unfamiliar target projects
     - grill-with-docs when scope, artifact policy, success criteria, or tradeoffs are unclear
-    - prd-to-issues when a scoped PRD still needs durable issue handoffs before implementation planning
-    - prototype when a risky implementation choice needs disposable evidence before exact steps are written
-    - plan-codebase-architecture when module, interface, dependency, or architecture strategy is not settled enough to plan implementation
-    - tdd when the implementation changes behavior, public interfaces, regressions, or testable workflows
+    - prd-to-issues when a scoped PRD still needs issue handoffs before planning
+    - prototype when risky implementation choices need disposable evidence before exact steps
+    - plan-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
+    - tdd when implementation changes behavior, public interfaces, regressions, or testable workflows
     - subagent-driven-development for larger, riskier, or parallelizable implementation when available
     - standards-and-spec-review after implementation when issue fit, acceptance coverage, or project standards need review
-    - code-security-review after implementation when trust boundaries, auth, user data, persistence, execution, or unsafe configuration may be affected
+    - code-security-review after implementation when trust boundaries, auth, user data, persistence, execution, or unsafe config may be affected
     - doc-sync after behavior, interfaces, architecture, standards, configuration, tests, or docs may have changed
-    - verification-before-completion before claiming the plan, implementation route, or closeout is complete or ready
-  fallback: If companion skills, project docs, runnable commands, subagents, or source evidence are unavailable, inspect the smallest relevant local evidence, keep the plan narrower, mark assumptions and residual risk, and avoid exact claims that cannot be verified.
+    - verification-before-completion before complete/ready plan, route, or closeout claims
+  fallback: If companion skills, docs, commands, subagents, or source evidence are unavailable, inspect minimal evidence, narrow the plan, mark assumptions/residual risk, and avoid unverifiable exact claims.
 adapters:
   codex: usable
   claude-code: usable

@@ -17,8 +17,8 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - active tool, skill, review, safety, or user-requested output contracts that require exact structure or normal clarity
-    - normal clarity for destructive confirmations, security warnings, confusing multi-step instructions, or user confusion
+    - active tool, skill, review, safety, or user output contracts requiring exact structure
+    - normal clarity for destructive confirmations, security warnings, confusing steps, or user confusion
   fallback: If the agent cannot reliably track persistence across turns, apply compact mode to the current response and state that persistence may need the user's reminder.
 adapters:
   codex: usable

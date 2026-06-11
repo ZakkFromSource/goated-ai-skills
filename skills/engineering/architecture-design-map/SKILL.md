@@ -21,14 +21,14 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before mapping a new or unfamiliar target project
-    - context-matrix-map when docs/agents/context-matrix.md exists or source discovery is broad
-    - project-context-calibration when root CONTEXT.md exists or project language affects architecture terms
-    - project-standards-calibration when standards influence architecture artifact location or diagram style
+    - session-start-progressive-disclosure for unfamiliar target-project mapping
+    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is broad
+    - project-context-calibration when root CONTEXT.md or project language affects architecture terms
+    - project-standards-calibration when standards affect artifact location or diagram style
     - grill-with-docs when source evidence conflicts or map scope needs a product decision
-    - doc-sync after writing a durable architecture-map artifact
-    - verification-before-completion before claiming a durable map is complete, evidence-backed, or ready for downstream work
-  fallback: If companion skills or durable project docs are unavailable, inspect the minimum relevant project evidence directly and state lower confidence.
+    - doc-sync after durable architecture-map artifacts
+    - verification-before-completion before complete/evidence-backed/downstream-ready map claims
+  fallback: If companion skills or durable docs are unavailable, inspect minimal project evidence and state lower confidence.
 adapters:
   codex: usable
   claude-code: usable

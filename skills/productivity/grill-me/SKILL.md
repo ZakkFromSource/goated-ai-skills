@@ -17,11 +17,11 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - grill-with-docs when engineering/project context, domain language, docs, standards, ADRs, code behavior, tests, schemas, or source evidence matter
-    - write-a-prd when the user wants the clarified topic turned into a scoped PRD
-    - prototype when the user wants to resolve a specific unknown through a disposable experiment
-    - writing-plans when the clarified topic is already scoped enough for an executable implementation plan
-  fallback: If companion skills are unavailable, continue the lightweight interview and clearly label unsourced assumptions.
+    - grill-with-docs when project context, docs, standards, ADRs, code, tests, schemas, or source evidence matter
+    - write-a-prd when the clarified topic should become a scoped PRD
+    - prototype when a specific unknown needs a disposable experiment
+    - writing-plans when the clarified topic is ready for implementation planning
+  fallback: If companion skills are unavailable, continue the lightweight interview and label unsourced assumptions.
 adapters:
   codex: usable
   claude-code: usable

@@ -17,15 +17,15 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before cleanup in an unfamiliar target project
+    - session-start-progressive-disclosure for unfamiliar target projects
     - context-matrix-map when docs/agents/context-matrix.md is missing, stale, or central to the cleanup
-    - project-context-calibration when root CONTEXT.md, project language, boundaries, or durable artifact meanings need deeper refresh
-    - project-standards-calibration when project standards, command expectations, or enforcement levels need deeper refresh
+    - project-context-calibration when root CONTEXT.md, language, boundaries, or artifact meanings need refresh
+    - project-standards-calibration when standards, commands, or enforcement levels need refresh
     - agent-instructions-integrator when root agent instructions or installed-skill routing need repair
-    - documentation-writer when cleanup reveals a missing or substantially rewritten durable manual, guide, runbook, product doc, or AI-facing guide
-    - doc-sync when a recent behavior, interface, architecture, test, or workflow change created targeted documentation drift
-    - verification-before-completion before claiming docs are cleaned, organized, safe, synced, or ready for future agents
-  fallback: If companion skills, Python, git, or project conventions are unavailable, inspect the smallest useful docs set directly, report lower confidence, and avoid destructive cleanup claims.
+    - documentation-writer when cleanup reveals missing or rewritten durable docs
+    - doc-sync when recent behavior, interface, architecture, test, or workflow changes created drift
+    - verification-before-completion before cleaned/organized/safe/synced/future-ready docs claims
+  fallback: If companion skills, Python, git, or conventions are unavailable, inspect the smallest useful docs set, report lower confidence, and avoid destructive cleanup claims.
 adapters:
   codex: usable
   claude-code: usable

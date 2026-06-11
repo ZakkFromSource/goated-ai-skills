@@ -18,13 +18,13 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before reviewing an unfamiliar target project
-    - standards-and-spec-review before this review when the originating issue, changed files, or intended behavior are unclear
-    - tdd before this review when security-relevant behavior changed and should have regression proof
-    - project-standards-calibration when local security, dependency, logging, privacy, or configuration standards affect the review
-    - doc-sync after this review when security assumptions, public behavior, configuration, or threat-model docs may have drifted
-    - verification-before-completion before claiming the security review is complete, clean, or ready for closeout
-  fallback: If companion skills, git history, project security docs, dependency metadata, or runnable checks are unavailable, inspect the smallest relevant local evidence, state lower confidence, and report residual risk instead of speculative findings.
+    - session-start-progressive-disclosure for unfamiliar target projects
+    - standards-and-spec-review when issue, changed files, or intended behavior are unclear
+    - tdd when security-relevant behavior changed and needs regression proof
+    - project-standards-calibration when security, dependency, logging, privacy, or config standards affect review
+    - doc-sync when security assumptions, public behavior, config, or threat-model docs may drift
+    - verification-before-completion before complete/clean/closeout-ready security claims
+  fallback: If companion skills, git history, security docs, dependency metadata, or checks are unavailable, inspect minimal local evidence, state lower confidence, and report residual risk instead of speculative findings.
 adapters:
   codex: usable
   claude-code: usable

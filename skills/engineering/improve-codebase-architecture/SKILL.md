@@ -17,17 +17,17 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before reviewing an unfamiliar target project
-    - context-matrix-map when docs/agents/context-matrix.md exists or source discovery is broad
-    - project-context-calibration when root CONTEXT.md exists or project language affects architecture terms
-    - project-standards-calibration when standards influence refactor shape, test expectations, or artifact location
+    - session-start-progressive-disclosure for unfamiliar target projects
+    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is broad
+    - project-context-calibration when root CONTEXT.md or language affects architecture terms
+    - project-standards-calibration when standards affect refactor shape, tests, or artifact location
     - architecture-design-map when a descriptive current-state map is needed before ranking improvements
-    - grill-with-docs when the architecture goal, user intent, or project constraints are unclear
+    - grill-with-docs when architecture goal, user intent, or constraints are unclear
     - tdd when a selected improvement moves into implementation and test design
     - write-a-prd when a chosen direction needs product-level scope or stakeholder decisions
     - prd-to-issues when a chosen direction should become implementation slices
-    - verification-before-completion before claiming ranked opportunities are complete, evidence-backed, or ready for downstream work
-  fallback: If companion skills or durable project docs are unavailable, inspect the minimum relevant project evidence directly, keep confidence lower, and separate facts from assumptions.
+    - verification-before-completion before complete/evidence-backed/downstream-ready opportunity claims
+  fallback: If companion skills or durable docs are unavailable, inspect minimal project evidence, keep confidence lower, and separate facts from assumptions.
 adapters:
   codex: usable
   claude-code: usable

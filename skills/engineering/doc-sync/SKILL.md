@@ -18,15 +18,15 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before syncing docs in an unfamiliar target project
+    - session-start-progressive-disclosure for unfamiliar target projects
     - context-matrix-map when docs/agents/context-matrix.md exists or doc discovery is broad
-    - project-context-calibration when project language, boundaries, or durable context may have changed
-    - project-standards-calibration when standards, commands, conventions, or enforcement levels may have changed
-    - standards-and-spec-review before doc sync when spec fit or changed scope is unclear
-    - code-security-review before doc sync when security assumptions, trust boundaries, or sensitive behavior changed
-    - verification-before-completion before claiming docs are synced, doc checks passed, or no documentation drift remains
-    - handoff after doc sync when unfinished work or residual risk should be preserved for a future session
-  fallback: If companion skills, git history, or durable docs are unavailable, inspect the smallest relevant local evidence, state lower confidence, and report unverifiable drift risk.
+    - project-context-calibration when language, boundaries, or durable context changed
+    - project-standards-calibration when standards, commands, conventions, or enforcement changed
+    - standards-and-spec-review when spec fit or changed scope is unclear
+    - code-security-review when security assumptions, trust boundaries, or sensitive behavior changed
+    - verification-before-completion before synced, checks-passed, or no-drift claims
+    - handoff when unfinished work or residual risk needs continuity
+  fallback: If companion skills, git history, or durable docs are unavailable, inspect minimal local evidence, state lower confidence, and report unverifiable drift risk.
 adapters:
   codex: usable
   claude-code: usable

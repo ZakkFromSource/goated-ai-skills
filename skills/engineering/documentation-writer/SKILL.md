@@ -18,13 +18,13 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - session-start-progressive-disclosure before writing docs in an unfamiliar target project
+    - session-start-progressive-disclosure for unfamiliar target projects
     - grill-with-docs when audience, purpose, scope, terminology, product behavior, or documentation ownership is unclear
-    - write-a-prd when product requirements, acceptance criteria, or feature intent are not settled enough to document
-    - doc-sync after documentation changes may make other durable docs, catalogs, standards, or operator guidance stale
-    - verification-before-completion before claiming docs are ready, source-grounded, checked, synced, or complete
+    - write-a-prd when requirements, acceptance criteria, or feature intent are not settled
+    - doc-sync when documentation changes may leave catalogs, standards, guidance, or other docs stale
+    - verification-before-completion before ready/source-grounded/checked/synced/complete docs claims
     - handoff when remaining gaps, skipped evidence, or documentation ownership need continuity
-  fallback: If companion skills, project docs, source access, or review tools are unavailable, inspect the smallest useful evidence, write narrower docs, label assumptions and gaps, and avoid readiness claims that cannot be verified.
+  fallback: If companion skills, docs, source access, or review tools are unavailable, inspect minimal evidence, write narrower docs, label assumptions/gaps, and avoid unverifiable readiness claims.
 adapters:
   codex: usable
   claude-code: usable

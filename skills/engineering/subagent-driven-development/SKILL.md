@@ -19,16 +19,16 @@ outputs:
 depends_on:
   hard: []
   soft:
-    - writing-plans before delegated development when an approved issue or scoped task needs an executable plan
-    - grill-with-docs when behavior, scope, product intent, project language, or review constraints are unclear
-    - prototype when a risky implementation choice needs disposable evidence before delegation
+    - writing-plans before delegation when an approved issue or task needs an executable plan
+    - grill-with-docs when behavior, scope, intent, language, or review constraints are unclear
+    - prototype when risky implementation choices need disposable evidence before delegation
     - plan-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
     - tdd when delegated work changes behavior, public interfaces, regressions, or testable workflows
     - standards-and-spec-review for spec fit, acceptance coverage, and project standards after delegated work
-    - code-security-review when delegated work touches trust boundaries, auth, permissions, user data, persistence, execution, or unsafe configuration
-    - doc-sync after behavior, interfaces, architecture, standards, configuration, tests, or docs may have changed
-    - verification-before-completion before claiming delegated work is complete, correct, passing, review-ready, or ready for lifecycle movement
-  fallback: If subagents, companion skills, runnable commands, or review tools are unavailable, run the same implementation and review phases sequentially with narrower scope, mark unavailable evidence, and avoid unsupported completion claims.
+    - code-security-review when delegated work touches trust boundaries, auth, permissions, user data, persistence, execution, or unsafe config
+    - doc-sync after delegated behavior, interface, architecture, standard, config, test, or doc changes
+    - verification-before-completion before complete/correct/passing/review-ready/lifecycle-ready delegated-work claims
+  fallback: If subagents, companion skills, commands, or review tools are unavailable, run implementation and review phases sequentially, mark unavailable evidence, and avoid unsupported completion claims.
 adapters:
   codex: usable
   claude-code: usable
