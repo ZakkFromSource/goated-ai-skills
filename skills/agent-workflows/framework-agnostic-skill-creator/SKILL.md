@@ -119,79 +119,11 @@ Both modes preserve GOATED's lean schema, public boundary, dependency classifica
 
 ## Output Contract
 
-When producing a review or proposal, use this shape:
+Use [Proposal And Report Templates](./references/proposal-and-report-templates.md) when producing a skill creator proposal, portability review, or edit report.
 
-```markdown
-# Skill Creator Proposal: <skill-name>
+For proposal or review output, INCLUDE mode and intent, source package manifest for port mode, neutral skill shape, support-file plan, evaluation plan or results, adapter notes, privacy and portability judgment, and remaining blockers.
 
-## Mode And Intent
-
-- Mode: <create from clarified intent | port from source material>
-- Goal: <one sentence>
-- Success criteria: <observable outcomes>
-- Scope and non-goals: <brief summary>
-
-## Source Package Manifest
-
-Use for port mode. For create mode, write `Not applicable`.
-
-### Files/Links Inspected
-
-| Source | Type | Why inspected | Behavior evidence found |
-| --- | --- | --- | --- |
-
-### Skipped Files / Why
-
-| Source | Why skipped | Residual risk |
-| --- | --- | --- |
-
-## Neutral Skill Shape
-
-- Name: <candidate-name>
-- Category: <agent-workflows | engineering | productivity>
-- Classification: <portable | domain-specific | private>
-- Status: <stable | wip | deprecated>
-- Trigger-focused description: <candidate description>
-- Key workflow steps: <brief list>
-- Outputs: <brief list>
-
-## Support Files
-
-- References: <files and read conditions>
-- Scripts: <files and run conditions>
-- Assets: <files and use conditions>
-
-## Evaluation
-
-- RED baseline or planned scenarios: <summary>
-- Rationalizations or expected failure modes: <summary>
-- GREEN verification or residual risk: <summary>
-
-## Adapter Notes
-
-| Adapter or mechanic | Neutral handling | Remaining risk |
-| --- | --- | --- |
-
-## Privacy And Portability
-
-- Public-safe content: <summary>
-- Removed or generalized content: <summary>
-- Classification recommendation: <portable | domain-specific | private>
-
-## Remaining Blockers
-
-- <blocker or "None">
-```
-
-When editing, create or update the skill folder and then report:
-
-- files changed;
-- selected mode and classification recommendation;
-- source package manifest summary when porting;
-- trigger, output, dependency, support-file, and adapter decisions;
-- evaluation plan or checks performed;
-- privacy or portability blockers;
-- verification checks performed.
+When editing a skill folder, REPORT files changed, selected mode and classification recommendation, port manifest summary when relevant, trigger/output/dependency/support-file/adapter decisions, evaluation checks, privacy or portability blockers, and verification performed.
 
 ## Delegation
 
@@ -237,3 +169,4 @@ If subagents are unavailable, perform the same passes sequentially with a narrow
 
 - [Source Package Audit](./references/source-package-audit.md) - read in port mode before judging any source folder, repo slice, public package, or entrypoint with adjacent support files.
 - [Skill Evaluation](./references/skill-evaluation.md) - read before trusting a new, substantially changed, or discipline-heavy skill.
+- [Proposal And Report Templates](./references/proposal-and-report-templates.md) - read when producing a skill creator proposal, portability review, or edit report.

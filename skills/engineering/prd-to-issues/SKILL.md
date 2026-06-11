@@ -133,118 +133,21 @@ Use this skill after a PRD is ready for breakdown. Each issue should be a balanc
 
 ## Output Contract
 
-Before writing files, present an approval breakdown shaped like this:
+Use [Issue Breakdown Templates](./references/issue-breakdown-templates.md) when preparing approval, issue-file, order-file, or final-report shapes.
 
-```markdown
-## Proposed Issue Breakdown
+Before writing files, present a dependency-ordered approval breakdown with:
 
-Planned order file: `issues/<parent-slug>-order.md` for multi-issue sets, or "Skipped - single-issue breakdown"
+- planned order file path, or single-issue skip reason;
+- title, AFK/HITL type, blockers, user stories, recommended first reads, source links, acceptance focus, expected proof, scope exclusions, and foundation rationale for each proposed issue.
 
-1. <Title>
-   - Type: <AFK | HITL>
-   - Blocked by: <local planned path/title or "None - can start immediately">
-   - User stories addressed: <explicit or derived stories>
-   - Recommended first reads: <docs, PRD sections, ADRs, prior issues, or "Parent PRD only">
-   - Relevant source links: <paths, anchors, external docs, or "None yet">
-   - Acceptance focus: <observable behavior or verification target>
-   - Expected proof: <test, review, command, artifact, source read, manual check, or decision evidence>
-   - Scope exclusions: <important non-goals, or "None worth calling out">
-   - Foundation rationale: <only when relevant; interface, hidden complexity, and unlocked slices>
-```
+Ask the user to approve granularity, blocker relationships, user-story coverage, AFK/HITL type, and fresh-agent-ready handoff coverage. Iterate until the breakdown is explicitly approved.
 
-After approval, write each issue using this default template:
+After approval:
 
-```markdown
-## Parent PRD
-
-`<path-to-parent-prd>`
-
-## Type
-
-<AFK | HITL>
-
-## What to build
-
-<Concise description of the vertical slice. Describe the end-to-end behavior, not layer-by-layer implementation.>
-
-## Recommended first reads
-
-- `<parent PRD path or section>`
-- `<relevant doc, ADR, prior issue, source file, or "None beyond the parent PRD">`
-
-## Relevant source links
-
-- `<path, URL, ADR, issue, schema, source file, or test that anchors this slice>`
-
-## Acceptance criteria
-
-- [ ] <observable criterion>
-- [ ] <observable criterion>
-
-## Expected proof
-
-- <Test, command, source review, artifact review, manual check, or approval evidence expected to prove this issue. Keep this stable; put exact executable steps in `writing-plans`.>
-
-## Blocked by
-
-- `<local issue path>`
-
-Or:
-
-- None - can start immediately
-
-## User stories addressed
-
-- <story from PRD, or "Derived: As a ..., I can ..., so that ...">
-
-## Implementation route
-
-- Use `grill-with-docs` before implementation unless this is a tiny mechanical issue.
-- Use `writing-plans` to create exact executable steps after reading this issue and the linked sources.
-
-## Scope exclusions
-
-- <Optional. Include only important exclusions or non-goals that prevent likely scope creep. Omit this section when it adds no value.>
-
-## Implementation notes
-
-- <Optional. Include only source-grounded notes that prevent likely mistakes. Omit this section when it adds no value. Do not turn this section into an implementation transcript.>
-```
-
-For approved multi-issue breakdowns, write or refresh the local recommended order file after the issue files exist:
-
-```markdown
-# <Parent PRD or Planning Artifact Title> Issue Order
-
-Last updated: <YYYY-MM-DD>
-
-Parent PRD or planning artifact: `<path-to-parent-prd-or-planning-artifact>`
-
-This local order file was generated from the approved `prd-to-issues` breakdown. Refresh it from the full approved issue set when `prd-to-issues` runs again; do not append stale entries. It is not a remote tracker sync, generated global index, background automation output, labels/milestones/assignees list, or project-board state.
-
-## Generated Issues
-
-- `<issue path>` - <Title> (<AFK | HITL>; Status: Not started; Blocked by: <issue paths or "None">)
-
-## Recommended Order
-
-1. `<issue path>`
-   - Type: <AFK | HITL>
-   - Status: Not started
-   - Blocked by: <issue paths or "None - can start immediately">
-   - Why now: <dependency or blocker-order rationale>
-```
-
-After writing, report:
-
-- issue files created in dependency order;
-- order file path for multi-issue breakdowns, or the single-issue skip reason;
-- parent PRD path;
-- warnings or broad-PRD concerns raised;
-- assumptions and derived user stories;
-- unresolved blockers or PRD gaps;
-- fresh-agent-ready handoff coverage, including any missing first reads, source links, proof expectations, or scope exclusions;
-- recommended next implementation slice or skill.
+- WRITE issue files in dependency order using the target project's local convention, or default to `issues/NNN-short-title.md`.
+- INCLUDE parent PRD, first reads, source links, acceptance criteria, expected proof, blockers, user stories, implementation route, and only useful scope exclusions or implementation notes.
+- WRITE or refresh the recommended order file only for approved multi-issue breakdowns; skip it for single-issue breakdowns and report the skip reason.
+- REPORT created paths, blocker order, assumptions, derived stories, warnings, unresolved PRD gaps, fresh-agent-ready coverage, and the recommended next skill or implementation slice.
 
 ## Delegation
 
@@ -290,4 +193,4 @@ If subagents are unavailable, perform the same work sequentially with a narrower
 
 ## References
 
-No external references are required. This skill is self-contained after installation.
+- [Issue Breakdown Templates](./references/issue-breakdown-templates.md) - read after PRD readiness is confirmed and before presenting approval breakdowns, writing approved issue/order files, or reporting generated artifacts.

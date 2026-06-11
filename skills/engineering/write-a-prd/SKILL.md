@@ -99,62 +99,9 @@ Use this skill when the next useful artifact is a PRD that can feed `prd-to-issu
 
 ## Output Contract
 
-Write a Markdown PRD using this shape by default:
+Use [PRD Template](./references/prd-template.md) when writing the default Markdown PRD artifact.
 
-```markdown
-# PRD: <Feature Or Outcome Name>
-
-## Status
-
-<Draft | Ready for issue breakdown | Blocked>, last updated <YYYY-MM-DD>.
-
-## Problem
-
-<The problem from the user or audience perspective.>
-
-## Audience
-
-- <primary user, maintainer, operator, admin, developer, or stakeholder>
-
-## Goals
-
-- <specific outcome>
-
-## Non-Goals
-
-- <explicitly excluded outcome>
-
-## Requirements
-
-| Requirement | Priority | Notes |
-| --- | --- | --- |
-
-## Acceptance Criteria
-
-- [ ] <observable condition that proves the PRD is satisfied>
-
-## Implementation Notes
-
-- <source-grounded architecture, module, data, UI, migration, or integration note>
-
-## Testing And Verification
-
-- <behavior, integration, migration, manual QA, or documentation check>
-
-## Risks And Mitigations
-
-| Risk | Impact | Mitigation |
-| --- | --- | --- |
-
-## Open Questions
-
-| Question | Owner | Needed before |
-| --- | --- | --- |
-
-## Source Evidence
-
-- <path, command, artifact, or conversation note used as evidence>
-```
+The PRD must include problem, audience, goals, non-goals, requirements, acceptance criteria, implementation notes, testing and verification, risks, open questions, and source evidence. Keep requirements product-focused, mark unverifiable assumptions, and avoid turning the PRD into issue slices or an implementation transcript.
 
 After writing, report:
 
@@ -200,4 +147,4 @@ If subagents are unavailable, perform the same evidence gathering sequentially w
 
 ## References
 
-No external references are required. This skill is self-contained after installation.
+- [PRD Template](./references/prd-template.md) - read when writing the default Markdown PRD artifact or checking that an existing PRD has the expected section shape.

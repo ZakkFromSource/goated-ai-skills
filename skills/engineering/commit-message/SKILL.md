@@ -114,7 +114,9 @@ This skill is read-only. It prepares a shell-ready `git add -- ... && git commit
 
 ## Output Contract
 
-Return copy-pasteable commands as the primary output. For a single clear unstaged, untracked, deleted, or all-dirty commit, start with one combined command block:
+Return copy-pasteable commands as the primary output. For staged-only or multi-group variants, read [Commit Output Variants](./references/commit-output-variants.md).
+
+For a single clear unstaged, untracked, deleted, or all-dirty commit, start with one combined command block:
 
 ````markdown
 ## Git Command
@@ -140,70 +142,9 @@ Not included:
 - None
 ````
 
-For staged-only scope, state `No git add command needed; selected changes are already staged.` before the `Git Command` block and emit only:
+Always include `Commit Scope` after the preview. Use `Included files` for selected paths. Use `Not included` with `None` when there are no excluded dirty files, or list each excluded path with a reason such as unrelated dirty work, untracked scratch file, outside requested scope, already staged outside requested scope, or not inspected enough to safely include.
 
-````markdown
-## Git Command
-
-```powershell
-git commit -m "Subject" -m "Optional body paragraph"
-```
-
-## Commit Message Preview
-
-```text
-Subject
-
-Optional body paragraph
-```
-
-## Commit Scope
-
-Included files:
-- `path/or/group`: already staged and selected for this commit
-
-Not included:
-- None
-````
-
-Always include `Commit Scope` after the preview. Use `Included files` for paths selected for the command. Use `Not included` with `None` when there are no excluded dirty files, or list each excluded path with a reason such as unrelated dirty work, untracked scratch file, outside requested scope, already staged outside requested scope, or not inspected enough to safely include.
-
-After the command block, preview, and scope, include compact notes only when they help the user avoid overclaiming or committing the wrong scope:
-
-```markdown
-Notes:
-- Verification: <commands, checks, review gates, CI, manual verification, or "No verification evidence provided or run">
-- Caveats: <skipped checks, unrelated changes, partial scope, assumptions, private-detail sanitization notes, or "None">
-```
-
-When the scope is ambiguous or contains unrelated change sets, return separate candidate command groups and name the scope each one covers before recommending a default. Keep every combined command directly copy-pasteable.
-
-For obvious independent change groups, return a commit plan shaped like this:
-
-````markdown
-## Commit Plan
-
-1. <Group name>
-   - Rationale: <why these files belong together>
-   - Git Command:
-     ```powershell
-     git add -- "path/or/group" && git commit -m "Subject" -m "Optional body paragraph"
-     ```
-   - Commit Message Preview:
-     ```text
-     Subject
-
-     Optional body paragraph
-     ```
-   - Commit Scope:
-     Included files:
-     - `path/or/group`: reason included
-
-     Not included:
-     - <excluded dirty files with reasons, or "None">
-   - Verification: <commands, checks, review gates, CI, manual verification, or "No verification evidence provided or run">
-   - Caveats: <skipped checks, unrelated dirty files not included, uncertain grouping, shell-safety limits, or "None">
-````
+After the command, preview, and scope, include compact notes only when they prevent overclaiming or wrong-scope commits. If scope is ambiguous or contains unrelated change sets, return separate candidate command groups, name each selected scope, and keep every emitted command directly copy-pasteable.
 
 ## Delegation
 
@@ -247,4 +188,4 @@ If subagents are unavailable, perform the same checks sequentially with a narrow
 
 ## References
 
-No external references are required. This skill is self-contained after installation.
+- [Commit Output Variants](./references/commit-output-variants.md) - read when selected changes are already staged, when obvious independent change groups need separate commands, or when compact notes are needed to avoid overclaiming.
