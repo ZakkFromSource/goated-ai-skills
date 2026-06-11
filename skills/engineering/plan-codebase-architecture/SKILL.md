@@ -55,18 +55,13 @@ This skill is design-only. It prevents avoidable architecture drift by planning 
 
 ## Architecture Language
 
-- **Module**: anything with an interface and implementation, such as a function, class, package, feature slice, subsystem, route group, or tier-spanning flow.
-- **Interface**: everything callers or tests must know to use a module correctly, including types, methods, invariants, ordering, error modes, configuration, and relevant performance expectations.
-- **Deep module**: a module where a small, meaningful interface hides substantial cohesive behavior.
-- **Shallow module**: a module whose interface is nearly as complex as its implementation, forcing callers to coordinate details.
-- **Seam**: the place where a module's interface lives and where behavior can vary without editing the caller.
-- **Port**: an interface introduced at a real seam so production and test adapters can vary dependency behavior while the deep module owns domain logic.
-- **Adapter**: a concrete implementation of a port or interface at a seam.
-- **Leverage**: more useful behavior per interface fact a caller must learn.
-- **Locality**: concentrating change, bugs, knowledge, and verification in one module instead of scattering them across callers.
-- **Interface-as-test-surface**: tests should prove observable behavior through the module interface that production callers use.
+Use project terms for concrete names. Keep these hot-path terms inline because they shape blueprint quality:
 
-Use project terms from target-project evidence for concrete names. Use this vocabulary to explain architecture mechanics when the project has no better local language.
+- **Module / interface**: plan behavior ownership plus the caller/test contract, not speculative file trees.
+- **Deep vs shallow module**: prefer small meaningful interfaces that hide cohesive behavior over wrappers that leak coordination to callers.
+- **Seam / port / adapter**: introduce only for real dependency variation, usually production plus test/local behavior.
+- **Leverage / locality**: a good design reduces caller knowledge and concentrates change, bugs, and proof.
+- **Interface-as-test-surface**: planned tests prove behavior through the public module interface.
 
 ## Workflow
 
@@ -94,7 +89,7 @@ Use project terms from target-project evidence for concrete names. Use this voca
    - Assign data/state ownership and describe cross-module flow.
    - Classify dependencies as in-process, local-substitutable, remote-owned, true external, or unknown.
    - Introduce ports/adapters only where there is a real seam or dependency category justifies variation.
-   - Read [Architecture Blueprint Patterns](references/architecture-blueprint-patterns.md) when choosing blueprint mode, dependency strategy, test surfaces, or artifact shape.
+   - Read [Architecture Blueprint Patterns](references/architecture-blueprint-patterns.md) when choosing blueprint vocabulary, dependency strategy, test surfaces, or artifact shape.
 
 5. Check against overdesign and underdesign:
    - Reject architecture that creates interfaces only because future variation might happen.

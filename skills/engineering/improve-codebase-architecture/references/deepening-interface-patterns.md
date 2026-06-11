@@ -2,6 +2,19 @@
 
 Read this reference when an architecture improvement candidate needs deeper dependency, seam, testing, interface-design, or report-shaping guidance. Keep `SKILL.md` as the operating procedure; use this file for reusable patterns that would bloat the main workflow.
 
+## Review Vocabulary
+
+Use project names first. Use these terms to classify evidence and rank opportunities:
+
+- **Module / interface / implementation**: review what callers and tests must know versus the behavior hidden behind the module.
+- **Depth / leverage / locality**: measure whether a smaller interface exposes more useful behavior and concentrates change, bugs, and proof.
+- **Deep module**: cohesive behavior behind a small contract; callers stop coordinating internals.
+- **Shallow module**: thin wrapper or pass-through where interface complexity is close to implementation complexity.
+- **Deletion test**: deleting an earned module makes hidden complexity reappear across callers; if complexity disappears, the module was likely pass-through.
+- **Port**: project-shaped interface at a real seam; use it only when production/test/local behavior or dependency category justifies variation.
+- **Seam / adapter**: variation point and concrete implementation. Report false seams when variation is imagined or internals still leak.
+- **Interface-as-test-surface**: tests should prove caller-visible behavior; private-state assertions, call-order tests, or owned-internal mocks can expose weak module shape.
+
 ## Dependency Categories
 
 Classify dependencies before proposing a deepening direction. The dependency shape determines whether behavior can move behind one interface directly or needs a port and adapter.

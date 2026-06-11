@@ -2,6 +2,19 @@
 
 Use this reference when choosing how to represent a source-grounded architecture map. Mermaid is the default source of truth. Other visual formats are secondary and should derive from the same evidence.
 
+## Map Vocabulary
+
+Use project domain names first. Use generic terms as map labels only when evidence supports them.
+
+| Term | Map Use | Evidence To Cite |
+| --- | --- | --- |
+| Module | Node for a source unit or flow with caller-facing behavior, from function to subsystem. | Entrypoint, export, class or function, package index, route, or test. |
+| Interface | Caller/test facts needed to use a module, such as entrypoint, type, invariant, error, config, or result. | Public API, route schema, type, docs, or tests. |
+| Implementation | Internal code behind the node; cite only when it explains a relationship. | Source internals, call chain, wiring, or config. |
+| Seam | Point where behavior can vary without changing the caller. | Interface plus multiple adapters, local/test substitute, or explicit dependency wiring. |
+| Port | Project-shaped interface at a seam; label only when the project exposes dependency behavior through that interface. | Type, protocol, trait, abstract class, service interface, provider contract, or explicit dependency wiring. |
+| Adapter | Concrete implementation at a seam for production, test/local behavior, or external integration. | Client, repository, fake, stub, provider, or service wiring. |
+
 ## Map Types
 
 ### Module Or Dependency Map

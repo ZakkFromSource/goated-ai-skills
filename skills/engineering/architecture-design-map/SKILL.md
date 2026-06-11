@@ -14,7 +14,7 @@ triggers:
 outputs:
   - Mermaid-first architecture or design diagram for detailed maps
   - concise explanation of what the map shows
-  - source references for diagram nodes, edges, flows, seams, and important claims
+  - source references for diagram nodes, edges, flows, seams, ports, adapters, and important claims
   - uncertainty notes for weak, inferred, stale, missing, or conflicting evidence
   - tracked target-project docs/agents/architecture-map.md for serious onboarding or durable documentation
   - quick inline module/caller map and recommended next files when zoom-out orientation is the right scope
@@ -57,13 +57,12 @@ This skill maps architecture that exists in code or is explicitly documented. It
 
 ## Architecture Language
 
-- **Module**: anything with an interface and an implementation, such as a function, class, package, feature slice, subsystem, route group, or tier-spanning flow.
-- **Interface**: what callers or tests must know to use a module correctly, including types, methods, invariants, ordering, error modes, configuration, and relevant performance expectations.
-- **Implementation**: the code and internal structure behind a module's interface.
-- **Seam**: the place where a module's interface lives and where behavior can vary without editing the caller.
-- **Adapter**: a concrete implementation that satisfies an interface at a seam, usually for production, testing, or external integration.
+Use target-project terms first. Use generic labels only when source evidence supports them:
 
-Use project domain terms from target-project evidence when naming map nodes. Use generic architecture terms only when the project does not define a better local term.
+- **Module**: source unit or flow with caller-facing behavior; map as a node when evidence shows its role.
+- **Interface**: caller/test facts needed to use a module; cite only facts relevant to the map.
+- **Seam / port / adapter**: variation point, project-shaped interface, and concrete implementation; label only when code or docs show swappable behavior.
+- **Implementation**: internals behind a module; cite when they explain a mapped relationship.
 
 ## Workflow
 
@@ -96,7 +95,7 @@ Use project domain terms from target-project evidence when naming map nodes. Use
    - Use a flowchart or sequence diagram for user journeys, request handling, async flows, jobs, or event paths.
    - Use a layered or runtime topology map for tiers, processes, services, deployment units, databases, queues, and third-party integrations.
    - Use an entity or schema-adjacent map only when architecture depends on data ownership or persistence shape.
-   - Read [references/diagram-patterns.md](references/diagram-patterns.md) when choosing diagram syntax, legends, optional formats, or uncertainty markers.
+   - Read [references/diagram-patterns.md](references/diagram-patterns.md) when choosing map vocabulary, diagram syntax, legends, optional formats, or uncertainty markers.
 
 5. Draw the Mermaid-first map:
    - Keep node names short, domain-specific, and stable.
@@ -106,7 +105,7 @@ Use project domain terms from target-project evidence when naming map nodes. Use
    - Use optional formats such as ASCII, Excalidraw, generated images, HTML, or plugin-backed diagrams only when useful and available; keep Mermaid as the default source of truth.
 
 6. Attach source references and uncertainty notes:
-   - List evidence paths for each major node, edge, flow, seam, adapter, runtime unit, or claim.
+   - List evidence paths for each major node, edge, flow, seam, port, adapter, runtime unit, or claim.
    - Separate verified facts from inferred relationships and unknowns.
    - Prefer "not found in this pass" or "not verified" over guessing.
    - If evidence conflicts, show both sources and ask which source should win before writing a durable artifact that would hide the conflict.
@@ -143,7 +142,7 @@ flowchart LR
 
 | Diagram item | Evidence | Confidence | Notes |
 | --- | --- | --- | --- |
-| <node, edge, flow, seam, adapter, or claim> | <path, command, doc, or user-provided evidence> | <high/medium/low> | <verified, inferred, stale, conflicting, or unknown> |
+| <node, edge, flow, seam, port, adapter, or claim> | <path, command, doc, or user-provided evidence> | <high/medium/low> | <verified, inferred, stale, conflicting, or unknown> |
 
 ## Uncertainty Notes
 

@@ -11,6 +11,18 @@ Read this reference when a project-wide or feature-specific architecture plan ne
 - Anti-overdesign checks
 - Artifact patterns
 
+## Blueprint Vocabulary
+
+Use project terms for concrete names. Use this vocabulary when it helps choose module shape, seam placement, and proof strategy:
+
+- **Module**: behavior owner with an interface and implementation; plan by responsibility, not file-tree guesswork.
+- **Interface**: caller/test contract, including entry points, invariants, errors, config, ordering, and expected results.
+- **Deep module**: small meaningful interface hiding cohesive behavior, orchestration, state, persistence, dependency detail, or validation.
+- **Shallow module**: interface nearly as complex as its internals; callers still coordinate the hard parts.
+- **Seam / port / adapter**: variation point, project-shaped interface, and concrete implementation. Add ports only for real production/test/local/external variation.
+- **Leverage / locality**: caller capability per fact learned, plus change and proof concentrated in one module.
+- **Interface-as-test-surface**: first slices should prove behavior through the public module surface production callers use.
+
 ## Blueprint Modes
 
 Use the smallest durable architecture artifact that can steer implementation.

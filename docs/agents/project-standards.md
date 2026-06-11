@@ -38,7 +38,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Existing implemented skills use adapter maps for Codex, Claude Code, Hermes, OpenCode, and generic agents. | review-enforced | Implemented `SKILL.md` frontmatter across all three categories | High |
 | Skill bodies commonly include Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References. | review-enforced | Implemented `SKILL.md` headings across all three categories | High |
 | Issue handoffs use numbered filenames and standard sections such as Parent PRD, Type, What to build, Recommended first reads, Acceptance criteria, Expected proof, Blocked by, and User stories addressed. | review-enforced | `issues/*.md`, `issues/archive/*.md` heading scan | High |
-| Completed implementation issues move under `issues/archive/` only after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete. | review-enforced | `CONTEXT.md`; archived issues `001` through `050`; active post-V1 issues `051`, `052`, `053`, and `054` | High |
+| Completed implementation issues move under `issues/archive/` only after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete. | review-enforced | `CONTEXT.md`; archived issues `001` through `050`; active post-V1 issues `051`, `052`, `053`, `054`, and `055` | High |
 | Docs-only changes currently rely on manual markdown review, while skill helper scripts need targeted command checks. | review-enforced | No project-wide manifest, CI, formatter, linter, or test config found in this pass; `documentation-cleanup` adds a read-only helper script | High |
 
 ## User-Confirmed Preferences
@@ -77,4 +77,4 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 - Date: 2026-06-11
 - Updated by: Codex
-- Evidence used: prior 2026-05-23 standards evidence; active post-V1 issues `051`, `052`, `053`, and `054`; archived issue `050`; documentation-cleanup implementation; targeted catalog and issue-state scans with `rg -n`; `git status --short`; issue-file heading review.
+- Evidence used: prior 2026-05-23 standards evidence; active post-V1 issues `051`, `052`, `053`, `054`, and `055`; archived issue `050`; documentation-cleanup implementation; targeted catalog and issue-state scans with `rg -n`; `git status --short`; issue-file heading review.

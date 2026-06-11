@@ -53,21 +53,15 @@ This skill is review/design-only. It ranks opportunities, explains tradeoffs, an
 
 ## Architecture Language
 
-- **Module**: anything with an interface and an implementation, such as a function, class, package, feature slice, subsystem, route group, or tier-spanning flow.
-- **Interface**: everything callers or tests must know to use a module correctly, including types, methods, invariants, ordering, error modes, configuration, and relevant performance expectations.
-- **Implementation**: the code and internal structure behind a module's interface.
-- **Depth**: the leverage provided by a module's interface: how much useful behavior callers can exercise per interface fact they must understand.
-- **Deep module**: a module where a small, meaningful interface gives access to substantial cohesive behavior and hides implementation complexity.
-- **Shallow module**: a module whose interface is nearly as complex as its implementation, often passing complexity through to callers.
-- **Seam**: the place where a module's interface lives and where behavior can vary without editing the caller.
-- **Port**: an interface introduced at a real seam so production and test adapters can vary dependency behavior while the deep module owns domain logic.
-- **Adapter**: a concrete implementation that satisfies a port or interface at a seam, usually for production, testing, or an external integration.
-- **Leverage**: what callers gain from depth: more capability and behavior per interface fact they must learn.
-- **Locality**: what maintainers gain from depth: change, bugs, knowledge, and verification concentrate in one module instead of scattering across callers.
-- **Deletion test**: if deleting a module makes its complexity reappear across callers, it was hiding useful behavior; if complexity simply disappears, it was likely pass-through.
-- **Interface-as-test-surface**: tests should exercise observable behavior through the module's interface. Tests reaching behind the interface are evidence that module shape or seam placement may need attention.
+Use target-project names for concrete modules and flows. Keep these review terms hot-path:
 
-Use the target project's own domain names for concrete modules and flows. Use this vocabulary to explain architecture mechanics when the project has no better local term.
+- **Module / interface / implementation**: compare caller/test knowledge with behavior hidden behind the module.
+- **Depth, leverage, locality**: judge whether a smaller interface gives more capability and concentrates change and proof.
+- **Deep vs shallow module**: reward cohesive hidden behavior; flag pass-through modules that leak caller choreography.
+- **Deletion test**: if removing the module makes complexity reappear across callers, it likely earns its place.
+- **Port**: project-shaped interface at a real seam; require production/test/local variation before recommending it.
+- **False seam / adapter**: flag indirection when behavior does not really vary or callers still know internals.
+- **Interface-as-test-surface**: prefer proof through caller-visible behavior; private/mock-heavy tests may expose weak shape.
 
 ## Workflow
 
@@ -89,7 +83,7 @@ Use the target project's own domain names for concrete modules and flows. Use th
    - Look for hard-to-test areas: noisy setup, internal patching, private-state assertions, call-order tests, dependency construction hidden too deep, or tests coupled to implementation details.
    - Look for false seams: ports/adapters with only one real implementation, interfaces added only for tests, or seams that leak internal ordering and configuration back to callers.
    - Look for dependency shapes that block deepening: in-process logic, local-substitutable dependencies, remote-owned services, and true external services.
-   - Read [Deepening Interface Patterns](references/deepening-interface-patterns.md) when classifying dependency/seam shape, comparing interface alternatives, or shaping the report.
+   - Read [Deepening Interface Patterns](references/deepening-interface-patterns.md) when using review vocabulary, classifying dependency/seam shape, comparing interface alternatives, or applying report tags.
 
 4. Rank opportunities:
    - Prefer candidates with strong source evidence, repeated pain across callers/tests, meaningful public-interface leverage, and a small next slice.

@@ -72,7 +72,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | --- | --- | --- | --- |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Public core product model, skill schema, V1 skill set, onboarding and delivery workflows. | Draft reference PRD. | Primary spec until superseded by accepted ADRs or updated PRDs. |
 | `issues/archive/*.md` | Completed scaffold, skill implementation, follow-up upgrade, doc-sync, and final acceptance handoffs. | Archived. | As of 2026-05-31, issues `001` through `050` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
-| `issues/*.md` excluding `issues/archive/` and PRDs | Future implementation or acceptance handoffs after V1. | Active post-V1 handoffs include `051`, `052`, `053`, and `054`. | Read the specific active issue before implementing or reviewing that slice. |
+| `issues/*.md` excluding `issues/archive/` and PRDs | Future implementation or acceptance handoffs after V1. | Active post-V1 handoffs include `051`, `052`, `053`, `054`, and `055`. | Read the specific active issue before implementing or reviewing that slice. |
 | `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md` | Accepted V1 runtime bootstrap and adapter automation decision. | Accepted ADR. | V1 allows narrow adapter notes only; runtime bootstrap, plugin manifests, hooks, installers, automatic loading, and adapter automation require future scoped work. |
 | `docs/adr/README.md` | ADR index, placement, and policy. | ADR index. | Lists ADR 0001 and should be read before adding or changing architectural decision records. |
 | `docs/agents/context-matrix.md` | Future-agent read order for this repo. | Maintained routing artifact. | Refresh when repo structure, issue state, skill inventory, or source-evidence paths change. |
@@ -91,4 +91,4 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 - Date: 2026-06-11
 - Updated by: Codex
-- Evidence used: prior 2026-05-23 matrix evidence; active post-V1 issues `051`, `052`, `053`, and `054`; archived issue `050`; documentation-cleanup implementation; targeted catalog and issue-state scans with `rg -n`; `git status --short`; issue-file heading review.
+- Evidence used: prior 2026-05-23 matrix evidence; active post-V1 issues `051`, `052`, `053`, `054`, and `055`; archived issue `050`; documentation-cleanup implementation; targeted catalog and issue-state scans with `rg -n`; `git status --short`; issue-file heading review.
