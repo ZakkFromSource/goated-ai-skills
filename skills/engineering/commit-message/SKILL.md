@@ -1,36 +1,8 @@
 ---
 name: commit-message
-category: engineering
-classification: portable
-status: wip
 description: Use when the user asks for a commit message, commit summary, git commit text, or closeout message for local changes.
-triggers:
-  - user asks for a commit message, commit summary, git commit text, or closeout message for local changes
-  - implementation, review, doc-sync, or verification work is complete and the next step is committing
-  - a target-project change needs a concise subject plus optional body explaining what changed, why, and what was verified
-  - an agent needs to summarize staged, unstaged, committed, or supplied patch changes for a human-controlled commit
-outputs:
-  - single copy-pasteable command block combining `git add -- ... && git commit -m ...` for selected changes, or commit-only command when selected changes are already staged
-  - commit message preview with an imperative subject and optional body that accurately summarizes the change
-  - commit scope section listing included files and any not-included files with reasons
-  - optional commit plan for obvious independent change groups
-  - compact notes for verification evidence, skipped checks, scope warnings, unrelated-change notes, and private-detail sanitization
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - standards-and-spec-review when spec fit or standards remain unresolved
-    - code-security-review when trust boundaries, auth, user data, persistence, execution, or security config changed
-    - doc-sync when behavior, interfaces, docs, standards, configuration, or tests may drift
-    - verification-before-completion before commit wording claims completion, passing checks, synced docs, or review readiness
-    - handoff when unfinished work or residual risk needs future continuity
-  fallback: If companion skills, git metadata, specs, or verification evidence are unavailable, inspect minimal local evidence, state lower confidence, and avoid invented intent/checks.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Commit Message
@@ -50,6 +22,20 @@ This skill is read-only. It prepares a shell-ready `git add -- ... && git commit
 - Verification evidence such as tests, linters, formatters, manual checks, review gates, doc-sync results, skipped checks, or known failures.
 - Target shell or shell constraints when message or path quoting is not cross-shell safe.
 - Optional platform context such as pull request title, issue ID, CI result, or review thread when available and relevant.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- standards-and-spec-review when spec fit or standards remain unresolved
+- code-security-review when trust boundaries, auth, user data, persistence, execution, or security config changed
+- doc-sync when behavior, interfaces, docs, standards, configuration, or tests may drift
+- verification-before-completion before commit wording claims completion, passing checks, synced docs, or review readiness
+- handoff when unfinished work or residual risk needs future continuity
+
+Fallback: If companion skills, git metadata, specs, or verification evidence are unavailable, inspect minimal local evidence, state lower confidence, and avoid invented intent/checks.
 
 ## Workflow
 

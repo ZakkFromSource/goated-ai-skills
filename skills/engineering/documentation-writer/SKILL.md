@@ -1,36 +1,8 @@
 ---
 name: documentation-writer
-category: engineering
-classification: portable
-status: wip
 description: Use when creating or substantially revising source-grounded durable documentation such as manuals, operator guides, runbooks, troubleshooting guides, onboarding guides, product docs, or AI-facing guide docs.
-triggers:
-  - user asks to write, create, draft, improve, or substantially revise a manual, guide, runbook, troubleshooting guide, onboarding guide, product doc, or user-facing documentation
-  - planned documentation needs audience, scope, source evidence, target location, assumptions, and verification before it is ready
-  - a project needs a separate AI-facing guide for repeated agent or model use, distinct from human-facing documentation
-  - existing docs need a manual-style rewrite rather than a drift-only sync
-outputs:
-  - created or updated durable documentation grounded in source evidence and audience needs
-  - target audience, doc type, scope, source evidence, assumptions, gaps, and unresolved questions
-  - target documentation location chosen from project conventions or an explicit fallback
-  - AI-facing guide decision, including created path or reason a separate guide is unnecessary
-  - verification summary, doc-sync relationship, skipped evidence, and remaining gaps
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - grill-with-docs when audience, purpose, scope, terminology, product behavior, or documentation ownership is unclear
-    - write-a-prd when requirements, acceptance criteria, or feature intent are not settled
-    - doc-sync when documentation changes may leave catalogs, standards, guidance, or other docs stale
-    - verification-before-completion before ready/source-grounded/checked/synced/complete docs claims
-    - handoff when remaining gaps, skipped evidence, or documentation ownership need continuity
-  fallback: If companion skills, docs, source access, or review tools are unavailable, inspect minimal evidence, write narrower docs, label assumptions/gaps, and avoid unverifiable readiness claims.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Documentation Writer
@@ -51,6 +23,20 @@ Human-facing docs come first. AI-facing guides are separate artifacts used only 
 - Source evidence such as code, tests, commands, product notes, PRDs, issues, ADRs, schemas, config, logs, support notes, screenshots, or user-provided context.
 - Known private or sensitive material that must not be copied into durable docs.
 - Verification tools or manual checks available for Markdown, links, generated docs, screenshots, commands, or product behavior.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- grill-with-docs when audience, purpose, scope, terminology, product behavior, or documentation ownership is unclear
+- write-a-prd when requirements, acceptance criteria, or feature intent are not settled
+- doc-sync when documentation changes may leave catalogs, standards, guidance, or other docs stale
+- verification-before-completion before ready/source-grounded/checked/synced/complete docs claims
+- handoff when remaining gaps, skipped evidence, or documentation ownership need continuity
+
+Fallback: If companion skills, docs, source access, or review tools are unavailable, inspect minimal evidence, write narrower docs, label assumptions/gaps, and avoid unverifiable readiness claims.
 
 ## Workflow
 

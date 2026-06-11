@@ -1,36 +1,8 @@
 ---
 name: standards-and-spec-review
-category: engineering
-classification: portable
-status: wip
 description: Use when reviewing changes since a fixed point along separate standards and spec/issue-fit axes, including issue acceptance, missed requirements, or unrequested scope.
-triggers:
-  - user asks for a standards review, spec review, issue-fit review, acceptance review, or closeout review
-  - implementation work is complete and needs a review gate before security review, doc sync, commit, or handoff
-  - a change needs comparison against docs/agents/project-standards.md, an issue handoff, PRD, ticket, or implementation spec
-  - a reviewer needs standards findings separated from missed requirements or unrequested scope
-outputs:
-  - review scope with fixed point, changed files, spec source, standards source, and evidence inspected
-  - standards findings separated from spec findings
-  - evidence-backed findings with affected paths, source evidence, impact, confidence, and recommended fix
-  - explicit no-findings statements for clean review axes
-  - assumptions, confidence, residual risk, and recommended next step
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - project-standards-calibration when docs/agents/project-standards.md is missing, stale, or standards need durable capture
-    - tdd when implemented behavior should have test evidence
-    - code-security-review when trust boundaries, user data, auth, persistence, execution, or unsafe config may be affected
-    - doc-sync after this review when behavior, standards, specs, public interfaces, or docs may have drifted
-    - verification-before-completion before complete/clean/closeout-ready review claims
-  fallback: If companion skills, git history, standards, or source spec are unavailable, inspect minimal local evidence, state lower confidence, and separate assumptions from findings.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Standards And Spec Review
@@ -53,6 +25,20 @@ This is a review gate, not an implementation workflow and not a security audit. 
 - Existing `docs/agents/project-standards.md`, if present.
 - Relevant root `CONTEXT.md`, `docs/agents/context-matrix.md`, ADRs, contributor docs, style guides, tests, commands, and nearby source files.
 - Prior implementation notes, TDD evidence, prototype verdicts, or known skipped checks when available.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- project-standards-calibration when docs/agents/project-standards.md is missing, stale, or standards need durable capture
+- tdd when implemented behavior should have test evidence
+- code-security-review when trust boundaries, user data, auth, persistence, execution, or unsafe config may be affected
+- doc-sync after this review when behavior, standards, specs, public interfaces, or docs may have drifted
+- verification-before-completion before complete/clean/closeout-ready review claims
+
+Fallback: If companion skills, git history, standards, or source spec are unavailable, inspect minimal local evidence, state lower confidence, and separate assumptions from findings.
 
 ## Workflow
 

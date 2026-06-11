@@ -1,40 +1,8 @@
 ---
 name: architecture-design-map
-category: engineering
-classification: portable
-status: wip
 description: Use when the user asks for a source-grounded architecture or design map, detailed diagram, system map, module map, dependency map, flow map, runtime topology, or quick zoom-out orientation, not an architecture plan or refactor recommendation.
-triggers:
-  - user asks for an architecture map, design map, detailed diagram, system map, module map, dependency map, flow map, or runtime topology
-  - user asks to create or refresh docs/agents/architecture-map.md
-  - target-project onboarding would benefit from a durable descriptive architecture map
-  - future agents need a visual map without mistaking speculation for project fact
-  - user asks to zoom out, go up a layer, or explain how an unfamiliar code area fits into the project
-  - user is focused on a file, symbol, feature, route, module, or subsystem and needs surrounding modules, callers, importers, or project terms
-outputs:
-  - Mermaid-first architecture or design diagram for detailed maps
-  - concise explanation of what the map shows
-  - source references for diagram nodes, edges, flows, seams, ports, adapters, and important claims
-  - uncertainty notes for weak, inferred, stale, missing, or conflicting evidence
-  - tracked target-project docs/agents/architecture-map.md for serious onboarding or durable documentation
-  - quick inline module/caller map and recommended next files when zoom-out orientation is the right scope
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target-project mapping
-    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is broad
-    - project-context-calibration when root CONTEXT.md or project language affects architecture terms
-    - project-standards-calibration when standards affect artifact location or diagram style
-    - grill-with-docs when source evidence conflicts or map scope needs a product decision
-    - doc-sync after durable architecture-map artifacts
-    - verification-before-completion before complete/evidence-backed/downstream-ready map claims
-  fallback: If companion skills or durable docs are unavailable, inspect minimal project evidence and state lower confidence.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Architecture Design Map
@@ -55,6 +23,20 @@ This skill maps architecture that exists in code or is explicitly documented. It
 - Source files, manifests, route definitions, package/module indexes, service entrypoints, data-access code, tests, fixtures, config, CI, deployment, infrastructure, and integration definitions.
 - User-provided screenshots, sketches, or external docs only when they are explicitly part of the target-project evidence.
 
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target-project mapping
+- context-matrix-map when docs/agents/context-matrix.md exists or discovery is broad
+- project-context-calibration when root CONTEXT.md or project language affects architecture terms
+- project-standards-calibration when standards affect artifact location or diagram style
+- grill-with-docs when source evidence conflicts or map scope needs a product decision
+- doc-sync after durable architecture-map artifacts
+- verification-before-completion before complete/evidence-backed/downstream-ready map claims
+
+Fallback: If companion skills or durable docs are unavailable, inspect minimal project evidence and state lower confidence.
 ## Architecture Language
 
 Use target-project terms first. Use generic labels only when source evidence supports them:

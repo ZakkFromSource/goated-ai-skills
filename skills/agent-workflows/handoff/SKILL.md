@@ -1,35 +1,8 @@
 ---
 name: handoff
-category: agent-workflows
-classification: portable
-status: wip
 description: Use when a session needs a handoff, continuity note, restart note, resume note, or unfinished context for a future agent.
-triggers:
-  - user asks for a handoff, continuity note, restart note, or resume note
-  - agent is ending an onboarding or delivery session with unfinished context
-  - future work needs current state, blockers, verification, and next skills preserved
-  - user explicitly wants a temporary, local, or tracked handoff artifact
-outputs:
-  - temporary handoff under the OS temp directory by default
-  - per-project handoff path using goated-handoffs/<project-name>/
-  - compact current-state summary
-  - important references by path
-  - verification status, blockers, and recommended next skills
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure when a future agent needs re-orientation
-    - context-matrix-map when a target project has docs/agents/context-matrix.md
-    - project-context-calibration when language or boundaries affected the work
-    - project-standards-calibration when standards affected the work
-    - verification-before-completion before complete/checked/future-session handoff claims
-  fallback: If companion skills or durable artifacts are unavailable, write compact note with explicit gaps and lower confidence.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: agent-workflows
 ---
 
 # Handoff
@@ -52,6 +25,19 @@ Use this skill at the end of onboarding, delivery, review, planning, or interrup
 - Verification commands run, skipped, failed, or still needed.
 - Known blockers, risks, assumptions, and recommended next skills.
 - Existing handoff path when updating a prior handoff.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure when a future agent needs re-orientation
+- context-matrix-map when a target project has docs/agents/context-matrix.md
+- project-context-calibration when language or boundaries affected the work
+- project-standards-calibration when standards affected the work
+- verification-before-completion before complete/checked/future-session handoff claims
+
+Fallback: If companion skills or durable artifacts are unavailable, write compact note with explicit gaps and lower confidence.
 
 ## Workflow
 

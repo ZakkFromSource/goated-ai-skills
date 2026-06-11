@@ -1,38 +1,8 @@
 ---
 name: doc-sync
-category: engineering
-classification: portable
-status: wip
 description: Use when behavior, interfaces, architecture, standards, configuration, tests, or public docs may have documentation drift.
-triggers:
-  - implementation work changed behavior, public interfaces, architecture, standards, configuration, tests, docs, or user-visible workflows
-  - user asks to sync docs, update docs, check documentation drift, or list required documentation updates
-  - standards-and-spec-review, code-security-review, TDD, PRD, issue, or architecture work indicates durable docs may be stale
-  - planning or review-only work needs required doc updates reported without editing files
-outputs:
-  - changed-behavior summary grounded in diffs, specs, tests, commands, or source evidence
-  - relevant docs discovered and checked before updates are proposed
-  - external documentation lookup notes created or recommended when external sources materially informed the work
-  - documentation updates made during implementation sessions or recommended during planning and review-only sessions
-  - skipped docs with reasons, already-covered docs, and residual drift risk
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - context-matrix-map when docs/agents/context-matrix.md exists or doc discovery is broad
-    - project-context-calibration when language, boundaries, or durable context changed
-    - project-standards-calibration when standards, commands, conventions, or enforcement changed
-    - standards-and-spec-review when spec fit or changed scope is unclear
-    - code-security-review when security assumptions, trust boundaries, or sensitive behavior changed
-    - verification-before-completion before synced, checks-passed, or no-drift claims
-    - handoff when unfinished work or residual risk needs continuity
-  fallback: If companion skills, git history, or durable docs are unavailable, inspect minimal local evidence, state lower confidence, and report unverifiable drift risk.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Doc Sync
@@ -52,6 +22,22 @@ Use this skill after implementation or review work that could make docs stale. I
 - External documentation lookups, source links, library ids, or attributed notes when vendor or package docs materially informed the work.
 - Existing durable docs such as `README.md`, `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, ADRs, feature docs, API docs, schema docs, runbooks, changelogs, or design docs.
 - Existing local/session artifacts such as OS temp handoffs under `goated-handoffs/<project-name>/`, scratch notes, or temporary plans when they help identify context but should not become source-of-truth docs.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- context-matrix-map when docs/agents/context-matrix.md exists or doc discovery is broad
+- project-context-calibration when language, boundaries, or durable context changed
+- project-standards-calibration when standards, commands, conventions, or enforcement changed
+- standards-and-spec-review when spec fit or changed scope is unclear
+- code-security-review when security assumptions, trust boundaries, or sensitive behavior changed
+- verification-before-completion before synced, checks-passed, or no-drift claims
+- handoff when unfinished work or residual risk needs continuity
+
+Fallback: If companion skills, git history, or durable docs are unavailable, inspect minimal local evidence, state lower confidence, and report unverifiable drift risk.
 
 ## Workflow
 

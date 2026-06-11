@@ -14,35 +14,30 @@ Implemented skill folders are intended to be copied, installed, or adapted into 
 
 ## Lean Schema
 
-Every implemented `SKILL.md` must use YAML frontmatter with these required fields:
+Every implemented `SKILL.md` must use YAML frontmatter with this required shape:
 
 ```yaml
-name:
-category:
-classification:
-status:
-description:
-triggers:
-outputs:
-depends_on:
-adapters:
+---
+name: <skill-name>
+description: <discovery-focused description>
+metadata:
+  goated-category: <agent-workflows | engineering | productivity>
+---
 ```
 
 `description` is for skill discovery only. It should say when to load the skill by naming user requests, task conditions, symptoms, or project context. Put workflow steps, proof gates, outputs, review loops, and implementation detail in the body, not in `description`.
 
-Valid `category` values for public V1 are:
+Valid `metadata.goated-category` values for public V1 are:
 
 - `agent-workflows`
 - `engineering`
 - `productivity`
 
-Use `portable`, `domain-specific`, or `private` for `classification`.
+Do not add GOATED-only top-level fields such as `category`, `classification`, `status`, `triggers`, `outputs`, `depends_on`, or `adapters`. Treat `metadata` as public, scalar, and non-behavioral. Keep routing behavior, output behavior, dependency semantics, and guardrails in Markdown body sections.
 
-Use `stable`, `wip`, or `deprecated` for `status`.
+Use standard optional frontmatter only when the skill has a real need. `compatibility` may describe an actual per-skill environment or framework constraint. Do not add VS Code-only fields, Codex `agents/openai.yaml`, or experimental tool controls unless a future approved issue explicitly calls for that work.
 
-GOATED keeps these richer schema fields even when source inspiration uses a smaller frontmatter shape. `classification`, `status`, `outputs`, `depends_on`, and `adapters` stay required for implemented skills.
-
-`depends_on` should name hard dependencies, soft dependencies, or graceful fallbacks explicitly. `adapters` should state whether the skill is usable in Codex, Claude Code, Hermes, OpenCode, or a generic agent framework, and should keep framework-specific notes small.
+Dependencies should name hard dependencies, soft dependencies, and graceful fallbacks explicitly in a body `## Dependencies` section. Adapter or compatibility notes should appear only when a specific skill has a real framework caveat; do not recreate generic "usable everywhere" maps.
 
 ## Body Sections
 
@@ -51,6 +46,7 @@ Prefer:
 - `# Skill Name`
 - `## Purpose`
 - `## Inputs`
+- `## Dependencies`
 - `## Workflow`
 - `## Output Contract`
 - `## Delegation`

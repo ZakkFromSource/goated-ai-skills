@@ -1,36 +1,8 @@
 ---
 name: write-a-prd
-category: engineering
-classification: portable
-status: wip
 description: Use when fuzzy intent, a client brief, roadmap item, or feature idea needs a scoped PRD before issue breakdown or implementation.
-triggers:
-  - user asks for a PRD, product requirements document, product spec, implementation spec, or feature brief
-  - user wants to turn unclear intent, a roadmap item, client brief, or feature idea into a concrete plan
-  - target-project onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria that need durable PRD capture
-  - target-project delivery needs a scoped artifact before issue breakdown or implementation
-  - a future agent needs enough product and technical context to split work into vertical-slice issues
-outputs:
-  - tracked target-project PRD under docs/prds/ by default
-  - problem, goals, non-goals, audience, and requirements
-  - acceptance criteria, risks, assumptions, and open questions
-  - source-grounded implementation and testing notes for later prd-to-issues work
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - grill-with-docs when docs, standards, ADRs, artifacts, language, or tradeoffs matter
-    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is needed
-    - project-context-calibration when root CONTEXT.md or language affects requirements
-    - project-standards-calibration when project standards affect requirements, testing, or rollout
-    - verification-before-completion before fully-checked or issue-ready PRD claims
-  fallback: If companion skills or docs are unavailable, inspect minimal evidence and mark unverifiable PRD assumptions.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Write A PRD
@@ -49,6 +21,20 @@ Use this skill when the next useful artifact is a PRD that can feed `prd-to-issu
 - Existing root `CONTEXT.md`, `docs/agents/context-matrix.md`, and `docs/agents/project-standards.md`, if present.
 - Relevant docs, ADRs, glossary/context files, standards, source files, tests, schemas, analytics notes, support notes, or product references.
 - Clarified work brief from `grill-with-docs`, when available or needed.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- grill-with-docs when docs, standards, ADRs, artifacts, language, or tradeoffs matter
+- context-matrix-map when docs/agents/context-matrix.md exists or discovery is needed
+- project-context-calibration when root CONTEXT.md or language affects requirements
+- project-standards-calibration when project standards affect requirements, testing, or rollout
+- verification-before-completion before fully-checked or issue-ready PRD claims
+
+Fallback: If companion skills or docs are unavailable, inspect minimal evidence and mark unverifiable PRD assumptions.
 
 ## Workflow
 

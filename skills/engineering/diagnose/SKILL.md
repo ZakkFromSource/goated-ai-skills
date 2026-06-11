@@ -1,42 +1,8 @@
 ---
 name: diagnose
-category: engineering
-classification: portable
-status: wip
 description: Use when investigating bugs, failing behavior, flaky tests, build failures, integration failures, performance regressions, or unexpected behavior before proposing or implementing fixes.
-triggers:
-  - user asks to diagnose, debug, investigate, find root cause, explain a failure, or analyze a bug before implementation
-  - a bug report, test failure, flaky failure, production symptom, build failure, integration failure, or unexpected behavior needs root-cause proof
-  - a performance regression needs baseline measurement, profiling, query plans, benchmark evidence, bisection, or comparative data before optimization
-  - previous fixes failed, an obvious quick fix is tempting, or implementation would begin without evidence
-  - a future TDD fix needs a confirmed reproduction, likely public test surface, and root-cause evidence packet first
-outputs:
-  - diagnosis scope, safety constraints, and fastest honest feedback loop
-  - repro evidence confirming exact observed symptom, frequency, environment, inputs, and command or manual steps
-  - observations comparing expected and actual behavior, recent changes, relevant logs or errors, and data flow
-  - ranked falsifiable hypotheses with predictions, probes, and results
-  - root-cause evidence packet or explicit residual uncertainty
-  - performance baseline, profiling, benchmark, query-plan, bisection, or equivalent measurement evidence when performance is involved
-  - cleanup notes for instrumentation, debug logs, scripts, harnesses, temporary artifacts, and remaining traces
-  - routed next action for tdd, improve-codebase-architecture, verification-before-completion, handoff, or user decision
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - grill-with-docs when reported vs expected behavior, scope, risk, or user impact is unclear
-    - tdd when proven cause and fix/regression proof can use a public-interface seam
-    - improve-codebase-architecture when no correct seam, false seams, failed fixes, or testability friction appear
-    - code-security-review when symptoms touch trust boundaries, auth, permissions, secrets, user data, persistence, execution, or unsafe config
-    - doc-sync when diagnosis changes behavior docs, runbooks, architecture docs, or test guidance
-    - verification-before-completion before proven-cause, complete, fixed, passing, or implementation-ready claims
-    - handoff when repro, root cause, uncertainty, or blocked verification needs continuity
-  fallback: If companion skills, docs, commands, profilers, production access, or subagents are unavailable, build/request the smallest safe feedback loop, state missing evidence, downgrade claims, and report residual risk.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Diagnose
@@ -53,6 +19,22 @@ Diagnosis ends with evidence and a routed next action. It does not own the fix c
 - Target-project root, relevant docs, recent changes, configs, dependency versions, environment facts, and affected entrypoints.
 - Known safety constraints, including production access, customer or user data, destructive repro risk, secret handling, time limits, and whether instrumentation may be left running.
 - Available proof tools: tests, CLI commands, HTTP scripts, browser automation, fixtures, traces, profilers, query plans, log search, feature flags, bisection, or human-in-the-loop checks.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- grill-with-docs when reported vs expected behavior, scope, risk, or user impact is unclear
+- tdd when proven cause and fix/regression proof can use a public-interface seam
+- improve-codebase-architecture when no correct seam, false seams, failed fixes, or testability friction appear
+- code-security-review when symptoms touch trust boundaries, auth, permissions, secrets, user data, persistence, execution, or unsafe config
+- doc-sync when diagnosis changes behavior docs, runbooks, architecture docs, or test guidance
+- verification-before-completion before proven-cause, complete, fixed, passing, or implementation-ready claims
+- handoff when repro, root cause, uncertainty, or blocked verification needs continuity
+
+Fallback: If companion skills, docs, commands, profilers, production access, or subagents are unavailable, build/request the smallest safe feedback loop, state missing evidence, downgrade claims, and report residual risk.
 
 ## Workflow
 

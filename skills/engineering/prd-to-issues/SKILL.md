@@ -1,41 +1,8 @@
 ---
 name: prd-to-issues
-category: engineering
-classification: portable
-status: wip
 description: Use when a scoped PRD, product spec, roadmap item, or approved plan is ready to become dependency-ordered vertical-slice local issue handoffs with acceptance criteria, blockers, and user stories.
-triggers:
-  - user asks to turn a PRD, product requirements document, product spec, implementation spec, roadmap item, or plan into issues
-  - user wants local issue handoffs, implementation tickets, work slices, or agent-ready tasks from a scoped PRD
-  - target-project delivery needs independently workable vertical slices before TDD, implementation, review, or handoff
-  - a future agent needs a PRD decomposed into blocker-aware AFK and HITL issues
-outputs:
-  - approval-ready issue breakdown with title, type, blockers, user stories, acceptance focus, and foundation rationale when relevant
-  - local Markdown issue handoffs named issues/NNN-short-title.md by default that a fresh agent can use without hidden chat history
-  - local recommended order file for approved multi-issue breakdowns, refreshed from the approved issue set when the workflow runs again
-  - blocker and foundation issues written before dependent issues
-  - concise vertical-slice issue bodies with parent PRD, first reads, source links, blockers, acceptance criteria, expected proof, and user stories
-  - implementation routing notes that send future agents to grill-with-docs before implementation and writing-plans for executable steps
-  - warnings when the PRD may be too broad or not ready for issue breakdown
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - grill-with-docs when PRD scope, language, standards, architecture, or approval tradeoffs are unclear
-    - write-a-prd when the PRD is missing, stale, ambiguous, or not issue-ready
-    - writing-plans after issue approval when implementers need exact steps
-    - prototype when an issue slice depends on a disposable experiment verdict
-    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is needed
-    - project-context-calibration when root CONTEXT.md or language affects issue wording
-    - project-standards-calibration when standards affect issue scope, verification, or acceptance
-    - verification-before-completion before complete/checked/implementation-ready issue-set claims
-  fallback: If companion skills or docs are unavailable, inspect minimal evidence, state lower confidence, and pause instead of writing issues from an unready PRD.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # PRD To Issues
@@ -58,6 +25,23 @@ Use this skill after a PRD is ready for breakdown. Each issue should be a balanc
 - Relevant docs, ADRs, standards, source files, tests, schemas, prototypes, or prior issue handoffs needed to understand current implementation state.
 - Clarified work brief from `grill-with-docs`, when available or needed.
 - Known scope exclusions, blockers, expected proof, and durable source links that a future implementer should read without access to the current chat session.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- grill-with-docs when PRD scope, language, standards, architecture, or approval tradeoffs are unclear
+- write-a-prd when the PRD is missing, stale, ambiguous, or not issue-ready
+- writing-plans after issue approval when implementers need exact steps
+- prototype when an issue slice depends on a disposable experiment verdict
+- context-matrix-map when docs/agents/context-matrix.md exists or discovery is needed
+- project-context-calibration when root CONTEXT.md or language affects issue wording
+- project-standards-calibration when standards affect issue scope, verification, or acceptance
+- verification-before-completion before complete/checked/implementation-ready issue-set claims
+
+Fallback: If companion skills or docs are unavailable, inspect minimal evidence, state lower confidence, and pause instead of writing issues from an unready PRD.
 
 ## Workflow
 

@@ -63,7 +63,7 @@ Tiny one-off tasks can still stay tiny. The stack is there when the work is cros
 
 ## Skill Catalog
 
-The V1 public core is complete, and all current public-core skills are portable, implemented, and self-contained. The implemented skills still intentionally declare `status: wip` while the workflows are sharpened.
+The V1 public core is complete, and all current public-core skills are portable, implemented, self-contained, and normalized for standards-first Agent Skills frontmatter.
 
 ### Agent Workflows
 

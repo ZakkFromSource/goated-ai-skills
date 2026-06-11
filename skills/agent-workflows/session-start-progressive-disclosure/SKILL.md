@@ -1,33 +1,8 @@
 ---
 name: session-start-progressive-disclosure
-category: agent-workflows
-classification: portable
-status: wip
 description: Use when starting a new agent session, orienting to unfamiliar work, or deciding what context to load before planning or implementation.
-triggers:
-  - user starts a new session or asks the agent to orient itself
-  - user asks for durable, cross-file, PRD-level, architectural, or repeated work
-  - user asks to install, adapt, create, or use GOATED AI Skills
-  - agent needs to decide what context to load before planning or implementation
-outputs:
-  - concise session orientation
-  - task-surface classification
-  - assumptions and missing context
-  - relevant artifacts read or deferred
-  - next recommended skill or workflow step
-depends_on:
-  hard: []
-  soft:
-    - context-matrix-map when a target project has or needs a durable context map
-    - project-context-calibration when a target project has or needs root CONTEXT.md
-    - project-standards-calibration when project standards affect the work
-  fallback: If companion skills are unavailable, inspect minimal relevant files and state lower confidence.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: agent-workflows
 ---
 
 # Session Start Progressive Disclosure
@@ -44,6 +19,17 @@ Use this skill to prevent broad context loading at the beginning of serious or r
 - Current working directory, when available.
 - Local agent instruction files, when present.
 - Existing target-project artifacts, when present, such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, or `docs/agents/project-standards.md`.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- context-matrix-map when a target project has or needs a durable context map
+- project-context-calibration when a target project has or needs root CONTEXT.md
+- project-standards-calibration when project standards affect the work
+
+Fallback: If companion skills are unavailable, inspect minimal relevant files and state lower confidence.
 
 ## Workflow
 

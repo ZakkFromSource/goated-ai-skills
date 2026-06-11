@@ -1,33 +1,8 @@
 ---
 name: grill-me
-category: productivity
-classification: portable
-status: wip
 description: Use when the user wants to be grilled, challenged, interviewed, or walked through a non-docs-grounded idea, topic, plan, choice, or decision.
-triggers:
-  - user says "grill me" about an idea, topic, question, plan, choice, or brainstorming thread
-  - user asks to be challenged, interviewed, pressure-tested, or walked through a decision one question at a time
-  - user wants to explore assumptions, tradeoffs, options, implications, or next moves using only conversation context and user-provided notes
-  - user needs lightweight alignment before deciding whether to keep brainstorming, make a choice, use `write-a-prd`, use `prototype`, create an implementation plan, implement, or switch to a docs-grounded grill
-outputs:
-  - clarified topic, central question, and desired outcome
-  - assumptions, tradeoffs, options, and tensions surfaced during the interview
-  - decisions or provisional conclusions, unresolved questions, and next move
-  - recommended defaults for decision-shaping questions without claiming undiscovered project facts
-depends_on:
-  hard: []
-  soft:
-    - grill-with-docs when project context, docs, standards, ADRs, code, tests, schemas, or source evidence matter
-    - write-a-prd when the clarified topic should become a scoped PRD
-    - prototype when a specific unknown needs a disposable experiment
-    - writing-plans when the clarified topic is ready for implementation planning
-  fallback: If companion skills are unavailable, continue the lightweight interview and label unsourced assumptions.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: productivity
 ---
 
 # Grill Me
@@ -46,6 +21,18 @@ Use `grill-with-docs` instead when engineering/project context matters, includin
 - Conversation context the user wants treated as in scope.
 - Constraints the user states directly, such as audience, deadline, appetite for risk, budget, rollout needs, or preferred tone.
 - Any user-provided note or excerpt that does not require broader project discovery.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- grill-with-docs when project context, docs, standards, ADRs, code, tests, schemas, or source evidence matter
+- write-a-prd when the clarified topic should become a scoped PRD
+- prototype when a specific unknown needs a disposable experiment
+- writing-plans when the clarified topic is ready for implementation planning
+
+Fallback: If companion skills are unavailable, continue the lightweight interview and label unsourced assumptions.
 
 ## Workflow
 

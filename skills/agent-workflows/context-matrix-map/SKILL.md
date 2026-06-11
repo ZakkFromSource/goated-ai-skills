@@ -1,33 +1,8 @@
 ---
 name: context-matrix-map
-category: agent-workflows
-classification: portable
-status: wip
 description: Use when onboarding a project for durable agent work, creating a context/source map, or deciding what future agents should read first.
-triggers:
-  - user asks to onboard a project for durable or repeated agent work
-  - user asks for a context map, repo map, source map, or future-agent read order
-  - agent needs to create or refresh docs/agents/context-matrix.md
-  - target-project delivery would benefit from a durable progressive-disclosure map
-outputs:
-  - tracked target-project docs/agents/context-matrix.md by default
-  - first-read, second-read, and only-if-needed source tiers
-  - source-grounded map of docs, code areas, tests, commands, ADRs, external-doc lookup notes, and context packs
-  - explicit assumptions, gaps, and verification commands used
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for new or unfamiliar project mapping
-    - project-context-calibration after mapping when language needs durable context
-    - project-standards-calibration after mapping when standards need durable profile
-    - verification-before-completion before complete/evidence-backed/future-agent claims
-  fallback: If companion skills are unavailable, inspect minimal project files and state lower confidence.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: agent-workflows
 ---
 
 # Context Matrix Map
@@ -46,6 +21,18 @@ Use this skill during target-project onboarding or when a project lacks a reliab
 - Existing root `CONTEXT.md`, if present.
 - Existing project docs, ADRs, issue or PRD folders, test layout, build metadata, and command definitions.
 - Existing `docs/agents/` artifacts, external-doc lookup notes, or context packs, if present.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for new or unfamiliar project mapping
+- project-context-calibration after mapping when language needs durable context
+- project-standards-calibration after mapping when standards need durable profile
+- verification-before-completion before complete/evidence-backed/future-agent claims
+
+Fallback: If companion skills are unavailable, inspect minimal project files and state lower confidence.
 
 ## Workflow
 

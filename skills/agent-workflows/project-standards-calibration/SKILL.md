@@ -1,34 +1,8 @@
 ---
 name: project-standards-calibration
-category: agent-workflows
-classification: portable
-status: wip
 description: Use when onboarding a project, capturing project standards, or separating documented standards, inferred conventions, and user-confirmed preferences.
-triggers:
-  - user asks to onboard a project for durable or repeated agent work
-  - user asks to capture, calibrate, audit, or document project standards
-  - agent needs to create or refresh docs/agents/project-standards.md
-  - future delivery work depends on coding, testing, documentation, or review conventions
-outputs:
-  - tracked target-project docs/agents/project-standards.md by default
-  - documented standards with source evidence
-  - inferred conventions separated from documented rules
-  - user-confirmed preferences and unresolved questions
-  - enforcement levels for standards, conventions, and preferences
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for new or unfamiliar project calibration
-    - context-matrix-map when docs/agents/context-matrix.md exists or is needed
-    - project-context-calibration when root CONTEXT.md or project language affects standards
-    - verification-before-completion before complete/checked/future-agent claims
-  fallback: If companion skills are unavailable, inspect minimal project files and state lower confidence.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: agent-workflows
 ---
 
 # Project Standards Calibration
@@ -49,6 +23,18 @@ Use this skill during target-project onboarding, before repeated delivery work, 
 - Project docs, agent instructions, ADRs, contributor guides, issue or PRD templates, and review guidance.
 - Build, lint, format, typecheck, test, CI, dependency, schema, and editor configuration files.
 - Representative source files and tests when needed to infer local conventions.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for new or unfamiliar project calibration
+- context-matrix-map when docs/agents/context-matrix.md exists or is needed
+- project-context-calibration when root CONTEXT.md or project language affects standards
+- verification-before-completion before complete/checked/future-agent claims
+
+Fallback: If companion skills are unavailable, inspect minimal project files and state lower confidence.
 
 ## Workflow
 

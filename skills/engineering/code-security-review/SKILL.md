@@ -1,36 +1,8 @@
 ---
 name: code-security-review
-category: engineering
-classification: portable
-status: wip
 description: Use when reviewing a diff, PR, patch, source area, auth flow, trust boundary, or data path for security issues and exploitable behavior.
-triggers:
-  - user asks for a security review, static security scan, vuln review, exploitability review, trust-boundary review, auth review, or data-leak review
-  - implementation work touches user data, auth, permissions, persistence, network calls, file handling, command execution, secrets, config, dependencies, or sandboxing
-  - standards-and-spec-review is complete and the change needs a security-focused review gate before doc sync, commit, PR, or handoff
-  - a reviewer needs high-confidence security findings separated from standards, style, spec fit, architecture, or general cleanup concerns
-outputs:
-  - security review scope with fixed point, changed files, review surface, and evidence inspected
-  - trust-boundary map covering entry points, privileged operations, sensitive assets, and sinks
-  - severity-classified findings with affected paths, evidence, impact, recommended fix, confidence, and false-positive control
-  - explicit no-findings statement when no high-evidence security findings are detected
-  - assumptions, skipped areas, residual risk, and a clear statement that this is not full audit coverage
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - standards-and-spec-review when issue, changed files, or intended behavior are unclear
-    - tdd when security-relevant behavior changed and needs regression proof
-    - project-standards-calibration when security, dependency, logging, privacy, or config standards affect review
-    - doc-sync when security assumptions, public behavior, config, or threat-model docs may drift
-    - verification-before-completion before complete/clean/closeout-ready security claims
-  fallback: If companion skills, git history, security docs, dependency metadata, or checks are unavailable, inspect minimal local evidence, state lower confidence, and report residual risk instead of speculative findings.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Code Security Review
@@ -49,6 +21,20 @@ This is a review gate, not a full security audit, penetration test, dependency a
 - Originating issue, PRD, ticket, accepted plan, standards/spec review, TDD evidence, or user-stated intent when available.
 - Relevant source files, tests, schemas, permissions, policies, routes, controllers, services, repositories, UI surfaces, CLI commands, jobs, deployment config, dependency manifests, lockfiles, and security docs.
 - Project security model when present: roles, tenants, auth providers, data classification, secrets policy, sandbox policy, threat model, privacy constraints, compliance notes, or documented trusted boundaries.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- standards-and-spec-review when issue, changed files, or intended behavior are unclear
+- tdd when security-relevant behavior changed and needs regression proof
+- project-standards-calibration when security, dependency, logging, privacy, or config standards affect review
+- doc-sync when security assumptions, public behavior, config, or threat-model docs may drift
+- verification-before-completion before complete/clean/closeout-ready security claims
+
+Fallback: If companion skills, git history, security docs, dependency metadata, or checks are unavailable, inspect minimal local evidence, state lower confidence, and report residual risk instead of speculative findings.
 
 ## Workflow
 

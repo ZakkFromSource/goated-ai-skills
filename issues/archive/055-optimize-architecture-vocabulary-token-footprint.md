@@ -114,22 +114,22 @@ Current target measurements from the docs-grounded decision pass:
 
 ## Acceptance criteria
 
-- [ ] All three edited `SKILL.md` files still follow the lean schema.
-- [ ] Each edited skill remains self-contained after installation and depends only on its own folder plus target-project evidence at runtime.
-- [ ] No repo-level, category-level, or cross-skill shared architecture glossary is introduced.
-- [ ] Existing local references are reused or expanded where useful instead of adding unnecessary support files.
-- [ ] Every moved or expanded reference detail is directly linked from the relevant `SKILL.md` with a clear read condition.
-- [ ] `Architecture Language` sections are compressed to the smallest useful hot-path vocabulary for each skill.
-- [ ] Common architecture definitions no longer repeat in full sentence form across all three `SKILL.md` files.
-- [ ] `architecture-design-map` still preserves inline the map-only boundary: describe existing architecture, do not plan new architecture, rank improvements, or produce refactor proposals.
-- [ ] `architecture-design-map` still preserves source-evidence, uncertainty, Mermaid-first mapping, quick zoom-out, and durable artifact behavior.
-- [ ] `plan-codebase-architecture` still preserves inline the clarified-intent gate, design-only boundary, deep-module bias, real-seam rule, anti-overdesign checks, public test surface planning, and downstream routing.
-- [ ] `improve-codebase-architecture` still preserves inline the review-only boundary, evidence-before-judgment rule, deletion test, false-seam control, ranked opportunity discipline, test-surface discipline, and no-implementation boundary.
-- [ ] Architecture terms remain readable. Hybrid IDK wording should improve clarity without making the prose mechanical.
-- [ ] No required frontmatter fields are removed.
-- [ ] No runtime bootstrap, automatic loading, generated manifest, installer, hook, adapter automation, eval harness, CI check, or token dashboard is introduced.
-- [ ] No installed Codex skill copies outside this source repo are edited.
-- [ ] The final diff is manually reviewed for behavior preservation, not only token reduction.
+- [x] All three edited `SKILL.md` files still follow the lean schema.
+- [x] Each edited skill remains self-contained after installation and depends only on its own folder plus target-project evidence at runtime.
+- [x] No repo-level, category-level, or cross-skill shared architecture glossary is introduced.
+- [x] Existing local references are reused or expanded where useful instead of adding unnecessary support files.
+- [x] Every moved or expanded reference detail is directly linked from the relevant `SKILL.md` with a clear read condition.
+- [x] `Architecture Language` sections are compressed to the smallest useful hot-path vocabulary for each skill.
+- [x] Common architecture definitions no longer repeat in full sentence form across all three `SKILL.md` files.
+- [x] `architecture-design-map` still preserves inline the map-only boundary: describe existing architecture, do not plan new architecture, rank improvements, or produce refactor proposals.
+- [x] `architecture-design-map` still preserves source-evidence, uncertainty, Mermaid-first mapping, quick zoom-out, and durable artifact behavior.
+- [x] `plan-codebase-architecture` still preserves inline the clarified-intent gate, design-only boundary, deep-module bias, real-seam rule, anti-overdesign checks, public test surface planning, and downstream routing.
+- [x] `improve-codebase-architecture` still preserves inline the review-only boundary, evidence-before-judgment rule, deletion test, false-seam control, ranked opportunity discipline, test-surface discipline, and no-implementation boundary.
+- [x] Architecture terms remain readable. Hybrid IDK wording should improve clarity without making the prose mechanical.
+- [x] No required frontmatter fields are removed.
+- [x] No runtime bootstrap, automatic loading, generated manifest, installer, hook, adapter automation, eval harness, CI check, or token dashboard is introduced.
+- [x] No installed Codex skill copies outside this source repo are edited.
+- [x] The final diff is manually reviewed for behavior preservation, not only token reduction.
 
 ## Expected proof
 

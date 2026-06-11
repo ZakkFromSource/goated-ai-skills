@@ -1,36 +1,8 @@
 ---
 name: agent-instructions-integrator
-category: agent-workflows
-classification: portable
-status: wip
 description: Use when integrating installed GOATED skills into a target project, creating or updating agent instructions, or routing agents to durable project artifacts.
-triggers:
-  - user asks to integrate installed GOATED skills into a target project
-  - user asks to create, update, or repair agent instructions for a project
-  - target-project onboarding needs routing to context and standards artifacts
-  - an agent framework needs a thin adapter to installed skill folders
-outputs:
-  - selected target-project instruction artifact or configuration
-  - installed skill routing notes
-  - target-project artifact routing notes
-  - unresolved framework assumptions or follow-up questions
-depends_on:
-  hard: []
-  soft:
-    - using-goated-ai-skills for installed-stack entrypoint or task-surface routing
-    - goated-prompt for prompt-crafting, reusable prompt, or GOATED-aware routing
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - context-matrix-map when routing should reference docs/agents/context-matrix.md
-    - project-context-calibration when routing should reference root CONTEXT.md
-    - project-standards-calibration when routing should reference docs/agents/project-standards.md
-    - verification-before-completion before complete/checked/ready adapter claims
-  fallback: If companion skills or target-project artifacts are unavailable, create a minimal framework router and state unverified gaps.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: agent-workflows
 ---
 
 # Agent Instructions Integrator
@@ -50,6 +22,21 @@ Use this skill after core onboarding artifacts exist, or when a target project n
 - Existing root `CONTEXT.md`, if present.
 - Existing `docs/agents/context-matrix.md` and `docs/agents/project-standards.md`, if present.
 - Framework docs or user-provided framework conventions, when local evidence is insufficient.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- using-goated-ai-skills for installed-stack entrypoint or task-surface routing
+- goated-prompt for prompt-crafting, reusable prompt, or GOATED-aware routing
+- session-start-progressive-disclosure for unfamiliar target projects
+- context-matrix-map when routing should reference docs/agents/context-matrix.md
+- project-context-calibration when routing should reference root CONTEXT.md
+- project-standards-calibration when routing should reference docs/agents/project-standards.md
+- verification-before-completion before complete/checked/ready adapter claims
+
+Fallback: If companion skills or target-project artifacts are unavailable, create a minimal framework router and state unverified gaps.
 
 ## Workflow
 

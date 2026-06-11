@@ -1,37 +1,8 @@
 ---
 name: framework-agnostic-skill-creator
-category: agent-workflows
-classification: portable
-status: wip
 description: Use when creating a new GOATED skill from clarified intent or porting, adapting, sanitizing, or publishing an existing skill, command, prompt, workflow, or agent instruction for portable GOATED use.
-triggers:
-  - user asks to create, write, design, update, evaluate, or publish a GOATED skill
-  - user wants to turn clarified intent, repeated agent behavior, or reusable workflow knowledge into an installable skill folder
-  - user asks to port, adapt, generalize, sanitize, or publish an existing skill, command, prompt, workflow, or agent instruction
-  - a source workflow is tied to one agent framework, project, issue tracker, folder layout, or private operating convention
-  - a candidate skill needs trigger, support-file, dependency, adapter, evaluation, privacy, or portability review before implementation
-outputs:
-  - selected mode: create from clarified intent or port from source material
-  - clarified skill intent, success criteria, audience, category, classification, status, triggers, outputs, dependencies, and adapters
-  - source package manifest with files and links inspected or skipped when porting source material
-  - proposed neutral GOATED skill shape or patched skill folder
-  - support-file plan covering prose, references, scripts, assets, and final review checks
-  - skill evaluation plan or results covering RED baseline, pressure scenarios, rationalization capture, and GREEN verification
-  - adapter notes, privacy and portability judgment, and remaining blockers
-depends_on:
-  hard: []
-  soft:
-    - grill-with-docs before public-facing, cross-workflow, unclear, or high-impact skill changes
-    - session-start-progressive-disclosure for unfamiliar target projects or source packages
-    - agent-instructions-integrator when target-project framework routing is needed
-    - handoff when skill creation or porting is interrupted or resumable
-  fallback: If companion skills, source-framework docs, or live subagents are unavailable, inspect available artifacts, mark unverified assumptions, and state residual risk.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: agent-workflows
 ---
 
 # Framework-Agnostic Skill Creator
@@ -45,7 +16,7 @@ Use this skill in two modes:
 - **Create from clarified intent** when the user wants a new or revised GOATED skill based on reusable behavior, preferences, standards, or a repeated workflow.
 - **Port from source material** when an existing skill, prompt, command, workflow, or instruction set must be converted into GOATED shape.
 
-Both modes preserve GOATED's lean schema, public boundary, dependency classification, adapter notes, delegation contract, and self-contained installed behavior.
+Both modes preserve GOATED's normalized schema, public boundary, dependency behavior, real compatibility caveats, delegation contract, and self-contained installed behavior.
 
 ## Inputs
 
@@ -53,30 +24,42 @@ Both modes preserve GOATED's lean schema, public boundary, dependency classifica
 - Clarified intent, success criteria, audience, workflow scope, non-goals, and examples of user requests that should trigger the skill.
 - Source workflow artifacts when porting, such as a `SKILL.md`, command file, prompt, agent instruction section, checklist, script, template, issue, PRD, or handoff.
 - Source package links or folders, including adjacent references, scripts, templates, examples, assets, producer artifacts, or consumer artifacts.
-- Target GOATED category, classification, status, and installation context, if already decided.
+- Target GOATED category, installation context, portability needs, maturity expectations, and real compatibility constraints, if already decided.
 - Public/private boundary requirements, including anything that must be removed, generalized, or kept out of tracked output.
 - Relevant framework docs, repository standards, or source licenses when they materially affect portability or reuse.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- grill-with-docs before public-facing, cross-workflow, unclear, or high-impact skill changes
+- session-start-progressive-disclosure for unfamiliar target projects or source packages
+- agent-instructions-integrator when target-project framework routing is needed
+- handoff when skill creation or porting is interrupted or resumable
+
+Fallback: If companion skills, source-framework docs, or live subagents are unavailable, inspect available artifacts, mark unverified assumptions, and state residual risk.
 
 ## Workflow
 
 1. Select the mode and boundary:
    - Use create mode when the main input is clarified intent or reusable behavior rather than an existing source package.
    - Use port mode when the main input is existing source material; if both apply, audit the source first, then design the created GOATED skill.
-   - Identify the intended output: implemented skill folder, patch to an existing skill, proposal, adapter note, private fork artifact, or portability review.
+   - Identify the intended output: implemented skill folder, patch to an existing skill, proposal, compatibility note, private fork artifact, or portability review.
    - Keep source repo guidance, installed skill behavior, and target-project artifacts distinct.
    - If the work is unclear, public-facing, or high-impact, use `grill-with-docs` or gather equivalent source-grounded clarification before drafting.
 
 2. Create mode - clarify the skill contract:
    - State the behavior the skill should change, the audience, success criteria, scope, non-goals, and examples of triggering user requests.
-   - Choose `agent-workflows`, `engineering`, or `productivity`; recommend `portable`, `domain-specific`, or `private`; and set `stable`, `wip`, or `deprecated`.
+   - Choose `agent-workflows`, `engineering`, or `productivity`; record portability and maturity as review judgments only when useful.
    - Write a trigger-focused `description`: say when to load the skill using requests, symptoms, task conditions, or project context. Do not summarize workflow steps in `description`.
-   - Add concrete `triggers` and `outputs` that make discovery and completion expectations explicit.
-   - Classify dependencies as hard, soft, or graceful fallback. Keep adapter notes small and honest.
+   - Capture activation conditions in the body and observable completion behavior in `## Output Contract`.
+   - Classify dependencies as hard, soft, or graceful fallback in `## Dependencies`. Add compatibility caveats only for real per-skill constraints.
 
 3. Create mode - choose the artifact shape:
    - Use prose when judgment, sequencing, or project-sensitive decisions matter.
    - Use `scripts/` when a repeatable operation is safer, clearer, or more deterministic as maintained code than as generated prose.
-   - Use `references/` for long examples, pressure scenarios, templates, checklists, stack-specific notes, rationalization tables, anti-pattern catalogs, or adapter playbooks.
+   - Use `references/` for long examples, pressure scenarios, templates, checklists, stack-specific notes, rationalization tables, anti-pattern catalogs, or compatibility playbooks.
    - Use `assets/` for reusable fixtures, templates, images, snippets, or packaged materials that support the skill's output.
    - Keep support files one level below `SKILL.md`, link each directly from `SKILL.md`, and say when to read or run each file.
    - Do not add standalone `README.md`, install guides, changelogs, or decorative support files to a skill folder.
@@ -86,19 +69,19 @@ Both modes preserve GOATED's lean schema, public boundary, dependency classifica
    - Recursively inventory the provided source package before summarizing behavior.
    - Read first-party support files that carry workflow behavior, including templates, references, scripts, examples, assets, producer artifacts, and consumer artifacts.
    - Record files and links inspected, skipped files, skip reasons, and residual uncertainty.
-   - Do not judge portability, classification, or neutral shape until this manifest exists.
+   - Do not judge portability, category, or neutral shape until this manifest exists.
 
 5. Port mode - translate behavior into GOATED shape:
    - Summarize what the full source package makes the agent do, when it triggers, what it asks from the user, what it edits or creates, and how it stops.
    - Separate durable behavior from incidental phrasing, persona, examples, local habits, and framework UI details.
    - Inventory framework mechanics such as slash commands, file mention syntax, MCP tools, apps, plugin APIs, command palettes, or model-specific features.
    - Inventory project mechanics such as instruction filenames, issue trackers, label vocabularies, docs layouts, scratch paths, build commands, or release processes.
-   - Classify dependencies, assumptions, adapter requirements, privacy risks, and portability blockers.
+   - Classify dependencies, assumptions, compatibility requirements, privacy risks, and portability blockers.
    - Preserve source-specific details only when they genuinely fit the destination workflow and remain public-safe.
 
 6. Draft the GOATED skill:
-   - Use the lean schema: `name`, `category`, `classification`, `status`, `description`, `triggers`, `outputs`, `depends_on`, and `adapters`.
-   - Make the body a framework-neutral operating procedure with `Purpose`, `Inputs`, `Workflow`, `Output Contract`, `Delegation`, `Guardrails`, and `References` when useful.
+   - Use the normalized schema: top-level `name`, top-level `description`, and `metadata.goated-category`.
+   - Make the body a framework-neutral operating procedure with `Purpose`, `Inputs`, `Dependencies`, `Workflow`, `Output Contract`, `Delegation`, `Guardrails`, and `References` when useful.
    - Keep `SKILL.md` under the soft 300-line review threshold whenever possible.
    - Attribute public inspiration when useful, but do not bulk-copy external material or private source text.
    - If the user requested review only, return the proposed shape and blockers without editing files.
@@ -111,7 +94,7 @@ Both modes preserve GOATED's lean schema, public boundary, dependency classifica
    - Add rationalization counters, stop rules, red flags, proof gates, or anti-pattern references when testing or review shows agents can dodge the intended behavior.
 
 8. Validate the artifact:
-   - Check the lean schema, category, classification, status, triggers, outputs, dependencies, adapters, and self-contained runtime behavior.
+   - Check the normalized schema, category metadata, discovery description, body activation conditions, output contract, dependencies, compatibility caveats, and self-contained runtime behavior.
    - Check that every local reference or script linked from `SKILL.md` exists and has a clear read or run condition.
    - Check that no root source-repo files are required after installation.
    - Check that private or sensitive content was removed, generalized, or kept in a private artifact.
@@ -121,19 +104,19 @@ Both modes preserve GOATED's lean schema, public boundary, dependency classifica
 
 Use [Proposal And Report Templates](./references/proposal-and-report-templates.md) when producing a skill creator proposal, portability review, or edit report.
 
-For proposal or review output, INCLUDE mode and intent, source package manifest for port mode, neutral skill shape, support-file plan, evaluation plan or results, adapter notes, privacy and portability judgment, and remaining blockers.
+For proposal or review output, INCLUDE mode and intent, source package manifest for port mode, neutral skill shape, support-file plan, evaluation plan or results, compatibility caveats, privacy and portability judgment, and remaining blockers.
 
-When editing a skill folder, REPORT files changed, selected mode and classification recommendation, port manifest summary when relevant, trigger/output/dependency/support-file/adapter decisions, evaluation checks, privacy or portability blockers, and verification performed.
+When editing a skill folder, REPORT files changed, selected mode and category decision, port manifest summary when relevant, discovery/output/dependency/support-file/compatibility decisions, evaluation checks, privacy or portability blockers, and verification performed.
 
 ## Delegation
 
-Main owns the skill goal, public/private decision, classification, final artifact, and user communication.
+Main owns the skill goal, public/private decision, category, final artifact, and user communication.
 
 Delegate only bounded independent passes: inventory one source folder/repo slice/package link, extract behavior from one artifact family, draft evaluation scenarios, forward-test when safe, inventory tool mechanics, review sensitive-content risk, or check lean schema and self-contained runtime rules.
 
 Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; source paths/links inspected; skipped paths/links with reasons; behavior, mechanics, assumptions, risks, evaluation evidence or scenarios, confidence, unresolved questions, and recommendation, not direct publication.
 
-Status handling: `DONE` integrates audit/evaluation/privacy/schema/portability evidence; `DONE_WITH_CONCERNS` requires concern review before publishing or editing; `NEEDS_CONTEXT` gets the missing source artifact, install target, category, classification, adapter constraint, or public/private rule before re-dispatch; `BLOCKED` narrows/splits the work, keeps output private, or escalates before tracked output.
+Status handling: `DONE` integrates audit/evaluation/privacy/schema/portability evidence; `DONE_WITH_CONCERNS` requires concern review before publishing or editing; `NEEDS_CONTEXT` gets the missing source artifact, install target, category, compatibility constraint, or public/private rule before re-dispatch; `BLOCKED` narrows/splits the work, keeps output private, or escalates before tracked output.
 
 If subagents are unavailable, run the same passes sequentially with a narrower context budget and mark live-evaluation gaps.
 
@@ -145,7 +128,7 @@ If subagents are unavailable, run the same passes sequentially with a narrower c
 - Do not assume one framework's instruction filename, command syntax, file mention behavior, plugin system, issue tracker, or docs layout is universal.
 - Do not claim behavioral proof from skill evaluation unless scenarios actually ran; describe unrun checks as a plan or residual risk.
 - Do not bulk-copy external source material; summarize behavior, respect licensing, and attribute public inspiration when relevant.
-- Do not expand `SKILL.md` with long examples, templates, or adapter matrices when a directly linked `references/` file would keep the skill lean.
+- Do not expand `SKILL.md` with long examples, templates, or generic compatibility matrices when a directly linked `references/` file would keep the skill lean.
 - Do not require this source repo's root `AGENT.md`, `README.md`, `CONTEXT.md`, issues, `.local/`, or handoffs at installed runtime.
 - Prefer explicit blockers over quiet assumptions when portability, privacy, or evaluation confidence is uncertain.
 

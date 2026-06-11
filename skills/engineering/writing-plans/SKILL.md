@@ -1,44 +1,8 @@
 ---
 name: writing-plans
-category: engineering
-classification: portable
-status: wip
 description: Use when an approved issue, scoped task, PRD slice, or implementation request needs a just-in-time executable plan before code, docs, or configuration changes.
-triggers:
-  - user asks for an implementation plan, execution plan, task plan, step-by-step plan, or plan before implementation
-  - an approved local issue, PRD slice, ticket, or scoped task is ready to become exact implementation steps
-  - a future agent needs enough source-grounded detail to implement without relying on hidden chat history
-  - durable issue handoffs should stay concise while volatile commands, file paths, snippets, and expected evidence need just-in-time detail
-  - implementation must be routed to TDD, delegated development, or direct execution based on size and risk
-outputs:
-  - source-grounded implementation plan written inline by default or under an ignored local path for long or resumable work
-  - exact files or source areas to inspect or edit, commands to run, expected evidence, and stop conditions
-  - slice shape: the smallest useful vertical behavior path, narrow foundation with rationale, or explicit non-vertical reason
-  - module/interface focus when relevant: the deep module, public interface, seam, or test surface the slice protects
-  - TDD steps when behavior, regressions, public interfaces, or testable implementation are involved
-  - implementation route: direct execution, tdd, or subagent-driven-development with fallback
-  - review, doc-sync, verification, and residual-risk closeout steps
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - grill-with-docs when scope, artifact policy, success criteria, or tradeoffs are unclear
-    - prd-to-issues when a scoped PRD still needs issue handoffs before planning
-    - prototype when risky implementation choices need disposable evidence before exact steps
-    - plan-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
-    - tdd when implementation changes behavior, public interfaces, regressions, or testable workflows
-    - subagent-driven-development for larger, riskier, or parallelizable implementation when available
-    - standards-and-spec-review after implementation when issue fit, acceptance coverage, or project standards need review
-    - code-security-review after implementation when trust boundaries, auth, user data, persistence, execution, or unsafe config may be affected
-    - doc-sync after behavior, interfaces, architecture, standards, configuration, tests, or docs may have changed
-    - verification-before-completion before complete/ready plan, route, or closeout claims
-  fallback: If companion skills, docs, commands, subagents, or source evidence are unavailable, inspect minimal evidence, narrow the plan, mark assumptions/residual risk, and avoid unverifiable exact claims.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Writing Plans
@@ -58,6 +22,25 @@ This skill keeps durable issues concise. Issues, PRDs, tickets, and roadmap note
 - Relevant project docs, local issue handoffs, standards, context artifacts, ADRs, source files, tests, schemas, commands, and previous verification evidence.
 - User constraints about plan location, tracked versus local artifacts, implementation route, risk tolerance, subagent use, or required closeout.
 - Known unavailable tools, skipped evidence, blockers, or decisions that must not be guessed.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- grill-with-docs when scope, artifact policy, success criteria, or tradeoffs are unclear
+- prd-to-issues when a scoped PRD still needs issue handoffs before planning
+- prototype when risky implementation choices need disposable evidence before exact steps
+- plan-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
+- tdd when implementation changes behavior, public interfaces, regressions, or testable workflows
+- subagent-driven-development for larger, riskier, or parallelizable implementation when available
+- standards-and-spec-review after implementation when issue fit, acceptance coverage, or project standards need review
+- code-security-review after implementation when trust boundaries, auth, user data, persistence, execution, or unsafe config may be affected
+- doc-sync after behavior, interfaces, architecture, standards, configuration, tests, or docs may have changed
+- verification-before-completion before complete/ready plan, route, or closeout claims
+
+Fallback: If companion skills, docs, commands, subagents, or source evidence are unavailable, inspect minimal evidence, narrow the plan, mark assumptions/residual risk, and avoid unverifiable exact claims.
 
 ## Workflow
 

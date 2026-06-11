@@ -1,40 +1,8 @@
 ---
 name: subagent-driven-development
-category: engineering
-classification: portable
-status: wip
 description: Use when an implementation plan or scoped task can benefit from fresh implementer and reviewer agents while the main agent keeps ownership of integration and final claims.
-triggers:
-  - user asks to use subagents, parallel agents, delegated implementation, fresh implementers, or reviewer agents for implementation work
-  - a scoped implementation plan has independent tasks that can be delegated with clear write ownership
-  - larger, riskier, or review-heavy implementation needs evidence-backed subagent work
-  - an agent needs a single-agent-compatible fallback for delegated development
-  - completed delegated work needs spec review, quality review, final review, and verified closeout
-outputs:
-  - task split with owned write scopes, dependency order, and sequential fallback path
-  - implementer dispatch prompts with scoped context, expected evidence, and allowed changes
-  - delegated status handling for DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, and BLOCKED
-  - spec review, quality review, and final review evidence before completion claims
-  - main-agent integration notes, conflict decisions, verification summary, and residual risk
-depends_on:
-  hard: []
-  soft:
-    - writing-plans before delegation when an approved issue or task needs an executable plan
-    - grill-with-docs when behavior, scope, intent, language, or review constraints are unclear
-    - prototype when risky implementation choices need disposable evidence before delegation
-    - plan-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
-    - tdd when delegated work changes behavior, public interfaces, regressions, or testable workflows
-    - standards-and-spec-review for spec fit, acceptance coverage, and project standards after delegated work
-    - code-security-review when delegated work touches trust boundaries, auth, permissions, user data, persistence, execution, or unsafe config
-    - doc-sync after delegated behavior, interface, architecture, standard, config, test, or doc changes
-    - verification-before-completion before complete/correct/passing/review-ready/lifecycle-ready delegated-work claims
-  fallback: If subagents, companion skills, commands, or review tools are unavailable, run implementation and review phases sequentially, mark unavailable evidence, and avoid unsupported completion claims.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Subagent-Driven Development
@@ -54,6 +22,23 @@ Keep the GOATED quality bar visible during delegation: prefer vertical behavior 
 - Task list with dependencies, likely edit areas, public interfaces, test surfaces, commands, and documentation surfaces.
 - User or project rules about subagents, write ownership, commits, branches, worktrees, review gates, or final closeout.
 - Available subagent, review, command, and verification capabilities.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- writing-plans before delegation when an approved issue or task needs an executable plan
+- grill-with-docs when behavior, scope, intent, language, or review constraints are unclear
+- prototype when risky implementation choices need disposable evidence before delegation
+- plan-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
+- tdd when delegated work changes behavior, public interfaces, regressions, or testable workflows
+- standards-and-spec-review for spec fit, acceptance coverage, and project standards after delegated work
+- code-security-review when delegated work touches trust boundaries, auth, permissions, user data, persistence, execution, or unsafe config
+- doc-sync after delegated behavior, interface, architecture, standard, config, test, or doc changes
+- verification-before-completion before complete/correct/passing/review-ready/lifecycle-ready delegated-work claims
+
+Fallback: If subagents, companion skills, commands, or review tools are unavailable, run implementation and review phases sequentially, mark unavailable evidence, and avoid unsupported completion claims.
 
 ## Workflow
 

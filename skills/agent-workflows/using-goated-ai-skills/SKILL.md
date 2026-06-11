@@ -1,37 +1,8 @@
 ---
 name: using-goated-ai-skills
-category: agent-workflows
-classification: portable
-status: wip
 description: Use when an installed GOATED skill stack needs to choose the right skill path for a user request, especially across source-repo maintenance, onboarding, delivery, installation, prompt-crafting, tiny tasks, or explicit overrides.
-triggers:
-  - user asks which GOATED skill or workflow to use
-  - user starts work in a project with GOATED skills installed
-  - user asks to install, adapt, create, maintain, or use GOATED AI Skills
-  - an agent needs to classify a task before loading deeper skills
-  - a request might be tiny enough to skip onboarding or planning ceremony
-  - user gives explicit instructions that may override default GOATED routing
-outputs:
-  - task-surface classification
-  - instruction-precedence decision
-  - selected GOATED skill path or direct-action path
-  - tiny-task or explicit-override handling
-  - assumptions, missing context, and next action
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for serious, unfamiliar, cross-file, PRD-level, architectural, repeated, or public-facing work
-    - grill-with-docs for docs-grounded intent, scope, criteria, language, or public behavior
-    - framework-agnostic-skill-creator when creating, porting, adapting, sanitizing, or publishing GOATED skills
-    - agent-instructions-integrator for target-project routing to installed skills and artifacts
-    - goated-prompt for prompt improvement, reusable prompts, and GOATED-aware request translation
-  fallback: If companion skills are unavailable, classify directly, obey user/project instructions, keep reads narrow, and state lower confidence.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: agent-workflows
 ---
 
 # Using GOATED AI Skills
@@ -49,6 +20,19 @@ Use this router at the start of installed-skill work, when a user asks which ski
 - Target-project instructions, repo instructions, or framework guidance that applies to the workspace.
 - Installed GOATED skill list or known skill folder location, when available.
 - Existing target-project artifacts, when present, such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, or `docs/agents/project-standards.md`.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for serious, unfamiliar, cross-file, PRD-level, architectural, repeated, or public-facing work
+- grill-with-docs for docs-grounded intent, scope, criteria, language, or public behavior
+- framework-agnostic-skill-creator when creating, porting, adapting, sanitizing, or publishing GOATED skills
+- agent-instructions-integrator for target-project routing to installed skills and artifacts
+- goated-prompt for prompt improvement, reusable prompts, and GOATED-aware request translation
+
+Fallback: If companion skills are unavailable, classify directly, obey user/project instructions, keep reads narrow, and state lower confidence.
 
 ## Workflow
 

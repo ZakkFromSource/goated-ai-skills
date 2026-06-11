@@ -35,12 +35,13 @@ Use for port mode. For create mode, write `Not applicable`.
 ## Neutral Skill Shape
 
 - Name: <candidate-name>
-- Category: <agent-workflows | engineering | productivity>
-- Classification: <portable | domain-specific | private>
-- Status: <stable | wip | deprecated>
-- Trigger-focused description: <candidate description>
+- Metadata category: <agent-workflows | engineering | productivity>
+- Discovery description: <candidate description>
+- Activation conditions: <brief list>
 - Key workflow steps: <brief list>
-- Outputs: <brief list>
+- Output contract: <brief list>
+- Dependencies: <hard, soft, fallback summary>
+- Compatibility caveats: <real caveats or "None">
 
 ## Support Files
 
@@ -54,16 +55,16 @@ Use for port mode. For create mode, write `Not applicable`.
 - Rationalizations or expected failure modes: <summary>
 - GREEN verification or residual risk: <summary>
 
-## Adapter Notes
+## Compatibility
 
-| Adapter or mechanic | Neutral handling | Remaining risk |
+| Constraint or mechanic | Neutral handling | Remaining risk |
 | --- | --- | --- |
 
 ## Privacy And Portability
 
 - Public-safe content: <summary>
 - Removed or generalized content: <summary>
-- Classification recommendation: <portable | domain-specific | private>
+- Portability judgment: <public-safe portable | domain-specific | private-only>
 
 ## Remaining Blockers
 
@@ -75,9 +76,9 @@ Use for port mode. For create mode, write `Not applicable`.
 When editing a skill folder, report:
 
 - files changed;
-- selected mode and classification recommendation;
+- selected mode and category decision;
 - source package manifest summary when porting;
-- trigger, output, dependency, support-file, and adapter decisions;
+- discovery, output, dependency, support-file, and compatibility decisions;
 - evaluation plan or checks performed;
 - privacy or portability blockers;
 - verification checks performed.

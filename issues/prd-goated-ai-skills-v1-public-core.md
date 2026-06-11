@@ -203,31 +203,20 @@ Each implemented skill should live in:
 skills/<category>/<skill-name>/SKILL.md
 ```
 
-Each `SKILL.md` should use lean YAML frontmatter:
+Each `SKILL.md` should use standards-first YAML frontmatter:
 
 ```yaml
 ---
 name: skill-name
-category: agent-workflows|engineering|productivity
-classification: portable|domain-specific|private
-status: stable|wip|deprecated
 description: Clear trigger-focused description of when to use the skill, not a workflow summary.
-triggers:
-  - user asks for ...
-outputs:
-  - expected output ...
-depends_on:
-  - optional dependency ...
-adapters:
-  codex: usable
-  claude-code: usable
-  generic-agent: usable
+metadata:
+  goated-category: agent-workflows|engineering|productivity
 ---
 ```
 
 The `description` field is for skill discovery only. It should describe when to load the skill using user requests, task conditions, symptoms, or project context. Workflow steps, proof gates, outputs, review loops, and implementation detail belong in the body.
 
-GOATED keeps this richer schema even when source inspiration uses smaller frontmatter. `classification`, `status`, `outputs`, `depends_on`, and `adapters` remain required for implemented skills.
+GOATED keeps behavior in Markdown body sections instead of GOATED-only top-level fields. Trigger patterns belong in workflow prose, output behavior belongs in `## Output Contract`, dependency semantics belong in `## Dependencies`, and real framework or environment caveats belong in body text or standard schema fields only when justified.
 
 Required body sections:
 
@@ -675,7 +664,7 @@ The V1 implementation is complete when:
 - no actual `SKILL.md` files exist during the scaffold/PRD phase;
 - actual implemented skills follow the lean schema once created;
 - every implemented skill is self-contained after installation;
-- every implemented skill has clear triggers, outputs, guardrails, and delegation notes where useful;
+- every implemented skill has clear activation conditions, output contracts, guardrails, dependencies, and delegation notes where useful;
 - every `SKILL.md` respects the soft 300-line cap or justifies why it exceeds it;
 - `agent-instructions-integrator` replaces narrow single-file instruction framing everywhere;
 - Target Project Onboarding and Target Project Delivery are documented consistently;

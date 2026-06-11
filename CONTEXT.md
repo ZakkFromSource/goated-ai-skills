@@ -37,15 +37,15 @@ These definitions are normative for this source repo. If another public doc uses
 - **`references/`** - support files inside a skill folder for detailed examples, prompt templates, checklists, stack-specific notes, anti-pattern catalogs, rationalization tables, or longer decision guides. Use them when detail would help the skill but should not sit in the main workflow.
 - **`scripts/`** - executable helpers inside a skill folder. Use them when a repeatable operation is safer, clearer, or more powerful as a maintained script than as prose instructions.
 - **`assets/`** - reusable assets inside a skill folder. Use them when examples, templates, fixtures, images, or other packaged materials improve the installed skill.
-- **Lean schema** - the required `SKILL.md` frontmatter and body convention for implemented skills: `name`, `category`, `classification`, `status`, `description`, `triggers`, `outputs`, `depends_on`, and `adapters`, with concise workflow sections such as Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References.
+- **Lean schema** - the standards-first `SKILL.md` convention for implemented skills: top-level `name`, top-level `description`, and `metadata.goated-category`, with behavior preserved in body sections such as Purpose, Inputs, Dependencies, Workflow, Output Contract, Delegation, Guardrails, and References.
 - **Trigger** - a user request pattern, task condition, or project situation that tells an agent when to use a skill.
 - **Output** - the artifact, decision, summary, change, or verification result a skill is expected to produce.
-- **Dependency** - another skill, project artifact, command, source, or workflow step the current skill requires, prefers, or can gracefully work without. Skill frontmatter should distinguish hard dependencies, soft dependencies, and fallback behavior when relevant.
-- **Skill adapter** - a small framework-specific note or compatibility marker for using a skill in Codex, Claude Code, Hermes, OpenCode, or a generic agent environment. In `SKILL.md` frontmatter this appears as `adapters`.
+- **Dependency** - another skill, project artifact, command, source, or workflow step the current skill requires, prefers, or can gracefully work without. Skill bodies should distinguish hard dependencies, soft dependencies, and fallback behavior when relevant.
+- **Skill compatibility note** - a small framework-specific or environment-specific caveat for using a skill in Codex, Claude Code, Hermes, OpenCode, or a generic agent environment. Add one only when a real per-skill constraint exists; do not recreate generic adapter maps.
 - **Thin adapter** - a short target-project or framework instruction layer that points agents to installed skills and durable project artifacts without copying full skill bodies or treating one framework's filename convention as universal.
-- **Category** - the public V1 skill grouping. Allowed V1 categories are `agent-workflows`, `engineering`, and `productivity`.
-- **Classification** - the portability label for a skill: `portable` means safe for any compatible agent or project; `domain-specific` means reusable with a named public domain or project assumption; `private` means intended for private forks or private deployments, not public main.
-- **Status** - the maturity label for a skill: `stable` means recommended for normal use; `wip` means experimental or still being sharpened; `deprecated` means kept for reference only.
+- **Category** - the public V1 skill grouping, represented by folder path and `metadata.goated-category`. Allowed V1 categories are `agent-workflows`, `engineering`, and `productivity`.
+- **Classification** - a historical source-repo portability label. Implemented skills no longer use `classification` as top-level frontmatter; use body text, issue notes, or review reports to discuss portability when needed.
+- **Status** - a historical source-repo maturity label. Implemented skills no longer use `status` as top-level frontmatter; record maturity or deprecation decisions in docs or scoped issues when needed.
 - **Discipline-heavy skill** - a skill that asks agents to resist shortcuts, verify claims, follow a strict process, or stop under pressure. These skills may need stop rules, proof gates, rationalization counters, red flags, or anti-pattern references.
 - **Delegated status enum** - explicit status values used by delegated workflows, such as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`, with controller behavior defined for each value. Use them when a subagent result can change the controller's next action; simple evidence scans can keep lighter evidence, assumption, uncertainty, and inspected-path requirements.
 
@@ -128,8 +128,8 @@ Skills should be:
 - specific enough to change agent behavior;
 - concise enough to avoid context bloat;
 - willing to use `references/`, `scripts/`, or `assets/` when they make the skill stronger without overloading `SKILL.md`;
-- clear that `description` is for discovery and triggers, while workflow details live in the body;
-- explicit about triggers, outputs, guardrails, dependencies, and delegation;
+- clear that `description` is for discovery, while trigger patterns and workflow details live in the body;
+- explicit about trigger patterns, output contracts, guardrails, dependencies, and delegation;
 - willing to use stop rules, proof gates, rationalization counters, red flags, or anti-pattern references when discipline-heavy behavior needs them;
 - clear about delegated status values and next controller actions when subagent results can change the workflow;
 - portable unless classified otherwise;

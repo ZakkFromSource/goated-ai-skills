@@ -1,38 +1,8 @@
 ---
 name: verification-before-completion
-category: engineering
-classification: portable
-status: wip
 description: Use before claiming work is complete, correct, fixed, passing, review-ready, documentation-synced, or successfully verified.
-triggers:
-  - user asks whether implementation, review, testing, docs, or closeout work is done
-  - an agent is about to say work is complete, correct, fixed, passing, clean, reviewed, ready, or synced
-  - an agent is about to close, archive, move, rename, or mark an issue, ticket, or handoff complete
-  - command, test, build, lint, rendered artifact, screenshot, source read, diff, CI, or manual smoke-test evidence is needed before a success claim
-  - subagent or tool reports need sanity-checking before the main agent relies on them
-  - checks failed, were skipped, or cannot run and the final response needs honest residual risk
-outputs:
-  - exact claim being verified or downgraded
-  - fresh evidence gathered after the relevant change, review scope, or claim is known
-  - verified facts separated from assumptions, skipped checks, known failures, and residual risk
-  - subagent or tool reports that were independently sanity-checked or marked unverified
-  - issue lifecycle actions allowed, withheld, or downgraded based on verified acceptance and required review evidence
-  - concise verification summary with evidence names, results, skipped checks, remaining risk, and next step
-depends_on:
-  hard: []
-  soft:
-    - tdd when missing proof is behavior, regression, red/green, or test-surface evidence
-    - standards-and-spec-review when completion depends on issue fit, acceptance, or standards
-    - code-security-review when completion depends on security-relevant behavior, trust boundaries, auth, user data, persistence, execution, or unsafe config
-    - doc-sync when behavior, interfaces, docs, standards, configuration, or tests may drift
-    - handoff when residual risk, skipped checks, failures, or unfinished verification need continuity
-  fallback: If companion skills, commands, tools, artifacts, or runtime access are unavailable, inspect minimal evidence, state unverified facts, downgrade unsupported claims, and report residual risk.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Verification Before Completion
@@ -54,6 +24,19 @@ This skill does not replace implementation, TDD, standards/spec review, security
 - Evidence sources such as command output, tests, builds, linters, diffs, source reads, rendered artifacts, screenshots, CI results, manual checks, docs inspection, or subagent reports.
 - Known failed checks, skipped checks, flaky checks, unavailable tools, environment limits, and safety constraints.
 - User instructions about scope, urgency, acceptable risk, or requested level of verification.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- tdd when missing proof is behavior, regression, red/green, or test-surface evidence
+- standards-and-spec-review when completion depends on issue fit, acceptance, or standards
+- code-security-review when completion depends on security-relevant behavior, trust boundaries, auth, user data, persistence, execution, or unsafe config
+- doc-sync when behavior, interfaces, docs, standards, configuration, or tests may drift
+- handoff when residual risk, skipped checks, failures, or unfinished verification need continuity
+
+Fallback: If companion skills, commands, tools, artifacts, or runtime access are unavailable, inspect minimal evidence, state unverified facts, downgrade unsupported claims, and report residual risk.
 
 ## Workflow
 

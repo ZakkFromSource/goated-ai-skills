@@ -1,37 +1,8 @@
 ---
 name: prototype
-category: engineering
-classification: portable
-status: wip
 description: Use when a product or technical question needs a disposable prototype, spike, mockup, variant, or cheap evidence before committing to direction.
-triggers:
-  - user asks to prototype, spike, sanity-check, mock up, try variants, or explore an idea cheaply
-  - a PRD, issue, or implementation decision depends on one risky product, UI, data, state, or technical question
-  - the user wants something runnable, clickable, or inspectable before committing to production implementation
-  - target-project delivery needs evidence from a disposable experiment before write-a-prd, prd-to-issues, or tdd
-outputs:
-  - explicit prototype question and approach
-  - branch chosen, branch assumption if any, and artifact shape
-  - clearly marked prototype artifacts located near the relevant code or route
-  - run command, URL, toggle, script path, or inspection path for the prototype
-  - verdict, observations, and recommended next action
-  - cleanup status showing whether the prototype was deleted, absorbed into real work, or explicitly handed off
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - grill-with-docs when the question is unclear, expensive, public-facing, cross-file, or docs/standards-sensitive
-    - write-a-prd when the prototype verdict should feed a broader product requirements document
-    - prd-to-issues when the prototype is exploring one focused implementation issue
-    - tdd when validated behavior is absorbed into production code after the prototype
-    - verification-before-completion before prototype verdict, cleanup, or absorption-complete claims
-  fallback: If companion skills or docs are unavailable, inspect minimal local evidence, state assumptions, and keep the prototype disposable.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Prototype
@@ -50,6 +21,20 @@ Use this skill before PRD creation, during issue exploration, or before committi
 - Relevant nearby route, component, module, command, schema, API, workflow, or test surface.
 - Existing project docs, standards, ADRs, context matrix, or planning artifacts when they affect the question.
 - Existing run commands, routing conventions, task runners, fixture patterns, and local development constraints.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- grill-with-docs when the question is unclear, expensive, public-facing, cross-file, or docs/standards-sensitive
+- write-a-prd when the prototype verdict should feed a broader product requirements document
+- prd-to-issues when the prototype is exploring one focused implementation issue
+- tdd when validated behavior is absorbed into production code after the prototype
+- verification-before-completion before prototype verdict, cleanup, or absorption-complete claims
+
+Fallback: If companion skills or docs are unavailable, inspect minimal local evidence, state assumptions, and keep the prototype disposable.
 
 ## Workflow
 

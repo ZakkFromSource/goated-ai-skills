@@ -1,41 +1,8 @@
 ---
 name: receiving-code-review
-category: engineering
-classification: portable
-status: wip
 description: Use when handling code review feedback, PR comments, reviewer suggestions, requested changes, or critique before deciding whether to clarify, push back, or implement.
-triggers:
-  - user asks to handle, address, apply, respond to, or work through code review feedback
-  - a reviewer, maintainer, CI bot, teammate, or subagent provides comments, requested changes, or suggestions on a diff, PR, patch, issue, or implementation
-  - review feedback is unclear, technically questionable, broad, conflicting, security-relevant, or likely to change behavior
-  - an agent is about to implement review suggestions before verifying them against source, tests, specs, or project intent
-  - accepted review feedback needs one-item-at-a-time implementation, verification, and closeout
-outputs:
-  - review feedback inventory with each item understood before editing
-  - classification of each item as accepted, rejected with technical rationale, needs clarification, or non-actionable commentary
-  - evidence used to accept, reject, clarify, defer, or route feedback
-  - clarification questions or technical pushback when feedback is unclear, wrong, too broad, or conflicts with project intent
-  - implementation route for accepted feedback, including direct fix, writing-plans, tdd, subagent-driven-development, standards-and-spec-review, code-security-review, or doc-sync
-  - per-item fix summary with verification evidence, skipped checks, assumptions, and residual risk
-  - closeout routed through verification-before-completion before any fixed, clean, done, or ready claim
-depends_on:
-  hard: []
-  soft:
-    - grill-with-docs when feedback exposes unclear intent, scope, language, tradeoffs, or public behavior
-    - writing-plans when accepted feedback is non-trivial, multi-step, risky, or needs a route before edits
-    - tdd when accepted feedback changes behavior, public interfaces, regressions, or testable workflows
-    - standards-and-spec-review when feedback concerns issue fit, acceptance, standards, unrequested scope, or spec interpretation
-    - code-security-review when feedback touches trust boundaries, auth, permissions, user data, persistence, execution, secrets, or security config
-    - subagent-driven-development when large or parallelizable feedback needs delegated implementation or review
-    - doc-sync when accepted feedback changes behavior, interfaces, architecture, standards, configuration, tests, or public docs
-    - verification-before-completion before fixed/resolved/clean/implemented/passing/ready/complete feedback claims
-  fallback: If companion skills, review tools, git history, tests, docs, or subagents are unavailable, inspect minimal source evidence, classify uncertainty, implement only safe accepted items, and downgrade unsupported claims.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Receiving Code Review
@@ -56,6 +23,22 @@ The default posture is respectful skepticism: understand the reviewer, check the
 - Relevant source, tests, docs, standards, ADRs, project context, logs, rendered artifacts, or command output needed to evaluate the feedback.
 - Review tool context, such as comment threads, requested-change status, inline anchors, or links, when available.
 - User or project constraints about scope, urgency, risk tolerance, compatibility, and required response style.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- grill-with-docs when feedback exposes unclear intent, scope, language, tradeoffs, or public behavior
+- writing-plans when accepted feedback is non-trivial, multi-step, risky, or needs a route before edits
+- tdd when accepted feedback changes behavior, public interfaces, regressions, or testable workflows
+- standards-and-spec-review when feedback concerns issue fit, acceptance, standards, unrequested scope, or spec interpretation
+- code-security-review when feedback touches trust boundaries, auth, permissions, user data, persistence, execution, secrets, or security config
+- subagent-driven-development when large or parallelizable feedback needs delegated implementation or review
+- doc-sync when accepted feedback changes behavior, interfaces, architecture, standards, configuration, tests, or public docs
+- verification-before-completion before fixed/resolved/clean/implemented/passing/ready/complete feedback claims
+
+Fallback: If companion skills, review tools, git history, tests, docs, or subagents are unavailable, inspect minimal source evidence, classify uncertainty, implement only safe accepted items, and downgrade unsupported claims.
 
 ## Workflow
 

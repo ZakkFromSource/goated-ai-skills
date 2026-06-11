@@ -1,40 +1,8 @@
 ---
 name: plan-codebase-architecture
-category: engineering
-classification: portable
-status: wip
 description: Use when a clarified brief, PRD, issue, or grill result needs a source-grounded architecture blueprint before implementation, especially for deep modules, clear interfaces, real seams, dependencies, test surfaces, slice order, risks, or ADR/RFC triggers.
-triggers:
-  - user asks to plan codebase architecture, feature architecture, module design, system design, or an architecture blueprint before implementation
-  - a new target project needs a project-wide architecture plan after onboarding context and standards are known
-  - a feature PRD, issue, or clarified brief affects modules, interfaces, data ownership, dependencies, test strategy, or implementation order
-  - future implementation should be steered toward deep modules, clear seams, and behavior-focused test surfaces
-outputs:
-  - project-wide or feature-specific architecture blueprint
-  - planned modules, responsibilities, interfaces, caller knowledge, and hidden complexity
-  - dependency categories, ports, adapters, data/state ownership, seams, and cross-module flows
-  - test surfaces, first TDD slices, implementation slice order, risks, open questions, and RFC or ADR triggers
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar architecture planning
-    - grill-with-docs before durable blueprints when brief, scope, constraints, or language is unclear
-    - write-a-prd when product scope or acceptance criteria are not architecture-ready
-    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is broad
-    - project-context-calibration when root CONTEXT.md or language affects architecture terms
-    - project-standards-calibration when standards affect module layout, testing, persistence, or artifact locations
-    - architecture-design-map when current architecture must be described before planning additions or changes
-    - improve-codebase-architecture when existing-code repair or refactor ranking is the real task
-    - prd-to-issues when the accepted blueprint should become implementation issue slices
-    - tdd when a blueprint slice moves into implementation and behavior proof
-    - verification-before-completion before complete/evidence-backed/issue-breakdown-ready blueprint claims
-  fallback: If companion skills or durable docs are unavailable, inspect minimal evidence, require an explicit clarified brief, keep confidence lower, and separate blueprint facts from assumptions.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Plan Codebase Architecture
@@ -53,6 +21,24 @@ This skill is design-only. It prevents avoidable architecture drift by planning 
 - Current source evidence for affected areas, including manifests, package/module indexes, routes, schemas, service clients, dependency wiring, persistence code, tests, fixtures, and CI/test commands.
 - User constraints, such as compatibility, migration risk, team ownership, deployment topology, deadlines, security posture, or technology choices that cannot be inferred from local evidence.
 
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar architecture planning
+- grill-with-docs before durable blueprints when brief, scope, constraints, or language is unclear
+- write-a-prd when product scope or acceptance criteria are not architecture-ready
+- context-matrix-map when docs/agents/context-matrix.md exists or discovery is broad
+- project-context-calibration when root CONTEXT.md or language affects architecture terms
+- project-standards-calibration when standards affect module layout, testing, persistence, or artifact locations
+- architecture-design-map when current architecture must be described before planning additions or changes
+- improve-codebase-architecture when existing-code repair or refactor ranking is the real task
+- prd-to-issues when the accepted blueprint should become implementation issue slices
+- tdd when a blueprint slice moves into implementation and behavior proof
+- verification-before-completion before complete/evidence-backed/issue-breakdown-ready blueprint claims
+
+Fallback: If companion skills or durable docs are unavailable, inspect minimal evidence, require an explicit clarified brief, keep confidence lower, and separate blueprint facts from assumptions.
 ## Architecture Language
 
 Use project terms for concrete names. Keep these hot-path terms inline because they shape blueprint quality:

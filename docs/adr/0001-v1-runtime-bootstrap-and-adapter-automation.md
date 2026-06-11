@@ -22,15 +22,17 @@ Superpowers demonstrates the value of runtime activation for a plugin product: s
 
 ## Decision
 
-GOATED V1 allows **narrow adapter notes only**.
+GOATED V1 allows **narrow compatibility notes only**.
 
 Allowed in V1:
 
 - self-contained skill folders with lean `SKILL.md` frontmatter;
 - portable router guidance such as `using-goated-ai-skills`;
-- small framework compatibility notes in skill `adapters` fields;
+- small framework compatibility notes only when a real per-skill constraint exists;
 - thin target-project instruction adapters created by `agent-instructions-integrator`;
 - docs-first install and adaptation guidance.
+
+Current schema note: issue `059` normalized implemented skill frontmatter and removed generic `adapters` maps. This ADR still permits narrow compatibility caveats, but future caveats should follow the current `skills/README.md` schema and body-section guidance.
 
 Not allowed in V1:
 

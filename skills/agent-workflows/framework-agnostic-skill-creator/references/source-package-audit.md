@@ -35,7 +35,7 @@ The goal is to understand the source as a package before judging what is portabl
 ## File Roles
 
 - **Entrypoint**: primary skill, command, prompt, readme, or instruction file that activates the workflow.
-- **Reference**: longer procedure, checklist, adapter notes, or detailed examples read by the entrypoint.
+- **Reference**: longer procedure, checklist, compatibility notes, or detailed examples read by the entrypoint.
 - **Template**: seed output or file content the workflow writes, updates, or asks the user to customize.
 - **Script**: deterministic helper whose arguments, outputs, failure behavior, or side effects shape the workflow.
 - **Example**: sample input or output that shows intended behavior, edge cases, tone, or scope.
@@ -50,7 +50,7 @@ When reading the package, identify:
 
 - Core behavior that should survive in a portable GOATED skill.
 - Source-specific details that are useful as-is for the destination workflow.
-- Source-specific details that should become adapter notes, examples, detection rules, or fallbacks.
+- Source-specific details that should become compatibility notes, examples, detection rules, or fallbacks.
 - Project-only assumptions such as issue trackers, label names, docs paths, instruction-file precedence, commands, and release processes.
 - Public/private risks, including names, credentials, client context, sensitive personal data, or non-public operating assumptions.
 - Hard dependencies, soft dependencies, and graceful fallback paths.
@@ -63,7 +63,7 @@ Do not flatten all source specificity into bland generic behavior. Branded names
 The important check is whether the port presents those details intentionally:
 
 - If they are required by the destination, keep them in core workflow.
-- If they are useful only for one adapter or environment, place them in adapter notes or examples.
+- If they are useful only for one framework or environment, place them in compatibility notes or examples.
 - If they are source-only assumptions, generalize them or mark them as blockers.
 - If the user explicitly wants a private or domain-specific adaptation, preserve more specificity and classify it honestly.
 

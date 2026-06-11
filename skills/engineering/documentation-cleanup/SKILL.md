@@ -1,37 +1,8 @@
 ---
 name: documentation-cleanup
-category: engineering
-classification: portable
-status: wip
 description: Use when auditing, tidying, consolidating, or optimizing a target project's docs tree, docs/agents artifacts, root README or context files, agent routing docs, progress/status docs, or documentation structure.
-triggers:
-  - user asks to clean up docs, tidy documentation, organize docs, reduce duplicated docs, audit docs structure, prune stale docs, or optimize docs for future agents
-  - a project has bulky or overlapping docs, stale status summaries, unclear source-of-truth ownership, orphaned docs, or confusing docs/agents artifacts
-  - target-project onboarding or repeated delivery work exposes documentation sprawl that is broader than a single changed-behavior doc-sync task
-  - user wants a documentation hygiene report, cleanup plan, or gated implementation pass for docs and root routing artifacts
-outputs:
-  - documentation inventory covering in-scope docs, root routing docs, likely roles, skipped areas, and evidence used
-  - cleanup findings with source-of-truth conflicts, duplication, stale status, bloated docs, orphan docs, risky links, private/local leakage, and residual risk
-  - recommended actions such as keep, refresh, merge, split, move, archive, delete, or defer, with approval-needed items separated
-  - optional gated documentation edits plus verification, skipped checks, and follow-up routes to companion skills
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - context-matrix-map when docs/agents/context-matrix.md is missing, stale, or central to the cleanup
-    - project-context-calibration when root CONTEXT.md, language, boundaries, or artifact meanings need refresh
-    - project-standards-calibration when standards, commands, or enforcement levels need refresh
-    - agent-instructions-integrator when root agent instructions or installed-skill routing need repair
-    - documentation-writer when cleanup reveals missing or rewritten durable docs
-    - doc-sync when recent behavior, interface, architecture, test, or workflow changes created drift
-    - verification-before-completion before cleaned/organized/safe/synced/future-ready docs claims
-  fallback: If companion skills, Python, git, or conventions are unavailable, inspect the smallest useful docs set, report lower confidence, and avoid destructive cleanup claims.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Documentation Cleanup
@@ -52,6 +23,22 @@ Default to audit-first. Do not move, delete, archive, or change source-of-truth 
 - Documentation folders such as `docs/`, `docs/agents/`, `docs/adr/`, `docs/decisions/`, `docs/prds/`, feature docs, layer docs, external-doc lookup notes, architecture docs, and issue workbench docs when in scope.
 - Project conventions for archives, immutable decisions, generated docs, private scratch areas, and source-of-truth precedence.
 - Optional inventory output from `scripts/inventory_docs.py`.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- context-matrix-map when docs/agents/context-matrix.md is missing, stale, or central to the cleanup
+- project-context-calibration when root CONTEXT.md, language, boundaries, or artifact meanings need refresh
+- project-standards-calibration when standards, commands, or enforcement levels need refresh
+- agent-instructions-integrator when root agent instructions or installed-skill routing need repair
+- documentation-writer when cleanup reveals missing or rewritten durable docs
+- doc-sync when recent behavior, interface, architecture, test, or workflow changes created drift
+- verification-before-completion before cleaned/organized/safe/synced/future-ready docs claims
+
+Fallback: If companion skills, Python, git, or conventions are unavailable, inspect the smallest useful docs set, report lower confidence, and avoid destructive cleanup claims.
 
 ## Workflow
 

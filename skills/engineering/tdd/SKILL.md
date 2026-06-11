@@ -1,41 +1,8 @@
 ---
 name: tdd
-category: engineering
-classification: portable
-status: wip
 description: Use when implementing or fixing target-project behavior, changing public interfaces, adding regression coverage, or doing test-first development.
-triggers:
-  - user asks to implement a focused issue, feature, behavior change, or bug fix with test-first proof
-  - user mentions TDD, red-green-refactor, test-first development, integration tests, behavior tests, or regression tests
-  - a target-project change needs observable behavior proof through public interfaces
-  - a public interface, module seam, adapter, or user-facing workflow is changing and should be protected by tests
-outputs:
-  - identified observable behavior, public test surface, and first focused failing test
-  - red evidence showing a feasible behavior test fails for the expected reason before implementation
-  - green evidence separating the focused passing test from broader nearby or project checks
-  - per-cycle notes showing one test, one minimal implementation, and no speculative scope
-  - refactor notes after green, including interface friction, deep-module opportunities, and tests rerun
-  - rationalization guardrail notes for skipped tests, post-hoc tests, over-mocking, test rewrites, and weak proof
-  - residual risk, test gaps, skipped checks, and weak or missing test infrastructure fallback notes
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - grill-with-docs when behavior, public interface, scope, language, or testing priority is unclear
-    - prd-to-issues when implementing a planned vertical issue slice
-    - prototype when risky behavior or interfaces need disposable evidence before production tests
-    - project-standards-calibration when test, fixture, naming, or quality standards affect implementation
-    - standards-and-spec-review after implementation when available
-    - code-security-review after implementation when trust boundaries, persistence, auth, or user data are touched
-    - doc-sync after behavior, public interface, architecture, or testing-doc changes
-    - verification-before-completion before complete/correct/passing/review-ready implementation claims
-  fallback: If companion skills or docs are unavailable, inspect minimal evidence, use discoverable tests/commands, and state lower confidence plus residual risk.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Test-Driven Development
@@ -57,6 +24,23 @@ Bad tests are coupled to implementation. They mock internal collaborators, test 
 - Existing source files, tests, fixtures, commands, public interfaces, schemas, routes, adapters, or UI flows related to the behavior.
 - Existing project docs, including root `CONTEXT.md` when present, glossary/context files, ADRs, standards, and test conventions when they affect naming, interface shape, or expected proof.
 - Available test commands, focused test filters, local development constraints, and known weak or missing test infrastructure.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- grill-with-docs when behavior, public interface, scope, language, or testing priority is unclear
+- prd-to-issues when implementing a planned vertical issue slice
+- prototype when risky behavior or interfaces need disposable evidence before production tests
+- project-standards-calibration when test, fixture, naming, or quality standards affect implementation
+- standards-and-spec-review after implementation when available
+- code-security-review after implementation when trust boundaries, persistence, auth, or user data are touched
+- doc-sync after behavior, public interface, architecture, or testing-doc changes
+- verification-before-completion before complete/correct/passing/review-ready implementation claims
+
+Fallback: If companion skills or docs are unavailable, inspect minimal evidence, use discoverable tests/commands, and state lower confidence plus residual risk.
 
 ## Workflow
 

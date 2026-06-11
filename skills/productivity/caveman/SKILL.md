@@ -1,31 +1,8 @@
 ---
 name: caveman
-category: productivity
-classification: portable
-status: wip
 description: Use when the user explicitly requests compact replies, caveman mode, fewer tokens, brief answers, or similarly terse communication.
-triggers:
-  - user says "caveman mode", "use caveman", "talk like caveman", or "compact mode"
-  - user asks for "less tokens", "fewer tokens", "be brief", "short answers", or similarly terse responses
-  - user asks the agent to keep replies compact across the current conversation
-  - user wants concise communication without losing technical accuracy, warnings, uncertainty, exact errors, or required output formats
-outputs:
-  - compact-mode activation, persistence, or exit decision
-  - terse response that preserves all technical substance and required structure
-  - normal-clarity exception when brevity would risk safety, correctness, confirmation, or user understanding
-  - explicit uncertainty, assumptions, warnings, exact errors, and code blocks when present
-depends_on:
-  hard: []
-  soft:
-    - active tool, skill, review, safety, or user output contracts requiring exact structure
-    - normal clarity for destructive confirmations, security warnings, confusing steps, or user confusion
-  fallback: If the agent cannot reliably track persistence across turns, apply compact mode to the current response and state that persistence may need the user's reminder.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: productivity
 ---
 
 # Caveman
@@ -44,6 +21,16 @@ Core rule: Respond terse like smart caveman. All technical substance stay. Only 
 - Current task, active instructions, and any required output contract.
 - Exact code, commands, errors, warnings, assumptions, data, identifiers, or technical terms that must not be compressed incorrectly.
 - Safety context, especially destructive actions, security risks, irreversible operations, or confusing multi-step instructions.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- active tool, skill, review, safety, or user output contracts requiring exact structure
+- normal clarity for destructive confirmations, security warnings, confusing steps, or user confusion
+
+Fallback: If the agent cannot reliably track persistence across turns, apply compact mode to the current response and state that persistence may need the user's reminder.
 
 ## Workflow
 

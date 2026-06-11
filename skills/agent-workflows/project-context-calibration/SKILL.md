@@ -1,36 +1,8 @@
 ---
 name: project-context-calibration
-category: agent-workflows
-classification: portable
-status: wip
 description: Use when onboarding a project, creating or refreshing project context, or aligning future agents on project boundaries and vocabulary.
-triggers:
-  - user asks to onboard a project for durable or repeated agent work
-  - user asks to create, refresh, calibrate, or curate a project context file
-  - agent needs to create or update root CONTEXT.md inside a target project
-  - future delivery work depends on shared project boundaries, terms, artifacts, or architecture vocabulary
-outputs:
-  - tracked target-project root CONTEXT.md by default
-  - project boundaries and non-boundaries
-  - domain language and durable artifact definitions
-  - reusable architecture vocabulary for future agents
-  - explicit gaps, assumptions, and evidence used
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for new or unfamiliar project calibration
-    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is needed
-    - grill-with-docs when project language, boundaries, or artifact definitions require user decisions
-    - project-standards-calibration after context when standards need a durable profile
-    - agent-instructions-integrator after context when routing should reference root CONTEXT.md
-    - verification-before-completion before complete/evidence-backed/future-agent claims
-  fallback: If companion skills or project docs are unavailable, inspect minimal evidence and mark lower-confidence gaps in CONTEXT.md.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: agent-workflows
 ---
 
 # Project Context Calibration
@@ -51,6 +23,20 @@ Use this skill during target-project onboarding, before repeated delivery work, 
 - Project README files, docs indexes, glossary or domain docs, ADRs, PRDs, issue templates, architecture notes, agent instructions, and public docs.
 - Representative source or tests only when docs are missing, stale, or insufficient to ground important project language.
 - User decisions about project terms, scope boundaries, and artifact meanings when local evidence cannot settle them.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for new or unfamiliar project calibration
+- context-matrix-map when docs/agents/context-matrix.md exists or discovery is needed
+- grill-with-docs when project language, boundaries, or artifact definitions require user decisions
+- project-standards-calibration after context when standards need a durable profile
+- agent-instructions-integrator after context when routing should reference root CONTEXT.md
+- verification-before-completion before complete/evidence-backed/future-agent claims
+
+Fallback: If companion skills or project docs are unavailable, inspect minimal evidence and mark lower-confidence gaps in CONTEXT.md.
 
 ## Workflow
 

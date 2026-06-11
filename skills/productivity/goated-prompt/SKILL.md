@@ -1,37 +1,8 @@
 ---
 name: goated-prompt
-category: productivity
-classification: portable
-status: wip
 description: Use when the user wants to transform a rough request into a GOATED-aware prompt, reusable prompt, spec prompt, task prompt, refinement prompt, or prompt-writing guidance.
-triggers:
-  - user asks to make a prompt GOATED, improve a prompt, optimize a prompt, rewrite a prompt, or create a reusable prompt
-  - user provides a rough request and wants a high-quality prompt for an AI coding assistant or reasoning model
-  - user wants a request translated into the GOATED AI Skills workflow without bypassing the installed router or companion skills
-  - user asks for a spec prompt, task prompt, planning prompt, iterative refinement prompt, or general non-code prompt
-  - prompt quality depends on classifying the task, calibrating context, choosing the right prompt structure, or naming assumptions
-outputs:
-  - detected mode and prompt type
-  - recommended GOATED skill route or model class when useful
-  - optimized prompt in a clearly labeled code block
-  - context plan, assumptions, missing-context question, or privacy warning when needed
-  - short rationale naming classification and key prompt-structure decisions
-depends_on:
-  hard: []
-  soft:
-    - using-goated-ai-skills when the request should route through the installed GOATED stack
-    - grill-me for lightweight intent, audience, tradeoff, or success-criteria clarification
-    - grill-with-docs when docs, standards, ADRs, source behavior, tests, schemas, or public facts matter
-    - write-a-prd when the prompt should ask for a scoped PRD before implementation
-    - writing-plans when an approved issue or task needs exact implementation steps
-    - framework-agnostic-skill-creator when the user wants the prompt turned into an installable GOATED skill
-  fallback: If companion skills or project evidence are unavailable, use conversation context, state assumptions, and avoid undiscovered project-fact claims.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: productivity
 ---
 
 # GOATED Prompt
@@ -54,6 +25,20 @@ The skill improves prompt quality; it does not replace project discovery, PRDs, 
 - Target mode if the user states one: GOATED Prompt, Reusable Prompt, or both.
 - Relevant context the user provides, such as audience, files, project facts, constraints, success criteria, examples, current output, or desired tone.
 - Sensitivity constraints for private paths, credentials, client data, proprietary details, or source excerpts.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- using-goated-ai-skills when the request should route through the installed GOATED stack
+- grill-me for lightweight intent, audience, tradeoff, or success-criteria clarification
+- grill-with-docs when docs, standards, ADRs, source behavior, tests, schemas, or public facts matter
+- write-a-prd when the prompt should ask for a scoped PRD before implementation
+- writing-plans when an approved issue or task needs exact implementation steps
+- framework-agnostic-skill-creator when the user wants the prompt turned into an installable GOATED skill
+
+Fallback: If companion skills or project evidence are unavailable, use conversation context, state assumptions, and avoid undiscovered project-fact claims.
 
 ## Workflow
 

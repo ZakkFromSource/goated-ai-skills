@@ -2,7 +2,7 @@
 
 Skills in this category define reusable operating patterns for installed agent workflows: skill routing, session starts, target-project context maps, context calibration, standards calibration, instruction integration, handoffs, and skill creation and porting.
 
-They should be portable by default, avoid assuming one instruction-file convention, and document adapter notes only when a specific agent framework requires them.
+They should be portable by default, avoid assuming one instruction-file convention, and document compatibility caveats only when a specific agent framework requires them.
 
 ## Implemented Skills
 

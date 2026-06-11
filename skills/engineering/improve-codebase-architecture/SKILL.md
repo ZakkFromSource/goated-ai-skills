@@ -1,39 +1,8 @@
 ---
 name: improve-codebase-architecture
-category: engineering
-classification: portable
-status: wip
 description: Use when looking for source-grounded architecture improvement opportunities, refactor direction, shallow modules, tightly coupled concepts, hard-to-test areas, deeper modules, clearer seams, or more testable and agent-navigable code structure.
-triggers:
-  - user asks to improve architecture, codebase architecture, module structure, boundaries, seams, layering, or refactor direction
-  - user asks for architecture improvement opportunities before committing to a refactor
-  - tests, callers, or implementation work reveal shallow modules, repeated choreography, leaky seams, or hard-to-test code
-  - a target project needs ranked refactor candidates, deepening directions, or an RFC-style handoff
-outputs:
-  - review scope, mode, evidence inspected, and commands run or skipped
-  - ranked architecture improvement opportunities with source evidence
-  - current friction, dependency/seam shape, deepening direction, tradeoffs, confidence, suggested next slice, and RFC trigger per opportunity
-  - cross-cutting themes, deferred or rejected candidates, assumptions, skipped areas, and recommended next step
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - context-matrix-map when docs/agents/context-matrix.md exists or discovery is broad
-    - project-context-calibration when root CONTEXT.md or language affects architecture terms
-    - project-standards-calibration when standards affect refactor shape, tests, or artifact location
-    - architecture-design-map when a descriptive current-state map is needed before ranking improvements
-    - grill-with-docs when architecture goal, user intent, or constraints are unclear
-    - tdd when a selected improvement moves into implementation and test design
-    - write-a-prd when a chosen direction needs product-level scope or stakeholder decisions
-    - prd-to-issues when a chosen direction should become implementation slices
-    - verification-before-completion before complete/evidence-backed/downstream-ready opportunity claims
-  fallback: If companion skills or durable docs are unavailable, inspect minimal project evidence, keep confidence lower, and separate facts from assumptions.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Improve Codebase Architecture
@@ -51,6 +20,23 @@ This skill is review/design-only. It ranks opportunities, explains tradeoffs, an
 - Source files, manifests, package/module indexes, route definitions, entrypoints, dependency injection/configuration code, data-access code, service clients, adapters, tests, fixtures, and CI/test commands related to the review scope.
 - Existing architecture diagrams, prior refactor notes, implementation pain points, test failures, flaky areas, or user-provided examples of hard-to-change code.
 
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- context-matrix-map when docs/agents/context-matrix.md exists or discovery is broad
+- project-context-calibration when root CONTEXT.md or language affects architecture terms
+- project-standards-calibration when standards affect refactor shape, tests, or artifact location
+- architecture-design-map when a descriptive current-state map is needed before ranking improvements
+- grill-with-docs when architecture goal, user intent, or constraints are unclear
+- tdd when a selected improvement moves into implementation and test design
+- write-a-prd when a chosen direction needs product-level scope or stakeholder decisions
+- prd-to-issues when a chosen direction should become implementation slices
+- verification-before-completion before complete/evidence-backed/downstream-ready opportunity claims
+
+Fallback: If companion skills or durable docs are unavailable, inspect minimal project evidence, keep confidence lower, and separate facts from assumptions.
 ## Architecture Language
 
 Use target-project names for concrete modules and flows. Keep these review terms hot-path:

@@ -16,7 +16,7 @@ Do not treat the GOATED AI Skills repository as a project template. The normal V
 
 Current V1 notes:
 
-- All implemented skills currently declare `status: wip`.
+- Implemented skills use standards-first Agent Skills frontmatter with GOATED category metadata.
 - Installed skills should remain self-contained after copying.
 - Runtime bootstrap, automatic activation, generated plugin manifests, hook setup, installer scripts, and framework detection automation are out of scope for V1.
 - Tiny one-off tasks can skip the full workflow when the request is small, obvious, and low risk.
@@ -190,7 +190,7 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 
 - **Purpose**: Creates or ports skills into GOATED's portable skill shape.
 - **Use when**: Creating a new GOATED skill from clarified intent or adapting an existing workflow, command, prompt, or instruction for public-safe reuse.
-- **Typical input**: Source material, target audience, triggers, outputs, dependencies, adapters, and portability constraints.
+- **Typical input**: Source material, target audience, trigger patterns, output contract, dependencies, compatibility constraints, and portability constraints.
 - **Typical output**: Clarified skill intent, evaluation notes, and a GOATED-shaped skill package plan or artifact.
 - **Pipeline role**: Specialized branch for extending or adapting the skill library, not normal target-project delivery.
 

@@ -1,36 +1,8 @@
 ---
 name: grill-with-docs
-category: engineering
-classification: portable
-status: wip
 description: Use when important target-project work needs docs-grounded clarification, pressure testing, success criteria, or scope decisions before implementation.
-triggers:
-  - user asks to be grilled, challenged, pressure-tested, or interviewed about a plan, PRD, architecture choice, workflow change, or ambiguous feature
-  - target-project onboarding is starting
-  - target-project delivery involves PRD-level planning, architecture changes, cross-file work, unclear intent, or public-facing behavior
-  - agent detects that success criteria, scope boundaries, project language, or documented decisions are unclear
-outputs:
-  - clarified goal and success criteria
-  - scope boundaries, non-goals, and affected project areas
-  - decisions made, assumptions confirmed, and remaining questions
-  - source-grounded notes from docs, standards, ADRs, code, tests, or project facts
-  - candidate durable updates for context docs, ADRs, standards docs, PRDs, or doc-sync follow-up
-depends_on:
-  hard: []
-  soft:
-    - session-start-progressive-disclosure for unfamiliar target projects
-    - context-matrix-map when docs/agents/context-matrix.md exists or source discovery is needed
-    - project-context-calibration when language, boundaries, or architecture vocabulary need durable capture
-    - project-standards-calibration when standards affect the decision
-    - doc-sync when settled decisions require documentation follow-up after the grill
-    - verification-before-completion before complete/checked/implementation-ready grill claims
-  fallback: If docs or companion skills are unavailable, inspect minimal evidence and state lower confidence before asking questions.
-adapters:
-  codex: usable
-  claude-code: usable
-  hermes: usable
-  opencode: usable
-  generic-agent: usable
+metadata:
+  goated-category: engineering
 ---
 
 # Grill With Docs
@@ -51,6 +23,20 @@ Use this skill before costly or ambiguous work so the agent and user reach share
 - Relevant README files, contributor docs, feature docs, specs, PRDs, ADRs, issue threads, glossary or context docs, and agent instructions.
 - Relevant source files, tests, schemas, commands, or runtime behavior when they can answer factual questions.
 - User constraints, preferences, deadlines, risk tolerance, and intended audience when not discoverable from project files.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- context-matrix-map when docs/agents/context-matrix.md exists or source discovery is needed
+- project-context-calibration when language, boundaries, or architecture vocabulary need durable capture
+- project-standards-calibration when standards affect the decision
+- doc-sync when settled decisions require documentation follow-up after the grill
+- verification-before-completion before complete/checked/implementation-ready grill claims
+
+Fallback: If docs or companion skills are unavailable, inspect minimal evidence and state lower confidence before asking questions.
 
 ## Workflow
 

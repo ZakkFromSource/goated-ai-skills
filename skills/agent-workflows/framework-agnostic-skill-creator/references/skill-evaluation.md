@@ -89,11 +89,11 @@ Avoid leaking the intended answer into an evaluation prompt. Pass the skill and 
 
 Before publishing or closing a skill change, verify:
 
-- `description` is trigger-focused and does not summarize the workflow.
-- `triggers` cover concrete requests, symptoms, or project conditions.
-- `outputs` define observable completion artifacts or decisions.
-- Dependencies are classified as hard, soft, or fallback.
-- Adapter notes are small and do not turn one framework into a universal rule.
+- `description` is discovery-focused and does not summarize the workflow.
+- Body activation conditions cover concrete requests, symptoms, or project conditions.
+- `## Output Contract` defines observable completion artifacts or decisions.
+- `## Dependencies` classifies hard dependencies, soft dependencies, and fallback behavior.
+- Compatibility notes are specific to real constraints and do not turn one framework into a universal rule.
 - Support files are directly linked from `SKILL.md` with clear read or run conditions.
 - Scripts are included only when maintained deterministic behavior is better than generated prose.
 - Long examples, templates, checklists, rationalization tables, and anti-patterns live in `references/`.
