@@ -151,26 +151,11 @@ After approval:
 
 ## Delegation
 
-The main agent owns PRD readiness judgment, slicing strategy, approval, final issue content, and user communication.
+Main owns PRD readiness judgment, slicing strategy, approval, final issue content, and user communication.
 
-When subagents are available, use them only for bounded evidence gathering that can return paths and source evidence, such as:
+Delegate only bounded evidence gathering: find issue conventions/numbers, check an order file, summarize PRD requirements/goals/non-goals/stories, inspect one source/test area, test slice shape, or review generated issue/order files for local-only behavior, blocker order, acceptance criteria, source links, expected proof, stale-entry replacement, and hidden-session independence.
 
-- finding existing issue conventions and next issue numbers;
-- finding or checking an existing recommended order file for the same parent PRD or planning artifact;
-- summarizing the PRD requirements, goals, non-goals, and user stories;
-- inspecting one relevant source or test area for current implementation state;
-- checking whether proposed slices are vertical, foundation-heavy, or overbroad;
-- reviewing generated issue and order files for local-only behavior, blocker order, acceptance criteria, source links, expected proof, stale-entry replacement, and hidden-session independence.
-
-Require every subagent result to include:
-
-- paths inspected;
-- commands run or deliberately skipped;
-- source evidence found;
-- assumptions and confidence;
-- candidate concerns or corrections, not final user-facing conclusions.
-
-If subagents are unavailable, perform the same work sequentially with a narrower context budget.
+Require paths inspected, commands run or skipped, source evidence, assumptions/confidence, and candidate concerns or corrections rather than final conclusions. If subagents are unavailable, run the same work sequentially with a narrower context budget.
 
 ## Guardrails
 

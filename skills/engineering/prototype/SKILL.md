@@ -144,28 +144,15 @@ Cleanup owner: <agent, user, or future implementer>
 
 ## Delegation
 
-The main agent owns the prototype question, scope control, final verdict, cleanup decision, and user communication.
+Main owns the prototype question, scope control, final verdict, cleanup decision, and user communication.
 
-When subagents are available, use them only for bounded work that can return evidence, such as:
+Delegate only bounded evidence-producing work: find route/component/module/story/fixture/command conventions, draft independent UI variants for the same question, create a focused logic harness in owned files, verify artifacts are marked/disposable, or summarize evidence from files/commands/screenshots.
 
-- finding the nearest route, component, module, story, fixture, or command convention;
-- drafting independent UI variants for the same stated question;
-- creating a focused logic harness in a clearly owned file set;
-- running a verification pass that checks prototype artifacts are marked and disposable;
-- summarizing what the prototype demonstrated from files, commands, or screenshots.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected or changed; commands run or skipped; prototype question served; verdict evidence; cleanup recommendation and remaining artifacts.
 
-Require every subagent result to include:
+Status handling: `DONE` integrates artifact/evidence/verdict into the prototype decision; `DONE_WITH_CONCERNS` requires review of fidelity, scope, cleanup, or user-inspection readiness before relying; `NEEDS_CONTEXT` gets the missing question, route, fixture, command, design constraint, or cleanup rule before re-dispatch; `BLOCKED` narrows the prototype, switches branch/host, chooses a safer disposable artifact, or escalates.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths inspected or changed;
-- commands run or deliberately skipped;
-- the stated prototype question it served;
-- evidence for the verdict;
-- cleanup recommendation and remaining artifacts.
-
-Handle delegated status this way: `DONE` means integrate the artifact, evidence, or verdict into the prototype decision; `DONE_WITH_CONCERNS` means inspect concerns about fidelity, scope, cleanup, or user-inspection readiness before relying on the result; `NEEDS_CONTEXT` means provide the missing prototype question, route, fixture, command, design constraint, or cleanup rule and re-dispatch; `BLOCKED` means narrow the prototype, switch branch or host, choose a safer disposable artifact, or escalate to the user.
-
-If subagents are unavailable, perform the same work sequentially with a narrower context budget.
+If subagents are unavailable, run the same work sequentially with a narrower context budget.
 
 ## Guardrails
 

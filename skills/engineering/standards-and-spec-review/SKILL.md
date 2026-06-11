@@ -143,29 +143,15 @@ If there are no findings on either axis, still include the review scope, explici
 
 ## Delegation
 
-The main agent owns the fixed-point decision, final review judgment, axis separation, and user communication.
+Main owns the fixed-point decision, final review judgment, axis separation, and user communication.
 
-When subagents are available, use them only for bounded evidence gathering or independent review passes, such as:
+Delegate only bounded evidence or review passes: identify changed files/fixed point, extract standards, summarize spec/acceptance criteria, review standards or spec fit for one area, or check whether findings are evidence-backed and in the correct axis.
 
-- identifying changed files and the fixed point;
-- extracting standards from `docs/agents/project-standards.md` or local docs;
-- summarizing the originating spec or acceptance criteria;
-- reviewing standards compliance for one source area;
-- reviewing spec fit for one source area;
-- checking whether reported findings are evidence-backed and in the correct axis.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; source-path evidence; assumptions, confidence, residual risk; and candidate findings separated into standards vs spec concerns.
 
-Require every subagent result to include:
+Status handling: `DONE` merges evidence/findings into the review judgment; `DONE_WITH_CONCERNS` requires review of fixed point, standard source, spec source, confidence, or axis separation before reporting; `NEEDS_CONTEXT` gets missing diff, baseline, spec, standards artifact, command output, or source path before re-dispatch; `BLOCKED` narrows scope, chooses a clearer fixed point, splits axes, or escalates.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths inspected;
-- commands run or deliberately skipped;
-- evidence found with source paths;
-- assumptions, confidence, and residual risk;
-- candidate findings separated into standards and spec concerns.
-
-Handle delegated status this way: `DONE` means merge the candidate evidence and findings into the main review judgment; `DONE_WITH_CONCERNS` means inspect concerns about fixed point, standard source, spec source, confidence, or axis separation before reporting; `NEEDS_CONTEXT` means provide the missing diff, baseline, spec, standards artifact, command output, or source path and re-dispatch; `BLOCKED` means narrow the review scope, choose a clearer fixed point, split standards and spec passes, or escalate to the user.
-
-If subagents are unavailable, perform the same work sequentially with a narrower context budget.
+If subagents are unavailable, run the same work sequentially with a narrower context budget.
 
 ## Guardrails
 

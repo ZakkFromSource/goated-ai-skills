@@ -130,24 +130,11 @@ If no safe artifact can be selected, do not edit. Return the same report shape w
 
 ## Delegation
 
-The main agent owns framework selection, edit strategy, final patch, and user communication.
+Main owns framework selection, edit strategy, final patch, and user communication.
 
-When subagents are available, use them only for bounded evidence scans, such as:
+Delegate only bounded evidence scans: find framework instruction artifacts, check `docs/agents/`, summarize one candidate instruction file, or identify installed skill registry paths from local config.
 
-- finding existing framework instruction artifacts;
-- checking whether `docs/agents/` artifacts exist;
-- summarizing one candidate instruction file;
-- identifying installed skill registry paths from local config.
-
-Require every subagent result to include:
-
-- paths inspected;
-- commands run;
-- framework signals found;
-- explicit assumptions and confidence;
-- recommended artifact candidates, not direct edits.
-
-If subagents are unavailable, perform the same scans sequentially with a narrower context budget.
+Require paths inspected, commands run, framework signals, assumptions/confidence, and recommended artifact candidates rather than direct edits. If subagents are unavailable, run the same scans sequentially with a narrower context budget.
 
 ## Guardrails
 

@@ -147,29 +147,15 @@ For an RFC-style handoff, include the chosen problem, source evidence, public in
 
 ## Delegation
 
-The main agent owns scope, evidence standards, opportunity ranking, architecture judgment, final recommendation, and user communication.
+Main owns scope, evidence standards, opportunity ranking, architecture judgment, final recommendation, and user communication.
 
-When subagents are available, use them for bounded independent exploration, such as:
+Delegate only bounded exploration: trace callers/tests for one module/package/route/flow/dependency, identify shallow modules/repeated choreography/primitive clusters/hard-to-test areas in one source area, check dependency/seam shape, draft interface alternatives for one strong candidate, or validate evidence vs speculation.
 
-- tracing callers/tests for one module family, package, route group, feature flow, or dependency;
-- identifying shallow modules, repeated choreography, primitive clusters, or hard-to-test areas in one bounded source area;
-- checking dependency/seam shape for a named integration;
-- drafting competing interface alternatives for one strong candidate;
-- validating whether a candidate is evidence-backed or speculative.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; exact source evidence; candidate friction, dependency/seam shape, confidence, assumptions, contradictions, and residual uncertainty. No final user-facing recommendation unless specifically asked.
 
-Require every subagent result to include:
+Status handling: `DONE` integrates opportunity evidence, dependency/seam assessment, or interface alternatives into ranking; `DONE_WITH_CONCERNS` requires review of speculative evidence, false seams, migration risk, weak test surfaces, or overbroad refactor direction before recommending; `NEEDS_CONTEXT` gets the missing source area, caller/test evidence, architecture doc, dependency constraint, or user goal before re-dispatch; `BLOCKED` narrows/splits/defer the candidate, changes model/tooling, or escalates.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths inspected;
-- commands run or deliberately skipped;
-- exact source evidence found;
-- candidate friction, dependency/seam shape, and confidence;
-- assumptions, contradictions, and residual uncertainty;
-- no final user-facing architecture recommendation unless specifically asked.
-
-Handle delegated status this way: `DONE` means integrate the opportunity evidence, dependency/seam assessment, or interface alternative into the main ranking; `DONE_WITH_CONCERNS` means inspect concerns about speculative evidence, false seams, migration risk, test-surface weakness, or overbroad refactor direction before recommending; `NEEDS_CONTEXT` means provide the missing source area, caller/test evidence, architecture doc, dependency constraint, or user goal and re-dispatch; `BLOCKED` means narrow the candidate, split exploration by module or dependency, defer the recommendation, use stronger model/tooling, or escalate to the user.
-
-If subagents are unavailable, perform the same passes sequentially with a narrower context budget.
+If subagents are unavailable, run the same passes sequentially with a narrower context budget.
 
 ## Guardrails
 

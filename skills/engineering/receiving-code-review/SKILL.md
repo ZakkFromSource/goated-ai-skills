@@ -156,28 +156,15 @@ For tiny feedback sets, a shorter response is acceptable only if it still separa
 
 ## Delegation
 
-The main agent owns feedback classification, technical judgment, scope control, final responses, and completion claims.
+Main owns feedback classification, technical judgment, scope control, final responses, and completion claims.
 
-When subagents are available, use them for bounded work such as:
+Delegate only bounded review work: inventory a large thread, verify one reviewer claim, implement one accepted item with clear ownership, run focused standards/spec/security/docs/verification review, or check whether an acceptance/rejection is evidence-backed.
 
-- inventorying a large review thread;
-- verifying one reviewer claim against a source area;
-- implementing one accepted item with clear write ownership;
-- running a focused standards/spec, security, docs, or verification pass;
-- checking whether a proposed rejection or acceptance is evidence-backed.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; feedback inspected or changed; paths/diffs/docs/threads/artifacts/commands inspected; classification evidence; changes made; tests/checks run or skipped; assumptions, concerns, residual risk; and recommendation, not final response.
 
-Require delegated results to include:
+Status handling: `DONE` gets evidence inspection before integration; `DONE_WITH_CONCERNS` requires concern resolution before editing/responding; `NEEDS_CONTEXT` gets missing review scope, source, spec, command, or decision; `BLOCKED` narrows the work, asks the user, or reports the blocker without claiming resolution.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- feedback items inspected or changed;
-- paths, diffs, docs, threads, artifacts, or commands inspected;
-- classification recommendations with evidence;
-- changes made, tests or checks run, skipped checks, assumptions, concerns, and residual risk;
-- recommendation for the main agent, not an unsupervised final response.
-
-Handle delegated status this way: `DONE` means inspect the evidence and integrate it; `DONE_WITH_CONCERNS` means resolve concerns before editing or responding; `NEEDS_CONTEXT` means provide missing review scope, source, spec, command, or decision; `BLOCKED` means narrow the work, ask the user, or report the blocker without claiming resolution.
-
-If subagents are unavailable, run the same intake, classification, implementation, review, and verification steps sequentially with a narrower context budget.
+If subagents are unavailable, run the same intake, classification, implementation, review, and verification sequentially with a narrower context budget.
 
 ## Guardrails
 

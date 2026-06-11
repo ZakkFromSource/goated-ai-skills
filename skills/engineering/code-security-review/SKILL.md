@@ -141,28 +141,15 @@ When no findings exist, still include the review scope, trust-boundary map, expl
 
 ## Delegation
 
-The main agent owns scope selection, trust-boundary judgment, finding classification, false-positive filtering, and user communication.
+Main owns scope selection, trust-boundary judgment, finding classification, false-positive filtering, and user communication.
 
-When subagents are available, use them only for bounded evidence gathering or independent review passes, such as:
+Delegate only bounded evidence or review passes: identify changed files/fixed point/manifests, map entry points/privileged operations/assets for one area, check one concrete auth/isolation/exposure/injection/execution/config path, validate a candidate finding, or summarize relevant security docs, policies, permissions, and framework defaults.
 
-- identifying changed files, fixed point, and dependency manifest changes;
-- mapping entry points, privileged operations, and sensitive assets for one source area;
-- checking auth, tenant isolation, data exposure, injection, unsafe execution, or config along one concrete path;
-- verifying whether a candidate finding has enough evidence and belongs in security review instead of standards/spec review;
-- summarizing project security docs, policies, permissions, or framework defaults relevant to one candidate issue.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; evidence with source paths and line refs when possible; assumptions, confidence, residual risk; and candidate findings with severity, impact, fix, and false-positive notes.
 
-Require every subagent result to include:
+Status handling: `DONE` integrates high-evidence findings or no-finding coverage; `DONE_WITH_CONCERNS` requires review of exploitability, false-positive control, severity, scope, or unverified trust boundaries before reporting; `NEEDS_CONTEXT` gets the missing diff, fixed point, policy, route, config, dependency, or runtime assumption before re-dispatch; `BLOCKED` narrows the trust path, splits the review, changes verification route/model/tooling, or escalates.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths inspected;
-- commands run or deliberately skipped;
-- evidence found with source paths and line references when possible;
-- assumptions, confidence, and residual risk;
-- candidate findings with severity, impact, recommended fix, and false-positive notes.
-
-Handle delegated status this way: `DONE` means integrate high-evidence findings or no-finding coverage into the security judgment; `DONE_WITH_CONCERNS` means inspect concerns about exploitability, false-positive control, severity, scope, or unverified trust boundaries before reporting; `NEEDS_CONTEXT` means provide the missing diff, fixed point, policy, route, config, dependency, or runtime assumption and re-dispatch; `BLOCKED` means narrow the trust path, split the review, choose a safer verification route, use stronger model/tooling, or escalate to the user.
-
-If subagents are unavailable, perform the same work sequentially with a narrower context budget.
+If subagents are unavailable, run the same work sequentially with a narrower context budget.
 
 ## Guardrails
 

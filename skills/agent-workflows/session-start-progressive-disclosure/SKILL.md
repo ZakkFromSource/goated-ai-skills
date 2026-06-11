@@ -99,16 +99,11 @@ If the user asked for immediate implementation and the next action is safe, cont
 
 ## Delegation
 
-The main agent owns classification, user intent, final judgment, and user communication.
+Main owns classification, user intent, final judgment, and user communication.
 
-Use subagents only for bounded scans that can return evidence without blocking the main next step, such as:
+Delegate only bounded scans that return evidence without blocking the main next step: find instruction files, summarize one docs folder, check context artifacts, or compare candidate entrypoints.
 
-- finding relevant instruction files;
-- summarizing a specific docs folder;
-- checking whether context artifacts exist;
-- comparing two candidate entrypoints.
-
-Require subagents to return file paths, commands run, source docs, explicit assumptions, and uncertainty. If subagents are unavailable, perform the same scan sequentially with a narrower read set.
+Require file paths, commands run, source docs, assumptions, and uncertainty. If subagents are unavailable, run the same scan sequentially with a narrower read set.
 
 ## Guardrails
 

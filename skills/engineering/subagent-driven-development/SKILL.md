@@ -115,26 +115,15 @@ During or after delegated development, report:
 
 ## Delegation
 
-The main agent owns task selection, write-scope boundaries, dispatch prompts, integration, conflict resolution, status decisions, final verification, and user communication.
+Main owns task selection, write-scope boundaries, dispatch prompts, integration, conflict resolution, status decisions, final verification, and user communication.
 
-When subagents are available, use them for:
+Delegate only lifecycle work with clear ownership: fresh implementation, task or combined-change spec review, quality review, final review of issue fit/integration/docs/residual risk, or verification that gathers evidence without taking over the final claim.
 
-- fresh implementation of one clearly owned task;
-- spec review of a task or combined change;
-- quality review of a task or combined change;
-- final review of issue fit, integration, docs, and residual risk;
-- verification passes that can gather independent evidence without taking over the final claim.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected or changed; commands run or skipped with results; tests or behavior proof when relevant; assumptions, concerns, skipped evidence, residual risk, confidence; and recommendation, not an unsupervised final claim.
 
-Require every delegated result to include:
+Status handling lives in the workflow lifecycle: `DONE` triggers inspection and review; `DONE_WITH_CONCERNS` requires concern resolution; `NEEDS_CONTEXT` gets missing scope/source/command/evidence before re-dispatch or local continuation; `BLOCKED` narrows, splits, replans, changes tooling, or stops for a real product decision.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths inspected or changed;
-- commands run or deliberately skipped, with results;
-- test results or other behavior proof when relevant;
-- assumptions, concerns, skipped evidence, residual risk, and confidence;
-- recommendation for the main agent, not an unsupervised final claim.
-
-If subagents are unavailable, perform the same work sequentially with a narrower context budget and keep the same evidence, review, and verification gates.
+If subagents are unavailable, run the same work sequentially with a narrower context budget and keep the evidence, review, and verification gates.
 
 ## Guardrails
 

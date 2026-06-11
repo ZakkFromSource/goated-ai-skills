@@ -141,20 +141,15 @@ Return a diagnosis packet shaped like this:
 
 ## Delegation
 
-Use subagents when available for bounded diagnosis and review work that can return evidence without taking over the final judgment:
+Main owns symptom framing, hypothesis discipline, root-cause judgment, fix direction, and user communication.
 
-- reproduce in a separate environment or with a different command;
-- trace one subsystem, caller chain, data flow, or dependency path;
-- compare a working example against the failing example;
-- gather performance profiles, query plans, benchmark data, or bisection evidence;
-- review the hypothesis list for missing plausible causes or unfalsifiable wording;
-- verify cleanup and public-boundary safety after diagnostic artifacts are removed.
+Delegate only bounded diagnosis/review work: reproduce separately, trace one subsystem/caller/data/dependency path, compare working vs failing examples, gather profiles/query plans/benchmarks/bisection evidence, review hypotheses for gaps, or verify cleanup and public-boundary safety.
 
-Require delegated results to include `Status` as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths and commands inspected; evidence gathered; assumptions; skipped checks; residual risk; and confidence. The main agent must sanity-check important delegated evidence before relying on it.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths/commands inspected; evidence gathered; assumptions, skipped checks, residual risk, and confidence. The main agent sanity-checks important delegated evidence before relying on it.
 
-Handle delegated status this way: `DONE` means integrate the evidence after inspection; `DONE_WITH_CONCERNS` means inspect concerns before trusting the result; `NEEDS_CONTEXT` means provide the missing symptom, path, command, artifact, access, or expected behavior and re-dispatch or continue locally; `BLOCKED` means narrow the diagnosis, choose a safer feedback loop, ask for required approval, or hand off residual risk.
+Status handling: `DONE` integrates inspected evidence; `DONE_WITH_CONCERNS` requires concern review before trust; `NEEDS_CONTEXT` gets the missing symptom, path, command, artifact, access, or expected behavior before re-dispatch or local continuation; `BLOCKED` narrows the diagnosis, chooses a safer loop, asks for approval, or hands off residual risk.
 
-If subagents are unavailable, perform the same steps sequentially with a narrower context budget.
+If subagents are unavailable, run the same steps sequentially with a narrower context budget.
 
 ## Guardrails
 

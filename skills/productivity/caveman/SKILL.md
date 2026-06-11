@@ -120,15 +120,11 @@ DELETE FROM orders;
 
 ## Delegation
 
-The main agent owns compact-mode activation, persistence, exit handling, and final communication.
+Main owns compact-mode activation, persistence, exit handling, and final communication.
 
-When subagents are available, use them only for bounded checks that do not depend on the compact style itself, such as:
+Delegate only bounded checks that do not depend on compact style: exact-code/error/format preservation, ambiguity or safety review, and output-contract preservation.
 
-- checking whether a draft preserved exact code, errors, warnings, and required formats;
-- reviewing whether a compact response became ambiguous or unsafe;
-- verifying whether a required output contract was preserved.
-
-Require delegated checks to return inspected text or paths, any omissions or ambiguity found, assumptions, and confidence. If subagents are unavailable, perform the same review directly before answering.
+Require inspected text or paths, omissions or ambiguity found, assumptions, and confidence. If subagents are unavailable, perform the same review directly before answering.
 
 ## Guardrails
 

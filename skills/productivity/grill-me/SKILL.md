@@ -134,23 +134,11 @@ If `grill-with-docs` is the better fit, say why and name the artifacts or projec
 
 ## Delegation
 
-The main agent owns the interview, decision ordering, recommendations, final synthesis, and user communication.
+Main owns the interview, decision ordering, recommendations, final synthesis, and user communication.
 
-When subagents are available, use them only for bounded, non-project-fact work that can run independently, such as:
+Delegate only bounded non-project-fact work: alternate decision-tree branches, hypothetical stress tests, high-level comparison of user-provided options, or summaries of provided excerpts.
 
-- generating alternative decision-tree branches from the user's provided topic;
-- stress-testing a stated assumption with hypothetical scenarios;
-- comparing two user-provided options at a high level;
-- summarizing a provided excerpt without broad project discovery.
-
-Require every subagent result to include:
-
-- inputs inspected;
-- assumptions made;
-- tradeoffs or risks found;
-- candidate questions, not direct user-facing conclusions.
-
-If subagents are unavailable, perform the same reasoning sequentially. Do not use subagents to inspect project docs, code, tests, standards, schemas, or ADRs for this skill; route that need to `grill-with-docs`.
+Require inputs inspected, assumptions, tradeoffs/risks, and candidate questions rather than direct conclusions. If subagents are unavailable, reason sequentially. Do not use subagents to inspect project docs, code, tests, standards, schemas, or ADRs for this skill; route that need to `grill-with-docs`.
 
 ## Guardrails
 

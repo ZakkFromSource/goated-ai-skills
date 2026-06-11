@@ -160,24 +160,11 @@ After writing the file, report:
 
 ## Delegation
 
-The main agent owns the target-project boundary, final terminology, user questions, context-file edits, and user communication.
+Main owns the target-project boundary, final terminology, user questions, context-file edits, and user communication.
 
-When subagents are available, use them only for bounded evidence scans, such as:
+Delegate only bounded evidence scans: terminology in docs/specs/issues, durable artifacts under root docs or `docs/agents/`, architecture-language usage in ADRs/notes/source layout, or contradictions between existing `CONTEXT.md` and current evidence.
 
-- terminology in docs, README files, glossary files, specs, PRDs, or issues;
-- existing durable artifacts under root docs or `docs/agents/`;
-- architecture-language terms in ADRs, architecture notes, package layout, or representative source files;
-- contradictions between existing `CONTEXT.md` and current project evidence.
-
-Require every subagent result to include:
-
-- paths inspected;
-- commands run or deliberately skipped;
-- exact source evidence found;
-- explicit assumptions and confidence;
-- candidate terms, artifact definitions, or contradictions, not final `CONTEXT.md` prose.
-
-If subagents are unavailable, perform the same scans sequentially with a narrower context budget. Do not promote unevidenced summaries into project context.
+Require paths inspected, commands run or skipped, exact source evidence, assumptions/confidence, and candidate terms, artifact definitions, or contradictions rather than final `CONTEXT.md` prose. If subagents are unavailable, run the same scans sequentially with a narrower context budget; do not promote unevidenced summaries into project context.
 
 ## Guardrails
 

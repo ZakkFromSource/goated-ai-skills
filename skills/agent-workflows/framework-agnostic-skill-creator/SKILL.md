@@ -127,31 +127,15 @@ When editing a skill folder, REPORT files changed, selected mode and classificat
 
 ## Delegation
 
-The main agent owns the skill goal, public/private decision, classification, final artifact, and user communication.
+Main owns the skill goal, public/private decision, classification, final artifact, and user communication.
 
-When subagents are available, use them only for bounded independent passes, such as:
+Delegate only bounded independent passes: inventory one source folder/repo slice/package link, extract behavior from one artifact family, draft evaluation scenarios, forward-test when safe, inventory tool mechanics, review sensitive-content risk, or check lean schema and self-contained runtime rules.
 
-- recursively inventorying one provided source folder, repo slice, or package link;
-- extracting source workflow behavior from one named artifact or support-file family;
-- drafting pressure scenarios or representative usage scenarios for evaluation;
-- forward-testing a skill with minimal context when safe;
-- inventorying tool-specific mechanics and dependencies;
-- reviewing private or sensitive content risks;
-- checking the drafted skill against the lean schema and self-contained runtime rules.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; source paths/links inspected; skipped paths/links with reasons; behavior, mechanics, assumptions, risks, evaluation evidence or scenarios, confidence, unresolved questions, and recommendation, not direct publication.
 
-Require every subagent result to include:
+Status handling: `DONE` integrates audit/evaluation/privacy/schema/portability evidence; `DONE_WITH_CONCERNS` requires concern review before publishing or editing; `NEEDS_CONTEXT` gets the missing source artifact, install target, category, classification, adapter constraint, or public/private rule before re-dispatch; `BLOCKED` narrows/splits the work, keeps output private, or escalates before tracked output.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- source paths or links inspected;
-- skipped paths or links with reasons;
-- behavior, mechanics, assumptions, and risks found;
-- evaluation evidence or proposed scenarios when relevant;
-- confidence and unresolved questions;
-- recommendation, not direct publication.
-
-Handle delegated status this way: `DONE` means integrate the audit, evaluation, privacy check, schema check, or portability recommendation; `DONE_WITH_CONCERNS` means inspect concerns before publishing or editing; `NEEDS_CONTEXT` means provide the missing source artifact, install target, category, classification, adapter constraint, or public/private rule and re-dispatch; `BLOCKED` means narrow the work, split the audit, keep the result private, or escalate to the user before creating tracked output.
-
-If subagents are unavailable, perform the same passes sequentially with a narrower context budget and mark any live-evaluation gaps.
+If subagents are unavailable, run the same passes sequentially with a narrower context budget and mark live-evaluation gaps.
 
 ## Guardrails
 

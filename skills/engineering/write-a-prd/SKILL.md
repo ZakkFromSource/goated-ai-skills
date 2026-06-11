@@ -114,24 +114,11 @@ After writing, report:
 
 ## Delegation
 
-The main agent owns the PRD scope, final synthesis, product judgment, and user communication.
+Main owns the PRD scope, final synthesis, product judgment, and user communication.
 
-When subagents are available, use them only for bounded evidence gathering, such as:
+Delegate only bounded evidence gathering: find PRD/spec conventions, summarize docs/ADRs/standards/issues, check source or tests for current behavior, or identify risks and acceptance criteria from one feature area.
 
-- finding existing PRD/spec conventions;
-- summarizing relevant docs, ADRs, standards, or prior issues;
-- checking source or tests for current behavior;
-- identifying risks or acceptance criteria from one feature area.
-
-Require every subagent result to include:
-
-- paths inspected;
-- commands run or deliberately skipped;
-- source evidence found;
-- assumptions and confidence;
-- candidate PRD inputs, not final PRD prose.
-
-If subagents are unavailable, perform the same evidence gathering sequentially with a narrower context budget.
+Require paths inspected, commands run or skipped, source evidence, assumptions/confidence, and candidate PRD inputs rather than final PRD prose. If subagents are unavailable, gather the same evidence sequentially with a narrower context budget.
 
 ## Guardrails
 

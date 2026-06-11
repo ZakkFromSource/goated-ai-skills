@@ -120,28 +120,15 @@ When no doc should be written, say so and explain the route, such as `doc-sync`,
 
 ## Delegation
 
-The main agent owns audience judgment, source-of-truth decisions, final documentation wording, target location, verification claims, and user communication.
+Main owns audience judgment, source-of-truth decisions, final wording, target location, verification claims, and user communication.
 
-When subagents are available, use them for bounded independent passes, such as:
+Delegate only bounded independent passes: summarize one source/doc/PRD/issue/command family, discover docs conventions, review outline and audience fit, evaluate AI-facing guide usefulness, or QA unsupported claims, private-data risk, broken links, stale wording, and static-site scope creep.
 
-- source summarization for one doc, code area, PRD, issue, or command family;
-- documentation convention discovery for one target project or docs folder;
-- outline review against the requested audience and doc type;
-- audience-fit review for human manuals, operator guides, onboarding docs, or product docs;
-- AI-facing guide usefulness review, including whether a separate guide is warranted;
-- documentation QA for unsupported claims, private-data risk, broken links, stale wording, or static-site scope creep.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths/docs/source/commands/artifacts/links inspected; exact and skipped evidence with reasons; assumptions, confidence, concerns, residual risk; and suggested findings/edits rather than final publication.
 
-Require every delegated result to include:
+Status handling: `DONE` integrates evidence after checking important claims; `DONE_WITH_CONCERNS` requires concern review before writing/reporting; `NEEDS_CONTEXT` gets the missing source, doc type, scope, audience, command, artifact, or product decision before re-dispatch or local continuation; `BLOCKED` narrows scope, chooses recommendation-only output, or asks for the missing decision.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths, docs, source files, commands, artifacts, or links inspected;
-- exact evidence found and skipped evidence with reasons;
-- assumptions, confidence, concerns, and residual risk;
-- suggested findings or edits, not unsupervised final publication.
-
-Handle delegated status this way: `DONE` means integrate evidence after checking important claims; `DONE_WITH_CONCERNS` means inspect concerns before writing or reporting; `NEEDS_CONTEXT` means provide the missing source, doc type, scope, audience, command, artifact, or product decision and re-dispatch or continue locally; `BLOCKED` means narrow the doc scope, choose recommendation-only output, or ask the user for the missing decision.
-
-If subagents are unavailable, perform the same checks sequentially with a narrower context budget.
+If subagents are unavailable, run the same checks sequentially with a narrower context budget.
 
 ## Guardrails
 

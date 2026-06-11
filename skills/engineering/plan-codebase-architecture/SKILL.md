@@ -160,27 +160,15 @@ For inline output, include the same core pieces without forcing a durable file p
 
 ## Delegation
 
-The main agent owns the planning mode, intent gate, architecture judgment, output location, final blueprint, and user communication.
+Main owns planning mode, intent gate, architecture judgment, output location, final blueprint, and user communication.
 
-When subagents are available, use them for bounded evidence gathering or competing blueprint passes, such as:
+Delegate only bounded evidence or competing-blueprint passes: summarize PRD/issue/standards/ADR/context/map evidence, trace callers/modules/data/dependency wiring/test surfaces for one area, draft one constrained alternative interface/module plan, or check the blueprint for overdesign, missing evidence, false seams, and weak test surfaces.
 
-- summarizing relevant PRD, issue, standards, ADR, context, or architecture-map evidence;
-- tracing current callers, source modules, data flow, dependency wiring, or test surfaces for one affected area;
-- drafting one alternative module/interface plan under a specific constraint, such as minimal interface, caller-optimized interface, or ports/adapters;
-- checking the blueprint for overdesign, missing evidence, false seams, or weak test surfaces.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; exact source evidence; assumptions, contradictions, confidence, residual uncertainty; and candidate blueprint inputs rather than implementation or final artifact edits.
 
-Require every subagent result to include:
+Status handling: `DONE` integrates evidence, risks, or alternative inputs into architecture judgment; `DONE_WITH_CONCERNS` requires review of overdesign, false seams, weak test surfaces, unsupported assumptions, or implementation-order risk before choosing; `NEEDS_CONTEXT` gets the missing PRD, issue, ADR, source path, dependency constraint, test evidence, or user decision before re-dispatch; `BLOCKED` narrows scope, splits design passes, defers unresolved decisions, changes model/tooling, or escalates.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths inspected;
-- commands run or deliberately skipped;
-- exact source evidence found;
-- assumptions, contradictions, confidence, and residual uncertainty;
-- candidate blueprint inputs, not unsupervised implementation or final artifact edits.
-
-Handle delegated status this way: `DONE` means integrate evidence, risks, or alternative blueprint inputs into the main architecture judgment; `DONE_WITH_CONCERNS` means inspect concerns about overdesign, false seams, weak test surfaces, unsupported assumptions, or implementation-order risk before choosing the blueprint; `NEEDS_CONTEXT` means provide the missing PRD, issue, ADR, source path, dependency constraint, test evidence, or user decision and re-dispatch; `BLOCKED` means narrow the architecture scope, split a competing design pass, defer an unresolved decision, use stronger model/tooling, or escalate to the user.
-
-If subagents are unavailable, perform the same passes sequentially with a narrower context budget.
+If subagents are unavailable, run the same passes sequentially with a narrower context budget.
 
 ## Guardrails
 

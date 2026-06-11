@@ -155,24 +155,11 @@ After writing the file, report:
 
 ## Delegation
 
-The main agent owns the target-project boundary, tiering judgment, final artifact, and user communication.
+Main owns the target-project boundary, tiering judgment, final artifact, and user communication.
 
-When subagents are available, use them only for bounded scans that can run independently, such as:
+Delegate only bounded independent scans: find docs, ADRs, and context packs; identify code-area entrypoints, test frameworks, or commands; or summarize one named folder/source family.
 
-- finding docs, ADRs, and context packs;
-- identifying code-area entrypoints from a shallow tree scan;
-- identifying test frameworks and commands;
-- summarizing one named folder or source family.
-
-Require every subagent result to include:
-
-- paths inspected;
-- commands run;
-- source docs or files used;
-- explicit assumptions;
-- confidence level or unresolved gaps.
-
-If subagents are unavailable, perform the same scans sequentially with a narrower context budget. Do not treat unevidenced summaries as project facts.
+Require paths inspected, commands run, source docs/files used, assumptions, confidence, and unresolved gaps. If subagents are unavailable, run the same scans sequentially with a narrower context budget; never promote unevidenced summaries to project facts.
 
 ## Guardrails
 

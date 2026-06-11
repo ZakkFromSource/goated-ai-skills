@@ -162,24 +162,11 @@ When the optional code-style posture is captured, the `User-Confirmed Preference
 
 ## Delegation
 
-The main agent owns the target-project boundary, standard classification, user questions, final artifact, and user communication.
+Main owns the target-project boundary, standard classification, user questions, final artifact, and user communication.
 
-When subagents are available, use them only for bounded evidence scans, such as:
+Delegate only bounded evidence scans: documented standards in docs/instructions, tool-enforced standards in config/build/CI, inferred conventions in one source or test area, or existing `docs/agents/` artifacts.
 
-- documented standards in docs and instruction files;
-- tool-enforced standards in config, build, and CI files;
-- inferred conventions in one named source or test area;
-- existing `docs/agents/` artifacts.
-
-Require every subagent result to include:
-
-- paths inspected;
-- commands run or deliberately not run;
-- exact source files used as evidence;
-- explicit assumptions and confidence;
-- candidate enforcement level for each finding.
-
-If subagents are unavailable, perform the same scans sequentially with a narrower context budget. Do not promote unevidenced summaries into standards.
+Require paths inspected, commands run or skipped, exact source files, assumptions/confidence, and candidate enforcement levels. If subagents are unavailable, run the same scans sequentially with a narrower context budget; do not promote unevidenced summaries into standards.
 
 ## Guardrails
 

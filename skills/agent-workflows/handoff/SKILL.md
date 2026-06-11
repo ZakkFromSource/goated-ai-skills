@@ -164,24 +164,11 @@ After writing the handoff, report:
 
 ## Delegation
 
-The main agent owns the handoff scope, final summary, privacy judgment, and user communication.
+Main owns the handoff scope, final summary, privacy judgment, and user communication.
 
-When subagents are available, use them only for bounded evidence gathering, such as:
+Delegate only bounded evidence gathering: summarize changed files, collect verification commands/outcomes, find issue/PRD/ADR/docs paths, or resolve the project root, slug, or existing handoff path.
 
-- summarizing changed files;
-- collecting verification commands and outcomes;
-- finding relevant issue, PRD, ADR, or docs paths;
-- resolving the target-project root, project-name slug, or existing handoff path.
-
-Require every subagent result to include:
-
-- paths inspected;
-- commands run;
-- evidence sources;
-- explicit assumptions and uncertainty;
-- concise findings suitable for reference, not pasted handoff prose.
-
-If subagents are unavailable, perform the same gathering sequentially with a narrower context budget.
+Require paths inspected, commands run, evidence sources, assumptions/uncertainty, and concise reference findings rather than pasted handoff prose. If subagents are unavailable, gather the same evidence sequentially with a narrower context budget.
 
 ## Guardrails
 

@@ -148,24 +148,11 @@ When the grill is skipped, report:
 
 ## Delegation
 
-The main agent owns the user interview, decision ordering, recommendations, final synthesis, and when to stop.
+Main owns the user interview, decision ordering, recommendations, final synthesis, and when to stop.
 
-When subagents are available, use them only for bounded evidence gathering that can run independently, such as:
+Delegate only bounded independent evidence gathering: find docs/ADRs/standards/context files, check whether code or tests contradict a user statement, summarize one feature/source family, or collect terminology around one domain concept.
 
-- finding relevant docs, ADRs, standards, or context files;
-- checking whether code or tests contradict a user statement;
-- summarizing one feature area or source family;
-- collecting existing project terminology around one domain concept.
-
-Require every subagent result to include:
-
-- paths inspected;
-- commands run or deliberately skipped;
-- exact source evidence found;
-- assumptions and confidence;
-- candidate questions or contradictions, not direct user-facing conclusions.
-
-If subagents are unavailable, perform the same evidence gathering sequentially with a narrower context budget.
+Require paths inspected, commands run or skipped, exact source evidence, assumptions/confidence, and candidate questions or contradictions rather than direct user-facing conclusions. If subagents are unavailable, gather the same evidence sequentially with a narrower context budget.
 
 ## Guardrails
 

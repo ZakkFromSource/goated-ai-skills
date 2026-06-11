@@ -173,25 +173,11 @@ For quick inline zoom-out, keep the response concise and orientation-focused:
 
 ## Delegation
 
-The main agent owns map scope, source-of-truth judgment, diagram synthesis, final artifact edits, and user communication.
+Main owns map scope, source-of-truth judgment, diagram synthesis, final artifact edits, and user communication.
 
-When subagents are available, use them only for bounded evidence gathering that can run independently, such as:
+Delegate only bounded independent evidence gathering: discover architecture docs/ADRs/diagrams, trace one source area or flow, identify runtime units/schemas/queues/jobs/external systems/test evidence for a named map scope, or check an existing diagram against source.
 
-- discovering architecture docs, ADRs, deployment docs, or existing diagrams;
-- tracing one source area, feature flow, module family, route group, or integration path;
-- identifying runtime units, schemas, queues, jobs, external systems, or test evidence for a named map scope;
-- checking whether an existing diagram still matches source evidence.
-
-Require every subagent result to include:
-
-- paths inspected;
-- commands run or deliberately skipped;
-- exact source evidence found;
-- candidate nodes, edges, flows, seams, adapters, or runtime units;
-- assumptions, confidence, and uncertainty;
-- contradictions or stale-map risks, not final user-facing conclusions.
-
-If subagents are unavailable, perform the same scans sequentially with a narrower context budget.
+Require paths inspected, commands run or skipped, exact source evidence, candidate nodes/edges/flows/seams/adapters/runtime units, assumptions/confidence/uncertainty, and contradictions or stale-map risks rather than final conclusions. If subagents are unavailable, run the same scans sequentially with a narrower context budget.
 
 ## Guardrails
 

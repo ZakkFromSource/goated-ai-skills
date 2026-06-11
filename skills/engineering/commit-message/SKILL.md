@@ -148,25 +148,11 @@ After the command, preview, and scope, include compact notes only when they prev
 
 ## Delegation
 
-The main agent owns scope selection, final message wording, caveat judgment, and user communication.
+Main owns scope selection, final message wording, caveat judgment, and user communication.
 
-When subagents are available, use them only for bounded evidence gathering, such as:
+Delegate only bounded evidence gathering: summarize diff intent for one area, extract acceptance criteria/rationale, collect verification output, check recent message style, or review a draft for mismatch, overclaiming, private details, and missing caveats.
 
-- summarizing changed files and diff intent for one source area;
-- extracting acceptance criteria or rationale from a named issue, PRD, ticket, or review report;
-- collecting verification evidence from command output, CI, review notes, or logs;
-- checking recent commit history for local message style;
-- reviewing the drafted message for mismatch, overclaiming, private details, or missing caveats.
-
-Require every subagent result to include:
-
-- paths inspected;
-- commands run or deliberately skipped;
-- evidence found with source paths, diff handles, or verification output;
-- assumptions, confidence, and residual risk;
-- candidate wording or concerns, not unsupervised staging or committing.
-
-If subagents are unavailable, perform the same checks sequentially with a narrower context budget.
+Require paths inspected, commands run or skipped, source/diff/verification evidence, assumptions/confidence/residual risk, and candidate wording or concerns. Never delegate unsupervised staging or committing. If subagents are unavailable, run the same checks sequentially with a narrower context budget.
 
 ## Guardrails
 

@@ -140,29 +140,15 @@ When there are no required updates, say so explicitly and still list the docs ch
 
 ## Delegation
 
-The main agent owns session mode, source-of-truth judgment, final doc edits, conflict decisions, and user communication.
+Main owns session mode, source-of-truth judgment, final doc edits, conflict decisions, and user communication.
 
-When subagents are available, use them only for bounded documentation review passes, such as:
+Delegate only bounded documentation review passes: summarize changed behavior, find docs for one term/feature/interface/command/schema, check one doc family, verify edited docs against final behavior, or collect residual-risk notes for uninspected docs.
 
-- summarizing changed behavior from a named diff or source area;
-- finding likely docs for one changed term, feature, interface, command, or schema;
-- checking one doc family, such as API docs, ADRs, standards, runbooks, or feature docs;
-- verifying that edited docs match the final behavior and do not introduce new drift;
-- collecting residual-risk notes for docs that could not be inspected.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; exact source evidence; doc status per artifact (`required update`, `already covered`, `recommended follow-up`, or `skipped`); assumptions, confidence, residual drift risk; and suggested edits/findings rather than broad rewrites.
 
-Require every subagent result to include:
+Status handling: `DONE` integrates doc status, suggestions, and residual drift risk; `DONE_WITH_CONCERNS` requires review of source-of-truth conflicts, stale docs, incomplete coverage, or risky wording before editing/reporting; `NEEDS_CONTEXT` gets the missing diff, behavior, schema, command output, doc family, or source artifact before re-dispatch; `BLOCKED` narrows the doc family, defers broad edits, switches to recommendation-only output, or escalates.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths inspected;
-- commands run or deliberately skipped;
-- exact source evidence found;
-- doc status for each checked artifact: required update, already covered, recommended follow-up, or skipped;
-- assumptions, confidence, and residual drift risk;
-- suggested edits or findings, not unsupervised broad rewrites.
-
-Handle delegated status this way: `DONE` means integrate doc status, suggested edits, and residual drift risk into the final doc-sync decision; `DONE_WITH_CONCERNS` means inspect concerns about source-of-truth conflicts, stale docs, incomplete coverage, or risky suggested wording before editing or reporting; `NEEDS_CONTEXT` means provide the missing diff, changed behavior, schema, command output, doc family, or source artifact and re-dispatch; `BLOCKED` means narrow the doc family, defer broad edits, choose a safer recommendation-only path, or escalate to the user.
-
-If subagents are unavailable, perform the same checks sequentially with a narrower context budget.
+If subagents are unavailable, run the same checks sequentially with a narrower context budget.
 
 ## Guardrails
 

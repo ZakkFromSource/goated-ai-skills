@@ -123,16 +123,11 @@ For tiny one-off tasks, a one-sentence note is enough. For explicit overrides, n
 
 ## Delegation
 
-The main agent owns routing, instruction precedence, user communication, and final judgment.
+Main owns routing, instruction precedence, user communication, and final judgment.
 
-Use subagents only for bounded evidence gathering that helps choose a route, such as:
+Delegate only bounded route evidence: applicable agent instructions, installed GOATED skill locations, one docs/standards artifact, or whether the request is tiny or standards-sensitive.
 
-- checking which agent instructions apply in a target project;
-- finding whether GOATED skills are installed and where;
-- summarizing a specific docs or standards artifact;
-- reviewing whether a request qualifies as tiny or standards-sensitive.
-
-Require subagents to return paths inspected, commands run, assumptions, uncertainty, and a routing recommendation. If subagents are unavailable, perform the same scan sequentially with a smaller context budget.
+Require paths inspected, commands run, assumptions, uncertainty, and a routing recommendation. If subagents are unavailable, run the same scan sequentially with a smaller context budget.
 
 ## Adapter Notes
 

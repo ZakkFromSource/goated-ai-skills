@@ -132,27 +132,15 @@ For a very small direct command, a one-line summary is acceptable only when it s
 
 ## Delegation
 
-The main agent owns the final claim, evidence standard, risk judgment, and user communication.
+Main owns the final claim, evidence standard, risk judgment, and user communication.
 
-When subagents are available, use them for bounded verification passes, such as:
+Delegate only bounded verification passes: run a focused command separately, inspect a diff/artifact/screenshot/docs surface, test claim-to-evidence strength, pressure-test skipped or stale evidence, or review the verification summary for unsupported wording.
 
-- running a focused command in a separate environment;
-- inspecting a diff, artifact, screenshot, or documentation surface;
-- checking whether a claim-to-evidence match is strong enough;
-- pressure-testing whether skipped checks or stale evidence were overclaimed;
-- reviewing the verification summary for unsupported wording.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths/artifacts/screenshots/diffs/commands inspected; fresh evidence and applicability; assumptions, skipped checks, known failures, residual risk, confidence; and recommendation about the claim, not an unsupervised final claim.
 
-Require delegated verification results to include:
+Status handling: `DONE` integrates evidence after sanity-checking important proof; `DONE_WITH_CONCERNS` requires concern review before any success claim; `NEEDS_CONTEXT` gets missing scope, artifact, command, or expected behavior before re-dispatch or local verification; `BLOCKED` narrows the claim, chooses safer proof, reports residual risk, or hands off.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths, artifacts, screenshots, diffs, or commands inspected;
-- fresh evidence gathered and when it applies;
-- assumptions, skipped checks, known failures, residual risk, and confidence;
-- recommendation about the claim, not an unsupervised final claim.
-
-Handle delegated status this way: `DONE` means integrate the evidence after sanity-checking important proof; `DONE_WITH_CONCERNS` means inspect the concerns before making any success claim; `NEEDS_CONTEXT` means provide the missing scope, artifact, command, or expected behavior and re-dispatch or verify locally; `BLOCKED` means narrow the claim, choose a safer proof path, report residual risk, or hand off.
-
-If subagents are unavailable, perform the same verification sequentially with a narrower context budget.
+If subagents are unavailable, run the same verification sequentially with a narrower context budget.
 
 ## Guardrails
 

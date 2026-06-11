@@ -141,27 +141,15 @@ For local plan files, include the same sections in the file and summarize the pl
 
 ## Delegation
 
-The main agent owns the planning target, artifact policy, execution route, final plan quality, and user communication.
+Main owns the planning target, artifact policy, execution route, final plan quality, and user communication.
 
-When subagents are available, use them for bounded evidence or review passes, such as:
+Delegate only bounded evidence or review passes: find edit paths/interfaces/test surfaces/commands for one area, check acceptance coverage, review placeholders/stale assumptions/unsafe commands/missing evidence, identify docs/standards/security/verification closeout surfaces, or stress-test direct execution vs `tdd` vs delegated development.
 
-- finding likely edit paths, public interfaces, test surfaces, or commands for one source area;
-- checking whether a proposed plan covers all acceptance criteria;
-- reviewing a plan for placeholders, stale assumptions, unsafe commands, or missing evidence;
-- identifying documentation, standards, security, or verification surfaces for closeout;
-- stress-testing whether work should route to direct execution, `tdd`, or delegated development.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths/docs/commands/tests/schemas/artifacts inspected; exact and skipped evidence with reasons; assumptions, residual risk, confidence; and recommended plan changes, not final publication.
 
-Require delegated planning results to include:
+Status handling: `DONE` integrates evidence into the plan; `DONE_WITH_CONCERNS` requires concern review before execution; `NEEDS_CONTEXT` gets missing artifact, scope, source path, command, or user decision before re-dispatch or local verification; `BLOCKED` narrows the plan, routes to clarification, or stops before implementation.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths, docs, commands, tests, schemas, or artifacts inspected;
-- exact evidence found and skipped evidence with reasons;
-- assumptions, residual risk, and confidence;
-- recommended plan changes, not unsupervised final publication.
-
-Handle delegated status this way: `DONE` means integrate evidence into the plan; `DONE_WITH_CONCERNS` means inspect concerns before execution; `NEEDS_CONTEXT` means provide the missing artifact, scope, source path, command, or user decision and re-dispatch or verify locally; `BLOCKED` means narrow the plan, route to clarification, or stop before implementation.
-
-If subagents are unavailable, perform the same checks sequentially with a smaller context budget.
+If subagents are unavailable, run the same checks sequentially with a narrower context budget.
 
 ## Guardrails
 

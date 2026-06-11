@@ -139,29 +139,15 @@ If test infrastructure is weak or missing, report:
 
 ## Delegation
 
-The main agent owns behavior selection, public-interface judgment, scope control, final implementation, and user communication.
+Main owns behavior selection, public-interface judgment, scope control, final implementation, and user communication.
 
-When subagents are available, use them only for bounded work that can return evidence, such as:
+Delegate only bounded evidence-producing work: find the nearest public interface/test convention/fixture/command, identify related tests, check proposed tests for internal coupling, implement one owned production slice after the failing test is defined, run disjoint verification, or review spec/standards/security concerns.
 
-- finding the nearest public interface, test convention, fixture pattern, or command;
-- identifying existing tests that describe related behavior;
-- checking whether a proposed test is coupled to internals;
-- implementing a clearly owned production slice after the failing test is already defined;
-- running verification on a disjoint platform or test command;
-- reviewing the final change for spec coverage, standards, or security concerns.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected or changed; commands run or skipped; behavior and public interface under test; red or green evidence when relevant; assumptions, residual risk, and confidence.
 
-Require every subagent result to include:
+Status handling: `DONE` integrates evidence and continues the TDD cycle; `DONE_WITH_CONCERNS` requires concern review before trusting implementation/test/review, then fix, re-dispatch, or report risk; `NEEDS_CONTEXT` gets missing behavior, public interface, fixture, command, or spec detail before re-dispatch; `BLOCKED` narrows the slice, chooses a safer proof path, changes model/tooling, or escalates before continuing.
 
-- `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`;
-- paths inspected or changed;
-- commands run or deliberately skipped;
-- behavior and public interface under test;
-- red or green evidence when relevant;
-- assumptions, residual risk, and confidence.
-
-Handle delegated status this way: `DONE` means integrate the evidence and continue the TDD cycle; `DONE_WITH_CONCERNS` means inspect concerns before trusting the implementation, test, or review result, then fix, re-dispatch, or report residual risk; `NEEDS_CONTEXT` means provide the missing behavior, public interface, fixture, command, or spec detail and re-dispatch; `BLOCKED` means narrow the slice, choose a safer proof path, use a more capable model or tool, or escalate to the user before continuing.
-
-If subagents are unavailable, perform the same work sequentially with a narrower context budget.
+If subagents are unavailable, run the same work sequentially with a narrower context budget.
 
 ## Guardrails
 

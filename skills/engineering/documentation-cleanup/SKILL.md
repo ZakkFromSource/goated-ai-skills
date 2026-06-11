@@ -115,21 +115,15 @@ When no cleanup is needed, say that clearly and still list the evidence inspecte
 
 ## Delegation
 
-The main agent owns scope, source-of-truth judgment, final cleanup recommendations, file edits, approval gates, and user communication.
+Main owns scope, source-of-truth judgment, cleanup recommendations, file edits, approval gates, and user communication.
 
-When subagents are available, use them only for bounded independent passes, such as:
+Delegate only bounded independent passes: inventory one docs tree/family, check duplicate guidance in one source family, review one `docs/agents/` set, check private/local leakage risk, or verify edited links/headings/source-of-truth consistency.
 
-- inventorying one docs tree or doc family;
-- checking duplicate guidance in one source family;
-- reviewing one `docs/agents/` set for future-agent readability;
-- checking private/local leakage risk;
-- verifying edited links, headings, and source-of-truth consistency.
+Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run; findings, assumptions, confidence, skipped areas, and recommended actions. Subagents suggest cleanup; they do not decide deletion, broad moves, or publication.
 
-Require delegated results to include `Status` (`DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`), paths inspected, commands run, findings, assumptions, confidence, skipped areas, and recommended actions. Subagents suggest cleanup; they do not decide deletion, broad moves, or final publication.
+Status handling: `DONE` integrates findings; `DONE_WITH_CONCERNS` requires concern review before editing/reporting; `NEEDS_CONTEXT` gets missing scope, convention, source document, or approval before useful re-dispatch; `BLOCKED` narrows scope, switches to report-only output, or asks the user.
 
-Handle delegated status this way: `DONE` means integrate the findings; `DONE_WITH_CONCERNS` means inspect the concern before editing or reporting; `NEEDS_CONTEXT` means provide the missing scope, project convention, source document, or approval and re-dispatch if useful; `BLOCKED` means narrow the scope, switch to report-only output, or ask the user for a decision.
-
-If subagents are unavailable, perform the same checks sequentially with a narrower context budget.
+If subagents are unavailable, run the same checks sequentially with a narrower context budget.
 
 ## Guardrails
 

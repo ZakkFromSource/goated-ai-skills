@@ -128,17 +128,11 @@ When one critical question must be answered first, return:
 
 ## Delegation
 
-The main agent owns mode selection, prompt type classification, final prompt quality, privacy judgment, and user communication.
+Main owns mode selection, prompt type classification, final prompt quality, privacy judgment, and user communication.
 
-When subagents are available, use them only for bounded prompt-improvement support, such as:
+Delegate only bounded prompt-improvement support: context sufficiency for one domain/code area, alternate structures, checklist review, privacy/stale-tool/success-criteria gaps, or pressure scenarios.
 
-- checking whether a prompt has enough context for one domain or code area;
-- generating alternate prompt structures for the same raw request;
-- reviewing the optimized prompt against the checklist;
-- identifying privacy risks, stale tool assumptions, or missing success criteria;
-- drafting pressure scenarios for reusable prompt evaluation.
-
-Require delegated results to include inspected inputs, prompt type recommendation, assumptions, privacy concerns, missing context, suggested changes, and confidence. If subagents are unavailable, perform the same checks directly with a smaller context budget.
+Require inspected inputs, prompt type recommendation, assumptions, privacy concerns, missing context, suggested changes, and confidence. If subagents are unavailable, run the same checks directly with a smaller context budget.
 
 ## Guardrails
 
