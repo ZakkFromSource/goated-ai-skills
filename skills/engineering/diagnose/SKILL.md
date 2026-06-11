@@ -171,7 +171,6 @@ If subagents are unavailable, perform the same steps sequentially with a narrowe
 
 ## References
 
-- [Root-Cause Tracing](references/root-cause-tracing.md) - read when the visible symptom appears downstream from the bad value, event, state, caller, or timing condition that caused it.
-- [Condition-Based Waiting](references/condition-based-waiting.md) - read when diagnosing flakes, async behavior, timing races, retries, readiness, polling, or arbitrary sleeps.
+Workflow-gated support files: [Root-Cause Tracing](references/root-cause-tracing.md), [Condition-Based Waiting](references/condition-based-waiting.md), and [Pressure Scenarios](references/pressure-scenarios.md).
+
 - [Defense In Depth](references/defense-in-depth.md) - read after root cause is proven and the likely fix needs layered prevention, containment, detection, or recovery; route implementation through `tdd`.
-- [Pressure Scenarios](references/pressure-scenarios.md) - read when urgency, fatigue, authority, repeated failed fixes, or "quick fix" pressure could weaken the diagnosis discipline.

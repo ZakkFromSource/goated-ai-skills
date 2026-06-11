@@ -73,7 +73,7 @@ Human-facing docs come first. AI-facing guides are separate artifacts used only 
    - Record location assumptions instead of presenting defaults as universal rules.
 
 4. Shape the doc for the audience:
-   - Read [Manual Patterns And QA](references/manual-patterns-and-qa.md) when choosing a doc type, AI-facing guide shape, or QA checklist.
+   - Read [Manual Patterns And QA](references/manual-patterns-and-qa.md) when choosing a doc type, shaping an AI-facing guide, or running doc QA before closeout.
    - Keep human docs task-oriented, readable, and audience-specific.
    - Keep AI-facing guides separate from human manuals by default. They should help agents load the right facts quickly, not replace human docs or become the only source of product behavior.
    - Prefer concise sections, examples, commands, warnings, and next reads that match the audience's real task.
@@ -158,4 +158,4 @@ If subagents are unavailable, perform the same checks sequentially with a narrow
 
 ## References
 
-- [Manual Patterns And QA](references/manual-patterns-and-qa.md) - read when selecting doc type patterns, deciding whether to create an AI-facing guide, or checking manual quality before closeout.
+Linked support file, read at the workflow gate above: [Manual Patterns And QA](references/manual-patterns-and-qa.md).

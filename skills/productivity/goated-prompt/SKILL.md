@@ -154,7 +154,4 @@ Require delegated results to include inspected inputs, prompt type recommendatio
 
 ## References
 
-- [Prompt Type Router](references/prompt-type-router.md) - read when classifying a raw request or resolving mixed prompt types.
-- [IDK Glossary](references/idk-glossary.md) - read when choosing precise action verbs and coding-object nouns.
-- [Prompt Templates](references/prompt-templates.md) - read when building the final prompt structure.
-- [Prompt Review Checklist](references/prompt-review-checklist.md) - read before delivering non-trivial, GOATED-aware, sensitive, or reusable prompts.
+Linked support files, read at the workflow gates above: [Prompt Type Router](references/prompt-type-router.md), [IDK Glossary](references/idk-glossary.md), [Prompt Templates](references/prompt-templates.md), and [Prompt Review Checklist](references/prompt-review-checklist.md).

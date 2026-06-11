@@ -98,7 +98,7 @@ This skill keeps durable issues concise. Issues, PRDs, tickets, and roadmap note
    - Keep steps ordered so each one produces evidence needed by the next.
 
 6. Review the plan before execution:
-   - Read [Plan Review Checklist](references/plan-review-checklist.md) for non-trivial, risky, delegated, or resumable plans.
+   - Read [Plan Review Checklist](references/plan-review-checklist.md) for non-trivial, risky, delegated, resumable, or local-file plans.
    - Check that every acceptance criterion has a planned proof path.
    - Remove placeholders, vague verbs, stale assumptions, and broad "do the rest" language.
    - Make the plan no more detailed than the work needs. Tiny tasks can use a short inline checklist.
@@ -182,4 +182,4 @@ If subagents are unavailable, perform the same checks sequentially with a smalle
 
 ## References
 
-- [Plan Review Checklist](references/plan-review-checklist.md) - read before executing non-trivial, risky, delegated, resumable, or local-file plans.
+Linked support file, read at the workflow gate above: [Plan Review Checklist](references/plan-review-checklist.md).

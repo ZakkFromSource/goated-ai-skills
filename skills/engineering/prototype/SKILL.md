@@ -184,5 +184,4 @@ If subagents are unavailable, perform the same work sequentially with a narrower
 
 ## References
 
-- [Logic Prototype](references/logic-prototype.md) - read after choosing the logic/state/data/API branch, before deciding whether to build a full-frame terminal interaction, script, fixture harness, or isolated module.
-- [UI Prototype](references/ui-prototype.md) - read after choosing the UI/look/layout branch, before deciding whether to use an existing route or host, variants, switching control, production gate, or throwaway surface.
+Linked support files, read at the branch gates above: [Logic Prototype](references/logic-prototype.md) and [UI Prototype](references/ui-prototype.md).

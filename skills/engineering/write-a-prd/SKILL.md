@@ -99,7 +99,7 @@ Use this skill when the next useful artifact is a PRD that can feed `prd-to-issu
 
 ## Output Contract
 
-Use [PRD Template](./references/prd-template.md) when writing the default Markdown PRD artifact.
+Use [PRD Template](./references/prd-template.md) for the default Markdown PRD artifact shape.
 
 The PRD must include problem, audience, goals, non-goals, requirements, acceptance criteria, implementation notes, testing and verification, risks, open questions, and source evidence. Keep requirements product-focused, mark unverifiable assumptions, and avoid turning the PRD into issue slices or an implementation transcript.
 
@@ -147,4 +147,4 @@ If subagents are unavailable, perform the same evidence gathering sequentially w
 
 ## References
 
-- [PRD Template](./references/prd-template.md) - read when writing the default Markdown PRD artifact or checking that an existing PRD has the expected section shape.
+- [PRD Template](./references/prd-template.md) - also use when checking an existing PRD's section shape.

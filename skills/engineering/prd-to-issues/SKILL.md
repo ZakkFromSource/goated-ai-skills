@@ -133,7 +133,7 @@ Use this skill after a PRD is ready for breakdown. Each issue should be a balanc
 
 ## Output Contract
 
-Use [Issue Breakdown Templates](./references/issue-breakdown-templates.md) when preparing approval, issue-file, order-file, or final-report shapes.
+Use local templates for approval, issue, order-file, and report shapes.
 
 Before writing files, present a dependency-ordered approval breakdown with:
 

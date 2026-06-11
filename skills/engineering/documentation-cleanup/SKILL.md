@@ -145,6 +145,4 @@ If subagents are unavailable, perform the same checks sequentially with a narrow
 
 ## References
 
-- [Doc Role Taxonomy](references/doc-role-taxonomy.md) - read when classifying docs, source-of-truth ownership, or lifecycle.
-- [Cleanup Audit Checklist](references/cleanup-audit-checklist.md) - read before auditing stale, duplicated, bloated, orphaned, or risky docs.
-- [Cleanup Report Template](references/cleanup-report-template.md) - use for audit, plan, and implementation reports.
+Linked support files, read or use at the workflow/output gates above: [Doc Role Taxonomy](references/doc-role-taxonomy.md), [Cleanup Audit Checklist](references/cleanup-audit-checklist.md), and [Cleanup Report Template](references/cleanup-report-template.md).

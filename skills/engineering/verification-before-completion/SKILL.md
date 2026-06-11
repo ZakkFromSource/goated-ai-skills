@@ -170,4 +170,4 @@ If subagents are unavailable, perform the same verification sequentially with a 
 
 ## References
 
-- [Evidence Map](references/evidence-map.md) - read when matching claims to proof, using non-command evidence, handling delegated evidence, or countering shortcut rationalizations.
+Linked support file, read at the workflow gate above: [Evidence Map](references/evidence-map.md).

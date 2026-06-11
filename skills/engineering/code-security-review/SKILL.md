@@ -182,7 +182,7 @@ If subagents are unavailable, perform the same work sequentially with a narrower
 
 This skill is self-contained after installation. The local checklist is packaged with the skill; external references are optional lookup aids, not runtime dependencies.
 
-- [Security Review Checklist](references/security-review-checklist.md) - read when a non-trivial review needs coverage guidance for entry points, trust boundaries, assets, sinks, high-risk classes, or severity examples.
+- Local support file, read at the workflow gate above: [Security Review Checklist](references/security-review-checklist.md).
 - [MITRE CWE List](https://cwe.mitre.org/data/index.html) - use for CWE IDs and weakness definitions when an exact CWE label matters.
 - [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/Glossary.html) - use for practical security topic guidance and remediation context.
 - [OWASP Top Ten](https://owasp.org/www-project-top-ten/) - use for broad web-application risk categories when they clarify a finding.

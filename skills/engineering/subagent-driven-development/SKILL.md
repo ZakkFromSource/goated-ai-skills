@@ -83,7 +83,7 @@ Keep the GOATED quality bar visible during delegation: prefer vertical behavior 
 5. Review each task before moving on:
    - Run **spec review** first: compare the actual changed files to the requested task, acceptance criteria, and planned scope. Missing requirements and unrequested behavior must be resolved before quality review.
    - Run **quality review** second: inspect maintainability, behavior proof, tests through public interfaces, deep-module fit, integration risk, and local standards.
-   - Use [Reviewer Prompt](references/reviewer-prompt.md) for both review modes, or perform the same review sequentially when subagents are unavailable.
+   - Use [Reviewer Prompt](references/reviewer-prompt.md) for spec, quality, and final review modes, or perform the same review sequentially when subagents are unavailable.
    - If a reviewer finds blocking issues, send a focused fix request to the implementer or fix sequentially, then re-review the affected mode.
 
 6. Handle reviewer status:
@@ -150,5 +150,4 @@ If subagents are unavailable, perform the same work sequentially with a narrower
 
 ## References
 
-- [Implementer Prompt](references/implementer-prompt.md) - use before dispatching a fresh implementer for a scoped task.
-- [Reviewer Prompt](references/reviewer-prompt.md) - use for spec, quality, and final review modes.
+Linked support files, use at the workflow gates above: [Implementer Prompt](references/implementer-prompt.md) and [Reviewer Prompt](references/reviewer-prompt.md).

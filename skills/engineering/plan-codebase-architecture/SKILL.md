@@ -89,7 +89,7 @@ Use project terms for concrete names. Keep these hot-path terms inline because t
    - Assign data/state ownership and describe cross-module flow.
    - Classify dependencies as in-process, local-substitutable, remote-owned, true external, or unknown.
    - Introduce ports/adapters only where there is a real seam or dependency category justifies variation.
-   - Read [Architecture Blueprint Patterns](references/architecture-blueprint-patterns.md) when choosing blueprint vocabulary, dependency strategy, test surfaces, or artifact shape.
+   - Read [Architecture Blueprint Patterns](references/architecture-blueprint-patterns.md) when choosing blueprint mode, module/interface shape, dependency or seam strategy, test surfaces, overdesign checks, or artifact shape.
 
 5. Check against overdesign and underdesign:
    - Reject architecture that creates interfaces only because future variation might happen.
@@ -195,4 +195,4 @@ If subagents are unavailable, perform the same passes sequentially with a narrow
 
 ## References
 
-Read [Architecture Blueprint Patterns](references/architecture-blueprint-patterns.md) when selecting blueprint mode, planning modules and interfaces, classifying dependencies, applying seam discipline, planning test surfaces, checking overdesign, or shaping durable artifacts.
+Linked support file, read at the workflow gate above: [Architecture Blueprint Patterns](references/architecture-blueprint-patterns.md).

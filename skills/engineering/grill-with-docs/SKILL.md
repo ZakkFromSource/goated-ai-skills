@@ -184,6 +184,4 @@ If subagents are unavailable, perform the same evidence gathering sequentially w
 
 This skill is self-contained after installation.
 
-Read [references/context-docs.md](references/context-docs.md) when project language, glossary/context docs, `CONTEXT.md`, `CONTEXT-MAP.md`, ownership, boundaries, or cross-context meaning affects the grill.
-
-Read [references/adr-capture.md](references/adr-capture.md) when a settled decision may be hard to reverse, surprising without context, and the result of a real tradeoff.
+Linked support files, read at the workflow gates above: [references/context-docs.md](references/context-docs.md) and [references/adr-capture.md](references/adr-capture.md).

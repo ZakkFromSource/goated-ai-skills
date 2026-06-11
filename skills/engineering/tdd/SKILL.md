@@ -212,8 +212,4 @@ One test, one implementation, repeat. Each test responds to what you learned fro
 
 ## References
 
-- [Test Design](references/test-design.md) - read when choosing test scope, naming behavior tests, or avoiding implementation-detail tests.
-- [Mocking And Seams](references/mocking-and-seams.md) - read before mocking dependencies, adding test doubles, or designing injection points.
-- [Deep Modules](references/deep-modules.md) - read when public interfaces feel shallow, wide, leaky, or hard to test.
-- [Refactor After Green](references/refactor-after-green.md) - read after tests pass and before non-trivial cleanup or module deepening.
-- [Testing Anti-Patterns](references/testing-anti-patterns.md) - read when rationalizing skipped RED proof, post-hoc tests, test rewrites, over-mocking, or completion without matching evidence.
+Linked support files, read at the workflow gates above: [Test Design](references/test-design.md), [Mocking And Seams](references/mocking-and-seams.md), [Deep Modules](references/deep-modules.md), [Refactor After Green](references/refactor-after-green.md), and [Testing Anti-Patterns](references/testing-anti-patterns.md).

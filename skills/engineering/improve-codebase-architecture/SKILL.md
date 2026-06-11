@@ -83,7 +83,7 @@ Use target-project names for concrete modules and flows. Keep these review terms
    - Look for hard-to-test areas: noisy setup, internal patching, private-state assertions, call-order tests, dependency construction hidden too deep, or tests coupled to implementation details.
    - Look for false seams: ports/adapters with only one real implementation, interfaces added only for tests, or seams that leak internal ordering and configuration back to callers.
    - Look for dependency shapes that block deepening: in-process logic, local-substitutable dependencies, remote-owned services, and true external services.
-   - Read [Deepening Interface Patterns](references/deepening-interface-patterns.md) when using review vocabulary, classifying dependency/seam shape, comparing interface alternatives, or applying report tags.
+   - Read [Deepening Interface Patterns](references/deepening-interface-patterns.md) when using review vocabulary, classifying dependency/seam shape, moving tests to an interface, comparing alternatives, or applying report tags.
 
 4. Rank opportunities:
    - Prefer candidates with strong source evidence, repeated pain across callers/tests, meaningful public-interface leverage, and a small next slice.
@@ -186,4 +186,4 @@ If subagents are unavailable, perform the same passes sequentially with a narrow
 
 ## References
 
-Read [Deepening Interface Patterns](references/deepening-interface-patterns.md) when classifying dependency categories, applying seam discipline, deciding how tests should move to an interface, comparing interface alternatives, or using report tags and diagrams.
+Linked support file, read at the workflow gate above: [Deepening Interface Patterns](references/deepening-interface-patterns.md).

@@ -180,4 +180,4 @@ If subagents are unavailable, perform the same checks sequentially with a narrow
 
 ## References
 
-- [External Docs Lookup Notes](references/external-docs-lookup-notes.md) - read when external documentation materially informs target-project work and may need concise, dated, attributed capture.
+Linked support file, read at the workflow gate above: [External Docs Lookup Notes](references/external-docs-lookup-notes.md).

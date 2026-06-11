@@ -114,7 +114,7 @@ This skill is read-only. It prepares a shell-ready `git add -- ... && git commit
 
 ## Output Contract
 
-Return copy-pasteable commands as the primary output. For staged-only or multi-group variants, read [Commit Output Variants](./references/commit-output-variants.md).
+Return copy-pasteable commands first; use local variants when the default command shape does not fit.
 
 For a single clear unstaged, untracked, deleted, or all-dirty commit, start with one combined command block:
 

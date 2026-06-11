@@ -167,6 +167,4 @@ If subagents are unavailable, perform the same passes sequentially with a narrow
 
 ## References
 
-- [Source Package Audit](./references/source-package-audit.md) - read in port mode before judging any source folder, repo slice, public package, or entrypoint with adjacent support files.
-- [Skill Evaluation](./references/skill-evaluation.md) - read before trusting a new, substantially changed, or discipline-heavy skill.
-- [Proposal And Report Templates](./references/proposal-and-report-templates.md) - read when producing a skill creator proposal, portability review, or edit report.
+Linked support files, read or use at the workflow/output gates above: [Source Package Audit](./references/source-package-audit.md), [Skill Evaluation](./references/skill-evaluation.md), and [Proposal And Report Templates](./references/proposal-and-report-templates.md).

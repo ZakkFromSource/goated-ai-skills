@@ -209,4 +209,4 @@ If subagents are unavailable, perform the same scans sequentially with a narrowe
 
 ## References
 
-Read [references/diagram-patterns.md](references/diagram-patterns.md) when selecting Mermaid syntax, legends, source-reference styles, uncertainty markers, or optional visual formats.
+Linked support file, read at the workflow gate above: [references/diagram-patterns.md](references/diagram-patterns.md).
