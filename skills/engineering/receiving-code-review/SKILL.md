@@ -32,6 +32,7 @@ Soft:
 - grill-with-docs when feedback exposes unclear intent, scope, language, tradeoffs, or public behavior
 - writing-plans when accepted feedback is non-trivial, multi-step, risky, or needs a route before edits
 - tdd when accepted feedback changes behavior, public interfaces, regressions, or testable workflows
+- code-refinement when accepted feedback is scoped cleanup, simplification, or behavior-preserving refactor work
 - standards-and-spec-review when feedback concerns issue fit, acceptance, standards, unrequested scope, or spec interpretation
 - code-security-review when feedback touches trust boundaries, auth, permissions, user data, persistence, execution, secrets, or security config
 - subagent-driven-development when large or parallelizable feedback needs delegated implementation or review
@@ -71,6 +72,7 @@ Fallback: If companion skills, review tools, git history, tests, docs, or subage
    - Use `code-security-review` for exploitable risk, trust boundaries, auth, permissions, secrets, user data, persistence, unsafe execution, or security-sensitive config.
    - Use `standards-and-spec-review` when the question is whether the implementation fits the issue, acceptance criteria, project standards, or allowed scope.
    - Use `tdd` when the fix changes observable behavior, a public interface, or a regression-prone workflow that should have behavior proof.
+   - Use `code-refinement` when the accepted item is scoped cleanup, simplification, or refactoring that should preserve behavior.
    - Use `writing-plans` before broad, risky, or multi-step feedback implementation.
    - Use `subagent-driven-development` when independent accepted items can be delegated with clear write ownership and review evidence.
    - Use `doc-sync` when accepted feedback changes docs, public behavior, architecture, standards, configuration, tests, or user-facing workflows.

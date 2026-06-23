@@ -30,6 +30,7 @@ Soft:
 - grill-with-docs for docs-grounded intent, scope, criteria, language, or public behavior
 - framework-agnostic-skill-creator when creating, porting, adapting, sanitizing, or publishing GOATED skills
 - agent-instructions-integrator for target-project routing to installed skills and artifacts
+- code-refinement for scoped post-change cleanup, simplification, or behavior-preserving refactor requests
 - goated-prompt for prompt improvement, reusable prompts, and GOATED-aware request translation
 
 Fallback: If companion skills are unavailable, classify directly, obey user/project instructions, keep reads narrow, and state lower confidence.

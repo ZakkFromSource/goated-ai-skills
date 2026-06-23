@@ -136,6 +136,7 @@ The skill must be language/framework-agnostic, scoped to known/current changes b
 - Added `skills/engineering/code-refinement/SKILL.md` with lean frontmatter, scoped post-change refinement workflow, proof gate, proposal fallback, delegation, output contract, companion routes, and guardrails.
 - Added `skills/engineering/code-refinement/references/refinement-patterns.md` with language/framework-agnostic refinement patterns, anti-patterns, and Python/HTML/CSS examples.
 - Updated `README.md`, `docs/how-to-use.md`, `skills/engineering/README.md`, and `skills/agent-workflows/using-goated-ai-skills/SKILL.md` to catalog and route `code-refinement`.
+- Updated relevant installed-skill routing and soft dependency sections so `code-refinement` appears in planning, TDD, delegated development, review feedback, standards/spec review, architecture-improvement review, verification, and the main GOATED router where scoped behavior-preserving cleanup fits.
 - `uv run python scripts/validate_skills.py` passed: 31 implemented skills checked, 0 human-review notes, 0 report-only docs/example schema drift.
 - `git diff --check` passed with line-ending warnings only.
 - Targeted `rg` checks found expected `code-refinement` routing/catalog references and no copied `code-simplifier`, Claude-only metadata, model-specific tool fields, or high-confidence private local path leaks in the changed public surfaces.

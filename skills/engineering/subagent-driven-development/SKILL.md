@@ -33,6 +33,7 @@ Soft:
 - prototype when risky implementation choices need disposable evidence before delegation
 - plan-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
 - tdd when delegated work changes behavior, public interfaces, regressions, or testable workflows
+- code-refinement after delegated implementation when the integrated diff needs scoped behavior-preserving cleanup before review gates
 - standards-and-spec-review for spec fit, acceptance coverage, and project standards after delegated work
 - code-security-review when delegated work touches trust boundaries, auth, permissions, user data, persistence, execution, or unsafe config
 - doc-sync after delegated behavior, interface, architecture, standard, config, test, or doc changes
@@ -84,7 +85,7 @@ Fallback: If subagents, companion skills, commands, or review tools are unavaila
 
 8. Run final review and closeout:
    - After all task-level reviews pass or residual risks are accepted, run a **final review** over the combined change for issue fit, standards, integration, docs, and security-sensitive paths when relevant.
-   - Use `standards-and-spec-review`, `code-security-review`, and `doc-sync` according to the change surface.
+   - Use `code-refinement`, `standards-and-spec-review`, `code-security-review`, and `doc-sync` according to the change surface.
    - Use `verification-before-completion` before claiming delegated work is complete, correct, passing, review-ready, documentation-synced, or ready for lifecycle movement.
 
 ## Output Contract

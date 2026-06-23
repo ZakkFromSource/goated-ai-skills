@@ -31,6 +31,7 @@ Hard: None.
 
 Soft:
 - tdd when missing proof is behavior, regression, red/green, or test-surface evidence
+- code-refinement when a review-ready or closeout claim depends on scoped behavior-preserving cleanup of recently changed code
 - standards-and-spec-review when completion depends on issue fit, acceptance, or standards
 - code-security-review when completion depends on security-relevant behavior, trust boundaries, auth, user data, persistence, execution, or unsafe config
 - doc-sync when behavior, interfaces, docs, standards, configuration, or tests may drift
@@ -82,6 +83,7 @@ Fallback: If companion skills, commands, tools, artifacts, or runtime access are
 
 7. Route missing proof:
    - Use `tdd` when behavior or regression proof is missing and a testable implementation path exists.
+   - Use `code-refinement` when recently changed code needs scoped cleanup before a review-ready or closeout claim and behavior should not change.
    - Use `standards-and-spec-review` when issue fit, acceptance coverage, standards, or unrequested scope is unclear.
    - Use `code-security-review` when the claim touches trust boundaries, auth, permissions, user data, persistence, unsafe execution, or security-sensitive configuration.
    - Use `doc-sync` when changed behavior or docs may have drifted.

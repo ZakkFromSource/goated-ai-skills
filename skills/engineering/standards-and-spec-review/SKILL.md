@@ -34,6 +34,7 @@ Soft:
 - session-start-progressive-disclosure for unfamiliar target projects
 - project-standards-calibration when docs/agents/project-standards.md is missing, stale, or standards need durable capture
 - tdd when implemented behavior should have test evidence
+- code-refinement when findings call for scoped behavior-preserving cleanup or simplification
 - code-security-review when trust boundaries, user data, auth, persistence, execution, or unsafe config may be affected
 - doc-sync after this review when behavior, standards, specs, public interfaces, or docs may have drifted
 - verification-before-completion before complete/clean/closeout-ready review claims
@@ -80,6 +81,7 @@ Fallback: If companion skills, git history, standards, or source spec are unavai
 
 7. Recommend the next step:
    - Recommend implementation fixes when findings exist.
+   - Recommend `code-refinement` when findings are scoped behavior-preserving cleanup, simplification, or local refactor issues.
    - Recommend `code-security-review` when the change may touch security-relevant behavior.
    - Recommend `doc-sync` when docs or durable artifacts may need updates.
    - Recommend commit-message or handoff only after review findings and required follow-up are addressed or intentionally accepted.
@@ -122,7 +124,7 @@ Return a compact review shaped like this:
 
 ## Next Step
 
-- <implementation fixes, code-security-review, doc-sync, commit-message, handoff, or none>
+- <implementation fixes, code-refinement, code-security-review, doc-sync, commit-message, handoff, or none>
 ```
 
 If there are no findings on either axis, still include the review scope, explicit no-findings statements, assumptions or residual risk, and the next recommended workflow.
