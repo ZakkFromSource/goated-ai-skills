@@ -98,14 +98,15 @@ flowchart LR
   G --> H["writing-plans"]
   H --> I["subagent-driven-development optional"]
   I --> J["tdd"]
-  J --> K["standards-and-spec-review"]
-  K --> L["code-security-review"]
-  L --> M["documentation-writer optional"]
-  M --> N["documentation-cleanup optional"]
-  N --> O["doc-sync"]
-  O --> P["verification-before-completion"]
-  P --> Q["commit-message"]
-  Q --> R["handoff optional"]
+  J --> K["code-refinement optional"]
+  K --> L["standards-and-spec-review"]
+  L --> M["code-security-review"]
+  M --> N["documentation-writer optional"]
+  N --> O["documentation-cleanup optional"]
+  O --> P["doc-sync"]
+  P --> Q["verification-before-completion"]
+  Q --> R["commit-message"]
+  R --> S["handoff optional"]
 ```
 
 Typical flow:
@@ -118,10 +119,11 @@ Typical flow:
 6. Use `writing-plans` immediately before implementation to produce exact steps, evidence, stop conditions, and review gates.
 7. Use `subagent-driven-development` for larger or riskier work when bounded implementer and reviewer agents are available.
 8. Use `tdd` for behavior changes, bug fixes, public interfaces, and regression coverage.
-9. Use `documentation-writer` when planned durable docs are part of the work. Use `documentation-cleanup` when the docs tree, root routing docs, progress/status docs, or agent-facing docs need broader hygiene.
-10. Use `doc-sync` when changed behavior or docs may have made other docs stale.
-11. Use `standards-and-spec-review`, `code-security-review`, `doc-sync`, and `verification-before-completion` before making strong completion claims.
-12. Use `commit-message` and optional `handoff` for closeout.
+9. Use `code-refinement` as an optional closeout pass for non-trivial code changes when recently changed code should be simplified without behavior changes.
+10. Use `documentation-writer` when planned durable docs are part of the work. Use `documentation-cleanup` when the docs tree, root routing docs, progress/status docs, or agent-facing docs need broader hygiene.
+11. Use `doc-sync` when changed behavior or docs may have made other docs stale.
+12. Use `standards-and-spec-review`, `code-security-review`, `doc-sync`, and `verification-before-completion` before making strong completion claims.
+13. Use `commit-message` and optional `handoff` for closeout.
 
 ## Skill Reference
 
@@ -259,6 +261,14 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Typical input**: Observable behavior, public test surface, acceptance criteria, source area, and test command.
 - **Typical output**: Failing test evidence, implementation evidence, refactor notes, and rerun proof.
 - **Pipeline role**: Main implementation discipline for behavior-changing delivery work.
+
+#### `code-refinement`
+
+- **Purpose**: Refines recently changed code after implementation while preserving behavior.
+- **Use when**: A scoped diff, generated code, or agent-written code should be simplified, cleaned up, or made easier to read without broad architecture changes.
+- **Typical input**: Current diff, task-touched files, explicit paths, relevant proof commands, local style evidence, and dirty-worktree constraints.
+- **Typical output**: Refinements made or proposed, behavior-preservation proof, public-interface impact, docs/security follow-up, deferred candidates, and residual risk.
+- **Pipeline role**: Optional post-implementation cleanup pass after `tdd` or implementation and before review gates.
 
 #### `receiving-code-review`
 
@@ -424,6 +434,7 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria, use `write-a-prd` before architecture planning; otherwise skip PRD creation.
 - If architecture shape matters, use `plan-codebase-architecture`; if you only need a descriptive map, use `architecture-design-map`.
 - If behavior changes, route implementation through `tdd`.
+- If recently changed code should be simplified or cleaned up without behavior changes, use `code-refinement` after implementation proof and before review gates.
 - If planned durable documentation is the work, or part of the work, use `documentation-writer`; if docs structure or agent docs are messy, use `documentation-cleanup`; use `doc-sync` for drift checks after behavior or docs change.
 - If a claim sounds like "done", "correct", "passing", "synced", or "ready", use `verification-before-completion` first.
 

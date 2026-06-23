@@ -66,6 +66,7 @@ Fallback: If companion skills are unavailable, classify directly, obey user/proj
    - Approved issue, scoped task, or implementation slice ready for executable steps -> `writing-plans`.
    - Broad implementation or refactor request that is not yet a focused vertical slice -> `prd-to-issues`, `writing-plans`, or `plan-codebase-architecture` before direct execution.
    - Implementation, bug fix, public interface change, or regression coverage -> `tdd`.
+   - Simplify, clean up, or refactor recently changed code while preserving behavior -> `code-refinement` after the scope and proof are clear.
    - Architecture blueprint needed before implementation, especially when deep modules or small public interfaces are at stake -> `plan-codebase-architecture`.
    - Descriptive architecture map, module map, or dependency map -> `architecture-design-map`.
    - Review of a diff, patch, or issue fit -> `standards-and-spec-review`; use `code-security-review` for security-relevant paths.

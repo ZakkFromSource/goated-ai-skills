@@ -39,7 +39,7 @@ GOATED AI Skills helps agents move from "I can edit files and hope it's what you
 - **Progressive disclosure**: load the smallest useful context first, then go deeper only when the task needs it.
 - **Target-project onboarding**: create durable project context, source maps, standards profiles, optional external-doc lookup notes, optional PRDs under `docs/prds/` when product scope, roadmap intent, or acceptance criteria need durable capture, and thin agent instruction adapters.
 - **Delivery workflows**: clarify intent, draft PRDs, break work into issues, plan architecture, prototype ideas, and write implementation plans.
-- **Implementation discipline**: use test-driven development, focused diagnosis, subagent-aware execution, standards review, security review, documentation cleanup, doc sync, and verification before completion claims.
+- **Implementation discipline**: use test-driven development, focused diagnosis, subagent-aware execution, scoped code refinement, standards review, security review, documentation cleanup, doc sync, and verification before completion claims.
 - **Clean continuity**: write commit messages and handoffs that help the next session resume with clarity.
 - **Portable skill design**: keep installed skills self-contained so they do not depend on this repo's root files at runtime.
 
@@ -88,6 +88,7 @@ The V1 public core is complete, and all current public-core skills are portable,
 - [`improve-codebase-architecture`](skills/engineering/improve-codebase-architecture/SKILL.md): find refactor opportunities that make code easier to understand and test.
 - [`prototype`](skills/engineering/prototype/SKILL.md): explore one product, UI, workflow, data, or technical idea with disposable, runnable evidence.
 - [`tdd`](skills/engineering/tdd/SKILL.md): use test-driven development to drive behavior changes through red, green, and refactor.
+- [`code-refinement`](skills/engineering/code-refinement/SKILL.md): refine recently changed code after implementation while preserving behavior and avoiding unrelated churn.
 - [`subagent-driven-development`](skills/engineering/subagent-driven-development/SKILL.md): coordinate bounded implementer and reviewer agents while one main agent owns integration.
 - [`receiving-code-review`](skills/engineering/receiving-code-review/SKILL.md): handle review feedback without blindly accepting or dismissing it.
 - [`standards-and-spec-review`](skills/engineering/standards-and-spec-review/SKILL.md): review changes against project standards and the originating spec as separate axes.
@@ -137,6 +138,7 @@ session-start-progressive-disclosure
 -> writing-plans
 -> subagent-driven-development optional
 -> tdd
+-> code-refinement optional for non-trivial code changes
 -> standards-and-spec-review
 -> code-security-review
 -> documentation-writer optional when planned docs are part of scope
