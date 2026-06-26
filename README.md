@@ -103,6 +103,7 @@ The V1 public core is complete, and all current public-core skills are portable,
 
 - [`goated-prompt`](skills/productivity/goated-prompt/SKILL.md): transform rough requests into GOATED-aware prompts or portable reusable prompts with calibrated context and prompt type.
 - [`grill-me`](skills/productivity/grill-me/SKILL.md): challenge and clarify ideas, plans, choices, and decisions when project docs are not needed.
+- [`learning-capture`](skills/productivity/learning-capture/SKILL.md): capture durable lessons, extract reusable knowledge from provided material, and nurture atomic knowledge notes.
 - [`caveman`](skills/productivity/caveman/SKILL.md): keep replies compact without losing important warnings, uncertainty, or exactness.
 
 ## Typical Routes

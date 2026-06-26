@@ -368,6 +368,14 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Typical output**: Detected mode and prompt type, optimized prompt in a code block, recommended GOATED route or model class, assumptions, and short rationale.
 - **Pipeline role**: Productivity aid for prompt quality and GOATED-aware request translation. It routes to `grill-with-docs`, `write-a-prd`, `writing-plans`, or `framework-agnostic-skill-creator` when those skills should own the next step.
 
+#### `learning-capture`
+
+- **Purpose**: Captures durable, reusable lessons as atomic Markdown notes for human reading and future agent reuse.
+- **Use when**: You want to capture what was learned from a session, extract lessons from provided material, document reusable discoveries, or nurture existing knowledge notes.
+- **Typical input**: Current-session context, user-provided notes or excerpts, destination hints, existing related notes, evidence, and privacy constraints.
+- **Typical output**: Approved candidate lesson cards, Obsidian-compatible Markdown notes when a destination is approved, and a chat audit of created, updated, nurtured, skipped, and blocked candidates.
+- **Pipeline role**: Optional learning closeout and knowledge-note workflow. It writes and nurtures notes, but does not replace broad knowledge-base retrieval, synthesis, or Q&A.
+
 #### `caveman`
 
 - **Purpose**: Keeps replies compact when the user explicitly asks for brief, terse, or caveman-style communication.
