@@ -30,7 +30,7 @@ Soft:
 - grill-with-docs for docs-grounded intent, scope, criteria, language, or public behavior
 - framework-agnostic-skill-creator when creating, porting, adapting, sanitizing, or publishing GOATED skills
 - agent-instructions-integrator for target-project routing to installed skills and artifacts
-- code-refinement for scoped post-change cleanup, simplification, or behavior-preserving refactor requests
+- code-refinement as a default run-or-explicit-skip closeout gate for non-trivial code-producing delivery work, and for explicit cleanup, simplification, or behavior-preserving refactor requests
 - goated-prompt for prompt improvement, reusable prompts, and GOATED-aware request translation
 
 Fallback: If companion skills are unavailable, classify directly, obey user/project instructions, keep reads narrow, and state lower confidence.
@@ -56,7 +56,7 @@ Fallback: If companion skills are unavailable, classify directly, obey user/proj
    - For installation/adaptation, use `session-start-progressive-disclosure` if the environment is unfamiliar, then `agent-instructions-integrator` for project routing or `framework-agnostic-skill-creator` for creating, porting, or adapting skills.
    - For prompt crafting, use `goated-prompt`; let it name companion skill routes when the prompt needs docs-grounded clarification, PRD capture, implementation planning, execution, review, or skill creation.
    - For onboarding, start with `session-start-progressive-disclosure`, then use `grill-with-docs` before durable onboarding decisions; route to `write-a-prd` only when onboarding itself needs project-level product scope, roadmap intent, or acceptance criteria before architecture planning or issue breakdown.
-   - For delivery, start with `session-start-progressive-disclosure`; use `grill-with-docs` when the request is PRD-level, architectural, cross-file, repeated, public-facing, unclear, or standards-sensitive.
+   - For delivery, start with `session-start-progressive-disclosure`; use `grill-with-docs` when the request is PRD-level, architectural, cross-file, repeated, public-facing, unclear, or standards-sensitive. For non-trivial code-producing work, include `code-refinement` as a run-or-explicit-skip gate after implementation proof and before review gates.
    - For tiny one-off tasks, proceed directly with the smallest useful context and skip full onboarding, grilling, or planning ceremony.
    - For explicit overrides, follow the override and record any skipped GOATED step and residual risk.
 
@@ -67,6 +67,7 @@ Fallback: If companion skills are unavailable, classify directly, obey user/proj
    - Approved issue, scoped task, or implementation slice ready for executable steps -> `writing-plans`.
    - Broad implementation or refactor request that is not yet a focused vertical slice -> `prd-to-issues`, `writing-plans`, or `plan-codebase-architecture` before direct execution.
    - Implementation, bug fix, public interface change, or regression coverage -> `tdd`.
+   - Non-trivial code-producing implementation after proof -> `code-refinement` as a run-or-explicit-skip gate before standards/spec review, security review, doc-sync, and final verification.
    - Simplify, clean up, or refactor recently changed code while preserving behavior -> `code-refinement` after the scope and proof are clear.
    - Architecture blueprint needed before implementation, especially when deep modules or small public interfaces are at stake -> `plan-codebase-architecture`.
    - Descriptive architecture map, module map, or dependency map -> `architecture-design-map`.
@@ -86,6 +87,7 @@ Fallback: If companion skills are unavailable, classify directly, obey user/proj
    - "The user said implement" does not skip clarification when project instructions, public behavior, architecture, or cross-file scope make intent unclear.
    - "Write a prompt for this" is prompt-crafting work; route to `goated-prompt` unless the user asks the agent to execute the underlying task instead.
    - Broad horizontal work, speculative scaffolding, or deep module and public interface decisions should not be routed through the tiny one-off path.
+   - Do not silently skip `code-refinement` for non-trivial code-producing delivery work; either run it or name the skip reason.
 
 7. Report the route briefly, then continue:
    - Name the selected task surface and next skill or direct action.

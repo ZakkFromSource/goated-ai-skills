@@ -35,7 +35,7 @@ Soft:
 - prd-to-issues when implementing a planned vertical issue slice
 - prototype when risky behavior or interfaces need disposable evidence before production tests
 - project-standards-calibration when test, fixture, naming, or quality standards affect implementation
-- code-refinement after green when non-trivial changed code should be simplified without behavior changes before review gates
+- code-refinement after green as a run-or-explicit-skip gate for non-trivial code-producing work before review gates
 - standards-and-spec-review after implementation when available
 - code-security-review after implementation when trust boundaries, persistence, auth, or user data are touched
 - doc-sync after behavior, public interface, architecture, or testing-doc changes
@@ -86,7 +86,7 @@ Fallback: If companion skills or docs are unavailable, inspect minimal evidence,
    - Read [Refactor After Green](references/refactor-after-green.md) before non-trivial cleanup.
    - Improve names, duplication, structure, locality, and interface shape only while tests are passing.
    - Prefer deeper modules when a smaller interface can hide real complexity and reduce caller/test burden.
-   - Use `code-refinement` for scoped post-change cleanup that should preserve behavior after green proof and before review gates.
+   - Use `code-refinement` as a run-or-explicit-skip gate for scoped post-change cleanup after green proof and before review gates.
    - Run tests after each meaningful refactor step.
    - Never refactor while red. Get to green first.
 

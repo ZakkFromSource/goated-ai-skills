@@ -9,7 +9,7 @@ metadata:
 
 ## Purpose
 
-Refine recently changed target-project code without changing behavior. Use this as a scoped post-change pass after implementation, generated code, or TDD green evidence, and before standards/spec review, security review when relevant, doc sync, and final verification.
+Refine recently changed target-project code without changing behavior. Use this as a scoped post-change pass after implementation, generated code, or TDD green evidence, and before standards/spec review, security review when relevant, doc sync, and final verification. For non-trivial code-producing delivery work, treat this skill as a default run-or-explicit-skip closeout gate.
 
 This skill optimizes in this order:
 
@@ -49,7 +49,8 @@ Fallback: If companion skills, tests, commands, or clean diffs are unavailable, 
 
 1. Confirm activation and scope:
    - Use this skill for non-trivial post-change cleanup, generated or agent-written awkward code, recently changed code that should be simplified, or explicit requests such as "clean this up", "simplify this diff", "make this easier to read", or "refactor this without behavior changes".
-   - Skip this skill for tiny mechanical edits, generated files that should not be hand-edited, docs-only changes, formatting-only changes, and already-clear one-line fixes.
+   - For non-trivial code-producing delivery work, either run this skill or explicitly skip it with a short reason before moving to later review gates.
+   - Skip this skill for tiny mechanical edits, generated files that should not be hand-edited, docs-only changes, formatting-only changes, no meaningful refinement candidates, user override, and already-clear one-line fixes.
    - Identify the target-project root and the refinement scope: current diff, staged diff, task-touched files, explicit user paths, or supplied patch.
    - Inspect working-tree state before editing. If files contain unrelated user-authored changes mixed with the refinement scope, edit around them carefully or propose changes first.
    - Do not expand from a known scope into nearby cleanup unless the user explicitly approves the broader scope.
@@ -88,11 +89,13 @@ Fallback: If companion skills, tests, commands, or clean diffs are unavailable, 
    - Rerun focused checks that match the refined scope. Run broader nearby checks when the local proof is too narrow for the risk.
    - Review the final diff for accidental behavior changes, unrelated churn, public-interface changes, weakened tests, and docs drift.
    - Use `verification-before-completion` before saying behavior was preserved, checks pass, refinement is done, or the change is ready for review.
+   - Assemble the closeout packet before the final response. The wording may be compact or natural, but every required Output Contract field must be accounted for with a value, `None`, `not applicable`, or a short fallback reason.
    - Report skipped checks, known weak proof, deferred architecture opportunities, docs follow-up, and residual risk.
+   - Include a compact contract-coverage line and the narrowest closeout claim allowed by the evidence.
 
 ## Output Contract
 
-After edit mode, report:
+After edit mode, report all required fields below. The final response may use compact or natural wording, but it must account for each field. Do not omit a field because it feels obvious; use `None`, `not applicable`, or a short fallback reason when needed.
 
 ```markdown
 ## Code Refinement
@@ -106,9 +109,11 @@ After edit mode, report:
 - Docs/security follow-up: <none, routed to doc-sync/code-security-review, or residual risk>
 - Deferred candidates: <architecture/TDD/standards follow-up, or none>
 - Residual risk: <skipped checks, weak proof, mixed user changes, or low>
+- Closeout claim: <narrow claim allowed by verification-before-completion>
+- Contract coverage: <all required fields accounted for, or incomplete - missing fields/reason>
 ```
 
-After proposal mode, report:
+After proposal mode, report all required fields below. Proposal mode is not an edit claim; make that explicit in the closeout claim.
 
 ```markdown
 ## Code Refinement Proposal
@@ -118,6 +123,19 @@ After proposal mode, report:
 - Candidate refinements: <one bullet per candidate with benefit and risk>
 - Proof needed: <tests/checks/manual verification before/after>
 - Recommended next step: <approve narrowed edits, route to TDD, route to architecture, or skip>
+- Closeout claim: <proposal-only claim, such as no files changed and behavior preservation not verified>
+- Contract coverage: <all required fields accounted for, or incomplete - missing fields/reason>
+```
+
+When skipped as the regular closeout gate before edit or proposal mode, report a compact skip note:
+
+```markdown
+## Code Refinement Skip
+
+- Scope: <changed files, current diff, explicit paths, or "not applicable">
+- Skip reason: <tiny change, docs-only, generated file, no meaningful refinement candidate, user override, weak proof requiring later proposal, or other reason>
+- Next gate: <standards/spec review, security review, doc-sync, verification-before-completion, or other next step>
+- Contract coverage: skip reason accounted for; edit/proposal fields not applicable because refinement mode did not run
 ```
 
 ## Delegation
@@ -143,6 +161,9 @@ If subagents are unavailable, run the same review sequentially with a narrower c
 - Do not delete, weaken, or rewrite tests to match the refined implementation unless equivalent behavior proof remains through the public interface.
 - Do not hand-edit generated files unless the project explicitly treats them as source.
 - Do not claim behavior preservation from a clean diff alone. Use fresh proof or report weaker confidence.
+- Do not replace the Output Contract with loose prose such as "cleaned up and tests pass"; final closeout must account for every required field or explicitly report the skip reason.
+- Do not omit required Output Contract facts because the value is `None`, `not applicable`, or inconvenient. State the value or fallback reason.
+- Do not claim code was refined after proposal mode or skip mode; say proposal-only or skipped when no refinement edits were made.
 - Do not replace `tdd`, `improve-codebase-architecture`, `standards-and-spec-review`, `code-security-review`, `doc-sync`, or `verification-before-completion`.
 - Do not include private notes, ignored scratch content, credentials, client data, sensitive personal context, secrets, or real user data in reports or examples.
 - Do not require this source repo's root files, issue files, `.local` notes, or hidden chat history after installation. The skill may rely only on its own instructions, local support files, and target-project evidence.
