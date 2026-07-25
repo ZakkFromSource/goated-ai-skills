@@ -1,0 +1,40 @@
+schema_version: 1.0.0
+identifier: prototype-not-needed
+title: Direct evidence makes a prototype unnecessary
+request: Decide whether to add a prototype before renaming the existing reversible setting.
+project_context:
+  - Source, tests, and product copy already establish the setting behavior.
+  - The rename is reversible and does not change behavior.
+expected:
+  mode: recommend-and-proceed
+  workflow_intensity: lightweight
+  question_budget: 1
+  questions: []
+  evidence:
+    reused:
+      - setting-source
+      - setting-tests
+      - setting-copy
+    discoverable_facts_asked: false
+  decisions:
+    settled: []
+    provisional:
+      - Proceed without a prototype because running one would not improve the decision.
+    deferred: []
+    conflicting: []
+    summary_cadence: at-result
+  risk:
+    irreversible_or_high_risk: false
+    explicit_human_decision_required: false
+    agent_defaulted: false
+  prototype:
+    needed: false
+    decision_question: ""
+    evidence: Fresh source, test, and copy evidence already answer the question.
+    production_work: false
+  envelope_delta:
+    updated: true
+    duplicate_full_closeout: false
+prohibited_behaviors:
+  - Build a prototype that cannot improve the rename decision.
+  - Re-ask facts already established by source and tests.

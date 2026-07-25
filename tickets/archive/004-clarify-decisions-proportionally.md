@@ -30,17 +30,17 @@ prototypes only when they raise decision fidelity.
 
 ## Acceptance Criteria
 
-- [ ] Both grill skills support `focused`, `rapid`,
+- [x] Both grill skills support `focused`, `rapid`,
       `recommend-and-proceed`, and `deep-dive`.
-- [ ] Rapid mode asks no more than three tightly related questions.
-- [ ] Deep-dive mode has no arbitrary question limit and periodically
+- [x] Rapid mode asks no more than three tightly related questions.
+- [x] Deep-dive mode has no arbitrary question limit and periodically
       summarizes settled, provisional, deferred, and conflicting decisions.
-- [ ] Recommend-and-proceed cannot silently default irreversible or high-risk
+- [x] Recommend-and-proceed cannot silently default irreversible or high-risk
       decisions.
-- [ ] Workflow intensity supplies a soft question budget outside deep-dive.
-- [ ] Docs-grounded grilling reuses evidence before asking discoverable facts.
-- [ ] Prototype routing produces decision evidence rather than production work.
-- [ ] The clarified result updates the shared envelope without a duplicate full
+- [x] Workflow intensity supplies a soft question budget outside deep-dive.
+- [x] Docs-grounded grilling reuses evidence before asking discoverable facts.
+- [x] Prototype routing produces decision evidence rather than production work.
+- [x] The clarified result updates the shared envelope without a duplicate full
       closeout.
 
 ## Expected Proof
@@ -70,3 +70,17 @@ prototypes only when they raise decision fidelity.
 
 - Do not turn every discussion into a durable spec or Wayfinder map.
 - Do not allow an agent to answer the human side of a HITL decision.
+
+## Implementation Proof
+
+- `uv run python -m unittest discover -s tests -v` passed 26 tests, including
+  six clarification-fixture validator behaviors.
+- `uv run python scripts/validate_skills.py` passed 32 implemented skills, 32
+  registry entries, 7 adaptive-routing fixtures, 4 onboarding fixtures, and 6
+  clarification fixtures with zero blocking errors or human-review notes.
+- The shared policy is 1,183 words, within its 800-1,200 soft target. Existing
+  skill decomposition warnings and three unrelated learning-capture drift notes
+  remain report-only.
+- `uv run python -m compileall -q scripts tests` and `git diff --check` passed.
+- Manual standards/spec review found no findings. Documentation sync updated the
+  context matrix and project standards for the Ticket 004 fixture contract.

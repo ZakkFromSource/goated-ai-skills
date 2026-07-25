@@ -1,0 +1,40 @@
+schema_version: 1.0.0
+identifier: rapid-three-question
+title: Rapid mode asks three tightly related product questions
+request: Quickly clarify the empty-state behavior before implementation.
+project_context:
+  - Existing product docs define the audience but not the empty-state action.
+expected:
+  mode: rapid
+  workflow_intensity: standard
+  question_budget: 3
+  questions:
+    - Should the empty state prioritize creating an item or importing one?
+    - Should the same primary action appear for first-time and returning users?
+    - What observable outcome makes the empty state successful?
+  evidence:
+    reused:
+      - audience-definition
+    discoverable_facts_asked: false
+  decisions:
+    settled:
+      - The interview is limited to the empty-state action and success outcome.
+    provisional: []
+    deferred: []
+    conflicting: []
+    summary_cadence: at-result
+  risk:
+    irreversible_or_high_risk: false
+    explicit_human_decision_required: false
+    agent_defaulted: false
+  prototype:
+    needed: false
+    decision_question: ""
+    evidence: The remaining choices can be decided directly in conversation.
+    production_work: false
+  envelope_delta:
+    updated: true
+    duplicate_full_closeout: false
+prohibited_behaviors:
+  - Ask a fourth question in rapid mode.
+  - Ask for the audience already defined in project documentation.

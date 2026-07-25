@@ -40,7 +40,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Skill bodies commonly include Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References. | review-enforced | Implemented `SKILL.md` headings across all three categories | High |
 | V2 ticket handoffs use numbered filenames and stable scope, acceptance, proof, blocker, route, and exclusion sections. | review-enforced | `tickets/*.md`, `tickets/goated-ai-skills-v2-order.md` | High |
 | Completed implementation issues move under `issues/archive/` only after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete. | review-enforced | `CONTEXT.md`; archived issues `001` through `060`; no active numbered implementation handoffs currently | High |
-| Docs-only changes still rely on manual markdown review outside validator-covered skill, registry, and routing-fixture checks. | review-enforced | Root `pyproject.toml`, `uv.lock`, `scripts/validate_skills.py`, and `tests/test_validate_skills.py`; no CI, formatter, or linter config is present. | High |
+| Docs-only changes still rely on manual markdown review outside validator-covered skill, registry, and fixture-contract checks. | review-enforced | Root `pyproject.toml`, `uv.lock`, `scripts/validate_skills.py`, and `tests/test_validate_skills.py`; no CI, formatter, or linter config is present. | High |
 
 ## User-Confirmed Preferences
 
@@ -66,8 +66,8 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | `rg --files` | Discover source files without bulk-reading. | review-enforced | Used by `docs/agents/context-matrix.md` and this pass. |
 | `rg -n` targeted scans | Find headings, schema references, and documented standards. | review-enforced | Used for issue and standards discovery. |
 | Manifest/config discovery with `rg --files -g ...` | Check whether build, test, lint, format, or CI entrypoints exist. | review-enforced | Root `pyproject.toml`, `uv.lock`, and `tests/` support local validation; no CI, formatter, or linter config is present. |
-| `uv run python -m unittest discover -s tests -v` | Exercise registry, adaptive-routing, and onboarding fixture validation behavior. | tooling-enforced | Added by Ticket 001 and extended by Tickets 002-003. |
-| `uv run python scripts/validate_skills.py` | Validate implemented skills, the integrated registry, routing and onboarding fixture contracts, public-boundary checks, and report-only drift. | tooling-enforced | Extended by Tickets 001-003; uses `pyyaml` and `jsonschema` through `uv`. |
+| `uv run python -m unittest discover -s tests -v` | Exercise registry, adaptive-routing, onboarding, and clarification fixture validation behavior. | tooling-enforced | Added by Ticket 001 and extended by Tickets 002-004. |
+| `uv run python scripts/validate_skills.py` | Validate implemented skills, the integrated registry, routing, onboarding, and clarification fixture contracts, public-boundary checks, and report-only drift. | tooling-enforced | Extended by Tickets 001-004; uses `pyyaml` and `jsonschema` through `uv`. |
 | Manual markdown review | Validate docs-only changes while no automated docs tooling exists. | review-enforced | Current practical default. |
 
 ## Enforcement Levels
@@ -80,7 +80,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 - Date: 2026-07-25
 - Updated by: Codex
-- Evidence used: prior standards evidence; V2 spec and Tickets 001-003; ADR
-  0002; `stack/`, including routing and onboarding fixtures; local validator
+- Evidence used: prior standards evidence; V2 spec and Tickets 001-004; ADR
+  0002; `stack/`, including routing, onboarding, and clarification fixtures; local validator
   tooling and tests; targeted catalog, docs-drift, and ticket-state scans;
   fresh validator and unit-test output.

@@ -53,8 +53,10 @@ Fallback: If companion skills or docs are unavailable, inspect minimal local evi
 
 3. Decide whether a prototype is justified:
    - Use a prototype when the answer is easier to learn by running, clicking, toggling, or inspecting than by discussing.
+   - Require a live decision with at least two plausible outcomes and name the observation that would distinguish them. If existing evidence already settles the choice, return a `not needed` verdict and the evidence instead of building.
    - Prefer direct implementation when the change is obvious, low risk, and already specified.
    - Do not use a prototype as a way to postpone required requirements work, tests, or design decisions.
+   - Do not use a prototype to supply user consent, stakeholder intent, or another human-only high-risk decision.
 
 4. Choose the artifact shape from the selected branch:
    - For logic/state/data/API prototypes, prefer a full-frame terminal interaction for hand-driven state questions: one compact state view re-rendered after each action, with the throwaway driver kept separate from reusable logic.
@@ -86,7 +88,7 @@ Fallback: If companion skills or docs are unavailable, inspect minimal local evi
 
 7. Evaluate the question:
    - Run, click through, or inspect the prototype enough to answer the stated question.
-   - Capture observations, surprising behavior, tradeoffs, and the decision the prototype supports.
+   - Capture observations, surprising behavior, tradeoffs, and the decision the prototype supports as evidence. Keep that verdict distinct from production implementation progress.
    - If the prototype does not answer the question, either adjust it narrowly or stop and report what is still unknown.
 
 8. Clean up or hand off before final closeout:
@@ -111,6 +113,11 @@ During or after the prototype, report:
 - Verdict: answer, observations, confidence, and what remains unknown.
 - Cleanup state: `deleted`, `absorbed`, or `handed off`, with paths and rationale.
 - Next action: direct implementation, PRD update, issue split, TDD work, more discovery, or no further action.
+
+In integrated use, return the verdict, evidence reference, cleanup state,
+affected decisions, remaining uncertainty, route signals, and next action as a
+shared envelope delta. Do not produce a duplicate full task closeout or label
+prototype artifacts as production changes.
 
 If a handoff is needed because the user must inspect the prototype later, include this minimum note in or near the prototype:
 

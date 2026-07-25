@@ -42,39 +42,56 @@ Fallback: If companion skills are unavailable, continue the lightweight intervie
    - If the topic starts general but a question depends on project reality, pause and recommend `grill-with-docs` rather than guessing.
    - If the user explicitly wants to proceed without project discovery, continue but label project-specific claims as assumptions.
 
-2. Establish the first framing:
+2. Select the clarification mode and budget:
+   - Honor an explicit user choice; otherwise recommend the least intensive mode that can resolve the material decisions:
+     - **focused**: one dependent or high-risk decision at a time;
+     - **rapid**: one compact batch of no more than three tightly related questions;
+     - **recommend-and-proceed**: provisional defaults for reversible, low-risk choices;
+     - **deep-dive**: no preset question limit for fuzzy products, major choices, or decision-complete exploration.
+   - Outside deep-dive, derive a soft question budget from workflow intensity: normally one for `lightweight`, up to three for `standard`, and up to five for `full`. Use fewer when conversation evidence or safe defaults already settle the topic.
+   - If the remaining decisions exceed the soft budget, summarize progress and ask whether to continue, change mode, defer them, or proceed with named ambiguity.
+   - Recommend-and-proceed must stop for explicit human input on irreversible, destructive, security-sensitive, privacy-sensitive, externally binding, or otherwise high-risk decisions.
+
+3. Establish the first framing:
    - Restate the topic and central question in one sentence.
    - Identify the broad interview shape: desired outcome, audience or beneficiary, assumptions, options, constraints, tradeoffs, success criteria, risks, and next move.
    - Pick the highest-upstream unresolved question first.
    - Do not dump the whole question list unless the user explicitly asks for a questionnaire.
 
-3. Ask one decision-shaping question at a time:
-   - Ask exactly one focused question, then wait for the user's answer.
+4. Ask according to the selected mode:
+   - In focused and deep-dive modes, ask exactly one focused question, then wait. Rapid mode may ask its tightly related batch together.
    - Include a recommended default in every question.
    - Explain the key tradeoff behind the recommendation without inventing undiscovered project facts.
    - Prefer choices, boundaries, priorities, scenarios, and definitions over vague "tell me more" prompts.
    - When the user uses a fuzzy term, propose a precise meaning and ask them to confirm or correct it.
+   - In recommend-and-proceed, label reversible low-risk defaults as provisional rather than confirmed user decisions, then continue within the user's scope.
 
-4. Pressure-test the topic in dependency order:
+5. Pressure-test the topic in dependency order:
    - Resolve upstream questions before dependent details.
    - Use concrete scenarios to test assumptions, edge cases, failure states, audience fit, timing, reversibility, opportunity cost, and success measures.
    - Challenge contradictions in the user's stated goals, constraints, preferences, or answers.
    - For brainstorming, keep narrowing options until the user has a stronger direction or a clear reason to keep exploring.
 
-5. Keep a running brief:
-   - Track the clarified topic, central question, decisions or provisional conclusions, assumptions, unresolved questions, and recommended next action as the conversation progresses.
+6. Keep a running brief:
+   - Track the clarified topic, central question, assumptions, unresolved questions, recommended next action, and decisions separated into `settled`, `provisional`, `deferred`, and `conflicting`.
+   - In deep-dive mode, summarize those four decision states after each coherent decision cluster, when the tree changes materially, or before context becomes hard to retain.
    - Separate confirmed user decisions from agent recommendations.
    - Keep assumptions explicit when they are based only on conversation context.
    - Do not write durable docs, PRDs, issues, prototypes, or implementation files unless the user asks for that next step.
 
-6. Stop at shared understanding:
+7. Route prototypes only for decision evidence:
+   - Recommend `prototype` only when a disposable experiment would distinguish live options more reliably than further discussion.
+   - State one decision question and the evidence the prototype must return. Do not frame it as production work or use it to answer a human-only decision.
+   - Skip prototyping when conversation evidence already settles the choice.
+
+8. Stop at shared understanding:
    - Stop when the topic is resolved enough for the next action, or when a remaining blocker needs another stakeholder, more reflection, or project evidence.
    - Recommend the next direct action or companion skill, such as continuing the brainstorm, making a choice, `write-a-prd`, `prototype`, `prd-to-issues`, `writing-plans`, implementing directly when tiny and clear, or switching to `grill-with-docs`.
    - If the user chooses to proceed with known ambiguity, name the residual risk clearly.
 
 ## Output Contract
 
-During the grill, keep the conversation one-question-at-a-time. Each question should use this shape:
+During the grill, follow the selected mode and label provisional recommendations. Focused and deep-dive questions should use this shape; rapid mode may repeat it for up to three tightly related questions:
 
 ```markdown
 My recommended default: <one sentence>.
@@ -82,7 +99,7 @@ Tradeoff: <why this default is useful, and what it costs>.
 Question: <one focused decision question>
 ```
 
-After enough decisions are resolved, return a compact working brief:
+In integrated use, update the shared envelope with the mode, question budget, settled/provisional/deferred/conflicting decisions, remaining questions, prototype verdict or route signal, and next action. Do not emit a second full task closeout. Standalone use returns this compact working brief:
 
 ```markdown
 ## Clarified Topic
@@ -100,8 +117,8 @@ After enough decisions are resolved, return a compact working brief:
 
 ## Decisions
 
-| Decision | Outcome | Rationale or tradeoff |
-| --- | --- | --- |
+| Decision | State | Outcome | Rationale or tradeoff |
+| --- | --- | --- | --- |
 
 ## Assumptions
 
@@ -129,7 +146,9 @@ Require inputs inspected, assumptions, tradeoffs/risks, and candidate questions 
 
 ## Guardrails
 
-- Ask one decision-shaping question at a time and wait for the user's answer.
+- Ask one decision-shaping question at a time outside rapid mode.
+- Never exceed three tightly related questions in rapid mode or impose an arbitrary limit in deep-dive mode.
+- Never silently default irreversible or high-risk decisions in recommend-and-proceed mode.
 - Prefer `grill-with-docs` when project artifacts, engineering constraints, source evidence, standards, ADRs, code behavior, tests, schemas, or target-project terminology matter.
 - Do not pretend to know undiscovered project facts.
 - Do not ask broad bundles of questions unless the user explicitly asks for a questionnaire.

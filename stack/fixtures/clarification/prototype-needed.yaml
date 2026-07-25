@@ -1,0 +1,42 @@
+schema_version: 1.0.0
+identifier: prototype-needed
+title: A disposable prototype raises decision fidelity
+request: Decide whether the proposed state model can represent partial retries.
+project_context:
+  - Static discussion leaves two plausible transition models.
+  - A local fixture harness can exercise both models without production effects.
+expected:
+  mode: recommend-and-proceed
+  workflow_intensity: standard
+  question_budget: 2
+  questions:
+    - May I treat partial retry behavior as the single prototype question?
+  evidence:
+    reused:
+      - existing-state-transitions
+      - retry-requirements
+    discoverable_facts_asked: false
+  decisions:
+    settled:
+      - Use a disposable logic fixture harness.
+    provisional:
+      - Prefer the smaller transition model if both satisfy the retry scenarios.
+    deferred:
+      - Production implementation waits for the prototype verdict.
+    conflicting: []
+    summary_cadence: at-result
+  risk:
+    irreversible_or_high_risk: false
+    explicit_human_decision_required: false
+    agent_defaulted: false
+  prototype:
+    needed: true
+    decision_question: Which state model represents partial retries without ambiguous transitions?
+    evidence: Run both models against the same local retry scenarios and record the verdict.
+    production_work: false
+  envelope_delta:
+    updated: true
+    duplicate_full_closeout: false
+prohibited_behaviors:
+  - Treat the prototype harness as production implementation.
+  - Prototype more than the focused state-model decision.

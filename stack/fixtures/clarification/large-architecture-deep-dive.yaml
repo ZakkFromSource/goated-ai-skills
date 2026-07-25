@@ -1,0 +1,48 @@
+schema_version: 1.0.0
+identifier: large-architecture-deep-dive
+title: Deep-dive follows a large architecture decision tree
+request: Work through the architecture until the major module and ownership decisions are understood.
+project_context:
+  - The change crosses persistence, synchronization, and public API seams.
+  - Several upstream ownership decisions constrain downstream interfaces.
+expected:
+  mode: deep-dive
+  workflow_intensity: full
+  question_budget: null
+  questions:
+    - Which module owns the canonical state?
+    - What consistency guarantee must callers observe?
+    - Which operations must remain available offline?
+    - Where does conflict resolution occur?
+    - Which public interface hides synchronization details?
+  evidence:
+    reused:
+      - current-module-map
+      - persistence-contract
+      - synchronization-tests
+    discoverable_facts_asked: false
+  decisions:
+    settled:
+      - Canonical state ownership must be resolved before interface details.
+    provisional:
+      - Synchronization should remain behind one public module interface.
+    deferred:
+      - Exact retry timing waits for operational evidence.
+    conflicting:
+      - Offline availability conflicts with the current server-authoritative assumption.
+    summary_cadence: after each decision cluster and whenever the decision tree changes
+  risk:
+    irreversible_or_high_risk: false
+    explicit_human_decision_required: false
+    agent_defaulted: false
+  prototype:
+    needed: false
+    decision_question: ""
+    evidence: Architecture evidence and discussion can resolve the current decision tree.
+    production_work: false
+  envelope_delta:
+    updated: true
+    duplicate_full_closeout: false
+prohibited_behaviors:
+  - Stop because an arbitrary question count was reached.
+  - Lose track of settled, provisional, deferred, or conflicting decisions.

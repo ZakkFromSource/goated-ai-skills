@@ -54,27 +54,39 @@ Fallback: If docs or companion skills are unavailable, inspect minimal evidence 
    - Prefer discoverable facts over user questions. If code, docs, tests, config, or command definitions can answer something, inspect them before asking.
    - Stop gathering when the remaining uncertainty is a decision, tradeoff, preference, or missing product intent.
 
-3. Identify the decision tree:
+3. Select the clarification mode and budget:
+   - Honor an explicit user choice; otherwise recommend the least intensive mode that can resolve the material decisions:
+     - **focused**: one dependent or high-risk decision at a time;
+     - **rapid**: one compact batch of no more than three tightly related questions;
+     - **recommend-and-proceed**: state provisional defaults and continue for reversible, low-risk choices;
+     - **deep-dive**: follow the material decision tree without a preset question limit for major architecture, fuzzy products, or decision-complete work.
+   - Outside deep-dive, derive a soft question budget from workflow intensity: normally one for `lightweight`, up to three for `standard`, and up to five for `full`. Use fewer questions when evidence or safe defaults settle the work.
+   - Treat the budget as pressure toward decision value, not permission to ask discoverable facts. If the remaining decision does not fit, summarize progress and ask whether to continue, change mode, defer it, or proceed with named ambiguity.
+   - In recommend-and-proceed, never default an irreversible, destructive, security-sensitive, privacy-sensitive, externally binding, or otherwise high-risk decision. Stop for an explicit human choice.
+
+4. Identify the decision tree:
    - Restate the likely goal and why the work matters.
    - List the decision branches that materially affect design, scope, behavior, testing, docs, migration, rollout, or user experience.
    - Include scenario probes when they would clarify lifecycle, ownership, identity, cardinality, partial vs whole operations, failure states, or cross-context effects.
    - Order questions so upstream decisions are resolved before dependent details.
    - Avoid dumping every possible question at once.
 
-4. Ask one decision-shaping question at a time:
-   - Ask only one focused question, then wait for the user's answer before continuing.
+5. Ask according to the selected mode:
+   - In focused and deep-dive modes, ask one focused question, then wait for the user's answer. Rapid mode may ask its tightly related batch together.
    - Include a recommended default and the evidence or rationale behind it in every decision-shaping question.
    - Ask about choices, priorities, boundaries, tradeoffs, and intent, not facts the agent should discover.
    - When the user uses vague or overloaded terms, propose a precise term and ask them to confirm or correct it.
+   - In recommend-and-proceed, record reversible low-risk defaults as provisional rather than confirmed user decisions, then continue within the approved scope.
 
-5. Challenge against docs and project reality:
+6. Challenge against docs and project reality:
    - Compare user statements with documented standards, ADRs, glossary/context language, source behavior, tests, and known constraints.
    - Surface contradictions directly and ask which source should win.
    - Use concrete scenarios and edge cases to test boundaries between concepts.
    - Call out when a decision would conflict with existing standards, may qualify for ADR capture, or need follow-up documentation.
 
-6. Capture decisions as they settle:
-   - Keep a running summary of clarified goal, success criteria, scope, non-goals, decisions, assumptions, and remaining questions.
+7. Capture decisions as they settle:
+   - Keep a running summary of clarified goal, success criteria, scope, non-goals, assumptions, and decisions separated into `settled`, `provisional`, `deferred`, and `conflicting`.
+   - In deep-dive mode, summarize those four decision states after each coherent decision cluster, when the tree changes materially, or before context becomes hard to retain.
    - Note which project sources support or contradict each decision.
    - List candidate durable updates for `CONTEXT.md`, ADRs, standards docs, PRDs, or doc-sync follow-up.
    - Route target-project `CONTEXT.md` curation to `project-context-calibration` when that skill is available.
@@ -82,7 +94,12 @@ Fallback: If docs or companion skills are unavailable, inspect minimal evidence 
    - Recommend ADR capture only after checking the target project's existing ADR convention; if none exists, suggest a default only when the user asks to create one.
    - Do not create new durable docs during the grill unless the user asked for that or the target project's established workflow requires it.
 
-7. Stop at shared understanding:
+8. Route prototypes only for decision evidence:
+   - Route to `prototype` only when running, clicking, toggling, or inspecting a disposable experiment would distinguish live options more reliably than further discussion or existing evidence.
+   - State one decision question and the evidence needed from the prototype. Do not frame the prototype as production implementation or use it to postpone a required human decision.
+   - Skip prototyping when fresh docs, source, tests, or direct discussion already settle the choice.
+
+9. Stop at shared understanding:
    - Stop when implementation can begin safely, the next skill should take over, or a blocker needs user or stakeholder input.
    - Recommend the next direct action or skill, such as `context-matrix-map`, `project-context-calibration`, `project-standards-calibration`, `prototype`, `write-a-prd`, `prd-to-issues`, `writing-plans`, `plan-codebase-architecture`, `architecture-design-map`, `tdd`, or `doc-sync`.
    - Use `verification-before-completion` before claiming the brief is complete, checked, or ready for implementation.
@@ -90,7 +107,7 @@ Fallback: If docs or companion skills are unavailable, inspect minimal evidence 
 
 ## Output Contract
 
-During the grill, keep the conversation one-question-at-a-time. After enough decisions are resolved, return a compact working brief:
+During the grill, follow the selected mode and label provisional recommendations. In integrated use, update the shared envelope with the mode, question budget, settled/provisional/deferred/conflicting decisions, remaining questions, evidence, prototype verdict or route signal, and next action. Do not emit a second full task closeout. Standalone use returns this compact working brief:
 
 ```markdown
 ## Clarified Work
@@ -103,8 +120,8 @@ During the grill, keep the conversation one-question-at-a-time. After enough dec
 
 ## Decisions
 
-| Decision | Outcome | Evidence or rationale |
-| --- | --- | --- |
+| Decision | State | Outcome | Evidence or rationale |
+| --- | --- | --- | --- |
 
 ## Assumptions
 
@@ -144,7 +161,9 @@ Require paths inspected, commands run or skipped, exact source evidence, assumpt
 
 - Do not ask the user for discoverable facts before inspecting available project evidence.
 - Do not turn tiny mechanical edits into a planning ceremony.
-- Do not ask multiple decision questions at once unless the user explicitly asks for a questionnaire.
+- Do not ask multiple decision questions at once outside rapid mode or an explicit questionnaire.
+- Do not exceed three tightly related questions in rapid mode or impose an arbitrary limit in deep-dive mode.
+- Do not silently default irreversible or high-risk decisions in recommend-and-proceed mode.
 - Do not treat undocumented guesses as project facts.
 - Do not override existing ADRs, standards, glossary terms, or code behavior silently; surface conflicts and ask which source should change.
 - Do not create or edit durable docs during the grill unless the user requested it or the target project's established workflow calls for immediate capture.

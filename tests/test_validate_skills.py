@@ -10,6 +10,7 @@ from pathlib import Path
 import yaml
 
 from scripts.validate_skills import (
+    validate_clarification_fixtures,
     validate_onboarding_fixtures,
     validate_registry,
     validate_route_fixtures,
@@ -33,6 +34,17 @@ def copy_onboarding_fixtures(destination: Path) -> Path:
     fixture_destination = destination / "stack" / "fixtures" / "onboarding"
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "onboarding",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_clarification_fixtures(destination: Path) -> Path:
+    """Copy clarification fixtures and return their destination directory."""
+
+    fixture_destination = destination / "stack" / "fixtures" / "clarification"
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "clarification",
         fixture_destination,
     )
     return fixture_destination
@@ -344,6 +356,138 @@ class RouteFixtureValidationTests(unittest.TestCase):
 
         self.assertIn(
             "routing fixture references undefined risk flag: not-defined",
+            messages,
+        )
+
+
+class ClarificationFixtureValidationTests(unittest.TestCase):
+    def test_current_clarification_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_clarification_fixtures(REPO_ROOT))
+
+    def test_focused_mode_cannot_bundle_multiple_decision_questions(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_clarification_fixtures(fixture_root)
+            fixture_path = fixture_directory / "lightweight-no-question.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["question_budget"] = 2
+            fixture["expected"]["questions"] = [
+                "Which name should be used?",
+                "Which release should include it?",
+            ]
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_clarification_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "focused clarification cannot bundle multiple decision questions",
+            messages,
+        )
+
+    def test_rapid_mode_cannot_exceed_three_questions(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_clarification_fixtures(fixture_root)
+            fixture_path = fixture_directory / "rapid-three-question.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["question_budget"] = 4
+            fixture["expected"]["questions"].append("Should there be a fallback?")
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_clarification_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "rapid clarification cannot exceed three questions",
+            messages,
+        )
+
+    def test_deep_dive_requires_unlimited_budget_and_summary_cadence(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_clarification_fixtures(fixture_root)
+            fixture_path = fixture_directory / "large-architecture-deep-dive.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["question_budget"] = 10
+            fixture["expected"]["decisions"]["summary_cadence"] = ""
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_clarification_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "deep-dive clarification must not have a preset question budget",
+            messages,
+        )
+        self.assertIn(
+            "deep-dive clarification requires a decision-summary cadence",
+            messages,
+        )
+
+    def test_high_risk_decision_cannot_be_agent_defaulted(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_clarification_fixtures(fixture_root)
+            fixture_path = fixture_directory / "focused-irreversible-decision.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["risk"]["explicit_human_decision_required"] = False
+            fixture["expected"]["risk"]["agent_defaulted"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_clarification_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "irreversible or high-risk decisions require an explicit human "
+            "decision and cannot be agent-defaulted",
+            messages,
+        )
+
+    def test_prototype_must_remain_decision_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_clarification_fixtures(fixture_root)
+            fixture_path = fixture_directory / "prototype-needed.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["prototype"]["production_work"] = True
+            fixture["expected"]["envelope_delta"]["duplicate_full_closeout"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_clarification_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "clarification prototype cannot produce production work",
+            messages,
+        )
+        self.assertIn(
+            "clarification must not produce a duplicate full closeout",
             messages,
         )
 

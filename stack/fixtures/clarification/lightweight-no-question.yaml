@@ -1,0 +1,38 @@
+schema_version: 1.0.0
+identifier: lightweight-no-question
+title: A discoverable lightweight fact requires no interview
+request: Rename the documented command to the name already used by the project.
+project_context:
+  - Current documentation and source agree on the replacement command.
+expected:
+  mode: focused
+  workflow_intensity: lightweight
+  question_budget: 1
+  questions: []
+  evidence:
+    reused:
+      - current-command-documentation
+      - current-command-source
+    discoverable_facts_asked: false
+  decisions:
+    settled:
+      - Use the command name established by current project evidence.
+    provisional: []
+    deferred: []
+    conflicting: []
+    summary_cadence: at-result
+  risk:
+    irreversible_or_high_risk: false
+    explicit_human_decision_required: false
+    agent_defaulted: false
+  prototype:
+    needed: false
+    decision_question: ""
+    evidence: Existing evidence settles the naming decision.
+    production_work: false
+  envelope_delta:
+    updated: true
+    duplicate_full_closeout: false
+prohibited_behaviors:
+  - Ask the user to repeat the command name already established by fresh evidence.
+  - Produce a standalone clarification closeout in addition to the task closeout.

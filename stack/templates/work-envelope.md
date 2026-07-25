@@ -30,6 +30,14 @@ route_signals: []
 evidence: []
 decisions: []
 open_questions: []
+clarification: # optional
+  mode: # focused | rapid | recommend-and-proceed | deep-dive
+  question_budget: # non-negative integer; omit for deep-dive
+  settled: []
+  provisional: []
+  deferred: []
+  conflicting: []
+  prototype_verdict:
 approval:
   mode: # risk-adaptive-default | confirm-each-write | approve-batch |
         # standing-session-consent | draft-without-applying
@@ -43,8 +51,11 @@ next:
 ```
 
 The `approval`, `route_signals`, and `changes` blocks are optional; omit them
-when they add no decision value. Approval remains valid while its covered scope
-and action reach still cover the work. A material change to either marks it
+when they add no decision value. The `clarification` block is also optional:
+specialist grills update it and the existing evidence, decisions, open
+questions, route, and next fields as a delta rather than emitting another full
+closeout. Approval remains valid while its covered scope and action reach still
+cover the work. A material change to either marks it
 `fresh-approval-required` before the expanded action.
 
 Other optional extensions may record a fixed point, artifacts, delegated work,

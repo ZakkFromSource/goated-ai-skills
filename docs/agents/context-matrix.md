@@ -23,7 +23,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | --- | --- | --- | --- |
 | `docs/install.md` | Defines integrated and individual docs-first install and adaptation guidance. | Before changing install docs or copying/adapting skills into an agent framework. | Integrated registry paths resolve from the shared distribution root; runtime installer automation remains out of scope. |
 | `docs/how-to-use.md` | Human operator manual for the installed GOATED skill stack. | Before changing usage-model docs, onboarding or delivery pipeline explanations, prompt starters, or skill-by-skill public reference material. | Complements install guidance; keep it aligned with the staged V2 migration and current implemented inventory. |
-| `stack/` | V2 shared policy, registry, schema, logical-state templates, and portable routing and onboarding fixtures. | Before changing integrated-stack behavior or cross-skill metadata. | `SKILL.md` files remain authoritative for specialist procedures; fixtures describe conformance expectations rather than live-agent proof. |
+| `stack/` | V2 shared policy, registry, schema, logical-state templates, and portable routing, onboarding, and clarification fixtures. | Before changing integrated-stack behavior or cross-skill metadata. | `SKILL.md` files remain authoritative for specialist procedures; fixtures describe conformance expectations rather than live-agent proof. |
 | `skills/README.md` | Defines skill schema, category rules, progressive disclosure, and delegation conventions. | Before creating or editing a skill folder. | Do not create skill folders from the index alone; use the approved issue. |
 | `skills/agent-workflows/README.md` | Defines the agent-workflows category and implemented skills. | Before editing onboarding, session, handoff, instruction-integration, or skill-creator workflows. | Keep workflows portable and compatibility caveats specific; archived issue `029` completed the creator rename. |
 | `skills/engineering/README.md` | Defines the engineering category and implemented skills. | Before implementing or reviewing delivery, testing, review, docs, architecture, or refactor skills. | Future additions still require approved implementation issues. |
@@ -53,7 +53,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Maintainer and adapter guidance | `AGENT.md`, `AGENTS.md`, `CLAUDE.md` | Source-repo rules and thin framework adapters. | Any repo planning, edits, review, or automation. |
 | Public context and root docs | `CONTEXT.md`, `README.md` | Domain language, source repo boundary, root layout, preserved V1 model, active V2 model, and public/private boundary. | Any public docs, product model, or skill-library work. |
 | Install and decision docs | `docs/install.md`, `docs/how-to-use.md`, `docs/adr/` | Integrated and individual installation, installed-stack usage guidance, deferred automation notes, and accepted ADRs. | Install/adaptation changes, usage-model changes, pipeline explanation changes, or accepted architecture decisions. |
-| Integrated stack | `stack/AGENTS.md`, `stack/goated-stack.yaml`, `stack/schemas/`, `stack/templates/`, `stack/fixtures/routing/` | Shared V2 behavior, portable catalog metadata, registry schema, logical-state templates, and routing expectations. | Integrated policy, registry, route-signal, shared-state, or routing-fixture changes. |
+| Integrated stack | `stack/AGENTS.md`, `stack/goated-stack.yaml`, `stack/schemas/`, `stack/templates/`, `stack/fixtures/` | Shared V2 behavior, portable catalog metadata, registry schema, logical-state templates, and routing, onboarding, and clarification expectations. | Integrated policy, registry, route-signal, shared-state, or fixture-contract changes. |
 | Agent context artifacts | `docs/agents/` | Durable routing and standards artifacts for agents working in this repo. | Serious future sessions after these artifacts exist. |
 | Product and ticket handoffs | `docs/specs/`, `tickets/`, `issues/`, `issues/archive/` | Active V2 specs/tickets plus historical V1 PRDs and issue handoffs. | Implementing a ticket, tracing blockers, validating acceptance history, or adding future slices. |
 | Skill library | `skills/` | Public category indexes and implemented installable skill folders. | Creating, editing, reviewing, or installing skills. |
@@ -68,9 +68,9 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Issue and PRD scans with `rg -n` | Sample issue and PRD headings, blockers, current names, and implementation summaries. | When deciding which issue to open first or checking documentation drift. | Ran on 2026-05-21 for issue discovery and interim doc sync. |
 | `git status --short` | Check local worktree state. | Before and after edits. | Ran on 2026-05-21 before interim doc-sync edits; output was empty. |
 | `rg --files -g 'package.json' -g 'pyproject.toml' -g 'pubspec.yaml' -g 'Cargo.toml' -g 'Makefile' -g '*.sln' -g '*.csproj' -g '*.fsproj' -g 'go.mod' -g 'requirements.txt'` | Look for build or package entrypoints. | Before claiming build, lint, format, or test commands exist. | Root `pyproject.toml` now exists for local validator tooling; no CI, formatter, linter, or test config is present. |
-| `tests/test_validate_skills.py` | Registry, adaptive-routing, and onboarding fixture validation behavior tests. | Before changing the registry, fixture contracts, or validator behavior. | Added by Ticket 001 and extended by Tickets 002-003. |
+| `tests/test_validate_skills.py` | Registry, adaptive-routing, onboarding, and clarification fixture validation behavior tests. | Before changing the registry, fixture contracts, or validator behavior. | Added by Ticket 001 and extended by Tickets 002-004. |
 | `uv run python -m unittest discover -s tests -v` | Run validator behavior tests. | Before claiming registry or routing-fixture validation behavior passes. | Uses the standard library `unittest` runner. |
-| `uv run python scripts/validate_skills.py` | Validate implemented skills, the integrated registry, routing and onboarding fixtures, public-boundary checks, and report-only drift. | Before claiming skill, registry, or fixture changes are valid. | Uses `pyyaml` and `jsonschema` through `uv`. |
+| `uv run python scripts/validate_skills.py` | Validate implemented skills, the integrated registry, routing, onboarding, and clarification fixtures, public-boundary checks, and report-only drift. | Before claiming skill, registry, or fixture changes are valid. | Uses `pyyaml` and `jsonschema` through `uv`. |
 | Manual markdown review | Validate docs-only changes. | For docs changes outside validator-covered skill checks. | Pair with targeted script checks when a skill adds executable helpers. |
 
 ## Decisions And Context Packs
@@ -101,7 +101,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 - Date: 2026-07-25
 - Updated by: Codex
-- Evidence used: prior context-matrix evidence; V2 spec and Tickets 001-003;
-  ADR 0002; `stack/`, including routing and onboarding fixtures; current
+- Evidence used: prior context-matrix evidence; V2 spec and Tickets 001-004;
+  ADR 0002; `stack/`, including routing, onboarding, and clarification fixtures; current
   validator tests and commands; targeted catalog, install, docs-drift, and
   ticket-state scans.

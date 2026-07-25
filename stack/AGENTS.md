@@ -136,6 +136,18 @@ checkpoint; do not let an individual skill silently reconstruct a long
 pipeline. A changed risk, scope, action reach, or evidence state may add,
 remove, or preserve gates with a recorded reason.
 
+## Proportional Clarification
+
+Support `focused`, `rapid`, `recommend-and-proceed`, and `deep-dive`
+clarification. Outside deep-dive, derive a soft question budget from workflow
+intensity; rapid never exceeds three tightly related questions. Reuse fresh
+evidence before asking discoverable facts. Provisional defaults may advance
+reversible low-risk choices, but irreversible or high-risk decisions require
+explicit human input. Deep-dive follows the material decision tree and
+periodically summarizes settled, provisional, deferred, and conflicting
+decisions. Route to a disposable prototype only when it can produce evidence
+that improves a live decision, never as production work.
+
 ## Ownership And Delegation
 
 The main agent owns user intent, orchestration, integration, final judgment,
