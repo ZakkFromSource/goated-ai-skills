@@ -1,7 +1,7 @@
 # Install And Adapt GOATED AI Skills
 
 GOATED AI Skills supports an integrated V2 installation and individual skill
-installation. Both remain docs-first in this foundation release: copy or adapt
+installation. Both remain docs-first: copy or adapt
 the files into the agent framework you already use.
 
 The integrated stack is the recommended V2 mode. Individual installation
@@ -45,8 +45,8 @@ framework-native filesystem location.
 4. Invoke it directly or route to it from a thin framework instruction.
 
 An individual skill remains usable without `stack/AGENTS.md`,
-`stack/goated-stack.yaml`, or this repository's root files. During the staged
-V2 migration, current skill folders retain their standalone V1 behavior.
+`stack/goated-stack.yaml`, or this repository's root files. V2 skill folders
+retain compact standalone behavior for this mode.
 
 ## Three Layers
 
@@ -143,7 +143,7 @@ docs/architecture/                 tracked feature-specific architecture bluepri
 Durable project facts should be tracked. Session-private state should remain
 ignored; use OS temp when a safe ignored project-local path is unavailable.
 
-## Out Of Scope For The V2 Foundation
+## Out Of Scope For V2
 
 - Installer scripts.
 - Automatic framework detection.
@@ -151,3 +151,8 @@ ignored; use OS temp when a safe ignored project-local path is unavailable.
 - Compatibility testing across every agent framework.
 - Adapter repair automation.
 - Runtime hooks, automatic loading, or Factory orchestration.
+
+If upgrading an existing installation, follow
+[Migrate From V1 To V2](migration-v1-to-v2.md). Release-candidate proof and
+residual risk are recorded in
+[GOATED AI Skills V2 Acceptance Report](v2-acceptance-report.md).

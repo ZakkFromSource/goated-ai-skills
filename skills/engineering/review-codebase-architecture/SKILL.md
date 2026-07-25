@@ -137,15 +137,15 @@ For an RFC-style handoff, include the chosen problem, source evidence, public in
 
 ## Delegation
 
-Main owns scope, evidence standards, opportunity ranking, architecture judgment, final recommendation, and user communication.
+Main owns scope, evidence standards, ranking, architecture judgment,
+recommendations, and communication. Delegate only bounded caller/test traces,
+one-area friction scans, seam checks, one interface alternative, or
+evidence-versus-speculation review.
 
-Delegate only bounded exploration: trace callers/tests for one module/package/route/flow/dependency, identify shallow modules/repeated choreography/primitive clusters/hard-to-test areas in one source area, check dependency/seam shape, draft interface alternatives for one strong candidate, or validate evidence vs speculation.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; exact source evidence; candidate friction, dependency/seam shape, confidence, assumptions, contradictions, and residual uncertainty. No final user-facing recommendation unless specifically asked.
-
-Status handling: `DONE` integrates opportunity evidence, dependency/seam assessment, or interface alternatives into ranking; `DONE_WITH_CONCERNS` requires review of speculative evidence, false seams, migration risk, weak test surfaces, or overbroad refactor direction before recommending; `NEEDS_CONTEXT` gets the missing source area, caller/test evidence, architecture doc, dependency constraint, or user goal before re-dispatch; `BLOCKED` narrows/splits/defer the candidate, changes model/tooling, or escalates.
-
-If subagents are unavailable, run the same passes sequentially with a narrower context budget.
+Return paths, commands, exact evidence, candidate friction and seam shape,
+confidence, assumptions, contradictions, uncertainty, and status—not a final
+recommendation. Resolve concerns or missing context before ranking; narrow,
+defer, or stop on `BLOCKED`. Without delegation, explore sequentially.
 
 ## Guardrails
 

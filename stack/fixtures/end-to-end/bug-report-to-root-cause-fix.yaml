@@ -1,0 +1,57 @@
+schema_version: 1.0.0
+identifier: bug-report-to-root-cause-fix
+user_request: Diagnose and fix a reproducible bug with regression proof.
+project_context:
+  - The symptom is known but the root cause is not.
+  - The requested scope already includes implementation of the fix.
+expected:
+  profile:
+    task_size: standard
+    intent_maturity: scoped
+    workflow_intensity: standard
+    continuity: single-session
+    execution: single-agent
+    domain: software
+    risk_flags: []
+  data_sensitivity: public
+  action_reach: project-changing
+  proof_strategy: Reproduce, isolate the root cause, add the smallest stable regression proof, and rerun affected checks.
+  selected_skills:
+    - using-goated-ai-skills
+    - diagnose
+    - tdd
+    - verification-before-completion
+  conditional_skills:
+    - code-refinement
+    - standards-and-spec-review
+    - code-security-review
+    - doc-sync
+  skipped_skills:
+    - write-a-spec
+    - wayfinder
+  route_signals: []
+  evidence:
+    reuse: [reproduction evidence, root-cause probe, failing regression]
+    refresh_after: [production fix, test changes]
+  closeout:
+    single_task_closeout: true
+    specialists_return_deltas: true
+prohibited_behaviors:
+  - Do not pause for redundant authorization between diagnosis and the requested fix.
+  - Do not prefer a broader integration surface when a stable focused proof exists.
+  - Do not load refinement without concrete debt.
+comparison:
+  v1_skills:
+    - session-start-progressive-disclosure
+    - diagnose
+    - writing-plans
+    - tdd
+    - code-refinement
+    - standards-and-spec-review
+    - doc-sync
+    - verification-before-completion
+  v2_skills:
+    - using-goated-ai-skills
+    - diagnose
+    - tdd
+    - verification-before-completion

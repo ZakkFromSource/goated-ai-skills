@@ -14,6 +14,7 @@ from scripts.validate_skills import (
     validate_behavior_proof_fixtures,
     validate_canonical_architecture_references,
     validate_clarification_fixtures,
+    validate_end_to_end_fixtures,
     validate_knowledge_retrieval_fixtures,
     validate_onboarding_fixtures,
     validate_output_communication_fixtures,
@@ -55,6 +56,19 @@ def copy_clarification_fixtures(destination: Path) -> Path:
         REPO_ROOT / "stack" / "fixtures" / "clarification",
         fixture_destination,
     )
+    return fixture_destination
+
+
+def copy_end_to_end_fixtures(destination: Path) -> Path:
+    """Copy end-to-end fixtures and the registry used to resolve skill names."""
+
+    fixture_destination = destination / "stack" / "fixtures" / "end-to-end"
+    fixture_destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "end-to-end",
+        fixture_destination,
+    )
+    shutil.copy(REPO_ROOT / "stack" / "goated-stack.yaml", destination / "stack")
     return fixture_destination
 
 
@@ -1685,6 +1699,54 @@ class ClarificationFixtureValidationTests(unittest.TestCase):
         )
         self.assertIn(
             "clarification must not produce a duplicate full closeout",
+            messages,
+        )
+
+
+class EndToEndFixtureValidationTests(unittest.TestCase):
+    def test_current_end_to_end_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_end_to_end_fixtures(REPO_ROOT))
+
+    def test_required_end_to_end_scenario_cannot_be_removed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_end_to_end_fixtures(fixture_root)
+            (fixture_directory / "bug-report-to-root-cause-fix.yaml").unlink()
+
+            messages = [
+                finding.message
+                for finding in validate_end_to_end_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "missing required end-to-end fixture: bug-report-to-root-cause-fix",
+            messages,
+        )
+
+    def test_end_to_end_route_uses_registered_skills_and_one_closeout(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_end_to_end_fixtures(fixture_root)
+            fixture_path = fixture_directory / "feature-brief-to-verified-change.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["selected_skills"].append("missing-skill")
+            fixture["expected"]["closeout"]["single_task_closeout"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_end_to_end_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "end-to-end fixture references unregistered skill: missing-skill",
+            messages,
+        )
+        self.assertIn(
+            "end-to-end fixture requires one consolidated task closeout",
             messages,
         )
 

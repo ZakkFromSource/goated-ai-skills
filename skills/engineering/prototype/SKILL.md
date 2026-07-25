@@ -136,15 +136,14 @@ Cleanup owner: <agent, user, or future implementer>
 
 ## Delegation
 
-Main owns the prototype question, scope control, final verdict, cleanup decision, and user communication.
+Main owns the question, scope, verdict, cleanup, and communication. Delegate
+only bounded convention discovery, independent variants, an owned logic
+harness, disposability checks, or evidence summaries.
 
-Delegate only bounded evidence-producing work: find route/component/module/story/fixture/command conventions, draft independent UI variants for the same question, create a focused logic harness in owned files, verify artifacts are marked/disposable, or summarize evidence from files/commands/screenshots.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected or changed; commands run or skipped; prototype question served; verdict evidence; cleanup recommendation and remaining artifacts.
-
-Status handling: `DONE` integrates artifact/evidence/verdict into the prototype decision; `DONE_WITH_CONCERNS` requires review of fidelity, scope, cleanup, or user-inspection readiness before relying; `NEEDS_CONTEXT` gets the missing question, route, fixture, command, design constraint, or cleanup rule before re-dispatch; `BLOCKED` narrows the prototype, switches branch/host, chooses a safer disposable artifact, or escalates.
-
-If subagents are unavailable, run the same work sequentially with a narrower context budget.
+Return inspected or changed paths, commands, question coverage, verdict
+evidence, cleanup recommendation, remaining artifacts, and status. Resolve
+fidelity, scope, cleanup, or missing-context concerns before relying on the
+result; narrow or stop on `BLOCKED`. Without delegation, work sequentially.
 
 ## Guardrails
 

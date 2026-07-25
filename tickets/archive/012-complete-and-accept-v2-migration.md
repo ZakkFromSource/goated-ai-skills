@@ -8,6 +8,10 @@
 
 HITL
 
+## Work State
+
+Completed and accepted by the maintainer on 2026-07-25.
+
 ## What To Build
 
 Finish the cross-catalog semantic-anatomy migration, remove remaining shared
@@ -38,24 +42,24 @@ public V2 document, and present the complete release for maintainer acceptance.
 
 ## Acceptance Criteria
 
-- [ ] Every implemented skill follows the semantic V2 anatomy or records a
+- [x] Every implemented skill follows the semantic V2 anatomy or records a
       justified exception.
-- [ ] Repeated global routing, delegation, privacy, evidence, and closeout
+- [x] Repeated global routing, delegation, privacy, evidence, and closeout
       boilerplate is removed.
-- [ ] All aliases, canonical names, registry paths, links, and route signals
+- [x] All aliases, canonical names, registry paths, links, and route signals
       validate.
-- [ ] All end-to-end and focused behavioural fixtures required by the spec are
+- [x] All end-to-end and focused behavioural fixtures required by the spec are
       reviewed or run through the documented comparison method.
-- [ ] Representative V2 routes load materially less instruction text than V1
+- [x] Representative V2 routes load materially less instruction text than V1
       without losing required behaviour.
-- [ ] Root context, standards, README, install guidance, operator guidance,
+- [x] Root context, standards, README, install guidance, operator guidance,
       category indexes, ADR index, and migration guidance describe V2
       consistently.
-- [ ] Historical V1 artifacts remain intact.
-- [ ] No Factory runtime, model benchmarking, or dedicated evaluation skill has
+- [x] Historical V1 artifacts remain intact.
+- [x] No Factory runtime, model benchmarking, or dedicated evaluation skill has
       entered V2 scope.
-- [ ] All required checks and manual reviews are reported with residual risk.
-- [ ] The maintainer explicitly accepts V2 before the release is treated as
+- [x] All required checks and manual reviews are reported with residual risk.
+- [x] The maintainer explicitly accepts V2 before the release is treated as
       complete.
 
 ## Expected Proof
@@ -97,3 +101,14 @@ public V2 document, and present the complete release for maintainer acceptance.
 
 - Do not use this ticket to add deferred skills or Factory features.
 - Do not accept V2 merely because structural validation passes.
+
+## Release Evidence
+
+- [`docs/v2-acceptance-report.md`](../docs/v2-acceptance-report.md) records the
+  validator, tests, focused and end-to-end behavioral review, V1/V2 context
+  comparison, documentation review, and residual risk.
+- [`docs/migration-v1-to-v2.md`](../docs/migration-v1-to-v2.md) covers install
+  modes, canonical renames and aliases, artifact paths, and removed mandatory
+  gates.
+- The maintainer reviewed the four documented residual risks individually and
+  explicitly accepted V2 as it currently stands on 2026-07-25.

@@ -27,6 +27,11 @@ Manual or host-driven review should confirm:
 - skill results become envelope deltas and the main agent gives one closeout;
 - static expectations remain realistic in both integrated and standalone use.
 
+Release conformance also requires explicit conflicting-trigger resolution and
+individual-skill fallback scenarios. These keep central routing from becoming
+parallel pipelines and prove that a copied skill retains task-critical safety
+without the shared policy or registry.
+
 ## Ticket 002 Baseline Observation
 
 Whitespace-delimited counts recorded on 2026-07-25 compare the preserved

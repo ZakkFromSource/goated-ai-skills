@@ -123,15 +123,14 @@ completion summary.
 
 ## Delegation
 
-Main owns scope selection, trust-boundary judgment, finding classification, false-positive filtering, and user communication.
+Main owns scope, trust-boundary judgment, classification, false-positive
+control, and communication. Delegate only bounded surface mapping, one concrete
+trust path, candidate validation, or policy/default research.
 
-Delegate only bounded evidence or review passes: identify changed files/fixed point/manifests, map entry points/privileged operations/assets for one area, check one concrete auth/isolation/exposure/injection/execution/config path, validate a candidate finding, or summarize relevant security docs, policies, permissions, and framework defaults.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; evidence with source paths and line refs when possible; assumptions, confidence, residual risk; and candidate findings with severity, impact, fix, and false-positive notes.
-
-Status handling: `DONE` integrates high-evidence findings or no-finding coverage; `DONE_WITH_CONCERNS` requires review of exploitability, false-positive control, severity, scope, or unverified trust boundaries before reporting; `NEEDS_CONTEXT` gets the missing diff, fixed point, policy, route, config, dependency, or runtime assumption before re-dispatch; `BLOCKED` narrows the trust path, splits the review, changes verification route/model/tooling, or escalates.
-
-If subagents are unavailable, run the same work sequentially with a narrower context budget.
+Return paths and commands, line-level evidence where possible, assumptions,
+confidence, residual risk, status, and candidate severity, impact, fix, and
+false-positive notes. Resolve concerns or missing context before reporting;
+narrow or stop on `BLOCKED`. Without delegation, review sequentially.
 
 ## Guardrails
 

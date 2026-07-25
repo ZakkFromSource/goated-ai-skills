@@ -1,0 +1,54 @@
+schema_version: 1.0.0
+identifier: product-idea-to-vertical-slice
+user_request: Turn a product idea into an approved spec, architecture, and first delivery slice.
+project_context:
+  - The intent is fuzzy and affects multiple modules.
+  - The destination is a fresh-agent-ready first implementation ticket.
+expected:
+  profile:
+    task_size: large
+    intent_maturity: fuzzy
+    workflow_intensity: full
+    continuity: resumable
+    execution: single-agent
+    domain: software
+    risk_flags: [architectural, public-facing]
+  data_sensitivity: public
+  action_reach: project-changing
+  proof_strategy: Prove decision readiness, spec coverage, architecture seams, and dependency-ordered slice acceptance.
+  selected_skills:
+    - using-goated-ai-skills
+    - grill-with-docs
+    - write-a-spec
+    - design-codebase-architecture
+    - spec-to-tickets
+  conditional_skills:
+    - prototype
+    - wayfinder
+  skipped_skills:
+    - tdd
+    - code-refinement
+  route_signals: [scope-changed, documentation-impact]
+  evidence:
+    reuse: [project sources, settled decisions, accepted spec]
+    refresh_after: [spec revision, architecture decision, ticket boundary change]
+  closeout:
+    single_task_closeout: true
+    specialists_return_deltas: true
+prohibited_behaviors:
+  - Do not execute production implementation during product planning.
+  - Do not select Wayfinder only because the work is large.
+  - Do not create horizontal layer tickets without a named dependent slice.
+comparison:
+  v1_skills:
+    - session-start-progressive-disclosure
+    - grill-with-docs
+    - write-a-prd
+    - plan-codebase-architecture
+    - prd-to-issues
+  v2_skills:
+    - using-goated-ai-skills
+    - grill-with-docs
+    - write-a-spec
+    - design-codebase-architecture
+    - spec-to-tickets

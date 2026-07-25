@@ -6,6 +6,7 @@ contracts:
   work_envelope: 1.0.0
   evidence_entry: 1.0.0
   routing_fixture: 1.0.0
+  end_to_end_fixture: 1.0.0
 
 route_signals:
   - name: scope-changed

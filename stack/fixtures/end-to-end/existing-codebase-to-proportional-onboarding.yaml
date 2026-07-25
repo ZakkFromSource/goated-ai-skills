@@ -1,0 +1,55 @@
+schema_version: 1.0.0
+identifier: existing-codebase-to-proportional-onboarding
+user_request: Prepare an existing codebase for durable agent work without creating unnecessary governance files.
+project_context:
+  - Existing root instructions and architecture docs are mostly accurate.
+  - Retrieval and standards gaps are limited to two source areas.
+expected:
+  profile:
+    task_size: standard
+    intent_maturity: scoped
+    workflow_intensity: standard
+    continuity: resumable
+    execution: single-agent
+    domain: software
+    risk_flags: []
+  data_sensitivity: private
+  action_reach: project-changing
+  proof_strategy: Reuse one discovery bundle, refresh only demonstrated gaps, and verify ignored continuity storage.
+  selected_skills:
+    - using-goated-ai-skills
+    - session-start-progressive-disclosure
+    - agent-instructions-integrator
+    - context-matrix-map
+    - project-standards-calibration
+  conditional_skills:
+    - project-context-calibration
+    - architecture-design-map
+  skipped_skills:
+    - write-a-spec
+    - design-codebase-architecture
+  route_signals: [documentation-impact]
+  evidence:
+    reuse: [root instructions, current architecture docs, source and test scans]
+    refresh_after: [instruction edits, standards refresh]
+  closeout:
+    single_task_closeout: true
+    specialists_return_deltas: true
+prohibited_behaviors:
+  - Do not create every onboarding artifact by default.
+  - Do not overwrite stronger project instructions.
+  - Do not track private work envelopes or handoffs.
+comparison:
+  v1_skills:
+    - using-goated-ai-skills
+    - session-start-progressive-disclosure
+    - agent-instructions-integrator
+    - context-matrix-map
+    - project-context-calibration
+    - project-standards-calibration
+  v2_skills:
+    - using-goated-ai-skills
+    - session-start-progressive-disclosure
+    - agent-instructions-integrator
+    - context-matrix-map
+    - project-standards-calibration

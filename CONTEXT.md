@@ -7,7 +7,7 @@ GOATED AI Skills is a public source library for reusable, installable AI skill f
 These definitions are normative for this source repo. If another public doc
 uses these terms differently, treat that as documentation drift to resolve.
 V1 terms describe the preserved historical release; V2 terms describe the
-active integrated-stack migration.
+maintainer-accepted integrated stack.
 
 ### Project Boundaries
 

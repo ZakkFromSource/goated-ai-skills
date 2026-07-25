@@ -1,8 +1,7 @@
 # How To Use GOATED AI Skills
 
-This is the user guide for running GOATED AI Skills after installation. The V2
-foundation supports a recommended integrated mode and a preserved individual
-skill mode.
+This is the user guide for running GOATED AI Skills after installation. V2
+supports a recommended integrated mode and a preserved individual skill mode.
 
 For installation mechanics, start with [install.md](install.md). This guide picks up after that: how to route work, how the two main pipelines fit together, and what each skill contributes.
 
@@ -19,7 +18,7 @@ integrated mode, install selected skill folders with the shared policy,
 registry, schema, and templates under `stack/`. In individual mode, copy one
 complete skill folder and use its standalone guidance.
 
-Current migration notes:
+Current V2 notes:
 
 - Implemented skills use standards-first Agent Skills frontmatter with GOATED category metadata.
 - Individually installed skills retain compact standalone behavior.
@@ -28,6 +27,9 @@ Current migration notes:
   setup, installer scripts, and framework detection automation remain out of
   scope.
 - Tiny one-off tasks can skip the full workflow when the request is small, obvious, and low risk.
+- Existing V1 installations can follow
+  [the migration guide](migration-v1-to-v2.md); release evidence is recorded in
+  [the acceptance report](v2-acceptance-report.md).
 
 ## The Full Stack
 

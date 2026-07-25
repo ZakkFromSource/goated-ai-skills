@@ -132,15 +132,14 @@ auditable without another artifact.
 
 ## Delegation
 
-Main owns the final claim, evidence standard, risk judgment, and user communication.
+Main owns the final claim, evidence standard, risk judgment, and communication.
+Delegate only bounded commands, artifact/diff inspection, claim-strength checks,
+stale-evidence pressure tests, or summary review.
 
-Delegate only bounded verification passes: run a focused command separately, inspect a diff/artifact/screenshot/docs surface, test claim-to-evidence strength, pressure-test skipped or stale evidence, or review the verification summary for unsupported wording.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths/artifacts/screenshots/diffs/commands inspected; fresh evidence and applicability; assumptions, skipped checks, known failures, residual risk, confidence; and recommendation about the claim, not an unsupervised final claim.
-
-Status handling: `DONE` integrates evidence after sanity-checking important proof; `DONE_WITH_CONCERNS` requires concern review before any success claim; `NEEDS_CONTEXT` gets missing scope, artifact, command, or expected behavior before re-dispatch or local verification; `BLOCKED` narrows the claim, chooses safer proof, reports residual risk, or hands off.
-
-If subagents are unavailable, run the same verification sequentially with a narrower context budget.
+Return inspected surfaces and commands, fresh applicable evidence, assumptions,
+skips, failures, risk, confidence, status, and a recommendation—not a final
+claim. Resolve concerns or missing context first; narrow or stop on `BLOCKED`.
+Without delegation, verify sequentially.
 
 ## Guardrails
 

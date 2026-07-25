@@ -40,9 +40,8 @@ plan.
 - `tickets/archive/011-produce-concise-docs-prompts-and-closeouts.md` — Produce Concise
   Docs, Prompts, And Closeouts (AFK; Work state: Completed; Blocked by:
   Tickets 002, 005, and 010)
-- `tickets/012-complete-and-accept-v2-migration.md` — Complete And Accept The V2
-  Migration (HITL; Work state: Not started; Blocked by: Tickets 001 through
-  011)
+- `tickets/archive/012-complete-and-accept-v2-migration.md` — Complete And Accept
+  The V2 Migration (HITL; Work state: Completed; Blocked by: None)
 
 ## Recommended Order
 
@@ -74,7 +73,7 @@ plan.
 11. `tickets/archive/011-produce-concise-docs-prompts-and-closeouts.md`
     - Why now: completes user-facing artifacts after routing and review
       behaviour are stable.
-12. `tickets/012-complete-and-accept-v2-migration.md`
+12. `tickets/archive/012-complete-and-accept-v2-migration.md`
     - Why now: performs full migration, conformance, documentation, and human
       acceptance only after all observable slices exist.
 

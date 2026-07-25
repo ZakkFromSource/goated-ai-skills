@@ -129,15 +129,14 @@ final closeout.
 
 ## Delegation
 
-Main owns the fixed-point decision, final review judgment, axis separation, and user communication.
+Main owns the fixed point, axis separation, review judgment, and communication.
+Delegate only bounded baseline discovery, standards/spec extraction, one-axis
+review, or finding validation.
 
-Delegate only bounded evidence or review passes: identify changed files/fixed point, extract standards, summarize spec/acceptance criteria, review standards or spec fit for one area, or check whether findings are evidence-backed and in the correct axis.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; source-path evidence; assumptions, confidence, residual risk; and candidate findings separated into standards vs spec concerns.
-
-Status handling: `DONE` merges evidence/findings into the review judgment; `DONE_WITH_CONCERNS` requires review of fixed point, standard source, spec source, confidence, or axis separation before reporting; `NEEDS_CONTEXT` gets missing diff, baseline, spec, standards artifact, command output, or source path before re-dispatch; `BLOCKED` narrows scope, chooses a clearer fixed point, splits axes, or escalates.
-
-If subagents are unavailable, run the same work sequentially with a narrower context budget.
+Return paths, commands, source evidence, assumptions, confidence, risk, status,
+and candidate findings separated by axis. Resolve concerns or missing context
+before reporting; narrow or stop on `BLOCKED`. Without delegation, review
+sequentially.
 
 ## Guardrails
 

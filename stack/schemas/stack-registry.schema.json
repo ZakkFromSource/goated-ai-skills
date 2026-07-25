@@ -27,7 +27,8 @@
         "shared_policy",
         "work_envelope",
         "evidence_entry",
-        "routing_fixture"
+        "routing_fixture",
+        "end_to_end_fixture"
       ],
       "properties": {
         "shared_policy": {
@@ -43,6 +44,10 @@
           "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
         },
         "routing_fixture": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "end_to_end_fixture": {
           "type": "string",
           "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
         }

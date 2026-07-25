@@ -61,7 +61,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Should the repo add markdown linting or formatting tools later? | Tooling would change which docs standards can be called tooling-enforced. | Manual markdown review, plus `scripts/validate_skills.py` for skill schema checks. | Adding automated docs checks, CI, or formatter expectations. |
 | Should category README files list planned skills before implementation? | Planned-skill catalog entries can make incomplete work look installable. | List implemented skills only; avoid making planned issues look complete. | Expanding category indexes or generated catalog docs. |
 | Should future generated indexes be public docs, local-only artifacts, or both? | Generated indexes could affect install docs and repo maintenance. | The hand-maintained V2 registry is the current catalog; no generated indexes. | Designing any generated index workflow. |
-| Should installer automation live in this repo or framework-specific adapters later? | It affects the current out-of-scope boundary and future ownership. | No installer tooling in the V2 foundation. | Starting installer automation work. |
+| Should installer automation live in this repo or framework-specific adapters later? | It affects the current out-of-scope boundary and future ownership. | No installer tooling in V2. | Starting installer automation work. |
 
 ## Commands And Checks
 
@@ -72,8 +72,9 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | `rg --files` | Discover source files without bulk-reading. | review-enforced | Used by `docs/agents/context-matrix.md` and this pass. |
 | `rg -n` targeted scans | Find headings, schema references, and documented standards. | review-enforced | Used for issue and standards discovery. |
 | Manifest/config discovery with `rg --files -g ...` | Check whether build, test, lint, format, or CI entrypoints exist. | review-enforced | Root `pyproject.toml`, `uv.lock`, and `tests/` support local validation; no CI, formatter, or linter config is present. |
-| `uv run python -m unittest discover -s tests -v` | Exercise registry, canonical-reference, adaptive-routing, onboarding, clarification, specification/ticket, architecture, implementation-planning, behavior-proof, review/verification, Wayfinding, and knowledge-retrieval fixture validation behavior. | tooling-enforced | Added by Ticket 001 and extended by Tickets 002-010. |
-| `uv run python scripts/validate_skills.py` | Validate implemented skills, canonical architecture references, the integrated registry, routing, onboarding, clarification, specification/ticket, architecture, implementation-planning, behavior-proof, review/verification, Wayfinding, and knowledge-retrieval fixture contracts, public-boundary checks, and report-only drift. | tooling-enforced | Extended by Tickets 001-010; uses `pyyaml` and `jsonschema` through `uv`. |
+| `uv run python -m unittest discover -s tests -v` | Exercise registry, canonical-reference, focused-fixture, end-to-end fixture, and V1/V2 context-comparison behavior. | tooling-enforced | Added by Ticket 001 and extended through Ticket 012. |
+| `uv run python scripts/validate_skills.py` | Validate implemented skills, links, canonical references, registry and aliases, signals, focused and end-to-end fixture contracts, public-boundary checks, word budgets, and report-only drift. | tooling-enforced | Extended through Ticket 012; uses `pyyaml` and `jsonschema` through `uv`. |
+| `uv run python scripts/compare_v1_v2_context.py` | Compare four representative V2 route-specific instruction sets with the preserved `v1-baseline` tag and report shared-policy cost separately. | tooling-enforced | Ticket 012 release-conformance proof. |
 | Manual markdown review | Validate docs-only changes while no automated docs tooling exists. | review-enforced | Current practical default. |
 
 ## Enforcement Levels
@@ -86,9 +87,9 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 - Date: 2026-07-25
 - Updated by: Codex
-- Evidence used: prior standards evidence; V2 spec and Tickets 001-010; ADR
+- Evidence used: prior standards evidence; V2 spec and Tickets 001-012; ADR
   0002; `stack/`, including routing, onboarding, clarification,
   specification/ticket, architecture, implementation-planning, behavior-proof,
-  review/verification, Wayfinding, and knowledge-retrieval fixtures; local validator
-  tooling and tests; targeted catalog, docs-drift, and ticket-state scans;
-  fresh validator and unit-test output.
+  review/verification, Wayfinding, knowledge-retrieval, and end-to-end
+  fixtures; context-comparison tooling; local validator and tests; migration
+  and acceptance docs; targeted catalog, docs-drift, and ticket-state scans.

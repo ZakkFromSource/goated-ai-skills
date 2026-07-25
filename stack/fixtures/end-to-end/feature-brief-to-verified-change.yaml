@@ -1,0 +1,61 @@
+schema_version: 1.0.0
+identifier: feature-brief-to-verified-change
+user_request: Implement an approved cross-file feature and prove it is ready.
+project_context:
+  - The feature brief is scoped but needs an executable plan.
+  - The change affects public behavior and durable operator documentation.
+expected:
+  profile:
+    task_size: large
+    intent_maturity: scoped
+    workflow_intensity: full
+    continuity: resumable
+    execution: single-agent
+    domain: software
+    risk_flags: [public-facing]
+  data_sensitivity: public
+  action_reach: project-changing
+  proof_strategy: Prove the smallest end-to-end behavior path, then run scoped review and final verification.
+  selected_skills:
+    - using-goated-ai-skills
+    - writing-plans
+    - tdd
+    - standards-and-spec-review
+    - doc-sync
+    - verification-before-completion
+  conditional_skills:
+    - code-security-review
+    - code-refinement
+  skipped_skills:
+    - wayfinder
+    - prototype
+  route_signals: [documentation-impact]
+  evidence:
+    reuse: [approved feature brief, source discovery, red-green proof]
+    refresh_after: [implementation edits, documentation edits]
+  closeout:
+    single_task_closeout: true
+    specialists_return_deltas: true
+prohibited_behaviors:
+  - Do not require refinement without observed debt.
+  - Do not emit separate skill closeouts.
+  - Do not claim readiness without fresh verification.
+comparison:
+  v1_skills:
+    - session-start-progressive-disclosure
+    - grill-with-docs
+    - write-a-prd
+    - prd-to-issues
+    - writing-plans
+    - tdd
+    - code-refinement
+    - standards-and-spec-review
+    - doc-sync
+    - verification-before-completion
+  v2_skills:
+    - using-goated-ai-skills
+    - writing-plans
+    - tdd
+    - standards-and-spec-review
+    - doc-sync
+    - verification-before-completion

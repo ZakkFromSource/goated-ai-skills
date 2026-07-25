@@ -170,11 +170,11 @@ When the optional code-style posture is captured, the `User-Confirmed Preference
 
 ## Delegation
 
-Main owns the target-project boundary, standard classification, user questions, final artifact, and user communication.
-
-Delegate only bounded evidence scans: documented standards in docs/instructions, tool-enforced standards in config/build/CI, inferred conventions in one source or test area, or existing `docs/agents/` artifacts.
-
-Require paths inspected, commands run or skipped, exact source files, assumptions/confidence, and candidate enforcement levels. If subagents are unavailable, run the same scans sequentially with a narrower context budget; do not promote unevidenced summaries into standards.
+Main owns project boundaries, classification, questions, the final artifact, and
+communication. Delegate only bounded scans of documented, tool-enforced, or
+inferred standards. Return exact sources, commands, assumptions, confidence,
+and candidate enforcement. Without delegation, scan sequentially. Never
+promote unevidenced summaries into standards.
 
 ## Guardrails
 

@@ -10,9 +10,9 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | --- | --- | --- | --- |
 | `AGENT.md` | Defines the maintainer contract for this source repo. | Before planning, editing, reviewing, or running automation in this repo. | Source-repo guidance wins over thin adapters unless a tool safety limit requires otherwise. |
 | `CONTEXT.md` | Defines public-safe language, scope, and product concepts. | With `AGENT.md` for non-trivial repo work. | Keeps source repo, installed skills, and target projects separate. |
-| `README.md` | Explains the public distribution model, root layout, preserved V1 baseline, and active V2 direction. | At the start of source-repo orientation or docs changes. | Good high-level map before opening narrower files. |
-| `docs/specs/2026-07-25-goated-ai-skills-v2.md` | Active V2 product and architecture contract. | Before changing V2 installation, routing, shared policy, registry, state, skills, or migration tickets. | Read only the sections relevant to the current ticket. |
-| `tickets/*.md` | Active V2 implementation handoffs. | Before implementing or reviewing the named V2 slice. | Start with the current ticket and follow its explicit source links and blockers. |
+| `README.md` | Explains the public distribution model, root layout, preserved V1 baseline, and accepted V2 release. | At the start of source-repo orientation or docs changes. | Good high-level map before opening narrower files. |
+| `docs/specs/2026-07-25-goated-ai-skills-v2.md` | V2 product and architecture contract. | Before changing V2 installation, routing, shared policy, registry, state, skills, or migration tickets. | Read only the sections relevant to the current ticket. |
+| `tickets/*.md` | Active future delivery tickets and the preserved V2 ticket-order index. | Before implementing or reviewing a named slice. | Completed V2 tickets are archived under `tickets/archive/`. |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Historical V1 product spec and acceptance reference. | When changing preserved V1 behavior or tracing why an existing skill exists. | V2 sources and accepted ADRs supersede conflicting active-development decisions. |
 | `docs/agents/context-matrix.md` | This routing artifact. | At the start of future serious sessions after this file exists. | Refresh when repo structure, workflow, or evidence paths change. |
 | `docs/agents/project-standards.md` | Durable standards profile for this repo. | At the start of future serious sessions after this file exists. | Use it to distinguish documented standards, inferred conventions, preferences, and unresolved questions. |
@@ -22,8 +22,8 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Source | Why read it | When to read | Notes |
 | --- | --- | --- | --- |
 | `docs/install.md` | Defines integrated and individual docs-first install and adaptation guidance. | Before changing install docs or copying/adapting skills into an agent framework. | Integrated registry paths resolve from the shared distribution root; runtime installer automation remains out of scope. |
-| `docs/how-to-use.md` | Human operator manual for the installed GOATED skill stack. | Before changing usage-model docs, onboarding or delivery pipeline explanations, prompt starters, or skill-by-skill public reference material. | Complements install guidance; keep it aligned with the staged V2 migration and current implemented inventory. |
-| `stack/` | V2 shared policy, registry, schema, logical-state templates, and portable routing, onboarding, clarification, specification/ticket, architecture, implementation-planning, behavior-proof, review/verification, Wayfinding, and knowledge-retrieval fixtures. | Before changing integrated-stack behavior or cross-skill metadata. | `SKILL.md` files remain authoritative for specialist procedures; fixtures describe conformance expectations rather than live-agent proof. |
+| `docs/how-to-use.md` | Human operator manual for the installed GOATED skill stack. | Before changing usage-model docs, onboarding or delivery pipeline explanations, prompt starters, or skill-by-skill public reference material. | Complements install and migration guidance; keep it aligned with accepted V2. |
+| `stack/` | V2 shared policy, registry, schema, logical-state templates, focused fixtures, and four release-level end-to-end fixtures. | Before changing integrated-stack behavior or cross-skill metadata. | `SKILL.md` files remain authoritative for specialist procedures; fixtures describe conformance expectations rather than live-agent proof. |
 | `skills/README.md` | Defines skill schema, category rules, progressive disclosure, and delegation conventions. | Before creating or editing a skill folder. | Do not create skill folders from the index alone; use the approved issue. |
 | `skills/agent-workflows/README.md` | Defines the agent-workflows category and implemented skills. | Before editing onboarding, session, Wayfinder, handoff, instruction-integration, or skill-creator workflows. | Keep workflows portable and compatibility caveats specific; archived issue `029` completed the creator rename. |
 | `skills/engineering/README.md` | Defines the engineering category and implemented skills. | Before implementing or reviewing delivery, testing, review, docs, architecture, or refactor skills. | Future additions still require approved implementation issues. |
@@ -51,11 +51,11 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Area | Paths | What lives there | Read before |
 | --- | --- | --- | --- |
 | Maintainer and adapter guidance | `AGENT.md`, `AGENTS.md`, `CLAUDE.md` | Source-repo rules and thin framework adapters. | Any repo planning, edits, review, or automation. |
-| Public context and root docs | `CONTEXT.md`, `README.md` | Domain language, source repo boundary, root layout, preserved V1 model, active V2 model, and public/private boundary. | Any public docs, product model, or skill-library work. |
+| Public context and root docs | `CONTEXT.md`, `README.md` | Domain language, source repo boundary, root layout, preserved V1 model, accepted V2 model, and public/private boundary. | Any public docs, product model, or skill-library work. |
 | Install and decision docs | `docs/install.md`, `docs/how-to-use.md`, `docs/adr/` | Integrated and individual installation, installed-stack usage guidance, deferred automation notes, and accepted ADRs. | Install/adaptation changes, usage-model changes, pipeline explanation changes, or accepted architecture decisions. |
-| Integrated stack | `stack/AGENTS.md`, `stack/goated-stack.yaml`, `stack/schemas/`, `stack/templates/`, `stack/fixtures/` | Shared V2 behavior, portable catalog metadata, registry schema, logical-state templates, and routing, onboarding, clarification, specification/ticket, architecture, implementation-planning, behavior-proof, review/verification, Wayfinding, and knowledge-retrieval expectations. | Integrated policy, registry, route-signal, shared-state, or fixture-contract changes. |
+| Integrated stack | `stack/AGENTS.md`, `stack/goated-stack.yaml`, `stack/schemas/`, `stack/templates/`, `stack/fixtures/` | Shared V2 behavior, portable catalog metadata, registry schema, logical-state templates, focused contracts, and release-level end-to-end expectations. | Integrated policy, registry, route-signal, shared-state, or fixture-contract changes. |
 | Agent context artifacts | `docs/agents/` | Durable routing and standards artifacts for agents working in this repo. | Serious future sessions after these artifacts exist. |
-| Product and ticket handoffs | `docs/specs/`, `tickets/`, `issues/`, `issues/archive/` | Active V2 specs/tickets plus historical V1 PRDs and issue handoffs. | Implementing a ticket, tracing blockers, validating acceptance history, or adding future slices. |
+| Product and ticket handoffs | `docs/specs/`, `tickets/`, `tickets/archive/`, `issues/`, `issues/archive/` | Accepted V2 spec and archived tickets plus historical V1 PRDs and issue handoffs. | Implementing a ticket, tracing acceptance history, or adding future slices. |
 | Skill library | `skills/` | Public category indexes and implemented installable skill folders. | Creating, editing, reviewing, or installing skills. |
 | Local/private and deferred areas | `.local/goated/`, `.local/`, OS temp `goated-handoffs/<project-name>/`, `.out-of-scope/` | Ignored resumable state, private notes, fallback temporary handoffs, and public deferred ideas. | Read local state only when explicitly relevant and verify ignore behavior before writing it. |
 
@@ -78,10 +78,12 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Source | Scope | Status | Notes |
 | --- | --- | --- | --- |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Public core product model, skill schema, V1 skill set, onboarding and delivery workflows. | Historical V1 reference. | Superseded for active development by the V2 spec and accepted ADRs. |
-| `docs/specs/2026-07-25-goated-ai-skills-v2.md` | V2 integrated-stack product, routing, state, skill, and migration contract. | Ready for implementation. | Primary active-development spec. |
+| `docs/specs/2026-07-25-goated-ai-skills-v2.md` | V2 integrated-stack product, routing, state, skill, and migration contract. | Implemented and accepted. | Primary V2 contract. |
 | `tickets/archive/001-establish-v2-integrated-stack-foundation.md` | Shared-policy, registry, schema, validation, baseline, and install foundation. | Completed and archived. | Foundation consumed by the remaining V2 tickets. |
 | `issues/archive/*.md` | Completed scaffold, skill implementation, follow-up upgrade, doc-sync, and final acceptance handoffs. | Archived. | As of 2026-06-11, issues `001` through `060` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
-| `tickets/*.md` | Dependency-ordered V2 implementation slices. | Active. | Read the specific ticket and order file before implementing or reviewing a slice. |
+| `tickets/archive/001-*.md` through `tickets/archive/012-*.md` | Completed dependency-ordered V2 implementation and acceptance slices. | Completed and archived. | Read the specific ticket when tracing why a V2 artifact or behavior exists. |
+| `docs/migration-v1-to-v2.md` | Concise install, rename, artifact-path, and adaptive-gate migration guide. | Accepted V2 guide. | Read when upgrading a V1 installation. |
+| `docs/v2-acceptance-report.md` | Validator, fixture, comparison, documentation-review, residual-risk, and maintainer-acceptance evidence. | Accepted release evidence. | Read before changing V2 release status or planning Factory follow-up. |
 | `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md` | Accepted V1 runtime bootstrap and adapter automation decision. | Accepted ADR. | V1 allows narrow compatibility notes for real caveats only; runtime bootstrap, plugin manifests, hooks, installers, automatic loading, and adapter automation require future scoped work. |
 | `docs/adr/0002-v2-integrated-stack-foundation.md` | V2 integrated and individual install modes plus narrowed standalone fallback. | Accepted ADR. | Supersedes the conflicting installation/self-containment portions of ADR 0001. |
 | `docs/adr/README.md` | ADR index, placement, and policy. | ADR index. | Lists accepted ADRs and should be read before adding or changing architectural decision records. |
@@ -101,9 +103,10 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 - Date: 2026-07-25
 - Updated by: Codex
-- Evidence used: prior context-matrix evidence; V2 spec and Tickets 001-010;
+- Evidence used: prior context-matrix evidence; V2 spec and Tickets 001-012;
   ADR 0002; `stack/`, including routing, onboarding, clarification,
   specification/ticket, architecture, implementation-planning, behavior-proof,
-  review/verification, Wayfinding, and knowledge-retrieval fixtures; current
-  validator tests and commands; targeted catalog, install, docs-drift, and
-  ticket-state scans.
+  review/verification, Wayfinding, knowledge-retrieval, and end-to-end
+  fixtures; V1/V2 context comparison tooling; migration and acceptance docs;
+  current validator tests and commands; targeted catalog, install, docs-drift,
+  and ticket-state scans.

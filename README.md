@@ -33,7 +33,7 @@ GOATED AI Skills packages those workflows as self-contained skill folders that c
 
 For install details, read [`docs/install.md`](docs/install.md). For the operator manual after installation, read [`docs/how-to-use.md`](docs/how-to-use.md).
 
-The V2 foundation remains docs-first. There is no installer script, automatic
+V2 remains docs-first. There is no installer script, automatic
 framework detection, runtime bootstrap, hook setup, or executable
 orchestration.
 
@@ -72,8 +72,8 @@ Tiny one-off tasks can still stay tiny. The stack is there when the work is cros
 
 ## Skill Catalog
 
-The V1 public core is preserved at the `v1-baseline` Git tag. The active V2
-migration begins with the shared policy, registry, schema, and templates under
+The V1 public core is preserved at the `v1-baseline` Git tag. The accepted V2
+release uses the shared policy, registry, schema, templates, and fixtures under
 `stack/`.
 
 ### Agent Workflows
@@ -261,3 +261,8 @@ For suggestions, please use GitHub Discussions. That keeps the project open to o
 If you want to understand the project model before suggesting a change, read [`CONTEXT.md`](CONTEXT.md), [`docs/install.md`](docs/install.md), and [`docs/how-to-use.md`](docs/how-to-use.md). For skill schema and category conventions, read [`skills/README.md`](skills/README.md).
 
 Maintainer-approved work may be tracked separately when an idea is ready to become scoped repo work.
+
+For V1 upgrades, read the concise
+[`docs/migration-v1-to-v2.md`](docs/migration-v1-to-v2.md) guide. The current
+release proof, accepted residual risks, and maintainer decision are recorded in
+[`docs/v2-acceptance-report.md`](docs/v2-acceptance-report.md).

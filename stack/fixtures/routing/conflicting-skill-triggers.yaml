@@ -1,0 +1,59 @@
+schema_version: 1.0.0
+identifier: conflicting-skill-triggers
+title: Central routing resolves overlapping diagnosis, review, and implementation triggers
+request: Review this failing parser test, find the bug, and fix it.
+project_context:
+  - The report contains a failing test but no reviewer feedback thread.
+  - The requested scope already includes diagnosis and implementation.
+expected:
+  profile:
+    task_size: standard
+    intent_maturity: scoped
+    workflow_intensity: standard
+    domain: software
+    risk_flags: []
+    continuity: single-session
+    execution: single-agent
+  data_sensitivity: public
+  action_reach: project-changing
+  route_signals: []
+  proof_strategy: Diagnose the root cause first, then add or refine the smallest stable regression proof before implementing the fix.
+  route:
+    required_gates:
+      - proportional-orientation
+      - diagnose
+      - consolidated-closeout
+    conditional_gates:
+      - tdd
+      - verification-before-completion
+    skipped_gates:
+      - receiving-code-review
+      - writing-plans
+  checkpoint_events:
+    - checkpoint: after-clarification-or-diagnosis
+      trigger: scope-changed
+      route_delta:
+        add_required:
+          - tdd
+        add_conditional: []
+        remove:
+          - tdd
+  approval:
+    mode: risk-adaptive-default
+    consent_reused: true
+    fresh_approval_required: false
+    scope_or_reach_changed: false
+    reason: The original request covers the root-cause fix and regression proof.
+  evidence:
+    reuse:
+      - failing-parser-test
+      - diagnosis-probes
+    invalidate:
+      - failing-parser-test
+  closeout:
+    skill_reports_internal_deltas: true
+    main_agent_consolidates: true
+prohibited_behaviors:
+  - Treat ordinary bug-report language as a code-review feedback thread.
+  - Run diagnosis, review response, planning, and implementation as parallel competing pipelines.
+  - Pause for redundant authorization between root-cause diagnosis and the requested fix.

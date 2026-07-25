@@ -143,15 +143,14 @@ standards/security reports, or a separate completion summary.
 
 ## Delegation
 
-Main owns feedback classification, technical judgment, scope control, final responses, and completion claims.
+Main owns classification, technical judgment, scope, responses, and completion
+claims. Delegate only bounded thread inventory, claim verification, one owned
+accepted fix, focused specialist review, or classification evidence checks.
 
-Delegate only bounded review work: inventory a large thread, verify one reviewer claim, implement one accepted item with clear ownership, run focused standards/spec/security/docs/verification review, or check whether an acceptance/rejection is evidence-backed.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; feedback inspected or changed; paths/diffs/docs/threads/artifacts/commands inspected; classification evidence; changes made; tests/checks run or skipped; assumptions, concerns, residual risk; and recommendation, not final response.
-
-Status handling: `DONE` gets evidence inspection before integration; `DONE_WITH_CONCERNS` requires concern resolution before editing/responding; `NEEDS_CONTEXT` gets missing review scope, source, spec, command, or decision; `BLOCKED` narrows the work, asks the user, or reports the blocker without claiming resolution.
-
-If subagents are unavailable, run the same intake, classification, implementation, review, and verification sequentially with a narrower context budget.
+Return inspected feedback and sources, changes, commands, checks, assumptions,
+concerns, risk, status, and recommendation—not the final response. Resolve
+concerns or missing context before editing or replying; narrow or stop on
+`BLOCKED`. Without delegation, run the lifecycle sequentially.
 
 ## Guardrails
 

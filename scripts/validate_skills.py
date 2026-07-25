@@ -141,6 +141,13 @@ ROUTE_FIXTURE_APPROVAL_MODES = {
     "standing-session-consent",
     "draft-without-applying",
 }
+
+REQUIRED_END_TO_END_FIXTURES = {
+    "feature-brief-to-verified-change",
+    "bug-report-to-root-cause-fix",
+    "product-idea-to-vertical-slice",
+    "existing-codebase-to-proportional-onboarding",
+}
 SHARED_ROUTE_GATES = {
     "proportional-orientation",
     "direct-work",
@@ -161,6 +168,8 @@ REQUIRED_ROUTE_FIXTURE_IDENTIFIERS = {
     "external-changing-action",
     "approval-reuse",
     "evidence-invalidation",
+    "conflicting-skill-triggers",
+    "individual-skill-fallback",
 }
 CLARIFICATION_MODES = {
     "focused",
@@ -1506,6 +1515,204 @@ def validate_route_fixtures(repo: Path) -> list[Finding]:
         )
         for identifier in sorted(REQUIRED_ROUTE_FIXTURE_IDENTIFIERS - identifiers)
     )
+    return errors
+
+
+def validate_end_to_end_fixtures(repo: Path) -> list[Finding]:
+    """Validate the four release-level workflow scenarios from the V2 spec."""
+
+    fixture_root = repo / "stack" / "fixtures" / "end-to-end"
+    fixture_paths = sorted(fixture_root.glob("*.yaml"))
+    if not fixture_paths:
+        return [Finding("stack/fixtures/end-to-end", "no end-to-end fixtures found")]
+
+    registry_path = repo / "stack" / "goated-stack.yaml"
+    registry, registry_errors = load_mapping(
+        registry_path,
+        "stack/goated-stack.yaml",
+    )
+    errors = list(registry_errors)
+    if registry is None:
+        return errors
+
+    skill_entries = registry.get("skills")
+    signal_entries = registry.get("route_signals")
+    if not isinstance(skill_entries, list) or not isinstance(signal_entries, list):
+        return errors + [
+            Finding(
+                "stack/goated-stack.yaml",
+                "registry skills and route_signals must be lists",
+            )
+        ]
+
+    registered_skills = {
+        entry["name"]
+        for entry in skill_entries
+        if isinstance(entry, dict) and isinstance(entry.get("name"), str)
+    }
+    registered_signals = {
+        entry["name"]
+        for entry in signal_entries
+        if isinstance(entry, dict) and isinstance(entry.get("name"), str)
+    }
+    identifiers: set[str] = set()
+    required_fields = {
+        "schema_version",
+        "identifier",
+        "user_request",
+        "project_context",
+        "expected",
+        "prohibited_behaviors",
+        "comparison",
+    }
+    expected_fields = {
+        "profile",
+        "selected_skills",
+        "conditional_skills",
+        "skipped_skills",
+        "route_signals",
+        "evidence",
+        "closeout",
+    }
+
+    for fixture_path in fixture_paths:
+        fixture_label = relative(fixture_path, repo)
+        fixture, fixture_errors = load_mapping(fixture_path, fixture_label)
+        errors.extend(fixture_errors)
+        if fixture is None:
+            continue
+
+        for field in sorted(required_fields - fixture.keys()):
+            errors.append(Finding(fixture_label, f"end-to-end fixture is missing {field}"))
+        if required_fields - fixture.keys():
+            continue
+        if fixture["schema_version"] != "1.0.0":
+            errors.append(
+                Finding(fixture_label, "unsupported end-to-end fixture schema_version")
+            )
+
+        identifier = fixture["identifier"]
+        if not isinstance(identifier, str) or not identifier:
+            errors.append(Finding(fixture_label, "end-to-end identifier must be a string"))
+        elif identifier in identifiers:
+            errors.append(
+                Finding(fixture_label, f"duplicate end-to-end fixture identifier: {identifier}")
+            )
+        else:
+            identifiers.add(identifier)
+
+        if not isinstance(fixture["user_request"], str) or not fixture["user_request"]:
+            errors.append(Finding(fixture_label, "end-to-end user_request must be a string"))
+        if not is_string_list(fixture["project_context"]):
+            errors.append(
+                Finding(fixture_label, "end-to-end project_context must be a string list")
+            )
+        if not is_string_list(fixture["prohibited_behaviors"], allow_empty=False):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end prohibited_behaviors must be a non-empty string list",
+                )
+            )
+
+        expected = fixture["expected"]
+        if not isinstance(expected, dict):
+            errors.append(Finding(fixture_label, "end-to-end expected must be a mapping"))
+            continue
+        for field in sorted(expected_fields - expected.keys()):
+            errors.append(
+                Finding(fixture_label, f"end-to-end expected is missing {field}")
+            )
+        if expected_fields - expected.keys():
+            continue
+
+        errors.extend(validate_route_fixture_profile(expected, fixture_label))
+        for field in ("selected_skills", "conditional_skills", "skipped_skills"):
+            skills = expected[field]
+            if not is_string_list(skills):
+                errors.append(
+                    Finding(fixture_label, f"end-to-end expected.{field} must be a string list")
+                )
+                continue
+            for skill in skills:
+                if skill not in registered_skills:
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"end-to-end fixture references unregistered skill: {skill}",
+                        )
+                    )
+
+        route_signals = expected["route_signals"]
+        if not is_string_list(route_signals):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end expected.route_signals must be a string list",
+                )
+            )
+        else:
+            for signal in route_signals:
+                if signal not in registered_signals:
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"end-to-end fixture references undefined route signal: {signal}",
+                        )
+                    )
+
+        evidence = expected["evidence"]
+        if not isinstance(evidence, dict):
+            errors.append(Finding(fixture_label, "end-to-end evidence must be a mapping"))
+        else:
+            for field in ("reuse", "refresh_after"):
+                if not is_string_list(evidence.get(field)):
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"end-to-end evidence.{field} must be a string list",
+                        )
+                    )
+
+        closeout = expected["closeout"]
+        if not isinstance(closeout, dict):
+            errors.append(Finding(fixture_label, "end-to-end closeout must be a mapping"))
+        else:
+            if closeout.get("single_task_closeout") is not True:
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "end-to-end fixture requires one consolidated task closeout",
+                    )
+                )
+            if closeout.get("specialists_return_deltas") is not True:
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "end-to-end specialists must return deltas instead of closeouts",
+                    )
+                )
+
+        comparison = fixture["comparison"]
+        if not isinstance(comparison, dict):
+            errors.append(Finding(fixture_label, "end-to-end comparison must be a mapping"))
+        else:
+            for field in ("v1_skills", "v2_skills"):
+                if not is_string_list(comparison.get(field), allow_empty=False):
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"end-to-end comparison.{field} must be a non-empty string list",
+                        )
+                    )
+
+    for identifier in sorted(REQUIRED_END_TO_END_FIXTURES - identifiers):
+        errors.append(
+            Finding(
+                "stack/fixtures/end-to-end",
+                f"missing required end-to-end fixture: {identifier}",
+            )
+        )
     return errors
 
 
@@ -4015,6 +4222,7 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
     # checks above, so both V2 installation modes use one command.
     errors.extend(validate_registry(repo))
     errors.extend(validate_route_fixtures(repo))
+    errors.extend(validate_end_to_end_fixtures(repo))
     errors.extend(validate_clarification_fixtures(repo))
     errors.extend(validate_onboarding_fixtures(repo))
     errors.extend(validate_planning_fixtures(repo))
@@ -4053,6 +4261,9 @@ def main() -> int:
     registry_count, policy_words, skills_over_budget = registry_summary(repo)
     route_fixture_count = len(
         list((repo / "stack" / "fixtures" / "routing").glob("*.yaml"))
+    )
+    end_to_end_fixture_count = len(
+        list((repo / "stack" / "fixtures" / "end-to-end").glob("*.yaml"))
     )
     onboarding_fixture_count = len(
         list((repo / "stack" / "fixtures" / "onboarding").glob("*.yaml"))
@@ -4124,6 +4335,10 @@ def main() -> int:
         print(
             "Adaptive routing fixture validation passed for "
             f"{route_fixture_count} scenarios."
+        )
+        print(
+            "End-to-end fixture validation passed for "
+            f"{end_to_end_fixture_count} scenarios."
         )
         print(
             "Onboarding fixture validation passed for "

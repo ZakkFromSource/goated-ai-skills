@@ -102,15 +102,14 @@ During or after delegated development, report:
 
 ## Delegation
 
-Main owns task selection, write-scope boundaries, dispatch prompts, integration, conflict resolution, status decisions, final verification, and user communication.
+Main owns tasks, write scopes, dispatch, integration, conflicts, statuses, final
+verification, and communication. Delegate only clearly owned implementation,
+spec/quality/final review, or evidence-gathering verification.
 
-Delegate only lifecycle work with clear ownership: fresh implementation, task or combined-change spec review, quality review, final review of issue fit/integration/docs/residual risk, or verification that gathers evidence without taking over the final claim.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected or changed; commands run or skipped with results; tests or behavior proof when relevant; assumptions, concerns, skipped evidence, residual risk, confidence; and recommendation, not an unsupervised final claim.
-
-Status handling lives in the workflow lifecycle: `DONE` triggers inspection and review; `DONE_WITH_CONCERNS` requires concern resolution; `NEEDS_CONTEXT` gets missing scope/source/command/evidence before re-dispatch or local continuation; `BLOCKED` narrows, splits, replans, changes tooling, or stops for a real product decision.
-
-If subagents are unavailable, run the same work sequentially with a narrower context budget and keep the evidence, review, and verification gates.
+Return paths, changes, commands, proof, assumptions, concerns, skips, risk,
+confidence, status, and recommendation—not a final claim. Inspect `DONE`;
+resolve `DONE_WITH_CONCERNS`; supply `NEEDS_CONTEXT`; narrow, replan, or stop on
+`BLOCKED`. Without delegation, run sequentially with the same review gates.
 
 ## Guardrails
 

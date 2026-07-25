@@ -130,15 +130,14 @@ Return a diagnosis packet shaped like this:
 
 ## Delegation
 
-Main owns symptom framing, hypothesis discipline, root-cause judgment, fix direction, and user communication.
+Main owns symptom framing, hypotheses, root-cause judgment, fix direction, and
+communication. Delegate only bounded reproduction, one trace or comparison,
+profiling/bisection evidence, hypothesis review, or cleanup checks.
 
-Delegate only bounded diagnosis/review work: reproduce separately, trace one subsystem/caller/data/dependency path, compare working vs failing examples, gather profiles/query plans/benchmarks/bisection evidence, review hypotheses for gaps, or verify cleanup and public-boundary safety.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths/commands inspected; evidence gathered; assumptions, skipped checks, residual risk, and confidence. The main agent sanity-checks important delegated evidence before relying on it.
-
-Status handling: `DONE` integrates inspected evidence; `DONE_WITH_CONCERNS` requires concern review before trust; `NEEDS_CONTEXT` gets the missing symptom, path, command, artifact, access, or expected behavior before re-dispatch or local continuation; `BLOCKED` narrows the diagnosis, chooses a safer loop, asks for approval, or hands off residual risk.
-
-If subagents are unavailable, run the same steps sequentially with a narrower context budget.
+Return paths, commands, evidence, assumptions, skipped checks, risk, confidence,
+and status. Sanity-check important evidence; resolve concerns or missing context
+before relying on it, and narrow or stop on `BLOCKED`. Without delegation, run
+the same probes sequentially.
 
 ## Guardrails
 

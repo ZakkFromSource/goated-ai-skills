@@ -135,15 +135,14 @@ proof needed, and next step. Make the proposal-only claim explicit.
 
 ## Delegation
 
-Main owns scope, dirty-worktree judgment, edit/proposal mode, final edits, proof interpretation, and user communication.
+Main owns scope, worktree judgment, mode, edits, proof interpretation, and
+communication. Delegate only bounded read-only diff, behavior-risk, mixed-work,
+style, proof-strength, or churn review unless a larger workflow assigns writes.
 
-Delegate only bounded read-only review unless a larger workflow explicitly assigns writes: inspect the scoped diff for candidate refinements, identify behavior-drift risk, check mixed user changes, compare local style conventions, inspect test proof strength, or pressure-test the final diff for unrelated churn.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; candidate refinements with benefit/risk; behavior-drift concerns; public-interface concerns; mixed-change warnings; assumptions; confidence; and recommended next action.
-
-Status handling: `DONE` integrates safe candidates; `DONE_WITH_CONCERNS` reviews risk before editing; `NEEDS_CONTEXT` gets missing scope, diff, test command, standard, or user decision; `BLOCKED` switches to proposal mode, routes to a companion skill, or reports the blocker.
-
-If subagents are unavailable, run the same review sequentially with a narrower context budget.
+Return paths, commands, candidate benefit/risk, drift or interface concerns,
+mixed-change warnings, assumptions, confidence, status, and next action.
+Resolve concerns or missing context before editing; use proposal mode or stop
+on `BLOCKED`. Without delegation, review sequentially.
 
 ## Guardrails
 

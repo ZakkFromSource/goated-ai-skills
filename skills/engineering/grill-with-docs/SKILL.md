@@ -151,11 +151,11 @@ When the grill is skipped, report:
 
 ## Delegation
 
-Main owns the user interview, decision ordering, recommendations, final synthesis, and when to stop.
-
-Delegate only bounded independent evidence gathering: find docs/ADRs/standards/context files, check whether code or tests contradict a user statement, summarize one feature/source family, or collect terminology around one domain concept.
-
-Require paths inspected, commands run or skipped, exact source evidence, assumptions/confidence, and candidate questions or contradictions rather than direct user-facing conclusions. If subagents are unavailable, gather the same evidence sequentially with a narrower context budget.
+Main owns the interview, decision order, recommendations, synthesis, and stop
+point. Delegate only bounded source discovery, contradiction checks, one
+feature summary, or terminology collection. Return exact paths, commands,
+evidence, assumptions, confidence, and candidate questions or contradictions,
+not user-facing conclusions. Without delegation, gather evidence sequentially.
 
 ## Guardrails
 

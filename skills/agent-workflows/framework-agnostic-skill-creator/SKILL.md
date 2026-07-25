@@ -110,15 +110,16 @@ When editing a skill folder, REPORT files changed, selected mode and category de
 
 ## Delegation
 
-Main owns the skill goal, public/private decision, category, final artifact, and user communication.
+Main owns the skill goal, public/private boundary, category, final artifact, and
+communication. Delegate only bounded source inventory, behavior extraction,
+scenario drafting, safe forward-testing, mechanics, privacy, schema, or
+portability review; never delegate publication.
 
-Delegate only bounded independent passes: inventory one source folder/repo slice/package link, extract behavior from one artifact family, draft evaluation scenarios, forward-test when safe, inventory tool mechanics, review sensitive-content risk, or check lean schema and self-contained runtime rules.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; source paths/links inspected; skipped paths/links with reasons; behavior, mechanics, assumptions, risks, evaluation evidence or scenarios, confidence, unresolved questions, and recommendation, not direct publication.
-
-Status handling: `DONE` integrates audit/evaluation/privacy/schema/portability evidence; `DONE_WITH_CONCERNS` requires concern review before publishing or editing; `NEEDS_CONTEXT` gets the missing source artifact, install target, category, compatibility constraint, or public/private rule before re-dispatch; `BLOCKED` narrows/splits the work, keeps output private, or escalates before tracked output.
-
-If subagents are unavailable, run the same passes sequentially with a narrower context budget and mark live-evaluation gaps.
+Return inspected and skipped sources, behavior, mechanics, evaluation evidence,
+assumptions, risk, confidence, unresolved questions, status, and recommendation.
+Resolve concerns or missing context before editing; narrow or stop on
+`BLOCKED`. Without delegation, run the same passes sequentially and record live
+evaluation gaps.
 
 ## Guardrails
 

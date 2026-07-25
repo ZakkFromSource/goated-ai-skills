@@ -148,15 +148,15 @@ For inline output, include the same core pieces without forcing a durable file p
 
 ## Delegation
 
-Main owns planning mode, intent gate, architecture judgment, output location, final blueprint, and user communication.
+Main owns mode, intent gate, architecture judgment, location, blueprint, and
+communication. Delegate only bounded evidence traces, one constrained
+alternative, or checks for overdesign, false seams, missing evidence, and weak
+test surfaces.
 
-Delegate only bounded evidence or competing-blueprint passes: summarize PRD/issue/standards/ADR/context/map evidence, trace callers/modules/data/dependency wiring/test surfaces for one area, draft one constrained alternative interface/module plan, or check the blueprint for overdesign, missing evidence, false seams, and weak test surfaces.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; exact source evidence; assumptions, contradictions, confidence, residual uncertainty; and candidate blueprint inputs rather than implementation or final artifact edits.
-
-Status handling: `DONE` integrates evidence, risks, or alternative inputs into architecture judgment; `DONE_WITH_CONCERNS` requires review of overdesign, false seams, weak test surfaces, unsupported assumptions, or implementation-order risk before choosing; `NEEDS_CONTEXT` gets the missing PRD, issue, ADR, source path, dependency constraint, test evidence, or user decision before re-dispatch; `BLOCKED` narrows scope, splits design passes, defers unresolved decisions, changes model/tooling, or escalates.
-
-If subagents are unavailable, run the same passes sequentially with a narrower context budget.
+Return inspected paths and commands, exact evidence, assumptions,
+contradictions, confidence, residual uncertainty, status, and blueprint inputs,
+not implementation or final edits. Resolve concerns or missing context before
+choosing; narrow or stop on `BLOCKED`. Without delegation, run sequentially.
 
 ## Guardrails
 

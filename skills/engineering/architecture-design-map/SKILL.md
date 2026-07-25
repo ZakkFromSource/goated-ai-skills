@@ -156,11 +156,11 @@ For quick inline zoom-out, keep the response concise and orientation-focused:
 
 ## Delegation
 
-Main owns map scope, source-of-truth judgment, diagram synthesis, final artifact edits, and user communication.
-
-Delegate only bounded independent evidence gathering: discover architecture docs/ADRs/diagrams, trace one source area or flow, identify runtime units/schemas/queues/jobs/external systems/test evidence for a named map scope, or check an existing diagram against source.
-
-Require paths inspected, commands run or skipped, exact source evidence, candidate nodes/edges/flows/seams/adapters/runtime units, assumptions/confidence/uncertainty, and contradictions or stale-map risks rather than final conclusions. If subagents are unavailable, run the same scans sequentially with a narrower context budget.
+Main owns scope, source-of-truth judgment, synthesis, edits, and communication.
+Delegate only bounded source discovery, one flow trace, runtime-unit inventory,
+or source-to-diagram check. Return paths, commands, exact evidence, candidate
+nodes and relationships, assumptions, confidence, uncertainty, and stale-map
+risk—not final conclusions. Without delegation, scan sequentially.
 
 ## Guardrails
 

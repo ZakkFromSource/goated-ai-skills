@@ -131,15 +131,15 @@ If test infrastructure is weak or missing, report:
 
 ## Delegation
 
-Main owns behavior selection, public-interface judgment, scope control, final implementation, and user communication.
+Main owns behavior, public-interface judgment, scope, implementation, and
+communication. Delegate only bounded interface/test discovery, related-test
+inventory, coupling review, one owned slice after red, disjoint verification,
+or focused spec/standards/security review.
 
-Delegate only bounded evidence-producing work: find the nearest public interface/test convention/fixture/command, identify related tests, check proposed tests for internal coupling, implement one owned production slice after the failing test is defined, run disjoint verification, or review spec/standards/security concerns.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected or changed; commands run or skipped; behavior and public interface under test; red or green evidence when relevant; assumptions, residual risk, and confidence.
-
-Status handling: `DONE` integrates evidence and continues the TDD cycle; `DONE_WITH_CONCERNS` requires concern review before trusting implementation/test/review, then fix, re-dispatch, or report risk; `NEEDS_CONTEXT` gets missing behavior, public interface, fixture, command, or spec detail before re-dispatch; `BLOCKED` narrows the slice, chooses a safer proof path, changes model/tooling, or escalates before continuing.
-
-If subagents are unavailable, run the same work sequentially with a narrower context budget.
+Return paths, changes, commands, behavior and interface, red/green evidence,
+assumptions, risk, confidence, and status. Resolve concerns or missing context
+before continuing; narrow or stop on `BLOCKED`. Without delegation, run the
+same cycle sequentially.
 
 ## Guardrails
 

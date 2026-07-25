@@ -127,15 +127,15 @@ For durable plan files, include the same sections in the file and summarize the 
 
 ## Delegation
 
-Main owns the planning target, artifact policy, execution route, final plan quality, and user communication.
+Main owns the target, artifact policy, route, final plan, and communication.
+Delegate only bounded path/test/command discovery, acceptance coverage,
+placeholder and safety review, closeout-surface discovery, or route
+stress-testing.
 
-Delegate only bounded evidence or review passes: find edit paths/interfaces/test surfaces/commands for one area, check acceptance coverage, review placeholders/stale assumptions/unsafe commands/missing evidence, identify docs/standards/security/verification closeout surfaces, or stress-test direct execution vs `tdd` vs delegated development.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths/docs/commands/tests/schemas/artifacts inspected; exact and skipped evidence with reasons; assumptions, residual risk, confidence; and recommended plan changes, not final publication.
-
-Status handling: `DONE` integrates evidence into the plan; `DONE_WITH_CONCERNS` requires concern review before execution; `NEEDS_CONTEXT` gets missing artifact, scope, source path, command, or user decision before re-dispatch or local verification; `BLOCKED` narrows the plan, routes to clarification, or stops before implementation.
-
-If subagents are unavailable, run the same checks sequentially with a narrower context budget.
+Return inspected and skipped evidence, assumptions, risk, confidence, status,
+and recommended changes—not final publication. Resolve concerns or missing
+context before execution; narrow, clarify, or stop on `BLOCKED`. Without
+delegation, review sequentially.
 
 ## Guardrails
 

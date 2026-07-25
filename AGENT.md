@@ -9,9 +9,9 @@ GOATED AI Skills is a public source library for installable, self-contained AI s
 3. target projects where installed skills are used.
 
 Current state: this repo preserves the completed V1 public-core skill set and
-is implementing the approved V2 integrated-stack migration. V1 is preserved by
-the `v1-baseline` Git tag. New skill folders and `SKILL.md` files should be
-added only when a specific approved implementation ticket calls for them.
+ships the maintainer-accepted V2 integrated stack. V1 is preserved by the
+`v1-baseline` Git tag. New skill folders and `SKILL.md` files should be added
+only when a specific approved implementation ticket calls for them.
 
 ## Core Posture
 
@@ -83,8 +83,8 @@ If subagents are unavailable, run the same workflow sequentially with a narrower
 ## Target Project Onboarding Workflow
 
 When the relevant skills are installed into an agent framework, start with the
-installed `using-goated-ai-skills` router. During V2 migration, apply the shared
-integrated policy when installed and preserve standalone fallback behavior.
+installed `using-goated-ai-skills` router. Apply the shared integrated policy
+when installed and preserve standalone fallback behavior.
 
 Track only durable target-project artifacts selected by the onboarding artifact
 budget. Resumable envelopes and handoffs default to verified-ignored

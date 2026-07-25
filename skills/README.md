@@ -1,8 +1,7 @@
 # Skills
 
-This folder contains the public skill catalog. The current folders preserve the
-completed V1 standalone experience while V2 migration proceeds through scoped
-tickets.
+This folder contains the accepted V2 public skill catalog while preserving
+compact standalone installation and the historical V1 baseline.
 
 Skill folders and `SKILL.md` files are added only when a specific approved implementation issue calls for them.
 
@@ -32,7 +31,7 @@ metadata:
 
 `description` is for skill discovery only. It should say when to load the skill by naming user requests, task conditions, symptoms, or project context. Put workflow steps, proof gates, outputs, review loops, and implementation detail in the body, not in `description`.
 
-Valid `metadata.goated-category` values for public V1 are:
+Valid `metadata.goated-category` values for the public catalog are:
 
 - `agent-workflows`
 - `engineering`
@@ -51,9 +50,12 @@ from the repo root:
 uv run python scripts/validate_skills.py
 ```
 
-The validator enforces current skill checks plus the integrated registry's JSON
-Schema and source cross-references. It reports docs/example schema drift
-separately without failing the command when implemented skills pass.
+The validator enforces current skill checks, the integrated registry's JSON
+Schema and source cross-references, focused fixtures, and the four end-to-end
+release scenarios. It reports docs/example schema drift separately without
+failing the command when implemented skills pass. Run
+`uv run python scripts/compare_v1_v2_context.py` for the reproducible
+route-specific V1/V2 instruction comparison.
 
 ## Body Sections
 
