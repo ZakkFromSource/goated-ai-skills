@@ -42,7 +42,10 @@ orchestration.
 GOATED AI Skills helps agents move from "I can edit files and hope it's what you want" to "I can carry out work responsibly, with full knowledge of what you expect from me."
 
 - **Progressive disclosure**: load the smallest useful context first, then go deeper only when the task needs it.
-- **Target-project onboarding**: create durable project context, source maps, standards profiles, optional external-doc lookup notes, optional PRDs under `docs/prds/` when product scope, roadmap intent, or acceptance criteria need durable capture, and thin agent instruction adapters.
+- **Target-project onboarding**: select a lightweight, standard, or full
+  artifact budget from one discovery pass, then create or incrementally refresh
+  only the context, source-map, standards, architecture, and routing artifacts
+  that solve a demonstrated need.
 - **Delivery workflows**: clarify intent, draft PRDs, break work into issues, plan architecture, prototype ideas, and write implementation plans.
 - **Implementation discipline**: use test-driven development, focused diagnosis, subagent-aware execution, scoped code refinement, standards review, security review, documentation cleanup, doc sync, and verification before completion claims.
 - **Clean continuity**: write commit messages and handoffs that help the next session resume with clarity.
@@ -121,17 +124,14 @@ Use these as human-readable maps. Installed agents should still begin with `usin
 ### Onboard a Target Project
 
 ```text
-session-start-progressive-disclosure
--> grill-with-docs
--> context-matrix-map
--> project-context-calibration
--> project-standards-calibration
--> agent-instructions-integrator
--> write-a-prd optional when product scope needs durable capture
--> architecture-design-map optional
--> plan-codebase-architecture optional
--> doc-sync
--> handoff optional
+using-goated-ai-skills
+-> proportional discovery and artifact budget
+-> agent-instructions-integrator for thin policy/routing
+-> context-matrix-map optional for retrieval gaps
+-> project-context-calibration optional for terminology/boundary gaps
+-> project-standards-calibration optional for standards gaps
+-> architecture or product artifacts only when discovery justifies them
+-> handoff optional for resumable work
 ```
 
 ### Deliver a Real Change

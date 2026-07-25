@@ -48,6 +48,11 @@ active integrated-stack migration.
   it is not a mandatory tracked artifact.
 - **Evidence entry** - a fresh, scoped reference to source or executable
   evidence that downstream skills can reuse without copying source content.
+- **Onboarding artifact budget** - the selected set of onboarding artifacts
+  justified by lightweight, standard, or full discovery; it is not a mandatory
+  checklist.
+- **Onboarding evidence bundle** - one set of provenance- and freshness-aware
+  evidence entries reused across every selected onboarding artifact.
 
 ### Skill Anatomy
 
@@ -86,8 +91,14 @@ active integrated-stack migration.
 - **Architecture plan** - a durable target-project artifact, normally `docs/agents/architecture-plan.md` for project-wide setup or `docs/architecture/<slug>-architecture-plan.md` for feature-specific work, that turns clarified intent into planned modules, interfaces, dependency seams, test surfaces, and implementation slice order.
 - **Agent instruction artifact** - a file or configuration entry that tells a specific agent framework how to use installed skills and target-project artifacts.
 - **Durable artifact** - tracked project knowledge that should survive across sessions, such as PRDs, ADRs, project context files, context matrices, standards profiles, architecture plans, and public docs.
-- **Local/session artifact** - ignored, private, or temporary context, such as OS temp `goated-handoffs/<project-name>/`, `.local/scratch/`, `.scratch/`, `tmp/`, or `temp/`.
-- **Handoff** - a compact continuity note for a future agent or session. Handoffs default to OS temp under `goated-handoffs/<project-name>/` and should reference existing artifacts instead of duplicating PRDs, issues, ADRs, diffs, or commits.
+- **Local/session artifact** - ignored, private, or temporary context, such as
+  `.local/goated/`, `.local/scratch/`, OS temp
+  `goated-handoffs/<project-name>/`, `.scratch/`, `tmp/`, or `temp/`.
+- **Handoff** - a compact continuity note for a future agent or session.
+  Resumable work defaults to verified-ignored
+  `.local/goated/handoffs/<effort-slug>.md`; OS temp is the fallback when
+  project-local state is inappropriate. Handoffs reference existing artifacts
+  instead of duplicating PRDs, tickets, ADRs, diffs, or commits.
 
 ### Operating Principles
 

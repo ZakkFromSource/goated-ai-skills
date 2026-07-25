@@ -23,7 +23,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | --- | --- | --- | --- |
 | `docs/install.md` | Defines integrated and individual docs-first install and adaptation guidance. | Before changing install docs or copying/adapting skills into an agent framework. | Integrated registry paths resolve from the shared distribution root; runtime installer automation remains out of scope. |
 | `docs/how-to-use.md` | Human operator manual for the installed GOATED skill stack. | Before changing usage-model docs, onboarding or delivery pipeline explanations, prompt starters, or skill-by-skill public reference material. | Complements install guidance; keep it aligned with the staged V2 migration and current implemented inventory. |
-| `stack/` | V2 shared policy, registry, schema, logical-state templates, and portable routing fixtures. | Before changing integrated-stack behavior or cross-skill metadata. | `SKILL.md` files remain authoritative for specialist procedures; fixtures describe conformance expectations rather than live-agent proof. |
+| `stack/` | V2 shared policy, registry, schema, logical-state templates, and portable routing and onboarding fixtures. | Before changing integrated-stack behavior or cross-skill metadata. | `SKILL.md` files remain authoritative for specialist procedures; fixtures describe conformance expectations rather than live-agent proof. |
 | `skills/README.md` | Defines skill schema, category rules, progressive disclosure, and delegation conventions. | Before creating or editing a skill folder. | Do not create skill folders from the index alone; use the approved issue. |
 | `skills/agent-workflows/README.md` | Defines the agent-workflows category and implemented skills. | Before editing onboarding, session, handoff, instruction-integration, or skill-creator workflows. | Keep workflows portable and compatibility caveats specific; archived issue `029` completed the creator rename. |
 | `skills/engineering/README.md` | Defines the engineering category and implemented skills. | Before implementing or reviewing delivery, testing, review, docs, architecture, or refactor skills. | Future additions still require approved implementation issues. |
@@ -41,7 +41,8 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | `skills/*/*/SKILL.md` | Actual installable workflow bodies. | Before editing, reviewing, installing, or adapting the named skill. | Do not bulk-read all skills when one skill is relevant. |
 | `.out-of-scope/` | Public deferred ideas and future upgrades. | When deciding whether a requested idea belongs in the active public scope. | Sample only the relevant file; archived issue `030` owns the concrete triage deferral update. |
 | `.local/` | Ignored private notes or scratch work. | Only when the user explicitly points to it or the active workflow requires private/local workspace context. | Public behavior must not depend on `.local/`. |
-| OS temp `goated-handoffs/<project-name>/` | Temporary handoff notes written outside the project workspace. | Only when the user points to an existing handoff or the active workflow needs temporary handoff context. | Resolve the absolute OS temp path through the active environment; temp files may be cleaned by the OS. |
+| `.local/goated/` | Ignored resumable envelopes and handoffs. | Only when the user points to existing state or resumable work requires it after ignore verification. | Public behavior must not depend on local state; OS temp remains the fallback. |
+| OS temp `goated-handoffs/<project-name>/` | Fallback handoff notes outside the project workspace. | When project-local state is inappropriate or cannot be stored safely. | Resolve the absolute OS temp path through the active environment; temp files may be cleaned by the OS. |
 | `.git/` | Git metadata. | Use through git commands only. | Do not treat it as normal context. |
 | Installed skill copies outside this repo, such as `C:/Users/.../.codex/skills/*` | Runtime copies used by an agent framework. | When the user asks to test installed behavior or compare source and installed copies. | Verify against source if manual copies may have drifted. |
 
@@ -56,7 +57,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Agent context artifacts | `docs/agents/` | Durable routing and standards artifacts for agents working in this repo. | Serious future sessions after these artifacts exist. |
 | Product and ticket handoffs | `docs/specs/`, `tickets/`, `issues/`, `issues/archive/` | Active V2 specs/tickets plus historical V1 PRDs and issue handoffs. | Implementing a ticket, tracing blockers, validating acceptance history, or adding future slices. |
 | Skill library | `skills/` | Public category indexes and implemented installable skill folders. | Creating, editing, reviewing, or installing skills. |
-| Local/private and deferred areas | `.local/`, OS temp `goated-handoffs/<project-name>/`, `.out-of-scope/` | Ignored private notes, temporary handoffs, and public deferred ideas. | Only when explicitly relevant; avoid `.local/` by default. |
+| Local/private and deferred areas | `.local/goated/`, `.local/`, OS temp `goated-handoffs/<project-name>/`, `.out-of-scope/` | Ignored resumable state, private notes, fallback temporary handoffs, and public deferred ideas. | Read local state only when explicitly relevant and verify ignore behavior before writing it. |
 
 ## Tests And Commands
 
@@ -67,9 +68,9 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Issue and PRD scans with `rg -n` | Sample issue and PRD headings, blockers, current names, and implementation summaries. | When deciding which issue to open first or checking documentation drift. | Ran on 2026-05-21 for issue discovery and interim doc sync. |
 | `git status --short` | Check local worktree state. | Before and after edits. | Ran on 2026-05-21 before interim doc-sync edits; output was empty. |
 | `rg --files -g 'package.json' -g 'pyproject.toml' -g 'pubspec.yaml' -g 'Cargo.toml' -g 'Makefile' -g '*.sln' -g '*.csproj' -g '*.fsproj' -g 'go.mod' -g 'requirements.txt'` | Look for build or package entrypoints. | Before claiming build, lint, format, or test commands exist. | Root `pyproject.toml` now exists for local validator tooling; no CI, formatter, linter, or test config is present. |
-| `tests/test_validate_skills.py` | Registry and adaptive-routing fixture validation behavior tests. | Before changing the registry, routing fixture contract, or validator behavior. | Added by Ticket 001 and extended by Ticket 002. |
+| `tests/test_validate_skills.py` | Registry, adaptive-routing, and onboarding fixture validation behavior tests. | Before changing the registry, fixture contracts, or validator behavior. | Added by Ticket 001 and extended by Tickets 002-003. |
 | `uv run python -m unittest discover -s tests -v` | Run validator behavior tests. | Before claiming registry or routing-fixture validation behavior passes. | Uses the standard library `unittest` runner. |
-| `uv run python scripts/validate_skills.py` | Validate implemented skills, the integrated registry schema and cross-references, public-boundary checks, and report-only drift. | Before claiming skill or registry changes are valid. | Uses `pyyaml` and `jsonschema` through `uv`. |
+| `uv run python scripts/validate_skills.py` | Validate implemented skills, the integrated registry, routing and onboarding fixtures, public-boundary checks, and report-only drift. | Before claiming skill, registry, or fixture changes are valid. | Uses `pyyaml` and `jsonschema` through `uv`. |
 | Manual markdown review | Validate docs-only changes. | For docs changes outside validator-covered skill checks. | Pair with targeted script checks when a skill adds executable helpers. |
 
 ## Decisions And Context Packs
@@ -100,6 +101,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 - Date: 2026-07-25
 - Updated by: Codex
-- Evidence used: prior context-matrix evidence; V2 spec and Ticket 001; ADR
-  0002; `stack/`; current validator tests and commands; targeted catalog,
-  install, docs-drift, and issue-state scans.
+- Evidence used: prior context-matrix evidence; V2 spec and Tickets 001-003;
+  ADR 0002; `stack/`, including routing and onboarding fixtures; current
+  validator tests and commands; targeted catalog, install, docs-drift, and
+  ticket-state scans.

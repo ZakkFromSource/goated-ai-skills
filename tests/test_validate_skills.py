@@ -9,7 +9,11 @@ from pathlib import Path
 
 import yaml
 
-from scripts.validate_skills import validate_registry, validate_route_fixtures
+from scripts.validate_skills import (
+    validate_onboarding_fixtures,
+    validate_registry,
+    validate_route_fixtures,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +25,17 @@ def copy_registry_fixture(destination: Path) -> Path:
     shutil.copytree(REPO_ROOT / "stack", destination / "stack")
     shutil.copytree(REPO_ROOT / "skills", destination / "skills")
     return destination / "stack" / "goated-stack.yaml"
+
+
+def copy_onboarding_fixtures(destination: Path) -> Path:
+    """Copy onboarding fixtures and return their destination directory."""
+
+    fixture_destination = destination / "stack" / "fixtures" / "onboarding"
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "onboarding",
+        fixture_destination,
+    )
+    return fixture_destination
 
 
 class RegistryValidationTests(unittest.TestCase):
@@ -329,6 +344,144 @@ class RouteFixtureValidationTests(unittest.TestCase):
 
         self.assertIn(
             "routing fixture references undefined risk flag: not-defined",
+            messages,
+        )
+
+
+class OnboardingFixtureValidationTests(unittest.TestCase):
+    def test_current_onboarding_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_onboarding_fixtures(REPO_ROOT))
+
+    def test_routine_orientation_must_stay_silent(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            copy_onboarding_fixtures(fixture_root)
+            fixture_path = (
+                fixture_root
+                / "stack"
+                / "fixtures"
+                / "onboarding"
+                / "lightweight-small-project.yaml"
+            )
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["orientation"]["visible_report"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_onboarding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "routine onboarding orientation must stay silent",
+            messages,
+        )
+
+    def test_lightweight_budget_cannot_require_governance_artifacts(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_onboarding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "lightweight-small-project.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["artifact_budget"].append("project-standards")
+            fixture["expected"]["artifact_actions"]["project-standards"] = "create"
+            fixture["expected"]["evidence_bundle"]["reuse_by"].append(
+                "project-standards"
+            )
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_onboarding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "lightweight onboarding budget must contain only thin-policy-routing",
+            messages,
+        )
+
+    def test_one_evidence_bundle_must_feed_every_budgeted_artifact(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_onboarding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "standard-incremental-refresh.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["evidence_bundle"]["reuse_by"].remove(
+                "project-standards"
+            )
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_onboarding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "onboarding evidence bundle must feed every budgeted artifact",
+            messages,
+        )
+
+    def test_inferred_standards_require_provenance_and_freshness(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_onboarding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "standard-incremental-refresh.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            del fixture["expected"]["inferred_standards"][0]["freshness"]
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_onboarding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "inferred standards require statement, provenance, freshness, "
+            "and confidence strings",
+            messages,
+        )
+
+    def test_resumable_work_requires_ignore_check_and_temp_fallback(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_onboarding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "resume-from-handoff.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["continuity"]["verify_ignore_before_write"] = False
+            fixture["expected"]["continuity"]["os_temp_fallback"] = False
+            fixture["expected"]["continuity"]["links_durable_artifacts"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_onboarding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "resumable onboarding requires verify_ignore_before_write",
+            messages,
+        )
+        self.assertIn(
+            "resumable onboarding requires os_temp_fallback",
+            messages,
+        )
+        self.assertIn(
+            "resumable onboarding requires links_durable_artifacts",
             messages,
         )
 

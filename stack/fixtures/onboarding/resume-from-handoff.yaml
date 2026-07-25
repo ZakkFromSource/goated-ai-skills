@@ -1,0 +1,42 @@
+schema_version: 1.0.0
+identifier: resume-from-handoff
+title: A resumed onboarding effort reuses fresh state and durable references
+request: Resume the interrupted onboarding effort from its handoff.
+project_context:
+  - An ignored project-local envelope and handoff already identify the active goal.
+  - Referenced durable onboarding artifacts still exist.
+expected:
+  profile: standard
+  artifact_budget:
+    - context-matrix
+    - project-standards
+  artifact_actions:
+    context-matrix: refresh
+    project-standards: preserve
+  evidence_bundle:
+    identifier: resumed-onboarding-discovery
+    reuse_by:
+      - context-matrix
+      - project-standards
+    entries:
+      - locator: .local/goated/handoffs/onboarding.md
+        provenance: ignored project-local continuity note
+        freshness: checked against referenced durable artifacts
+        key_finding: The next action is a targeted source-map refresh.
+      - locator: docs/agents/context-matrix.md
+        provenance: tracked durable onboarding artifact
+        freshness: current working tree
+        key_finding: Most existing source tiers remain current.
+  inferred_standards: []
+  orientation:
+    visible_report: false
+    reuse_fresh_state: true
+  continuity:
+    resumable: true
+    storage_preference: project-local-ignored
+    verify_ignore_before_write: true
+    os_temp_fallback: true
+    links_durable_artifacts: true
+prohibited_behaviors:
+  - Copy durable context, standards, or source maps into the handoff.
+  - Repeat discovery that fresh evidence already supports.

@@ -11,7 +11,9 @@ metadata:
 
 Add a thin target-project routing layer that tells the user's chosen agent framework when to use installed GOATED skills and durable project artifacts.
 
-Use this skill after core onboarding artifacts exist, or when a target project needs a small instruction adapter. The adapter should route to installed skills; it should not copy full skill bodies or turn one framework's filename convention into a universal rule.
+Use this skill whenever the selected onboarding budget includes thin policy or
+framework routing. Lightweight onboarding may stop here after reusing existing
+docs; context, source-map, and standards artifacts do not need to exist.
 
 ## Inputs
 
@@ -77,7 +79,10 @@ Fallback: If companion skills or target-project artifacts are unavailable, creat
    - Tell future agents to read root `CONTEXT.md` when it exists for project language, boundaries, and durable artifact definitions.
    - Tell future agents to read `docs/agents/context-matrix.md` when it exists for source discovery.
    - Tell future agents to read `docs/agents/project-standards.md` when standards affect the work.
-   - Tell future agents to use ignored `.local/` paths only for session-private notes, handoffs, or scratch artifacts when the project uses them.
+   - Mention only artifacts that exist. Missing optional onboarding artifacts
+     do not lower confidence when discovery found no need for them.
+   - Tell future agents to use `.local/goated/` for resumable envelopes and
+     handoffs only after verifying `.local/` is ignored; otherwise use OS temp.
    - State lower confidence if these artifacts are missing or not yet calibrated.
 
 7. Verify the adapter:
@@ -100,6 +105,7 @@ Update the selected target-project instruction artifact or configuration with a 
 - Use root `CONTEXT.md` for project language and boundaries when present.
 - Use `docs/agents/context-matrix.md` for source discovery when present.
 - Use `docs/agents/project-standards.md` for project standards when present.
+- Use `.local/goated/` for resumable local state only after ignore verification; otherwise use OS temp.
 - Use installed GOATED skills by name; do not copy skill bodies into this file.
 - Unresolved assumptions: <none or concise list>
 ```
@@ -131,6 +137,8 @@ Require paths inspected, commands run, framework signals, assumptions/confidence
 - Do not edit instructions before detecting or confirming the chosen framework.
 - Do not overwrite existing project-specific rules, safety notes, or framework syntax.
 - Do not route to target-project artifacts that do not exist without marking them missing or planned.
+- Do not imply that optional context, source-map, or standards artifacts are
+  missing requirements when the onboarding budget intentionally omitted them.
 - Do not include private notes, ignored local scratch files, credentials, client data, or sensitive personal context unless the user explicitly requests a private artifact.
 - Prefer a small router that points to installed skills and durable target-project artifacts.
 

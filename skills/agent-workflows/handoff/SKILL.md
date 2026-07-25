@@ -48,13 +48,22 @@ Fallback: If companion skills or durable artifacts are unavailable, write compac
    - Keep the handoff focused on resuming the current work, not documenting the whole project.
 
 2. Choose storage:
-   - Default to the user's OS temp directory under `goated-handoffs/<project-name>/`.
+   - For resumable work, default to
+     `.local/goated/handoffs/<effort-slug>.md` inside the target project after
+     verifying `.local/` is ignored.
+   - Verify ignore behavior with project evidence such as
+     `git check-ignore .local/` or the applicable version-control ignore
+     configuration before writing private or session state there.
+   - Use the user's OS temp directory under
+     `goated-handoffs/<project-name>/` when the project should not be modified,
+     `.local/` is not safely ignored, or no target-project root is available.
    - Resolve OS temp with a platform API when possible, such as Python `tempfile.gettempdir()`, Node `os.tmpdir()`, or PowerShell `[System.IO.Path]::GetTempPath()`.
    - Define `<project-name>` as a filesystem-safe slug from the user-provided project name when available, otherwise the target-project root folder name.
    - Use `unknown-project` when no project name or target-project root can be identified.
    - Replace whitespace, path separators, and reserved filename characters in `<project-name>` with hyphens; keep the slug readable rather than hash-first.
    - Use a clear default path such as `<os-temp>/goated-handoffs/<project-name>/<YYYY-MM-DD>-<short-topic>.md`.
-   - If updating an existing handoff, read it before writing.
+   - Define `<effort-slug>` from the active envelope or a short filesystem-safe
+     topic. If updating an existing handoff, read it before writing.
    - Write a tracked handoff only when the user explicitly requests one, and keep tracked handoffs public-safe.
 
 3. Gather references instead of copying content:
@@ -90,7 +99,9 @@ Fallback: If companion skills or durable artifacts are unavailable, write compac
 
 ## Output Contract
 
-Write a Markdown handoff under `<os-temp>/goated-handoffs/<project-name>/` by default:
+Write a Markdown handoff under
+`<target-project>/.local/goated/handoffs/<effort-slug>.md` by default for
+verified resumable work, with OS temp as the safe fallback:
 
 ```markdown
 # Handoff: <short topic>
@@ -101,7 +112,7 @@ Write a Markdown handoff under `<os-temp>/goated-handoffs/<project-name>/` by de
 - Goal: <one sentence>
 - Next-session focus: <user-provided focus or "not specified">
 - Target project: <path or name>
-- Storage: <temporary OS temp | tracked>
+- Storage: <ignored project-local | temporary OS temp | tracked>
 - Handoff path: <absolute path>
 
 ## Current State
@@ -143,7 +154,7 @@ Write a Markdown handoff under `<os-temp>/goated-handoffs/<project-name>/` by de
 After writing the handoff, report:
 
 - absolute handoff path;
-- whether it is temporary OS temp storage or tracked;
+- whether it is ignored project-local, temporary OS temp, or tracked storage;
 - most important references included;
 - verification status;
 - recommended next skill or direct next action.
@@ -158,8 +169,12 @@ Require paths inspected, commands run, evidence sources, assumptions/uncertainty
 
 ## Guardrails
 
-- Default to `<os-temp>/goated-handoffs/<project-name>/`, not the current project workspace.
-- Always report the absolute handoff path because OS temp locations vary by system and may be cleaned automatically.
+- Do not write project-local continuity state until `.local/` ignore behavior
+  is verified.
+- Prefer `.local/goated/handoffs/` for resumable project work and OS temp when
+  project-local state is inappropriate or unsafe.
+- Always report the absolute handoff path so the next session can locate
+  project-local or OS-temp state; temporary files may be cleaned automatically.
 - Do not treat temporary handoffs as durable records or secret storage.
 - Write tracked handoffs only when the user explicitly requests a tracked artifact.
 - Do not duplicate PRDs, issue files, ADRs, diffs, commit messages, long logs, or conversation transcripts.

@@ -162,6 +162,19 @@ REQUIRED_ROUTE_FIXTURE_IDENTIFIERS = {
     "approval-reuse",
     "evidence-invalidation",
 }
+ONBOARDING_PROFILES = {"lightweight", "standard", "full"}
+ONBOARDING_ARTIFACT_ACTIONS = {"create", "refresh", "preserve"}
+ONBOARDING_CONTINUITY_STORAGE = {
+    "conversation",
+    "project-local-ignored",
+    "os-temp",
+}
+REQUIRED_ONBOARDING_FIXTURE_IDENTIFIERS = {
+    "lightweight-small-project",
+    "standard-incremental-refresh",
+    "full-governance-project",
+    "resume-from-handoff",
+}
 
 # Regex helpers for specific mechanical checks. These intentionally favor clear,
 # high-confidence matches over clever parsing.
@@ -1151,6 +1164,324 @@ def validate_route_fixtures(repo: Path) -> list[Finding]:
     return errors
 
 
+def validate_onboarding_evidence(
+    expected: dict[str, object],
+    fixture_label: str,
+    artifact_budget: list[str],
+) -> list[Finding]:
+    """Validate one shared, reusable onboarding evidence bundle."""
+
+    evidence_bundle = expected.get("evidence_bundle")
+    if not isinstance(evidence_bundle, dict):
+        return [
+            Finding(
+                fixture_label,
+                "onboarding fixture expected.evidence_bundle must be a mapping",
+            )
+        ]
+
+    errors: list[Finding] = []
+    if not isinstance(evidence_bundle.get("identifier"), str):
+        errors.append(
+            Finding(
+                fixture_label,
+                "onboarding evidence bundle identifier must be a string",
+            )
+        )
+
+    reuse_by = evidence_bundle.get("reuse_by")
+    if not is_string_list(reuse_by, allow_empty=False):
+        errors.append(
+            Finding(
+                fixture_label,
+                "onboarding evidence bundle reuse_by must be a non-empty string list",
+            )
+        )
+    elif not set(artifact_budget).issubset(reuse_by):
+        errors.append(
+            Finding(
+                fixture_label,
+                "onboarding evidence bundle must feed every budgeted artifact",
+            )
+        )
+
+    entries = evidence_bundle.get("entries")
+    if not isinstance(entries, list) or not entries:
+        errors.append(
+            Finding(
+                fixture_label,
+                "onboarding evidence bundle entries must be a non-empty list",
+            )
+        )
+    else:
+        for entry in entries:
+            if not isinstance(entry, dict) or any(
+                not isinstance(entry.get(field), str) or not entry[field]
+                for field in ("locator", "provenance", "freshness", "key_finding")
+            ):
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "onboarding evidence entries require locator, provenance, "
+                        "freshness, and key_finding strings",
+                    )
+                )
+                break
+
+    inferred_standards = expected.get("inferred_standards", [])
+    if not isinstance(inferred_standards, list):
+        errors.append(
+            Finding(
+                fixture_label,
+                "onboarding fixture expected.inferred_standards must be a list",
+            )
+        )
+    else:
+        for standard in inferred_standards:
+            if not isinstance(standard, dict) or any(
+                not isinstance(standard.get(field), str) or not standard[field]
+                for field in ("statement", "provenance", "freshness", "confidence")
+            ):
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "inferred standards require statement, provenance, freshness, "
+                        "and confidence strings",
+                    )
+                )
+                break
+    return errors
+
+
+def validate_onboarding_continuity(
+    expected: dict[str, object],
+    fixture_label: str,
+) -> list[Finding]:
+    """Validate silent orientation and safe resumable-state expectations."""
+
+    errors: list[Finding] = []
+    orientation = expected.get("orientation")
+    if not isinstance(orientation, dict):
+        errors.append(
+            Finding(
+                fixture_label,
+                "onboarding fixture expected.orientation must be a mapping",
+            )
+        )
+    else:
+        for field in ("visible_report", "reuse_fresh_state"):
+            if not isinstance(orientation.get(field), bool):
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        f"onboarding fixture expected.orientation.{field} must be boolean",
+                    )
+                )
+        if orientation.get("visible_report") is True:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "routine onboarding orientation must stay silent",
+                )
+            )
+        if orientation.get("reuse_fresh_state") is False:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "onboarding orientation must reuse fresh state",
+                )
+            )
+
+    continuity = expected.get("continuity")
+    if not isinstance(continuity, dict):
+        return errors + [
+            Finding(
+                fixture_label,
+                "onboarding fixture expected.continuity must be a mapping",
+            )
+        ]
+
+    for field in (
+        "resumable",
+        "verify_ignore_before_write",
+        "os_temp_fallback",
+        "links_durable_artifacts",
+    ):
+        if not isinstance(continuity.get(field), bool):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"onboarding fixture expected.continuity.{field} must be boolean",
+                )
+            )
+    storage_preference = continuity.get("storage_preference")
+    if storage_preference not in ONBOARDING_CONTINUITY_STORAGE:
+        errors.append(
+            Finding(
+                fixture_label,
+                "onboarding fixture continuity storage_preference is unsupported",
+            )
+        )
+    if continuity.get("resumable") is True:
+        if storage_preference != "project-local-ignored":
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "resumable onboarding must prefer ignored project-local state",
+                )
+            )
+        for required_field in (
+            "verify_ignore_before_write",
+            "os_temp_fallback",
+            "links_durable_artifacts",
+        ):
+            if continuity.get(required_field) is not True:
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        f"resumable onboarding requires {required_field}",
+                    )
+                )
+    return errors
+
+
+def validate_onboarding_fixtures(repo: Path) -> list[Finding]:
+    """Validate portable onboarding profiles and continuity expectations."""
+
+    fixture_root = repo / "stack" / "fixtures" / "onboarding"
+    fixture_paths = sorted(fixture_root.glob("*.yaml"))
+    if not fixture_paths:
+        return [Finding("stack/fixtures/onboarding", "no onboarding fixtures found")]
+
+    errors: list[Finding] = []
+    identifiers: set[str] = set()
+    required_fields = {
+        "schema_version",
+        "identifier",
+        "title",
+        "request",
+        "project_context",
+        "expected",
+        "prohibited_behaviors",
+    }
+    for fixture_path in fixture_paths:
+        fixture_label = relative(fixture_path, repo)
+        fixture, fixture_errors = load_mapping(fixture_path, fixture_label)
+        errors.extend(fixture_errors)
+        if fixture is None:
+            continue
+
+        missing_fields = sorted(required_fields - fixture.keys())
+        errors.extend(
+            Finding(fixture_label, f"onboarding fixture is missing {field}")
+            for field in missing_fields
+        )
+        if missing_fields:
+            continue
+        if fixture["schema_version"] != "1.0.0":
+            errors.append(
+                Finding(fixture_label, "unsupported onboarding fixture schema_version")
+            )
+
+        identifier = fixture["identifier"]
+        if not isinstance(identifier, str) or not identifier:
+            errors.append(
+                Finding(fixture_label, "onboarding fixture identifier must be a string")
+            )
+            continue
+        if identifier in identifiers:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"duplicate onboarding fixture identifier: {identifier}",
+                )
+            )
+        identifiers.add(identifier)
+
+        expected = fixture["expected"]
+        if not isinstance(expected, dict):
+            errors.append(
+                Finding(fixture_label, "onboarding fixture expected must be a mapping")
+            )
+            continue
+        profile = expected.get("profile")
+        if profile not in ONBOARDING_PROFILES:
+            errors.append(
+                Finding(fixture_label, "onboarding fixture profile is unsupported")
+            )
+        artifact_budget = expected.get("artifact_budget")
+        if not is_string_list(artifact_budget, allow_empty=False):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "onboarding fixture artifact_budget must be a non-empty string list",
+                )
+            )
+            artifact_budget = []
+        elif profile == "lightweight" and artifact_budget != ["thin-policy-routing"]:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "lightweight onboarding budget must contain only thin-policy-routing",
+                )
+            )
+
+        artifact_actions = expected.get("artifact_actions")
+        if not isinstance(artifact_actions, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "onboarding fixture artifact_actions must be a mapping",
+                )
+            )
+        else:
+            if set(artifact_actions) != set(artifact_budget):
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "onboarding artifact actions must match the artifact budget",
+                    )
+                )
+            for action in artifact_actions.values():
+                if action not in ONBOARDING_ARTIFACT_ACTIONS:
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            "onboarding artifact action is unsupported",
+                        )
+                    )
+
+        errors.extend(
+            validate_onboarding_evidence(expected, fixture_label, artifact_budget)
+        )
+        errors.extend(validate_onboarding_continuity(expected, fixture_label))
+        if not is_string_list(fixture["project_context"]):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "onboarding fixture project_context must be a string list",
+                )
+            )
+        if not is_string_list(fixture["prohibited_behaviors"], allow_empty=False):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "onboarding fixture prohibited_behaviors must be a non-empty string list",
+                )
+            )
+
+    errors.extend(
+        Finding(
+            "stack/fixtures/onboarding",
+            f"missing required onboarding fixture: {identifier}",
+        )
+        for identifier in sorted(
+            REQUIRED_ONBOARDING_FIXTURE_IDENTIFIERS - identifiers
+        )
+    )
+    return errors
+
+
 def registry_summary(repo: Path) -> tuple[int, int, list[str]]:
     """Return catalog size, shared-policy words, and skills over 1,500 words."""
 
@@ -1203,6 +1534,7 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
     # checks above, so both V2 installation modes use one command.
     errors.extend(validate_registry(repo))
     errors.extend(validate_route_fixtures(repo))
+    errors.extend(validate_onboarding_fixtures(repo))
 
     # Docs drift is informational in issue 060, so it is returned separately.
     drift = scan_docs_schema_drift(repo, set(skill_files))
@@ -1233,6 +1565,9 @@ def main() -> int:
     route_fixture_count = len(
         list((repo / "stack" / "fixtures" / "routing").glob("*.yaml"))
     )
+    onboarding_fixture_count = len(
+        list((repo / "stack" / "fixtures" / "onboarding").glob("*.yaml"))
+    )
     if 800 <= policy_words <= 1200:
         policy_budget_status = "within 800-1,200 target"
     elif policy_words < 800:
@@ -1260,6 +1595,10 @@ def main() -> int:
         print(
             "Adaptive routing fixture validation passed for "
             f"{route_fixture_count} scenarios."
+        )
+        print(
+            "Onboarding fixture validation passed for "
+            f"{onboarding_fixture_count} scenarios."
         )
         print(
             f"Word-budget report: shared policy {policy_words} words "

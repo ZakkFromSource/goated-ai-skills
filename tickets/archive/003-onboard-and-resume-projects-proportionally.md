@@ -33,17 +33,17 @@ framework routing, and reliable ignored local continuity.
 
 ## Acceptance Criteria
 
-- [ ] Onboarding intensity selects an artifact budget rather than a mandatory
+- [x] Onboarding intensity selects an artifact budget rather than a mandatory
       document checklist.
-- [ ] One evidence bundle feeds all selected onboarding artifacts.
-- [ ] Existing context, source maps, and standards are refreshed incrementally.
-- [ ] Inferred standards record provenance and freshness.
-- [ ] Small projects can stop after a thin policy/routing integration.
-- [ ] Session orientation normally operates silently and reuses fresh state.
-- [ ] Resumable envelopes and handoffs default to ignored
+- [x] One evidence bundle feeds all selected onboarding artifacts.
+- [x] Existing context, source maps, and standards are refreshed incrementally.
+- [x] Inferred standards record provenance and freshness.
+- [x] Small projects can stop after a thin policy/routing integration.
+- [x] Session orientation normally operates silently and reuses fresh state.
+- [x] Resumable envelopes and handoffs default to ignored
       `.local/goated/` paths after ignore verification.
-- [ ] OS temp remains a fallback when project-local state is inappropriate.
-- [ ] Handoffs link to durable artifacts instead of copying them.
+- [x] OS temp remains a fallback when project-local state is inappropriate.
+- [x] Handoffs link to durable artifacts instead of copying them.
 
 ## Expected Proof
 
@@ -72,3 +72,20 @@ framework routing, and reliable ignored local continuity.
 
 - Do not make `CONTEXT.md`, a context matrix, or a standards profile universal.
 - Do not add a database, background refresh service, or framework installer.
+
+## Implementation Proof
+
+- `uv run python -m unittest discover -s tests -v` passed 20 tests, including
+  six onboarding-fixture behavior tests for artifact budgets, shared evidence,
+  inferred-standard provenance/freshness, silent orientation, ignore
+  verification, OS-temp fallback, and durable links.
+- `uv run python scripts/validate_skills.py` passed 32 implemented skills, 32
+  registry entries, seven adaptive-routing fixtures, and four onboarding
+  fixtures. The shared policy remained within its 800-1,200 word target.
+- `stack/fixtures/onboarding/` covers lightweight small-project, standard
+  incremental-refresh, full governance-heavy, and resume-from-handoff
+  scenarios.
+- Manual standards/spec review found no remaining findings after continuity
+  reporting and public documentation were synchronized.
+- `git diff --check` passed. Three unrelated learning-capture schema-drift
+  notes remain report-only.

@@ -1,6 +1,6 @@
 ---
 name: context-matrix-map
-description: Use when onboarding a project for durable agent work, creating a context/source map, or deciding what future agents should read first.
+description: Use when onboarding or refreshing a project after discovery shows a durable source-routing or repeated retrieval problem.
 metadata:
   goated-category: agent-workflows
 ---
@@ -9,9 +9,12 @@ metadata:
 
 ## Purpose
 
-Create a durable, source-grounded map of a target project so future agents know where to look first, what to defer, and which sources are only useful for specialized work.
+Create or incrementally refresh a durable, source-grounded map so future agents
+know where to look first, what to defer, and which sources are specialized.
 
-Use this skill during target-project onboarding or when a project lacks a reliable `docs/agents/context-matrix.md`. The result should route future context loading; it should not become a full architecture essay.
+Activate it only when the onboarding artifact budget includes a source map
+because retrieval is repeated, cross-area, stale, or unreliable. A lightweight
+project can stop at thin policy and routing without this artifact.
 
 ## Inputs
 
@@ -21,6 +24,8 @@ Use this skill during target-project onboarding or when a project lacks a reliab
 - Existing root `CONTEXT.md`, if present.
 - Existing project docs, ADRs, issue or PRD folders, test layout, build metadata, and command definitions.
 - Existing `docs/agents/` artifacts, external-doc lookup notes, or context packs, if present.
+- Selected onboarding profile, artifact budget, and shared evidence bundle when
+  running inside the integrated stack.
 
 ## Dependencies
 
@@ -41,26 +46,33 @@ Fallback: If companion skills are unavailable, inspect minimal project files and
    - Keep installed-skill instructions separate from target-project artifacts.
    - If the root is ambiguous, inspect one local source such as `git rev-parse --show-toplevel`, a package manifest, or a README before asking the user.
 
-2. Discover candidate sources without bulk-reading:
+2. Reuse the shared onboarding evidence:
+   - Start from fresh entries already collected during onboarding discovery.
+   - Read more only when the bundle is stale, contradictory, or too shallow to
+     place a source safely.
+   - Add compact locator, provenance, freshness, finding, and confidence
+     updates for other selected onboarding artifacts to reuse.
+
+3. Discover remaining candidate sources without bulk-reading:
    - List top-level files and directories.
    - Search for likely instruction files, README files, docs indexes, ADRs, issue folders, PRDs, context packs, optional `docs/agents/external-docs/` lookup notes, package manifests, build scripts, test folders, and config files.
    - Prefer fast file discovery commands and targeted file opens over recursive reading.
    - Do not open generated output, dependency folders, lockfiles, binary assets, or large data dumps unless they are the only source for a required fact.
 
-3. Sample sources just enough to classify them:
+4. Sample sources just enough to classify them:
    - Read short indexes, headings, manifests, command definitions, and nearby docs that explain project conventions.
    - For code areas, identify entrypoints, feature directories, shared libraries, data-access boundaries, and integration surfaces from filenames and shallow reads.
    - For tests, identify test frameworks, locations, naming patterns, and the smallest useful commands.
    - For ADRs and specs, record titles, paths, dates when available, and the decision or product area they govern.
 
-4. Build the matrix using progressive-disclosure tiers:
+5. Build the matrix using progressive-disclosure tiers:
    - **First-read**: sources future agents should read at the start of most serious sessions.
    - **Second-read**: sources to read after the task surface is known or before changing a relevant area.
    - **Only-if-needed**: deep references, large docs, historical specs, generated files, specialized commands, or narrow subsystems.
    - Put external-doc lookup notes in the lowest useful tier, usually **Only-if-needed**, unless a captured source is central to most serious work in the target project.
    - Put each source in the lowest-context tier that still keeps future agents safe.
 
-5. Cover the required source types:
+6. Cover only relevant source types:
    - Docs and README files.
    - Existing project context files, such as root `CONTEXT.md`.
    - Code areas and important boundaries.
@@ -69,13 +81,15 @@ Fallback: If companion skills are unavailable, inspect minimal project files and
    - ADRs, PRDs, issues, or decision records.
    - Agent instructions, external-doc lookup notes, and existing context packs under paths such as `docs/agents/`.
 
-6. Write or update the default tracked artifact:
+7. Write or incrementally refresh the default tracked artifact:
    - Use `docs/agents/context-matrix.md` unless the user requested another tracked path.
    - Create `docs/agents/` if needed.
-   - Preserve useful existing project-specific facts when refreshing the file.
+   - Read the existing file first. Preserve accurate entries, update only stale
+     or affected rows, and remove content only when current evidence disproves
+     it.
    - Mark uncertainty explicitly instead of filling gaps with speculation.
 
-7. Stop when the map can route future reading:
+8. Stop when the map can route future reading:
    - Do not keep exploring to explain every module.
    - Defer architecture diagrams, standards profiles, security review, or detailed delivery planning to companion skills.
    - If the project is too large to map in one pass, write a partial matrix with clear gaps and recommended next scans.
@@ -140,6 +154,10 @@ After writing the file, report:
 - notable gaps or assumptions;
 - verification or discovery commands used.
 
+In integrated use, return these items as an internal envelope delta unless a
+conflict, blocker, material route change, or explicit user request justifies a
+visible report.
+
 ## Delegation
 
 Main owns the target-project boundary, tiering judgment, final artifact, and user communication.
@@ -155,6 +173,8 @@ Require paths inspected, commands run, source docs/files used, assumptions, conf
 - Do not rank sources by personal preference; tier them by when future agents need them.
 - Do not include private notes, ignored local scratch files, credentials, client data, or sensitive personal context unless the user explicitly requests a private artifact.
 - Do not assume every project has GOATED artifacts, ADRs, tests, or agent instruction files.
+- Do not create this artifact merely because onboarding began or rebuild an
+  accurate existing matrix from a blank template.
 - Do not assume every project has external-doc lookup notes; when present, treat them as dated optional evidence and re-check external sources when freshness matters.
 - Do not claim commands work unless they were discovered from project files or actually run.
 - Keep entries brief, evidence-based, and path-oriented.

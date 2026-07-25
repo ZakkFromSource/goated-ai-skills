@@ -53,35 +53,38 @@ flowchart TB
 
 ## Pipeline 1: Target Project Onboarding
 
-Run onboarding before serious or repeated work in a target project. The purpose is to help future agents know what to read, what the project means by its terms, which standards apply, and how installed skills should be routed. If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria needed before architecture planning or issue breakdown, route through `write-a-prd`; otherwise skip the PRD step.
+Onboarding selects a lightweight, standard, or full artifact budget from one
+shared discovery evidence bundle. It creates or incrementally refreshes only
+the artifacts that solve demonstrated retrieval, terminology, standards,
+architecture, routing, or continuity needs.
 
 ```mermaid
 flowchart LR
-  A["session-start-progressive-disclosure"] --> B["grill-with-docs"]
-  B --> C["context-matrix-map"]
-  C --> D["project-context-calibration"]
-  D --> E["project-standards-calibration"]
-  E --> F["agent-instructions-integrator"]
-  F --> G{"Need product scope, roadmap, or acceptance criteria?"}
-  G -->|yes| H["write-a-prd optional"]
-  G -->|no| I["architecture-design-map optional"]
-  H --> I
-  I --> J["plan-codebase-architecture optional"]
-  J --> K["doc-sync"]
-  K --> L["handoff optional"]
+  A["using-goated-ai-skills"] --> B["proportional discovery"]
+  B --> C{"Artifact budget"}
+  C --> D["thin policy/routing"]
+  C --> E["context/source-map/standards as needed"]
+  C --> F["architecture/product artifacts as needed"]
+  D --> G["optional resumable handoff"]
+  E --> G
+  F --> G
 ```
 
 Typical flow:
 
-1. Start small with `session-start-progressive-disclosure` so the agent reads only the context needed for the request.
-2. Use `grill-with-docs` to clarify goals, success criteria, terminology, and scope against existing project facts.
-3. Create durable context artifacts with `context-matrix-map`, `project-context-calibration`, and `project-standards-calibration`.
-4. Use `agent-instructions-integrator` to connect the target project's agent instructions to installed skills and durable artifacts.
-5. Add `write-a-prd` only when onboarding needs durable project-level product scope, roadmap intent, or acceptance criteria, usually before architecture planning or issue breakdown.
-6. Add `architecture-design-map` or `plan-codebase-architecture` only when the project needs current-state architecture orientation or a project-wide blueprint.
-7. Run `doc-sync` and optional `handoff` so the onboarding result is discoverable later.
+1. Let `using-goated-ai-skills` classify onboarding intensity and reuse fresh
+   session state silently.
+2. Run one focused discovery pass and select an artifact budget.
+3. Use `agent-instructions-integrator` for thin policy and routing. Lightweight
+   projects can stop here.
+4. Add `context-matrix-map`, `project-context-calibration`, or
+   `project-standards-calibration` only for demonstrated gaps; refresh existing
+   artifacts instead of rebuilding them.
+5. Add architecture or product artifacts only when discovery justifies them.
+6. For resumable work, write the envelope and handoff under verified-ignored
+   `.local/goated/`; use OS temp when project-local state is inappropriate.
 
-Expected durable target-project artifacts often include:
+Possible durable target-project artifacts include:
 
 - `CONTEXT.md`
 - `docs/agents/context-matrix.md`
@@ -89,7 +92,9 @@ Expected durable target-project artifacts often include:
 - `docs/agents/external-docs/` optional dated, attributed lookup notes when external docs materially inform work
 - `docs/prds/` only when onboarding needs durable product scope, roadmap intent, or acceptance criteria
 - `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful
-- OS temp handoffs under `goated-handoffs/<project-name>/` when continuity is needed but a tracked file is not
+- ignored `.local/goated/` envelopes and handoffs for resumable work after
+  ignore verification
+- OS temp handoffs under `goated-handoffs/<project-name>/` as the fallback
 
 ## Pipeline 2: Target Project Delivery
 
@@ -193,7 +198,9 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Purpose**: Writes compact continuity notes for future sessions or agents.
 - **Use when**: Work is unfinished, context may be lost, a future agent needs the next step, or a restart note would reduce risk.
 - **Typical input**: Current status, evidence, changed files, unresolved questions, skipped checks, and next action.
-- **Typical output**: Temporary handoff under OS temp by default, usually under `goated-handoffs/<project-name>/`.
+- **Typical output**: Ignored project-local handoff under
+  `.local/goated/handoffs/` for resumable work after ignore verification, with
+  OS temp as the fallback.
 - **Pipeline role**: Optional closeout for onboarding or delivery.
 
 #### `framework-agnostic-skill-creator`
@@ -407,7 +414,11 @@ Use prompts like these after the skill folders are installed.
 ### Onboard a project
 
 ```text
-Use GOATED AI Skills to onboard this project for serious future agent work. Start with using-goated-ai-skills, let it route to session-start-progressive-disclosure and grill-with-docs as needed, and create the durable context, standards, and instruction-routing artifacts the stack expects.
+Use GOATED AI Skills to onboard this project proportionally. Reuse one
+discovery evidence bundle, select a lightweight, standard, or full artifact
+budget, and create or incrementally refresh only the routing, context, source,
+standards, architecture, or continuity artifacts that solve a demonstrated
+need.
 ```
 
 ### Start a delivery change

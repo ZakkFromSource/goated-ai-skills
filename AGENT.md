@@ -86,7 +86,10 @@ When the relevant skills are installed into an agent framework, start with the
 installed `using-goated-ai-skills` router. During V2 migration, apply the shared
 integrated policy when installed and preserve standalone fallback behavior.
 
-Durable target-project artifacts should be tracked, including root `CONTEXT.md` and agent artifacts under `docs/agents/`. Handoffs default to OS temp under `goated-handoffs/<project-name>/`; other session/private workspace artifacts should use ignored `.local/`.
+Track only durable target-project artifacts selected by the onboarding artifact
+budget. Resumable envelopes and handoffs default to verified-ignored
+`.local/goated/`; use OS temp `goated-handoffs/<project-name>/` when
+project-local state is inappropriate or unsafe.
 
 ## Target Project Delivery Workflow
 

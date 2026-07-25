@@ -1,0 +1,55 @@
+schema_version: 1.0.0
+identifier: full-governance-project
+title: Governance-heavy onboarding uses stronger evidence without empty artifacts
+request: Onboard this public multi-agent security-sensitive repository.
+project_context:
+  - Architecture, public contribution, security, and governance sources all affect agent work.
+  - Work will continue across sessions and needs durable retrieval support.
+expected:
+  profile: full
+  artifact_budget:
+    - context-matrix
+    - project-context
+    - project-standards
+    - thin-policy-routing
+    - architecture-map
+  artifact_actions:
+    context-matrix: create
+    project-context: refresh
+    project-standards: create
+    thin-policy-routing: refresh
+    architecture-map: create
+  evidence_bundle:
+    identifier: onboarding-discovery
+    reuse_by:
+      - context-matrix
+      - project-context
+      - project-standards
+      - thin-policy-routing
+      - architecture-map
+    entries:
+      - locator: docs/adr/
+        provenance: accepted project decision records
+        freshness: reviewed at onboarding checkpoint
+        key_finding: Accepted decisions govern architecture and contribution boundaries.
+      - locator: SECURITY.md
+        provenance: current public security policy
+        freshness: current working tree
+        key_finding: Security-sensitive work has explicit reporting and review constraints.
+  inferred_standards:
+    - statement: Architecture changes require decision-record review.
+      provenance: accepted records and current contribution guidance
+      freshness: reviewed at onboarding checkpoint
+      confidence: medium
+  orientation:
+    visible_report: false
+    reuse_fresh_state: true
+  continuity:
+    resumable: true
+    storage_preference: project-local-ignored
+    verify_ignore_before_write: true
+    os_temp_fallback: true
+    links_durable_artifacts: true
+prohibited_behaviors:
+  - Create governance artifacts that add no retrieval or decision value.
+  - Store resumable private state before verifying the local path is ignored.

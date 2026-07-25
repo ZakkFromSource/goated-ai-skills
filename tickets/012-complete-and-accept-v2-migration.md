@@ -72,7 +72,7 @@ public V2 document, and present the complete release for maintainer acceptance.
 
 - `tickets/archive/001-establish-v2-integrated-stack-foundation.md`
 - `tickets/archive/002-route-work-through-adaptive-gates.md`
-- `tickets/003-onboard-and-resume-projects-proportionally.md`
+- `tickets/archive/003-onboard-and-resume-projects-proportionally.md`
 - `tickets/004-clarify-decisions-proportionally.md`
 - `tickets/005-turn-specs-into-delivery-tickets.md`
 - `tickets/006-design-architecture-and-plans-proportionally.md`

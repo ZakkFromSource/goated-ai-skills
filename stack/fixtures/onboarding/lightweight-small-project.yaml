@@ -1,0 +1,35 @@
+schema_version: 1.0.0
+identifier: lightweight-small-project
+title: A small project stops after thin policy and routing integration
+request: Set up GOATED guidance for this small single-agent project.
+project_context:
+  - Existing README and build metadata already explain the project.
+  - No repeated retrieval, terminology, or standards problem is evident.
+expected:
+  profile: lightweight
+  artifact_budget:
+    - thin-policy-routing
+  artifact_actions:
+    thin-policy-routing: create
+  evidence_bundle:
+    identifier: onboarding-discovery
+    reuse_by:
+      - thin-policy-routing
+    entries:
+      - locator: README.md
+        provenance: current project file
+        freshness: current working tree
+        key_finding: Existing documentation is sufficient for project orientation.
+  inferred_standards: []
+  orientation:
+    visible_report: false
+    reuse_fresh_state: true
+  continuity:
+    resumable: false
+    storage_preference: conversation
+    verify_ignore_before_write: false
+    os_temp_fallback: true
+    links_durable_artifacts: true
+prohibited_behaviors:
+  - Create CONTEXT.md, a context matrix, or a standards profile without demonstrated need.
+  - Expand the thin adapter into copied specialist workflows.

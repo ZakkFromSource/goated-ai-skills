@@ -58,10 +58,16 @@ Layer 0: Skill Pack Distribution
 
 Layer 1: Target Project Onboarding
 
-- Run the installed onboarding skills inside a project before durable, cross-file, PRD-level, architectural, or repeated work.
-- Use onboarding to create durable target-project artifacts such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, optional `docs/agents/external-docs/` lookup notes when external docs materially inform work, PRDs under `docs/prds/` only when project-level product scope, roadmap intent, or acceptance criteria need durable capture, and `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful.
-- Use the OS temp directory for handoffs by default, under `goated-handoffs/<project-name>/`.
-- Use ignored `.local/` in the target project for private scratch notes and other temporary workspace artifacts.
+- Choose a lightweight, standard, or full onboarding artifact budget from one
+  discovery pass. Create or refresh only artifacts that solve a demonstrated
+  retrieval, terminology, standards, architecture, or routing need.
+- Lightweight projects may stop after shared-policy merge and thin framework
+  routing. `CONTEXT.md`, a context matrix, and a standards profile are
+  optional.
+- For resumable work, use `.local/goated/work-envelopes/` and
+  `.local/goated/handoffs/` only after verifying `.local/` is ignored.
+- Use OS temp `goated-handoffs/<project-name>/` when project-local state is
+  inappropriate or cannot be stored safely.
 
 Layer 2: Target Project Delivery
 
@@ -114,18 +120,21 @@ For OpenCode-style workflows, place copied or adapted skills wherever OpenCode e
 Installed skills should use these defaults around a target project:
 
 ```text
-CONTEXT.md                         tracked durable project context and language
-docs/agents/context-matrix.md      tracked durable context map
-docs/agents/project-standards.md   tracked durable standards profile
+CONTEXT.md                         optional tracked project context and language
+docs/agents/context-matrix.md      optional tracked context map
+docs/agents/project-standards.md   optional tracked standards profile
 docs/agents/external-docs/         optional dated, attributed external-doc lookup notes
 docs/prds/                         tracked PRDs only when product scope, roadmap intent, or acceptance criteria need durable capture
 docs/agents/architecture-plan.md   tracked project-wide architecture blueprint when useful
 docs/architecture/                 tracked feature-specific architecture blueprints when useful
-<os-temp>/goated-handoffs/<project-name>/ temporary handoff notes
+.local/goated/work-envelopes/      ignored resumable work state after ignore verification
+.local/goated/handoffs/            ignored resumable handoffs after ignore verification
+<os-temp>/goated-handoffs/<project-name>/ fallback temporary handoff notes
 .local/scratch/                    ignored temporary notes or experiments
 ```
 
-Durable project facts should be tracked. Temporary handoffs should live outside the workspace in OS temp unless the user explicitly requests a tracked handoff. Session-private workspace artifacts should be ignored.
+Durable project facts should be tracked. Session-private state should remain
+ignored; use OS temp when a safe ignored project-local path is unavailable.
 
 ## Out Of Scope For The V2 Foundation
 

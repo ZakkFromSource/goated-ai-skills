@@ -16,8 +16,8 @@ plan.
   None)
 - `tickets/archive/002-route-work-through-adaptive-gates.md` — Route Work
   Through Adaptive Gates (AFK; Work state: Completed; Blocked by: Ticket 001)
-- `tickets/003-onboard-and-resume-projects-proportionally.md` — Onboard And
-  Resume Projects Proportionally (AFK; Work state: Not started; Blocked by:
+- `tickets/archive/003-onboard-and-resume-projects-proportionally.md` — Onboard
+  And Resume Projects Proportionally (AFK; Work state: Completed; Blocked by:
   Ticket 002)
 - `tickets/004-clarify-decisions-proportionally.md` — Clarify Decisions
   Proportionally (AFK; Work state: Not started; Blocked by: Ticket 002)
@@ -52,7 +52,7 @@ plan.
 2. `tickets/archive/002-route-work-through-adaptive-gates.md`
    - Why now: establishes the central route and shared state used by all
      workflow migrations.
-3. `tickets/003-onboard-and-resume-projects-proportionally.md`
+3. `tickets/archive/003-onboard-and-resume-projects-proportionally.md`
    - Why now: completes the first end-to-end consumer of the shared route.
 4. `tickets/004-clarify-decisions-proportionally.md`
    - Why now: provides the decision workflow needed before specs and Wayfinder.

@@ -1,0 +1,52 @@
+schema_version: 1.0.0
+identifier: standard-incremental-refresh
+title: Repeated project work refreshes existing onboarding artifacts incrementally
+request: Refresh the agent onboarding for this evolving medium repository.
+project_context:
+  - Existing context, source-map, and standards artifacts contain useful project facts.
+  - Several relevant source areas changed since the artifacts were last reviewed.
+expected:
+  profile: standard
+  artifact_budget:
+    - context-matrix
+    - project-context
+    - project-standards
+    - thin-policy-routing
+  artifact_actions:
+    context-matrix: refresh
+    project-context: preserve
+    project-standards: refresh
+    thin-policy-routing: preserve
+  evidence_bundle:
+    identifier: onboarding-discovery
+    reuse_by:
+      - context-matrix
+      - project-context
+      - project-standards
+      - thin-policy-routing
+    entries:
+      - locator: docs/agents/context-matrix.md
+        provenance: existing tracked onboarding artifact
+        freshness: compared with current working tree
+        key_finding: Existing source tiers remain useful but changed areas need refresh.
+      - locator: pyproject.toml
+        provenance: current project manifest
+        freshness: current working tree
+        key_finding: The repository exposes a current validator command.
+  inferred_standards:
+    - statement: Validation uses the command recorded in the current project manifest.
+      provenance: pyproject.toml and nearby test conventions
+      freshness: observed in current working tree
+      confidence: high
+  orientation:
+    visible_report: false
+    reuse_fresh_state: true
+  continuity:
+    resumable: false
+    storage_preference: conversation
+    verify_ignore_before_write: false
+    os_temp_fallback: true
+    links_durable_artifacts: true
+prohibited_behaviors:
+  - Rebuild accurate onboarding artifacts from blank templates.
+  - Promote an inferred convention without provenance or freshness.

@@ -65,6 +65,32 @@ stronger proof. Project changes invalidate affected pre-change evidence.
 Current source and executable checks outrank summaries for exact or high-risk
 claims.
 
+## Proportional Onboarding And Continuity
+
+Treat onboarding intensity as an artifact budget, not a mandatory document
+checklist. Reuse one discovery evidence bundle across every selected onboarding
+artifact.
+
+- `lightweight`: merge the shared policy and add thin project routing. Reuse
+  existing docs; do not create context, source-map, or standards artifacts
+  without a demonstrated need.
+- `standard`: select only the context, retrieval, standards, or routing
+  artifacts that solve observed problems. Refresh existing artifacts
+  incrementally and preserve accurate project knowledge.
+- `full`: add stronger provenance, freshness, governance, architecture, and
+  resumability depth for complex or high-risk projects, while still omitting
+  artifacts with no retrieval or decision value.
+
+Record provenance and freshness for inferred standards. Routine session
+orientation stays internal and reuses fresh envelope and evidence state; report
+only conflicts, missing decisions, material route changes, or user-requested
+orientation.
+
+For resumable work, prefer `.local/goated/work-envelopes/<effort-slug>.md` and
+`.local/goated/handoffs/<effort-slug>.md` after verifying `.local/` is ignored.
+Use OS temp when project-local state is inappropriate or cannot be stored
+safely. Handoffs reference durable artifacts instead of copying them.
+
 ## Scope, Changes, And Approvals
 
 Preserve user changes and existing project conventions. Inspect before editing,
