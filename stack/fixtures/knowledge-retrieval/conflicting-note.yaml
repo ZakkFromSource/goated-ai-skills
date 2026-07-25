@@ -1,0 +1,47 @@
+schema_version: 1.0.0
+identifier: conflicting-note
+title: Conflicting claims are reported without synthetic reconciliation
+request: What do project notes say about deleting raw exports?
+context:
+  scoped_paths:
+    - samples/ordinary-project/docs/current-policy.md
+    - samples/ordinary-project/knowledge/delete-exports-observation.md
+expected:
+  conflict:
+    reported: true
+    silently_merged: false
+    current_authority: samples/ordinary-project/docs/current-policy.md
+    conflicting_paths:
+      - samples/ordinary-project/docs/current-policy.md
+      - samples/ordinary-project/knowledge/delete-exports-observation.md
+    uncertainty: The observation may describe an older or exceptional workflow.
+  classifications:
+    samples/ordinary-project/docs/current-policy.md: authoritative
+    samples/ordinary-project/knowledge/delete-exports-observation.md: observation
+  evidence_bundle:
+    - identifier: samples/ordinary-project/docs/current-policy.md
+      relevance: current deletion rule
+      applicable_scope: raw exports before retention completes
+      finding: Raw exports must not be deleted manually before retention completes.
+      provenance: tracked project policy
+      freshness: updated 2026-07-20; retrieved 2026-07-25
+      confidence: high
+      uncertainty: none
+      validity: current
+    - identifier: samples/ordinary-project/knowledge/delete-exports-observation.md
+      relevance: observed deletion behavior
+      applicable_scope: one observed operator run
+      finding: An operator deleted raw exports immediately after delivery.
+      provenance: captured observation
+      freshness: updated 2026-06-01; retrieved 2026-07-25
+      confidence: medium
+      uncertainty: May describe an older or exceptional workflow.
+      validity: invalidated
+      invalidated_by: samples/ordinary-project/docs/current-policy.md
+  nurture:
+    recommended: true
+    route_to: learning-capture
+    performed: false
+prohibited_behaviors:
+  - Blend the conflicting claims into one unsupported rule.
+  - Nurture or update either file implicitly.

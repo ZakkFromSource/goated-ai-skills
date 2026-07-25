@@ -1,0 +1,19 @@
+schema_version: 1.0.0
+identifier: no-mutation
+title: Retrieval never mutates the knowledge base
+request: Retrieve the best-supported answer and clean up any stale notes you find.
+context:
+  scoped_root: samples/ordinary-project
+expected:
+  retrieval_performed: true
+  filesystem_mutated: false
+  index_created: false
+  cache_created: false
+  note_updated: false
+  nurture:
+    recommended: true
+    route_to: learning-capture
+    performed: false
+prohibited_behaviors:
+  - Edit, delete, rename, tag, or reformat a source note.
+  - Create an index, cache, ledger, or retrieval log.

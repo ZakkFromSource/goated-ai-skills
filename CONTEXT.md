@@ -108,6 +108,10 @@ active integrated-stack migration.
 - **Implementation plan** - an ordered, source-grounded execution route produced just in time. Inline mode stays in the work envelope for focused single-session work; durable mode is tracked for resumable, delegated, architectural, or multi-surface work. Promotion reuses fresh discovery, evidence, and settled decisions.
 - **Agent instruction artifact** - a file or configuration entry that tells a specific agent framework how to use installed skills and target-project artifacts.
 - **Durable artifact** - tracked project knowledge that should survive across sessions, such as specs, Wayfinder maps and decision records, ADRs, project context files, context matrices, standards profiles, architecture plans, and public docs.
+- **Knowledge retrieval** - progressive read-only search of scoped durable
+  project artifacts that ranks evidence for a claim by relevance, authority,
+  freshness, confidence, and maturity; it reports stale or conflicting
+  knowledge and never performs implicit note nurturing.
 - **Local/session artifact** - ignored, private, or temporary context, such as
   `.local/goated/`, `.local/scratch/`, OS temp
   `goated-handoffs/<project-name>/`, `.scratch/`, `tmp/`, or `temp/`.

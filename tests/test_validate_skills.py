@@ -13,6 +13,7 @@ from scripts.validate_skills import (
     validate_architecture_planning_fixtures,
     validate_canonical_architecture_references,
     validate_clarification_fixtures,
+    validate_knowledge_retrieval_fixtures,
     validate_onboarding_fixtures,
     validate_planning_fixtures,
     validate_registry,
@@ -84,6 +85,19 @@ def copy_wayfinding_fixtures(destination: Path) -> Path:
     fixture_destination = destination / "stack" / "fixtures" / "wayfinding"
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "wayfinding",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_knowledge_retrieval_fixtures(destination: Path) -> Path:
+    """Copy knowledge-retrieval fixtures and return their directory."""
+
+    fixture_destination = (
+        destination / "stack" / "fixtures" / "knowledge-retrieval"
+    )
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "knowledge-retrieval",
         fixture_destination,
     )
     return fixture_destination
@@ -433,6 +447,368 @@ class ArchitecturePlanningFixtureValidationTests(unittest.TestCase):
         )
         self.assertIn(
             "plan promotion requires preserves_decisions=True",
+            messages,
+        )
+
+
+class KnowledgeRetrievalFixtureValidationTests(unittest.TestCase):
+    def test_current_knowledge_retrieval_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_knowledge_retrieval_fixtures(REPO_ROOT))
+
+    def test_current_authoritative_source_must_rank_first(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "authoritative-source.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["ranked_results"].reverse()
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "knowledge retrieval must rank current authoritative evidence first",
+            messages,
+        )
+
+    def test_retrieval_must_be_progressive_read_only_and_local(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "authoritative-source.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["search"]["progressive"] = False
+            fixture["expected"]["search"]["read_only"] = False
+            fixture["expected"]["search"]["external_web"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "knowledge retrieval search must be progressive, read-only, and "
+            "exclude external web research",
+            messages,
+        )
+
+    def test_ranking_requires_all_claim_scoped_factors(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "authoritative-source.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["ranking_factors"]["maturity"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "knowledge retrieval ranking requires authority, relevance, "
+            "confidence, maturity, and freshness",
+            messages,
+        )
+
+    def test_retrieval_distinguishes_every_knowledge_class(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "authoritative-source.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["classifications_supported"].remove(
+                "brainstorming"
+            )
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "knowledge retrieval must distinguish authoritative, history, "
+            "observation, inference, brainstorming, and stale material",
+            messages,
+        )
+
+    def test_conflicts_cannot_be_silently_merged_or_nurtured(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "conflicting-note.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["conflict"]["silently_merged"] = True
+            fixture["expected"]["nurture"]["performed"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "knowledge retrieval must report conflicts without silently merging",
+            messages,
+        )
+        self.assertIn(
+            "knowledge retrieval may recommend learning-capture but cannot "
+            "perform nurturing",
+            messages,
+        )
+
+    def test_resolved_conflict_preserves_both_entries_and_invalidation(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "conflicting-note.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            observation = fixture["expected"]["evidence_bundle"].pop()
+            observation.pop("invalidated_by")
+            fixture["expected"]["evidence_bundle"].append(observation)
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "resolved conflicts must preserve both evidence entries and link "
+            "the invalidated entry to current authority",
+            messages,
+        )
+
+    def test_stale_knowledge_must_remain_visible_and_qualified(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "stale-note.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["report_staleness"] = False
+            fixture["expected"]["silently_merge"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "stale knowledge must be reported without silent merge or discard",
+            messages,
+        )
+
+    def test_missing_optional_capabilities_require_local_file_fallback(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = (
+                fixture_directory / "missing-capability-fallback.yaml"
+            )
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["fallback"]["ordinary_files"] = False
+            fixture["expected"]["external_web"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "missing capabilities must fall back to ordinary local files",
+            messages,
+        )
+        self.assertIn(
+            "knowledge retrieval fixtures must keep external web research out "
+            "of scope",
+            messages,
+        )
+
+    def test_ordinary_files_fixture_requires_a_real_selected_source(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "ordinary-files-only.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["ordinary_files_sufficient"] = False
+            fixture["expected"]["selected_path"] = "samples/missing.md"
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "ordinary-file retrieval requires a real selected_path and "
+            "ordinary_files_sufficient=True",
+            messages,
+        )
+
+    def test_retrieved_evidence_requires_scope_provenance_and_uncertainty(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "authoritative-source.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            evidence_entry = fixture["expected"]["evidence_bundle"][0]
+            evidence_entry.pop("relevance")
+            evidence_entry.pop("applicable_scope")
+            evidence_entry.pop("finding")
+            evidence_entry.pop("provenance")
+            evidence_entry.pop("uncertainty")
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "retrieved evidence entries require identifier, relevance, "
+            "applicable_scope, finding, provenance, freshness, confidence, "
+            "and uncertainty",
+            messages,
+        )
+
+    def test_shared_evidence_freshness_requires_a_traceable_marker(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "authoritative-source.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["evidence_bundle"][0]["freshness"] = "current"
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "retrieved evidence freshness requires a commit, date, or "
+            "equivalent traceable marker",
+            messages,
+        )
+
+    def test_fixture_validation_does_not_mutate_ordinary_files(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            before = {
+                path.relative_to(fixture_directory): path.read_bytes()
+                for path in fixture_directory.rglob("*")
+                if path.is_file()
+            }
+
+            self.assertEqual(
+                [],
+                validate_knowledge_retrieval_fixtures(fixture_root),
+            )
+
+            after = {
+                path.relative_to(fixture_directory): path.read_bytes()
+                for path in fixture_directory.rglob("*")
+                if path.is_file()
+            }
+
+        self.assertEqual(before, after)
+
+    def test_retrieval_contract_forbids_filesystem_and_note_mutation(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_knowledge_retrieval_fixtures(fixture_root)
+            fixture_path = fixture_directory / "no-mutation.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["filesystem_mutated"] = True
+            fixture["expected"]["note_updated"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_knowledge_retrieval_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "knowledge retrieval must not mutate files, notes, indexes, or caches",
             messages,
         )
 

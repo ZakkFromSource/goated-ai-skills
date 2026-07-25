@@ -1,0 +1,29 @@
+schema_version: 1.0.0
+identifier: stale-note
+title: Stale knowledge remains visible and qualified
+request: Summarize the earlier retention guidance and whether it is still current.
+context:
+  scoped_paths:
+    - samples/ordinary-project/knowledge/retention-memory.md
+    - samples/ordinary-project/docs/current-policy.md
+expected:
+  classification: stale
+  stale_path: samples/ordinary-project/knowledge/retention-memory.md
+  superseded_by: samples/ordinary-project/docs/current-policy.md
+  report_staleness: true
+  silently_discard: false
+  silently_merge: false
+  evidence_bundle:
+    - identifier: samples/ordinary-project/knowledge/retention-memory.md
+      relevance: earlier retention guidance
+      applicable_scope: historical retention guidance
+      finding: Exported reports were described as retained for 90 days.
+      provenance: captured knowledge note
+      freshness: updated 2025-01-10; review overdue 2025-07-10; retrieved 2026-07-25
+      confidence: high
+      uncertainty: superseded by current project policy
+      validity: invalidated
+      invalidated_by: samples/ordinary-project/docs/current-policy.md
+prohibited_behaviors:
+  - Present the stale note as current truth.
+  - Delete or rewrite the stale note.

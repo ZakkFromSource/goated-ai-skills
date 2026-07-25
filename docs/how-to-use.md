@@ -425,6 +425,14 @@ contract.
 - **Typical output**: Detected mode and prompt type, optimized prompt in a code block, recommended GOATED route or model class, assumptions, and short rationale.
 - **Pipeline role**: Productivity aid for prompt quality and GOATED-aware request translation. It routes to `grill-with-docs`, `write-a-spec`, `writing-plans`, or `framework-agnostic-skill-creator` when those skills should own the next step.
 
+#### `knowledge-retrieval`
+
+- **Purpose**: Retrieves durable project knowledge progressively and read-only, ranks results for the exact claim, and adds provenance-aware references to shared evidence.
+- **Use when**: A question should be answered from project notes, decisions, standards, source, tests, or other durable local artifacts and authority, freshness, conflict, or uncertainty matters.
+- **Typical input**: The question and scope, explicit paths, existing evidence entries, project source maps, ordinary files, and optional in-scope search capabilities.
+- **Typical output**: A best-supported answer, ranked and classified evidence, explicit stale or conflicting sources, a shared-evidence delta, and capability or uncertainty limits.
+- **Pipeline role**: Read-only knowledge consumer. It may recommend a separate `learning-capture` nurture run but never edits notes, builds indexes, or performs external web research.
+
 #### `learning-capture`
 
 - **Purpose**: Captures durable, reusable lessons as atomic Markdown notes for human reading and future agent reuse.
@@ -475,6 +483,15 @@ Use GOATED AI Skills for this feature idea. Clarify the intent against project d
 Use GOATED AI Skills to turn this rough request into a better prompt. Start with using-goated-ai-skills if the route is unclear, then use goated-prompt to choose the prompt type, calibrate context, name assumptions, and route to companion skills only when they should own the next step.
 ```
 
+### Retrieve durable project knowledge
+
+```text
+Use knowledge-retrieval to answer this question from scoped project files and
+notes. Search progressively and read-only, rank sources for the exact claim,
+report stale or conflicting knowledge, and add provenance-aware shared
+evidence without nurturing or rewriting any note.
+```
+
 ### Implement a scoped issue
 
 ```text
@@ -499,6 +516,9 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If the request is to improve, rewrite, optimize, or create a reusable prompt, use `goated-prompt`; let it route onward only when another skill should own the next step.
 - If the request is unfamiliar or cross-file, start with `session-start-progressive-disclosure`.
 - If the request needs product or scope clarity, use `grill-with-docs`.
+- If a question should be answered from durable project artifacts and source
+  authority or freshness matters, use `knowledge-retrieval`; use
+  `learning-capture` separately for approved note writes or nurturing.
 - If the request is fuzzy and user-facing, use `write-a-spec` before implementation planning.
 - If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria, use `write-a-spec` before architecture planning; otherwise skip spec creation.
 - If architecture shape must be prescribed, use `design-codebase-architecture`; for review-only findings use `review-codebase-architecture`; if you only need a descriptive map, use `architecture-design-map`.

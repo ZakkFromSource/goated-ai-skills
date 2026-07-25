@@ -13,7 +13,10 @@ Capture durable, reusable lessons as atomic Markdown notes.
 
 Use this skill after research, brainstorming, design, iteration, implementation, debugging, review, or reading user-provided material reveals knowledge worth preserving. The output should be useful to both a human learner and future agents.
 
-This skill is writer-focused. It may read existing notes only to deduplicate, update, merge, link, or nurture them. It does not perform broad knowledge-base search, synthesis, or Q&A. A future `knowledge-retrieval` or `second-brain-query` companion skill could own that retrieval surface.
+This skill is writer-focused. It may read existing notes only to deduplicate,
+update, merge, link, or nurture them. It does not perform broad knowledge-base
+search, synthesis, or Q&A. Use the read-only `knowledge-retrieval` companion
+for that retrieval surface.
 
 ## Inputs
 
@@ -32,6 +35,8 @@ Soft:
 - `grill-with-docs` when project docs, standards, ADRs, code behavior, tests, schemas, or source evidence must shape the lesson
 - `doc-sync` when captured lessons reveal documentation drift in a target project
 - `verification-before-completion` before claiming notes were written, updated, skipped correctly, or are ready to rely on
+- `knowledge-retrieval` when scoped durable knowledge must be searched and
+  ranked before a separately approved capture or nurture run
 
 Fallback: If companion skills, config files, or existing notes are unavailable, use the provided context, label assumptions, and ask before writing when destination or approval is missing.
 
@@ -41,7 +46,9 @@ Fallback: If companion skills, config files, or existing notes are unavailable, 
    - Use **capture** for durable lessons from the current session or milestone.
    - Use **extract** for durable lessons from user-provided notes, docs, research, or conversation excerpts.
    - Use **nurture** to improve existing `seedling` or `budding` notes with new evidence, examples, caveats, links, or clearer wording.
-   - If the user is asking broad questions of a knowledge base, state that retrieval/Q&A is out of scope for V1 and continue only with capture-relevant work.
+   - If the user is asking broad questions of a knowledge base, route the
+     read-only work to `knowledge-retrieval` and continue here only when
+     capture or nurture is separately requested.
 
 2. Resolve the destination:
    - Prefer the current user instruction.

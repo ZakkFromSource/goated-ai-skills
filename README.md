@@ -119,6 +119,7 @@ only the canonical folders.
 
 - [`goated-prompt`](skills/productivity/goated-prompt/SKILL.md): transform rough requests into GOATED-aware prompts or portable reusable prompts with calibrated context and prompt type.
 - [`grill-me`](skills/productivity/grill-me/SKILL.md): challenge and clarify ideas, plans, choices, and decisions when project docs are not needed.
+- [`knowledge-retrieval`](skills/productivity/knowledge-retrieval/SKILL.md): retrieve durable project knowledge progressively, rank it by claim-scoped authority and freshness, and report conflicts without mutating source notes.
 - [`learning-capture`](skills/productivity/learning-capture/SKILL.md): capture durable lessons, extract reusable knowledge from provided material, and nurture atomic knowledge notes.
 - [`caveman`](skills/productivity/caveman/SKILL.md): keep replies compact without losing important warnings, uncertainty, or exactness.
 
@@ -179,6 +180,18 @@ using-goated-ai-skills
 Wayfinder may gather research, build disposable decision prototypes, or clear
 bounded prerequisites. It never performs production implementation, migration
 execution, publication, or deployment.
+
+### Retrieve Durable Project Knowledge
+
+```text
+using-goated-ai-skills when the route is unclear
+-> knowledge-retrieval
+-> learning-capture only as a separately requested and approved write workflow
+```
+
+Retrieval is progressive and read-only. It ranks current project evidence,
+reports stale or conflicting knowledge, and does not substitute external web
+research for local durable sources.
 
 ### Craft or Refine a Prompt
 

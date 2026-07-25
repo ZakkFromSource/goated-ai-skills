@@ -1,0 +1,55 @@
+schema_version: 1.0.0
+identifier: authoritative-source
+title: Current authoritative evidence outranks a mature stale note
+request: Which retention period currently applies to exported reports?
+context:
+  scoped_paths:
+    - samples/ordinary-project/docs/current-policy.md
+    - samples/ordinary-project/knowledge/retention-memory.md
+expected:
+  search:
+    progressive: true
+    read_only: true
+    external_web: false
+  ranking_factors:
+    authority: true
+    relevance: true
+    confidence: true
+    maturity: true
+    freshness: true
+  classifications_supported:
+    - authoritative
+    - history
+    - observation
+    - inference
+    - brainstorming
+    - stale
+  ranked_results:
+    - path: samples/ordinary-project/docs/current-policy.md
+      classification: authoritative
+      authority: current-project-policy
+      relevance: exact
+      confidence: high
+      maturity: approved
+      freshness: current
+    - path: samples/ordinary-project/knowledge/retention-memory.md
+      classification: stale
+      authority: captured-note
+      relevance: exact
+      confidence: high
+      maturity: mature
+      freshness: stale
+  conclusion: Exported reports are retained for 30 days.
+  evidence_bundle:
+    - identifier: samples/ordinary-project/docs/current-policy.md
+      relevance: exact retention rule
+      applicable_scope: exported reports
+      finding: Exported reports are retained for 30 days.
+      provenance: tracked project policy
+      freshness: updated 2026-07-20; retrieved 2026-07-25
+      confidence: high
+      uncertainty: none
+      validity: current
+prohibited_behaviors:
+  - Prefer the mature stale note over the current project policy.
+  - Treat keyword similarity as authority.

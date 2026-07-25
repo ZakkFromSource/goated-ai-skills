@@ -340,6 +340,16 @@ skills:
     accepts_signals: [scope-changed]
     emits_signals: [scope-changed]
 
+  - name: knowledge-retrieval
+    path: skills/productivity/knowledge-retrieval/SKILL.md
+    category: productivity
+    aliases: []
+    workflow_role: knowledge-retrieval
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [evidence-stale]
+
   - name: learning-capture
     path: skills/productivity/learning-capture/SKILL.md
     category: productivity

@@ -1,6 +1,6 @@
 ---
 name: using-goated-ai-skills
-description: Use when an installed GOATED stack should select or revise a proportionate route for delivery, onboarding, source maintenance, installation, prompt work, or a tiny direct task.
+description: Use when an installed GOATED stack should select or revise a proportionate route for delivery, onboarding, source maintenance, installation, durable-knowledge retrieval, prompt work, or a tiny direct task.
 metadata:
   goated-category: agent-workflows
 ---
@@ -76,6 +76,7 @@ GOATED source repository or hidden session files.
 | --- | --- |
 | Proportional orientation | Always; near-zero ceremony for fresh tiny work |
 | Clarification or diagnosis | Intent or root cause materially blocks action |
+| Knowledge retrieval | Durable project knowledge must answer a question, especially when authority, freshness, conflict, or provenance matters |
 | Wayfinder | Uncertainty branches across focused sessions and later decisions depend on earlier evidence |
 | Spec, architecture, or tickets | Durable intent, module strategy, or multiple resumable slices must be settled |
 | Writing plan | A scoped task still needs executable steps |

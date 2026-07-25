@@ -1,0 +1,22 @@
+schema_version: 1.0.0
+identifier: ordinary-files-only
+title: Plain files support useful retrieval without specialist infrastructure
+request: Find the current export retention rule in this small project.
+context:
+  available_capabilities:
+    ordinary_files: true
+    obsidian: false
+    semantic_search: false
+    database: false
+    connector: false
+expected:
+  selected_path: samples/ordinary-project/docs/current-policy.md
+  progressive_stages:
+    - explicit-and-reused-evidence
+    - nearby-project-artifacts
+  stopped_after_sufficient_evidence: true
+  ordinary_files_sufficient: true
+  external_web: false
+prohibited_behaviors:
+  - Require Obsidian, embeddings, a database, or a connector.
+  - Search outside the scoped project after sufficient evidence is found.

@@ -1,0 +1,22 @@
+schema_version: 1.0.0
+identifier: missing-capability-fallback
+title: Missing optional search capabilities degrade to ordinary file search
+request: Search these project notes even though no semantic tools are installed.
+context:
+  unavailable_capabilities:
+    - obsidian
+    - semantic-search
+    - database
+    - connector
+expected:
+  fallback:
+    ordinary_files: true
+    filenames_and_paths: true
+    headings_and_metadata: true
+    bounded_text_search: true
+  blocked: false
+  capability_limit_reported: true
+  external_web: false
+prohibited_behaviors:
+  - Claim retrieval is impossible because optional capabilities are missing.
+  - Substitute external web research for local project knowledge.

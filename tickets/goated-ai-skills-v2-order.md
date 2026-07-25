@@ -30,8 +30,8 @@ plan.
 - `tickets/archive/007-navigate-uncertainty-with-wayfinder.md` — Navigate
   Multi-Session Uncertainty With Wayfinder (AFK; Work state: Completed; Blocked by: Tickets
   004, 005, and 006)
-- `tickets/008-retrieve-durable-knowledge-safely.md` — Retrieve Durable
-  Knowledge Safely (AFK; Work state: Not started; Blocked by: Ticket 002)
+- `tickets/archive/008-retrieve-durable-knowledge-safely.md` — Retrieve Durable
+  Knowledge Safely (AFK; Work state: Completed; Blocked by: Ticket 002)
 - `tickets/009-prove-behaviour-without-mandatory-refinement.md` — Prove
   Behaviour Without Mandatory Refinement (AFK; Work state: Not started; Blocked
   by: Ticket 002)
@@ -63,7 +63,7 @@ plan.
      by Wayfinder destinations.
 7. `tickets/archive/007-navigate-uncertainty-with-wayfinder.md`
    - Why now: composes the settled grill, spec, and architecture capabilities.
-8. `tickets/008-retrieve-durable-knowledge-safely.md`
+8. `tickets/archive/008-retrieve-durable-knowledge-safely.md`
    - Why now: adds a separate evidence consumer after the evidence contract is
      stable.
 9. `tickets/009-prove-behaviour-without-mandatory-refinement.md`
