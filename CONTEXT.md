@@ -80,6 +80,18 @@ active integrated-stack migration.
 
 - **Spec** - a scoped product or delivery contract. A PRD is one possible spec form.
 - **Delivery ticket** - a portable dependency-aware work unit, normally stored under `tickets/`; a remote issue is one possible tracker representation.
+- **Wayfinder** - an uncertainty-navigation workflow for branching work that
+  exceeds one focused session. It advances decisions and evidence toward a
+  named planning destination but never performs production implementation,
+  migration execution, publication, or deployment.
+- **Wayfinder map** - a durable low-resolution index of a destination,
+  completion condition, standing constraints, settled-decision pointers,
+  visible frontier, not-yet-specified fog, and out-of-scope work. Without a
+  configured tracker, it lives at `docs/wayfinding/<effort-slug>/map.md`.
+- **Wayfinder decision record** - a decision artifact, distinct from a delivery
+  ticket, with type `grilling`, `research`, `prototype`, or `prerequisite`;
+  independent `AFK` or `HITL` mode; status, blockers, question, evidence links,
+  and resolution.
 - **Fresh-agent-ready ticket** - a local delivery ticket containing enough linked context, first reads, acceptance criteria, proof expectations, blockers, and exclusions for a future agent to start without hidden chat history, ignored notes, or unlinked upstream context.
 - **PRD** - the V1 term for a product requirements document; historical V1 PRDs remain unchanged.
 - **Issue handoff** - the V1 term for a local implementation slice under `issues/`; historical V1 issue handoffs remain unchanged.
@@ -95,7 +107,7 @@ active integrated-stack migration.
 - **Architecture review** - a review-only assessment of current architecture quality and improvement opportunities. It may route an accepted finding to architecture design, but does not itself produce the replacement blueprint.
 - **Implementation plan** - an ordered, source-grounded execution route produced just in time. Inline mode stays in the work envelope for focused single-session work; durable mode is tracked for resumable, delegated, architectural, or multi-surface work. Promotion reuses fresh discovery, evidence, and settled decisions.
 - **Agent instruction artifact** - a file or configuration entry that tells a specific agent framework how to use installed skills and target-project artifacts.
-- **Durable artifact** - tracked project knowledge that should survive across sessions, such as PRDs, ADRs, project context files, context matrices, standards profiles, architecture plans, and public docs.
+- **Durable artifact** - tracked project knowledge that should survive across sessions, such as specs, Wayfinder maps and decision records, ADRs, project context files, context matrices, standards profiles, architecture plans, and public docs.
 - **Local/session artifact** - ignored, private, or temporary context, such as
   `.local/goated/`, `.local/scratch/`, OS temp
   `goated-handoffs/<project-name>/`, `.scratch/`, `tmp/`, or `temp/`.

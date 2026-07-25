@@ -100,6 +100,16 @@ skills:
     accepts_signals: [scope-changed, evidence-stale, security-impact, documentation-impact, refinement-debt]
     emits_signals: []
 
+  - name: wayfinder
+    path: skills/agent-workflows/wayfinder/SKILL.md
+    category: agent-workflows
+    aliases: []
+    workflow_role: uncertainty-navigation
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [scope-changed, documentation-impact]
+
   - name: architecture-design-map
     path: skills/engineering/architecture-design-map/SKILL.md
     category: engineering

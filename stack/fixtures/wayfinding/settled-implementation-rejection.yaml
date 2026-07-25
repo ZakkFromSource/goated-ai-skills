@@ -1,0 +1,14 @@
+schema_version: 1.0.0
+identifier: settled-implementation-rejection
+title: Large settled implementation routes to delivery
+request: Implement the approved multi-surface plan whose product and architecture decisions are already settled.
+expected:
+  rejection:
+    selected: false
+    reason: already-specified-implementation
+    route_to: writing-plans
+    map_created: false
+    restarts_discovery: false
+prohibited_behaviors:
+  - Select Wayfinder because the implementation is large.
+  - Restart settled discovery instead of routing to delivery.

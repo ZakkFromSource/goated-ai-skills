@@ -1,0 +1,17 @@
+schema_version: 1.0.0
+identifier: handoff-to-spec
+title: Settled Wayfinder evidence feeds spec creation
+request: The product decisions are settled; hand them to the named spec destination.
+expected:
+  handoff:
+    destination_skill: write-a-spec
+    reuses_settled_decisions: true
+    reuses_evidence_links: true
+    restarts_discovery: false
+    state_before_destination_exists: destination-ready
+    state_after_destination_linked: completed
+    destination_path: samples/destinations/product-spec.md
+    executes_production_work: false
+prohibited_behaviors:
+  - Ask the spec workflow to rediscover settled decisions.
+  - Mark the map completed before the linked spec exists.

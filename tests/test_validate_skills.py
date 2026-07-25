@@ -17,6 +17,7 @@ from scripts.validate_skills import (
     validate_planning_fixtures,
     validate_registry,
     validate_route_fixtures,
+    validate_wayfinding_fixtures,
 )
 
 
@@ -72,6 +73,17 @@ def copy_architecture_planning_fixtures(destination: Path) -> Path:
     )
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "architecture-planning",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_wayfinding_fixtures(destination: Path) -> Path:
+    """Copy Wayfinder fixtures and return their destination directory."""
+
+    fixture_destination = destination / "stack" / "fixtures" / "wayfinding"
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "wayfinding",
         fixture_destination,
     )
     return fixture_destination
@@ -421,6 +433,264 @@ class ArchitecturePlanningFixtureValidationTests(unittest.TestCase):
         )
         self.assertIn(
             "plan promotion requires preserves_decisions=True",
+            messages,
+        )
+
+
+class WayfindingFixtureValidationTests(unittest.TestCase):
+    def test_current_wayfinding_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_wayfinding_fixtures(REPO_ROOT))
+
+    def test_chart_creation_requires_all_approved_dimensions(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_wayfinding_fixtures(fixture_root)
+            fixture_path = (
+                fixture_directory / "branching-selection-and-approval.yaml"
+            )
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["chart_approval"]["visible_frontier"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_wayfinding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "Wayfinder chart approval requires visible_frontier=True",
+            messages,
+        )
+
+    def test_session_sized_work_cannot_select_wayfinder(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_wayfinding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "session-sized-rejection.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["rejection"]["selected"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_wayfinding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "Wayfinder rejection requires selected=False",
+            messages,
+        )
+
+    def test_rejections_route_to_the_expected_workflow(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_wayfinding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "session-sized-rejection.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["rejection"]["route_to"] = "wayfinder"
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_wayfinding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "Wayfinder rejection requires route_to='grill-me'",
+            messages,
+        )
+
+    def test_production_execution_cannot_be_enabled_by_pressure(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_wayfinding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "no-execution-pressure.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["prohibited"]["production_implementation"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_wayfinding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "Wayfinder no-execution boundary requires "
+            "production_implementation=False",
+            messages,
+        )
+
+    def test_completed_state_requires_an_existing_destination(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_wayfinding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "lifecycle-transitions.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            completed = next(
+                state
+                for state in fixture["expected"]["states"]
+                if state["state"] == "completed"
+            )
+            completed["destination_path"] = "samples/destinations/missing.md"
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_wayfinding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "completed Wayfinder state requires an existing destination_path",
+            messages,
+        )
+
+    def test_local_map_must_link_its_frontier_decision(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_wayfinding_fixtures(fixture_root)
+            map_path = fixture_directory / "samples" / "map.md"
+            map_text = map_path.read_text(encoding="utf-8").replace(
+                "[Confirm synchronization guarantees]"
+                "(decisions/002-confirm-synchronization-guarantees.md)",
+                "Confirm synchronization guarantees",
+            )
+            map_path.write_text(map_text, encoding="utf-8")
+
+            messages = [
+                finding.message
+                for finding in validate_wayfinding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "Wayfinder map sample must link its frontier decision sample",
+            messages,
+        )
+
+    def test_local_decision_samples_validate_type_and_delivery_boundary(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_wayfinding_fixtures(fixture_root)
+            decision_path = (
+                fixture_directory
+                / "samples"
+                / "decisions"
+                / "001-select-storage-strategy.md"
+            )
+            decision_text = decision_path.read_text(encoding="utf-8").replace(
+                "\nresearch\n",
+                "\ninvalid-type\n",
+            )
+            decision_text += "\n## Implementation Plan\n\nDeploy the change.\n"
+            decision_path.write_text(decision_text, encoding="utf-8")
+
+            messages = [
+                finding.message
+                for finding in validate_wayfinding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "Wayfinder sample "
+            "samples/decisions/001-select-storage-strategy.md "
+            "has unsupported decision type",
+            messages,
+        )
+        self.assertIn(
+            "Wayfinder decision sample contains delivery heading: "
+            "## Implementation Plan",
+            messages,
+        )
+
+    def test_lifecycle_cases_must_enter_every_state(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_wayfinding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "lifecycle-transitions.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["transitions"] = [
+                transition
+                for transition in fixture["expected"]["transitions"]
+                if transition["to"] != "dropped"
+            ]
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_wayfinding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "Wayfinder lifecycle transitions must enter every state",
+            messages,
+        )
+
+    def test_lifecycle_state_snapshots_must_be_unique(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_wayfinding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "lifecycle-transitions.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["states"].append(
+                {"state": "active", "actionable_frontier": True}
+            )
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_wayfinding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "Wayfinder lifecycle states must not contain duplicates",
+            messages,
+        )
+
+    def test_destination_handoff_reuses_discovery_and_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_wayfinding_fixtures(fixture_root)
+            fixture_path = fixture_directory / "handoff-to-spec.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["handoff"]["restarts_discovery"] = True
+            fixture["expected"]["handoff"]["reuses_evidence_links"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_wayfinding_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "Wayfinder destination handoff requires restarts_discovery=False",
+            messages,
+        )
+        self.assertIn(
+            "Wayfinder destination handoff requires reuses_evidence_links=True",
             messages,
         )
 

@@ -1,0 +1,14 @@
+schema_version: 1.0.0
+identifier: session-sized-rejection
+title: Focused discussion stays out of Wayfinder
+request: Help me choose between two already-understood options this afternoon.
+expected:
+  rejection:
+    selected: false
+    reason: session-sized
+    route_to: grill-me
+    map_created: false
+    restarts_discovery: false
+prohibited_behaviors:
+  - Create a durable decision map for one focused discussion.
+  - Confuse ordinary ambiguity with a multi-session decision frontier.

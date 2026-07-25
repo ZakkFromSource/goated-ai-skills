@@ -92,6 +92,8 @@ Possible durable target-project artifacts include:
 - `docs/agents/external-docs/` optional dated, attributed lookup notes when external docs materially inform work
 - `docs/specs/` only when onboarding needs durable product scope, roadmap intent, or acceptance criteria
 - `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful
+- `docs/wayfinding/<effort-slug>/` when approved branching uncertainty needs a
+  durable local map and no configured tracker is used
 - ignored `.local/goated/` envelopes and handoffs for resumable work after
   ignore verification
 - OS temp handoffs under `goated-handoffs/<project-name>/` as the fallback
@@ -138,9 +140,32 @@ Typical flow:
 12. Use `standards-and-spec-review`, `code-security-review`, `doc-sync`, and `verification-before-completion` before making strong completion claims.
 13. Use `commit-message` and optional `handoff` for closeout.
 
+## Pipeline 3: Multi-Session Uncertainty
+
+Use Wayfinder only when uncertainty branches across more than one focused
+session and later decisions depend on earlier evidence. Do not use it for one
+focused discussion or for large implementation whose product and architecture
+decisions are already settled.
+
+```mermaid
+flowchart LR
+  A["using-goated-ai-skills"] --> B["wayfinder"]
+  B --> C["one primary decision focus"]
+  C --> D["write-a-spec or design-codebase-architecture"]
+```
+
+Before writing a map, approve its destination, location, visible frontier,
+action reach, and initial write scope. With no configured tracker, the portable
+fallback is `docs/wayfinding/<effort-slug>/`. The map can coordinate grilling,
+research, disposable prototypes, and bounded prerequisites, each independently
+classified as `AFK` or `HITL`. Production implementation, migration execution,
+publication, and deployment are prohibited.
+
 ## Skill Reference
 
-Each skill is listed with its current V1 role. Read the installed skill's own `SKILL.md` when you need the full workflow, guardrails, dependencies, or output contract.
+Each skill is listed with its current role. Read the installed skill's own
+`SKILL.md` when you need the full workflow, guardrails, dependencies, or output
+contract.
 
 ### Agent Workflows
 
@@ -210,6 +235,23 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Typical input**: Source material, target audience, trigger patterns, output contract, dependencies, compatibility constraints, and portability constraints.
 - **Typical output**: Clarified skill intent, evaluation notes, and a GOATED-shaped skill package plan or artifact.
 - **Pipeline role**: Specialized branch for extending or adapting the skill library, not normal target-project delivery.
+
+#### `wayfinder`
+
+- **Purpose**: Navigates only the visible decision frontier for branching,
+  multi-session uncertainty.
+- **Use when**: Later decisions depend on earlier answers and the complete route
+  to a named planning destination cannot yet be specified responsibly.
+- **Reject when**: The discussion fits one focused session, or a large
+  implementation is already specified.
+- **Typical input**: Proposed destination and completion condition, evidence,
+  constraints, approval scope, action reach, and an existing map when present.
+- **Typical output**: An approved map, separate decision records, fog/frontier
+  deltas, lifecycle state, and an evidence-reusing handoff to a named planning
+  destination.
+- **Pipeline role**: Optional uncertainty-navigation branch before
+  `write-a-spec`, `design-codebase-architecture`, or another named planning
+  destination; never a production-execution route.
 
 ### Engineering
 

@@ -1,0 +1,17 @@
+schema_version: 1.0.0
+identifier: fog-frontier-blocker-update
+title: Resolution advances only the visible frontier
+request: Resolve the storage-strategy question and update the decision map.
+expected:
+  update:
+    primary_decision_focus_count: 1
+    frontier_contains_only_precise_questions: true
+    clarified_fog_graduates: true
+    graduated_fog_removed: true
+    blocker_links_updated: true
+    authoritative_detail_duplicated: false
+    evidence_links_reused: true
+    out_of_scope_unchanged: true
+prohibited_behaviors:
+  - Convert imprecise fog directly into speculative tickets.
+  - Copy full evidence or resolutions into the map.

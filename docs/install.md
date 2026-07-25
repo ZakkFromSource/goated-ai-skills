@@ -68,10 +68,17 @@ Layer 1: Target Project Onboarding
   `.local/goated/handoffs/` only after verifying `.local/` is ignored.
 - Use OS temp `goated-handoffs/<project-name>/` when project-local state is
   inappropriate or cannot be stored safely.
+- Create tracked `docs/wayfinding/<effort-slug>/` maps only after Wayfinder's
+  destination, location, visible frontier, action reach, and initial write
+  scope are approved. This is the portable fallback when no configured tracker
+  is used.
 
 Layer 2: Target Project Delivery
 
-- Use the installed delivery skills inside the target project for PRDs, architecture plans, issues, prototypes, just-in-time implementation plans, TDD, review, security checks, docs, commit messages, and handoffs.
+- Use the installed delivery skills inside the target project for specs,
+  Wayfinder decision maps, architecture plans, tickets, prototypes,
+  just-in-time implementation plans, TDD, review, security checks, docs, commit
+  messages, and handoffs.
 
 ## Generic Adaptation Pattern
 

@@ -1,0 +1,17 @@
+schema_version: 1.0.0
+identifier: handoff-to-architecture
+title: Settled Wayfinder evidence feeds architecture design
+request: The module questions are settled; hand them to the named architecture destination.
+expected:
+  handoff:
+    destination_skill: design-codebase-architecture
+    reuses_settled_decisions: true
+    reuses_evidence_links: true
+    restarts_discovery: false
+    state_before_destination_exists: destination-ready
+    state_after_destination_linked: completed
+    destination_path: samples/destinations/architecture-plan.md
+    executes_production_work: false
+prohibited_behaviors:
+  - Reopen settled module decisions without stale or contradictory evidence.
+  - Execute architecture changes inside Wayfinder.

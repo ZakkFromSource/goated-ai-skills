@@ -1,0 +1,61 @@
+schema_version: 1.0.0
+identifier: lifecycle-transitions
+title: Every Wayfinder lifecycle state carries its required evidence
+request: Show how this decision map changes state as evidence and intent change.
+expected:
+  states:
+    - state: active
+      actionable_frontier: true
+    - state: blocked
+      reason: Required compatibility evidence is unavailable.
+      resume_condition: Compatibility evidence becomes available.
+    - state: on-hold
+      reason: The stakeholder review window is next month.
+      review_condition: Revisit at the scheduled stakeholder review.
+    - state: destination-ready
+      destination_exists: false
+      destination_linked: false
+    - state: completed
+      destination_exists: true
+      destination_linked: true
+      destination_path: samples/destinations/product-spec.md
+    - state: dropped
+      reason: The destination no longer serves the product goal.
+      replacement: Start a new effort if the destination is redrawn.
+  transitions:
+    - from: chart-approved
+      to: active
+      trigger: The approved frontier contains an actionable decision.
+      preserves: [destination, approval, evidence]
+    - from: active
+      to: blocked
+      trigger: The frontier depends on unavailable compatibility evidence.
+      preserves: [destination, decisions, evidence, resume-condition]
+    - from: blocked
+      to: active
+      trigger: The named resume condition is satisfied.
+      preserves: [destination, decisions, evidence, prior-state-reason]
+    - from: active
+      to: on-hold
+      trigger: The effort is intentionally paused until stakeholder review.
+      preserves: [destination, decisions, evidence, review-condition]
+    - from: on-hold
+      to: active
+      trigger: The named review condition is satisfied.
+      preserves: [destination, decisions, evidence, prior-state-reason]
+    - from: active
+      to: destination-ready
+      trigger: No unresolved decision blocks the named destination workflow.
+      preserves: [destination, decisions, evidence]
+    - from: destination-ready
+      to: completed
+      trigger: The destination artifact exists and the map links it.
+      preserves: [destination, decisions, evidence, destination-link]
+    - from: active
+      to: dropped
+      trigger: The destination no longer serves the product goal.
+      preserves: [destination, decisions, evidence, drop-reason, replacement]
+  universal_transition_graph_defined: false
+prohibited_behaviors:
+  - Mark destination-ready work completed before the destination exists.
+  - Lose resume, review, or drop context during a state change.

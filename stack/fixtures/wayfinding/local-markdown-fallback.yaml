@@ -1,0 +1,31 @@
+schema_version: 1.0.0
+identifier: local-markdown-fallback
+title: Local Markdown preserves the portable Wayfinder artifact contract
+request: Persist this approved map without requiring a remote issue tracker.
+expected:
+  location: docs/wayfinding/storage-strategy/map.md
+  decision_pattern: docs/wayfinding/storage-strategy/decisions/NNN-<decision-title>.md
+  map_sample: samples/map.md
+  decision_sample: samples/decisions/001-select-storage-strategy.md
+  frontier_decision_sample: samples/decisions/002-confirm-synchronization-guarantees.md
+  map_headings:
+    - "## Destination"
+    - "## Completion Condition"
+    - "## State"
+    - "## Standing Notes And Constraints"
+    - "## Decisions So Far"
+    - "## Current Frontier"
+    - "## Not Yet Specified"
+    - "## Out Of Scope"
+  decision_headings:
+    - "## Type"
+    - "## Mode"
+    - "## Status"
+    - "## Blockers"
+    - "## Question"
+    - "## Evidence Or Asset Links"
+    - "## Resolution"
+  decision_ticket_is_delivery_ticket: false
+prohibited_behaviors:
+  - Require a remote issue tracker.
+  - Store implementation steps in a Wayfinder decision record.

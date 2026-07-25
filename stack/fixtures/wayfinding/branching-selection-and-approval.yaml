@@ -1,0 +1,23 @@
+schema_version: 1.0.0
+identifier: branching-selection-and-approval
+title: Branching multi-session uncertainty selects Wayfinder after chart approval
+request: Chart a route through a large idea whose later decisions depend on research, prototypes, and earlier answers.
+project_context:
+  - The complete route cannot responsibly be specified in one focused session.
+  - Production implementation is not part of the requested decision work.
+expected:
+  selection:
+    selected: true
+    branching_uncertainty: true
+    exceeds_one_focused_session: true
+    already_specified_implementation: false
+  chart_approval:
+    destination: true
+    location: true
+    visible_frontier: true
+    action_reach: true
+    initial_write_scope: true
+    approved_before_write: true
+prohibited_behaviors:
+  - Select Wayfinder because implementation is merely large.
+  - Write the map before all five chart dimensions are approved.

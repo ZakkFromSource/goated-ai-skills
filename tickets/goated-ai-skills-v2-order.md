@@ -27,8 +27,8 @@ plan.
 - `tickets/archive/006-design-architecture-and-plans-proportionally.md` — Design
   Architecture And Plans Proportionally (AFK; Work state: Completed; Blocked
   by: Ticket 002)
-- `tickets/007-navigate-uncertainty-with-wayfinder.md` — Navigate Multi-Session
-  Uncertainty With Wayfinder (AFK; Work state: Not started; Blocked by: Tickets
+- `tickets/archive/007-navigate-uncertainty-with-wayfinder.md` — Navigate
+  Multi-Session Uncertainty With Wayfinder (AFK; Work state: Completed; Blocked by: Tickets
   004, 005, and 006)
 - `tickets/008-retrieve-durable-knowledge-safely.md` — Retrieve Durable
   Knowledge Safely (AFK; Work state: Not started; Blocked by: Ticket 002)
@@ -61,7 +61,7 @@ plan.
 6. `tickets/archive/006-design-architecture-and-plans-proportionally.md`
    - Why now: completes the architecture and executable-planning route needed
      by Wayfinder destinations.
-7. `tickets/007-navigate-uncertainty-with-wayfinder.md`
+7. `tickets/archive/007-navigate-uncertainty-with-wayfinder.md`
    - Why now: composes the settled grill, spec, and architecture capabilities.
 8. `tickets/008-retrieve-durable-knowledge-safely.md`
    - Why now: adds a separate evidence consumer after the evidence contract is

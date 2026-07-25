@@ -85,6 +85,7 @@ migration begins with the shared policy, registry, schema, and templates under
 - [`project-standards-calibration`](skills/agent-workflows/project-standards-calibration/SKILL.md): separate documented standards, inferred conventions, preferences, and unresolved questions.
 - [`agent-instructions-integrator`](skills/agent-workflows/agent-instructions-integrator/SKILL.md): connect installed skills to a target project's thin agent instruction layer.
 - [`framework-agnostic-skill-creator`](skills/agent-workflows/framework-agnostic-skill-creator/SKILL.md): create, port, adapt, and sanitize skills into the GOATED shape.
+- [`wayfinder`](skills/agent-workflows/wayfinder/SKILL.md): navigate branching multi-session uncertainty through a visible decision frontier and hand settled evidence to a named planning destination.
 - [`handoff`](skills/agent-workflows/handoff/SKILL.md): preserve continuity for future agents or future sessions.
 
 ### Engineering
@@ -161,6 +162,23 @@ session-start-progressive-disclosure
 -> commit-message
 -> handoff optional
 ```
+
+### Navigate Multi-Session Uncertainty
+
+Use this branch only when uncertainty itself is branching across focused
+sessions. Large, already-specified implementation stays on the normal delivery
+route.
+
+```text
+using-goated-ai-skills
+-> wayfinder
+-> one primary decision focus per invocation
+-> write-a-spec or design-codebase-architecture as the named destination
+```
+
+Wayfinder may gather research, build disposable decision prototypes, or clear
+bounded prerequisites. It never performs production implementation, migration
+execution, publication, or deployment.
 
 ### Craft or Refine a Prompt
 

@@ -1,0 +1,24 @@
+schema_version: 1.0.0
+identifier: decision-mode-classification
+title: Decision type and human mode are classified independently
+request: Classify the visible questions before choosing the next focus.
+expected:
+  classification_independent: true
+  decisions:
+    - type: grilling
+      mode: HITL
+      reason: A stakeholder must choose the acceptable tradeoff.
+    - type: research
+      mode: AFK
+      reason: Current public documentation can settle the fact.
+    - type: prototype
+      mode: AFK
+      reason: Repeatable local scenarios can distinguish the state models.
+    - type: prerequisite
+      mode: HITL
+      reason: A human must approve external access before evidence can be gathered.
+      necessary_for_decision: true
+      approval_covers_reach: true
+prohibited_behaviors:
+  - Derive HITL or AFK from decision type alone.
+  - Let the agent supply a stakeholder decision.

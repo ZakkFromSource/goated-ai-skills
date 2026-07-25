@@ -34,6 +34,7 @@ Soft:
 - `session-start-progressive-disclosure` when the project, source area,
   boundary, or evidence is unfamiliar, cross-area, or stale
 - specialist skills selected as gates below
+- `wayfinder` when uncertainty is branching and exceeds one focused session
 
 Fallback: Without the shared policy or registry, use the compact profile, gate,
 approval, evidence, and checkpoint rules in this file. Never depend on the
@@ -75,6 +76,7 @@ GOATED source repository or hidden session files.
 | --- | --- |
 | Proportional orientation | Always; near-zero ceremony for fresh tiny work |
 | Clarification or diagnosis | Intent or root cause materially blocks action |
+| Wayfinder | Uncertainty branches across focused sessions and later decisions depend on earlier evidence |
 | Spec, architecture, or tickets | Durable intent, module strategy, or multiple resumable slices must be settled |
 | Writing plan | A scoped task still needs executable steps |
 | TDD or equivalent proof | Behavior, a public interface, or regression risk changes |
@@ -86,6 +88,10 @@ GOATED source repository or hidden session files.
    - Full orientation loads only for unfamiliar, cross-area, stale, or
      boundary-uncertain work. Code refinement loads only for observed
      refinement debt or an explicit cleanup request.
+   - Wayfinder is not a synonym for large work. Reject it for session-sized
+     discussion and for implementation whose decisions are already settled.
+     Its chart requires approval of destination, location, visible frontier,
+     action reach, and initial write scope before any map write.
    - Tiny work uses direct action plus narrow proof. Do not silently turn it
      into clarification, planning, review, and handoff.
 
