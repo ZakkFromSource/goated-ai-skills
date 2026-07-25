@@ -105,7 +105,7 @@ flowchart LR
   A["session-start-progressive-disclosure"] --> B["grill-with-docs when gated mandatory"]
   B --> C["prototype optional"]
   C --> D["write-a-spec"]
-  D --> E["plan-codebase-architecture optional"]
+  D --> E["design-codebase-architecture optional"]
   E --> F["spec-to-tickets"]
   F --> G["prototype optional per focused issue"]
   G --> H["writing-plans"]
@@ -128,7 +128,7 @@ Typical flow:
 2. Use `grill-with-docs` when the work is unclear, architectural, public-facing, cross-file, standards-sensitive, or spec-level.
 3. Use `prototype` before committing to a risky product, UI, logic, or technical choice.
 4. Use `write-a-spec` for fuzzy ideas, then `spec-to-tickets` to break the approved spec into fresh-agent-ready local delivery tickets and an order file for multi-ticket sets.
-5. Use `plan-codebase-architecture` when the module shape, interfaces, dependencies, or implementation slices need source-grounded architecture design before code.
+5. Use `design-codebase-architecture` when the module shape, interfaces, dependencies, or implementation slices need source-grounded architecture design before code.
 6. Use `writing-plans` immediately before implementation to produce exact steps, evidence, stop conditions, and review gates.
 7. Use `subagent-driven-development` for larger or riskier work when bounded implementer and reviewer agents are available.
 8. Use `tdd` for behavior changes, bug fixes, public interfaces, and regression coverage.
@@ -242,7 +242,7 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Purpose**: Turns an approved ticket, scoped task, or spec slice into a just-in-time implementation plan.
 - **Use when**: Work is scoped enough to implement, but the agent needs exact steps, evidence, commands, stop conditions, and review gates.
 - **Typical input**: Ticket, spec slice, current source evidence, relevant docs, likely tests, and user constraints.
-- **Typical output**: Inline implementation plan by default, or ignored local plan for long/resumable work.
+- **Typical output**: Inline plan in the work envelope for focused single-session work, or a durable tracked plan for resumable, delegated, architectural, or multi-surface work. Inline plans can be promoted without repeating fresh discovery.
 - **Pipeline role**: Final planning step before implementation.
 
 #### `subagent-driven-development`
@@ -354,24 +354,24 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Purpose**: Produces descriptive, source-grounded architecture or design maps.
 - **Use when**: You need a module map, dependency map, flow map, runtime topology, or quick zoom-out orientation.
 - **Typical input**: Focused source area, imports/callers, architecture docs, routes, schemas, tests, and context artifacts.
-- **Typical output**: Mermaid-first map, explanation, source references, and uncertainty notes.
+- **Typical output**: the smallest useful representation, explanation, source references, and uncertainty notes.
 - **Pipeline role**: Optional current-state onboarding or delivery orientation step, not a PRD prerequisite or planning substitute.
 
-#### `plan-codebase-architecture`
+#### `design-codebase-architecture`
 
-- **Purpose**: Plans source-grounded architecture before implementation.
+- **Purpose**: Prescribes source-grounded architecture before implementation.
 - **Use when**: A clarified brief, PRD, issue, or grill result needs module boundaries, interfaces, dependency seams, test surfaces, or slice order.
 - **Typical input**: Clarified intent, source evidence, existing architecture docs, constraints, risks, and acceptance criteria.
-- **Typical output**: Project-wide or feature-specific architecture blueprint.
+- **Typical output**: Project-wide, feature-specific, or inline architecture blueprint using the smallest useful representation.
 - **Pipeline role**: Optional architecture planning step in onboarding or delivery.
 
-#### `improve-codebase-architecture`
+#### `review-codebase-architecture`
 
-- **Purpose**: Finds source-grounded architecture improvement opportunities.
+- **Purpose**: Reviews source-grounded architecture improvement opportunities without prescribing or implementing the replacement design.
 - **Use when**: You want to identify shallow modules, tight coupling, hard-to-test areas, unclear interfaces, or refactor direction.
 - **Typical input**: Review scope, source evidence, tests, docs, architecture vocabulary, and observed pain points.
 - **Typical output**: Ranked improvement opportunities with evidence and risk notes.
-- **Pipeline role**: Specialized branch for architecture review before future planning.
+- **Pipeline role**: Review-only branch that emits one justified next-step signal, often `design-codebase-architecture`, `code-refinement`, or `tdd`.
 
 ### Productivity
 
@@ -459,7 +459,7 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If the request needs product or scope clarity, use `grill-with-docs`.
 - If the request is fuzzy and user-facing, use `write-a-spec` before implementation planning.
 - If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria, use `write-a-spec` before architecture planning; otherwise skip spec creation.
-- If architecture shape matters, use `plan-codebase-architecture`; if you only need a descriptive map, use `architecture-design-map`.
+- If architecture shape must be prescribed, use `design-codebase-architecture`; for review-only findings use `review-codebase-architecture`; if you only need a descriptive map, use `architecture-design-map`.
 - If behavior changes, route implementation through `tdd`.
 - For non-trivial code-producing work, use `code-refinement` after implementation proof and before review gates, or explicitly record why it was skipped. Use it directly when recently changed code should be simplified or cleaned up without behavior changes.
 - If planned durable documentation is the work, or part of the work, use `documentation-writer`; if docs structure or agent docs are messy, use `documentation-cleanup`; use `doc-sync` for drift checks after behavior or docs change.

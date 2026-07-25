@@ -36,8 +36,8 @@ Hard: None.
 
 Soft:
 - tdd when behavior, regression coverage, public interfaces, or a red/green/refactor loop is still needed
-- improve-codebase-architecture when cleanup pressure reveals broad architecture friction, shallow modules, false seams, or hard-to-test design
-- plan-codebase-architecture when a public interface, module boundary, dependency seam, file ownership, or migration strategy should change
+- review-codebase-architecture when cleanup pressure reveals broad architecture friction, shallow modules, false seams, or hard-to-test design
+- design-codebase-architecture when a public interface, module boundary, dependency seam, file ownership, or migration strategy should change
 - standards-and-spec-review after refinement when issue fit, acceptance coverage, or project standards need review
 - code-security-review after refinement when trust boundaries, auth, permissions, user data, persistence, unsafe execution, or dependency behavior are touched
 - doc-sync when refinement changes public names, docs-relevant examples, commands, tests, or reports possible documentation drift
@@ -79,8 +79,8 @@ Fallback: If companion skills, tests, commands, or clean diffs are unavailable, 
    - After each meaningful refinement step, rerun the smallest useful proof when the project makes that practical.
 
 6. Route larger findings instead of smuggling them into cleanup:
-   - Route to `improve-codebase-architecture` when repeated refinement friction suggests broad architecture opportunities.
-   - Route to `plan-codebase-architecture` when a better design would change public interfaces, module ownership, dependency seams, file structure, migration strategy, or multiple callers.
+   - Route to `review-codebase-architecture` when repeated refinement friction suggests broad architecture opportunities.
+   - Route to `design-codebase-architecture` when a better design would change public interfaces, module ownership, dependency seams, file structure, migration strategy, or multiple callers.
    - Route to `tdd` when the desired cleanup needs behavior changes, new tests, regression coverage, or public-interface proof.
    - Route to `doc-sync` when public names, examples, commands, workflows, or docs-relevant tests changed or when drift is suspected.
    - Route to `code-security-review` when the refinement touches security-relevant code paths.
@@ -164,7 +164,7 @@ If subagents are unavailable, run the same review sequentially with a narrower c
 - Do not replace the Output Contract with loose prose such as "cleaned up and tests pass"; final closeout must account for every required field or explicitly report the skip reason.
 - Do not omit required Output Contract facts because the value is `None`, `not applicable`, or inconvenient. State the value or fallback reason.
 - Do not claim code was refined after proposal mode or skip mode; say proposal-only or skipped when no refinement edits were made.
-- Do not replace `tdd`, `improve-codebase-architecture`, `standards-and-spec-review`, `code-security-review`, `doc-sync`, or `verification-before-completion`.
+- Do not replace `tdd`, `review-codebase-architecture`, `standards-and-spec-review`, `code-security-review`, `doc-sync`, or `verification-before-completion`.
 - Do not include private notes, ignored scratch content, credentials, client data, sensitive personal context, secrets, or real user data in reports or examples.
 - Do not require this source repo's root files, issue files, `.local` notes, or hidden chat history after installation. The skill may rely only on its own instructions, local support files, and target-project evidence.
 

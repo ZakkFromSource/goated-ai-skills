@@ -105,7 +105,7 @@ Possible refactors:
 
 Keep the test surface stable unless changing the public interface is part of the issue. When the interface must change, update tests to describe the new public contract, not the transitional internals.
 
-If the TDD cycle exposes a broader architecture problem that is larger than the current issue, do not smuggle that refactor into the green phase. Capture the evidence and route follow-up to `improve-codebase-architecture` when that skill exists and is available.
+If the TDD cycle exposes a broader architecture problem that is larger than the current issue, do not smuggle that refactor into the green phase. Capture the evidence and route follow-up to `review-codebase-architecture` when that skill exists and is available.
 
 ## Deep Module Checklist
 

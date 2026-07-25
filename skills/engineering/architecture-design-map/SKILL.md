@@ -9,7 +9,7 @@ metadata:
 
 ## Purpose
 
-Create descriptive, source-grounded architecture and design maps for target projects. Use Mermaid by default for detailed maps, attach source evidence to every meaningful diagram claim, and mark uncertainty instead of inventing missing structure.
+Create descriptive, source-grounded architecture and design maps for target projects. Use the smallest representation that makes the important relationships clearer, attach source evidence to every meaningful claim, and mark uncertainty instead of inventing missing structure.
 
 This skill has two common modes. The primary mode is a detailed architecture/design map for a project, subsystem, flow, runtime topology, or durable target-project artifact. The lightweight mode is quick inline zoom-out for orienting around unfamiliar code by going up one layer to surrounding modules, callers, importers, and project vocabulary.
 
@@ -71,7 +71,9 @@ Use target-project terms first. Use generic labels only when source evidence sup
    - When caller or importer evidence is missing in a quick zoom-out pass, say it was not found or not inspected instead of inventing surrounding context.
    - Record missing, stale, inferred, or conflicting sources as uncertainty.
 
-4. Select the smallest useful map type:
+4. Select the smallest useful representation:
+   - Start with prose or compact bullets when the scope is one relationship, a tiny caller set, or a short orientation.
+   - Use a table for repeated mappings, ownership, interfaces, or evidence comparisons.
    - Use a module map for ownership, dependencies, or major subsystems.
    - Use a compact module/caller map for quick inline zoom-out around a focused code area.
    - Use a flowchart or sequence diagram for user journeys, request handling, async flows, jobs, or event paths.
@@ -79,12 +81,13 @@ Use target-project terms first. Use generic labels only when source evidence sup
    - Use an entity or schema-adjacent map only when architecture depends on data ownership or persistence shape.
    - Read [references/diagram-patterns.md](references/diagram-patterns.md) when choosing map vocabulary, diagram syntax, legends, optional formats, or uncertainty markers.
 
-5. Draw the Mermaid-first map:
+5. Render the selected representation:
    - Keep node names short, domain-specific, and stable.
    - Show only relationships supported by evidence or clearly marked as inferred.
-   - Prefer readable maps over exhaustive maps; split large maps by subsystem or flow when one diagram becomes dense.
+   - Use Mermaid only when a diagram makes three or more relationships, a flow, hierarchy, or topology materially easier to understand than prose or a table.
+   - Prefer readable outputs over exhaustive ones; split large maps by subsystem or flow when one representation becomes dense.
    - Include a legend when colors, dashed edges, uncertainty markers, external systems, or seams need explanation.
-   - Use optional formats such as ASCII, Excalidraw, generated images, HTML, or plugin-backed diagrams only when useful and available; keep Mermaid as the default source of truth.
+   - Use ASCII, Mermaid, Excalidraw, generated images, HTML, or plugin-backed diagrams only when useful and available; keep the evidence table or source references as the auditable source of truth.
 
 6. Attach source references and uncertainty notes:
    - List evidence paths for each major node, edge, flow, seam, port, adapter, runtime unit, or claim.
@@ -94,7 +97,7 @@ Use target-project terms first. Use generic labels only when source evidence sup
 
 7. Write or return the map:
    - For durable output, write or update `docs/agents/architecture-map.md` unless the user requested another path.
-   - For inline output, include the Mermaid diagram, explanation, source references, and uncertainty notes directly in the response.
+   - For inline output, include only the selected representation, explanation, source references, and uncertainty notes needed for the request.
    - Do not update `CONTEXT.md`, ADRs, standards, or source code from this skill unless the user separately asks; route follow-up documentation drift to `doc-sync`.
    - Use `verification-before-completion` before claiming a durable map is complete, evidence-backed, or ready for downstream work.
 
@@ -109,12 +112,10 @@ Write `docs/agents/architecture-map.md` with this shape when a durable detailed 
 
 One short paragraph explaining the map scope and how future agents should use it.
 
-## Map
+## Representation
 
-```mermaid
-flowchart LR
-  A[Module A] --> B[Module B]
-```
+<Use concise prose, bullets, a table, ASCII, Mermaid, or another available
+format according to the smallest-useful-representation rule.>
 
 ## What This Shows
 
@@ -139,11 +140,11 @@ flowchart LR
 
 For inline detailed-map output, return the same core pieces without the `Last Updated` section unless useful:
 
-- Mermaid diagram.
+- The smallest useful representation: prose, bullets, table, ASCII, Mermaid, or another available visual format.
 - Concise explanation.
 - Source references.
 - Uncertainty notes.
-- Optional next-step routing, such as `doc-sync` for durable doc drift or `improve-codebase-architecture` for refactor opportunities.
+- One optional next-step signal, such as `doc-sync` for durable doc drift or `review-codebase-architecture` for review opportunities.
 
 For quick inline zoom-out, keep the response concise and orientation-focused:
 
@@ -164,6 +165,7 @@ Require paths inspected, commands run or skipped, exact source evidence, candida
 ## Guardrails
 
 - Do not diagram before gathering relevant source evidence.
+- Do not default to Mermaid or make a diagram mandatory when prose, bullets, or a table communicates the relationship more clearly.
 - Do not create decorative, aspirational, speculative, or marketing-style diagrams unsupported by project evidence.
 - Do not plan new architecture, improve architecture, rank refactor opportunities, design interfaces, or produce before/after refactor proposals.
 - Do not treat folder layout alone as architecture; verify with docs, imports, entrypoints, routes, runtime config, tests, or other project evidence.
@@ -174,6 +176,7 @@ Require paths inspected, commands run or skipped, exact source evidence, candida
 - Do not include private notes, ignored local scratch files, credentials, client data, sensitive personal context, secrets, or real user data in tracked architecture maps.
 - Do not require the original skill-library repository or any maintainer-only root files after installation. The skill may rely only on its own installed files and target-project evidence.
 - Prefer small, accurate maps over exhaustive diagrams that future agents cannot trust.
+- Emit at most one justified next-step signal; do not reconstruct the downstream delivery pipeline.
 
 ## References
 

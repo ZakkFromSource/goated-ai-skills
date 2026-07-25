@@ -1,0 +1,23 @@
+schema_version: 1.0.0
+identifier: current-state-map-vs-architecture-design
+title: Current-state mapping stays distinct from prescriptive design
+request: Compare how an existing system map and a proposed module design should route.
+expected:
+  routes:
+    - request_kind: current-state-map
+      skill: architecture-design-map
+      intent: descriptive
+      smallest_useful_visualization: true
+      mermaid_required: false
+      next_signal: none
+    - request_kind: architecture-design
+      skill: design-codebase-architecture
+      intent: prescriptive
+      smallest_useful_visualization: true
+      mermaid_required: false
+      next_signal: writing-plans
+  shared_discovery_reused: true
+  rebuilds_delivery_pipeline: false
+prohibited_behaviors:
+  - Use the descriptive map to prescribe unapproved target architecture.
+  - Default either route to Mermaid when prose or a table is clearer.

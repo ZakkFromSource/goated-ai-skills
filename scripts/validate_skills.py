@@ -183,6 +183,13 @@ REQUIRED_PLANNING_FIXTURE_IDENTIFIERS = {
     "single-ticket",
     "multi-ticket",
 }
+REQUIRED_ARCHITECTURE_PLANNING_FIXTURE_IDENTIFIERS = {
+    "current-state-map-vs-architecture-design",
+    "architecture-review-only",
+    "inline-implementation-plan",
+    "durable-implementation-plan",
+    "compact-plan-promotion",
+}
 COMPACT_SPEC_SECTIONS = {
     "problem",
     "goals",
@@ -570,6 +577,40 @@ def scan_docs_schema_drift(repo: Path, skill_files: set[Path]) -> list[Finding]:
                 )
             )
     return drift
+
+
+def validate_canonical_architecture_references(repo: Path) -> list[Finding]:
+    """Reject deprecated architecture names from active runtime and user docs."""
+
+    deprecated_names = {
+        "plan-codebase-architecture": "design-codebase-architecture",
+        "improve-codebase-architecture": "review-codebase-architecture",
+    }
+    active_paths = [
+        repo / "README.md",
+        repo / "docs" / "how-to-use.md",
+        repo / "docs" / "install.md",
+        repo / "stack" / "AGENTS.md",
+    ]
+    active_paths.extend(sorted((repo / "skills").rglob("*.md")))
+
+    errors: list[Finding] = []
+    for path in active_paths:
+        if not path.exists():
+            continue
+        text = read_text(path)
+        for deprecated_name, canonical_name in deprecated_names.items():
+            for match in re.finditer(re.escape(deprecated_name), text):
+                line = text.count("\n", 0, match.start()) + 1
+                errors.append(
+                    Finding(
+                        relative(path, repo),
+                        f"active reference uses deprecated architecture skill name "
+                        f"{deprecated_name!r}; use {canonical_name!r}",
+                        line=line,
+                    )
+                )
+    return errors
 
 
 def load_mapping(path: Path, label: str) -> tuple[dict[str, object] | None, list[Finding]]:
@@ -1992,6 +2033,13 @@ def validate_planning_fixtures(repo: Path) -> list[Finding]:
                 Finding(fixture_label, "planning fixture identifier must be a string")
             )
             continue
+        if identifier in identifiers:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"duplicate planning fixture identifier: {identifier}",
+                )
+            )
         identifiers.add(identifier)
 
         expected = fixture.get("expected")
@@ -2022,6 +2070,300 @@ def validate_planning_fixtures(repo: Path) -> list[Finding]:
         )
         for identifier in sorted(
             REQUIRED_PLANNING_FIXTURE_IDENTIFIERS - identifiers
+        )
+    )
+    return errors
+
+
+def validate_fixture_contract_values(
+    actual: dict[str, object],
+    required: dict[str, object],
+    fixture_label: str,
+    contract_name: str,
+) -> list[Finding]:
+    """Return readable findings for mismatched fixture contract values."""
+
+    return [
+        Finding(
+            fixture_label,
+            f"{contract_name} requires {field}={required_value!r}",
+        )
+        for field, required_value in required.items()
+        if actual.get(field) != required_value
+    ]
+
+
+def validate_architecture_planning_fixtures(repo: Path) -> list[Finding]:
+    """Validate proportional architecture and implementation-plan routing."""
+
+    fixture_root = repo / "stack" / "fixtures" / "architecture-planning"
+    fixture_paths = sorted(fixture_root.glob("*.yaml"))
+    if not fixture_paths:
+        return [
+            Finding(
+                "stack/fixtures/architecture-planning",
+                "no architecture-planning fixtures found",
+            )
+        ]
+
+    errors: list[Finding] = []
+    identifiers: set[str] = set()
+    for fixture_path in fixture_paths:
+        fixture_label = relative(fixture_path, repo)
+        fixture, fixture_errors = load_mapping(fixture_path, fixture_label)
+        errors.extend(fixture_errors)
+        if fixture is None:
+            continue
+
+        if fixture.get("schema_version") != "1.0.0":
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "unsupported architecture-planning fixture schema_version",
+                )
+            )
+
+        identifier = fixture.get("identifier")
+        if not isinstance(identifier, str):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "architecture-planning fixture identifier must be a string",
+                )
+            )
+            continue
+        if identifier in identifiers:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"duplicate architecture-planning fixture identifier: {identifier}",
+                )
+            )
+        identifiers.add(identifier)
+
+        expected = fixture.get("expected")
+        if not isinstance(expected, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "architecture-planning fixture expected must be a mapping",
+                )
+            )
+            continue
+
+        if expected.get("rebuilds_delivery_pipeline") is not False:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "architecture and planning routes must not rebuild the delivery pipeline",
+                )
+            )
+        if not is_string_list(fixture.get("prohibited_behaviors"), allow_empty=False):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "architecture-planning prohibited_behaviors must be a non-empty string list",
+                )
+            )
+
+        if identifier == "current-state-map-vs-architecture-design":
+            routes = expected.get("routes")
+            if not isinstance(routes, list) or len(routes) != 2:
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "mapping-versus-design fixture must define exactly two routes",
+                    )
+                )
+                continue
+            route_by_kind = {
+                route.get("request_kind"): route
+                for route in routes
+                if isinstance(route, dict)
+            }
+            required_routes = {
+                "current-state-map": (
+                    "architecture-design-map",
+                    "descriptive",
+                ),
+                "architecture-design": (
+                    "design-codebase-architecture",
+                    "prescriptive",
+                ),
+            }
+            for request_kind, (skill_name, intent) in required_routes.items():
+                route = route_by_kind.get(request_kind)
+                if not isinstance(route, dict) or route.get("skill") != skill_name:
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"{request_kind} must route to {skill_name}",
+                        )
+                    )
+                    continue
+                if route.get("intent") != intent:
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"{request_kind} requires intent={intent!r}",
+                        )
+                    )
+                if route.get("smallest_useful_visualization") is not True:
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"{request_kind} must use the smallest useful visualization",
+                        )
+                    )
+                if route.get("mermaid_required") is not False:
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"{request_kind} must not require Mermaid",
+                        )
+                    )
+                if not isinstance(route.get("next_signal"), str):
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"{request_kind} requires one next_signal",
+                        )
+                    )
+            if expected.get("shared_discovery_reused") is not True:
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "mapping and design routes must be able to reuse shared discovery",
+                    )
+                )
+
+        elif identifier == "architecture-review-only":
+            route = expected.get("route")
+            if not isinstance(route, dict):
+                errors.append(
+                    Finding(fixture_label, "review-only fixture route must be a mapping")
+                )
+                continue
+            review_contract = {
+                "skill": "review-codebase-architecture",
+                "intent": "review-only",
+                "prescriptive_blueprint": False,
+                "mutates_target_architecture": False,
+            }
+            errors.extend(
+                validate_fixture_contract_values(
+                    route,
+                    review_contract,
+                    fixture_label,
+                    "architecture review route",
+                )
+            )
+            if not isinstance(route.get("next_signal"), str):
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "architecture review route requires one next_signal",
+                    )
+                )
+
+        elif identifier in {
+            "inline-implementation-plan",
+            "durable-implementation-plan",
+        }:
+            plan = expected.get("plan")
+            if not isinstance(plan, dict):
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "implementation-plan fixture plan must be a mapping",
+                    )
+                )
+                continue
+            expected_mode = (
+                "inline"
+                if identifier == "inline-implementation-plan"
+                else "durable"
+            )
+            expected_tracked = expected_mode == "durable"
+            if plan.get("skill") != "writing-plans":
+                errors.append(
+                    Finding(fixture_label, "implementation plans must use writing-plans")
+                )
+            if plan.get("mode") != expected_mode:
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        f"{identifier} requires mode={expected_mode!r}",
+                    )
+                )
+            if plan.get("tracked") is not expected_tracked:
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        f"{expected_mode} plan tracked state is incorrect",
+                    )
+                )
+            mode_contract = (
+                {
+                    "held_in_envelope": True,
+                    "promotion_supported": True,
+                }
+                if expected_mode == "inline"
+                else {"respects_project_convention": True}
+            )
+            errors.extend(
+                validate_fixture_contract_values(
+                    plan,
+                    mode_contract,
+                    fixture_label,
+                    f"{expected_mode} plan",
+                )
+            )
+            if not isinstance(plan.get("next_signal"), str):
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "implementation plan requires one next_signal",
+                    )
+                )
+
+        elif identifier == "compact-plan-promotion":
+            promotion = expected.get("promotion")
+            if not isinstance(promotion, dict):
+                errors.append(
+                    Finding(fixture_label, "plan promotion must be a mapping")
+                )
+                continue
+            promotion_contract = {
+                "from": "inline",
+                "to": "durable",
+                "restart_discovery": False,
+                "reuses_evidence": True,
+                "preserves_decisions": True,
+            }
+            errors.extend(
+                validate_fixture_contract_values(
+                    promotion,
+                    promotion_contract,
+                    fixture_label,
+                    "plan promotion",
+                )
+            )
+        else:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"unsupported architecture-planning fixture: {identifier}",
+                )
+            )
+
+    errors.extend(
+        Finding(
+            "stack/fixtures/architecture-planning",
+            f"missing required architecture-planning fixture: {identifier}",
+        )
+        for identifier in sorted(
+            REQUIRED_ARCHITECTURE_PLANNING_FIXTURE_IDENTIFIERS - identifiers
         )
     )
     return errors
@@ -2074,6 +2416,7 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
 
     # Public-boundary checks scan the whole public text surface, not just skills.
     errors.extend(scan_public_path_leaks(repo))
+    errors.extend(validate_canonical_architecture_references(repo))
 
     # The integrated registry is validated without changing the individual-skill
     # checks above, so both V2 installation modes use one command.
@@ -2082,6 +2425,7 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
     errors.extend(validate_clarification_fixtures(repo))
     errors.extend(validate_onboarding_fixtures(repo))
     errors.extend(validate_planning_fixtures(repo))
+    errors.extend(validate_architecture_planning_fixtures(repo))
 
     # Docs drift is informational in issue 060, so it is returned separately.
     drift = scan_docs_schema_drift(repo, set(skill_files))
@@ -2120,6 +2464,13 @@ def main() -> int:
     )
     planning_fixture_count = len(
         list((repo / "stack" / "fixtures" / "planning").glob("*.yaml"))
+    )
+    architecture_planning_fixture_count = len(
+        list(
+            (repo / "stack" / "fixtures" / "architecture-planning").glob(
+                "*.yaml"
+            )
+        )
     )
     if 800 <= policy_words <= 1200:
         policy_budget_status = "within 800-1,200 target"
@@ -2160,6 +2511,10 @@ def main() -> int:
         print(
             "Planning fixture validation passed for "
             f"{planning_fixture_count} scenarios."
+        )
+        print(
+            "Architecture and implementation-planning fixture validation passed for "
+            f"{architecture_planning_fixture_count} scenarios."
         )
         print(
             f"Word-budget report: shared policy {policy_words} words "

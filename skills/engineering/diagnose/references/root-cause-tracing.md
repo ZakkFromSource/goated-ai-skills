@@ -93,4 +93,4 @@ Stop and reroute when:
 - two or more plausible causes remain and no safe probe can distinguish them;
 - the same area has received repeated failed fixes without a clear public-interface seam.
 
-Use `tdd` when the cause and regression behavior are known. Use `improve-codebase-architecture` when the system shape prevents honest proof.
+Use `tdd` when the cause and regression behavior are known. Use `review-codebase-architecture` when the system shape prevents honest proof.

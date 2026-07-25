@@ -100,7 +100,7 @@ Before accepting a blueprint, ask:
 - Are file paths grounded in current project conventions?
 - Can the first implementation slice prove behavior through a public interface?
 - Are unknown product, data, security, or ownership decisions marked as open questions?
-- Would `improve-codebase-architecture` immediately flag this design as shallow, speculative, or hard to test?
+- Would `review-codebase-architecture` immediately flag this design as shallow, speculative, or hard to test?
 
 If the answer is weak, simplify the blueprint or route to the needed evidence-gathering workflow.
 
@@ -124,7 +124,7 @@ Useful tags:
 - Dependency: `in-process`, `local-substitutable`, `remote-owned`, `true-external`, `unknown`.
 - Seam: `real seam`, `internal seam`, `external seam`, `one-adapter risk`, `no seam needed`.
 - Test surface: `module API`, `route`, `command`, `UI flow`, `repository`, `adapter`, `integration`.
-- Next step: `spec-to-tickets`, `tdd`, `write-a-spec`, `architecture-design-map`, `improve-codebase-architecture`, `ADR`, `RFC`.
+- Next step: `spec-to-tickets`, `writing-plans`, `tdd`, `write-a-spec`, `architecture-design-map`, `review-codebase-architecture`, `ADR`, `RFC`.
 
 RFC or ADR triggers:
 

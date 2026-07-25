@@ -1,6 +1,6 @@
 # Plan Review Checklist
 
-Use this checklist before executing a non-trivial, risky, delegated, resumable, or local-file implementation plan.
+Use this checklist before executing a non-trivial, risky, delegated, resumable, or durable implementation plan.
 
 ## Source Grounding
 

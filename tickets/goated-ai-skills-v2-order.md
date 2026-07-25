@@ -24,8 +24,8 @@ plan.
 - `tickets/archive/005-turn-specs-into-delivery-tickets.md` — Turn Specs Into
   Durable Delivery Tickets (AFK; Work state: Completed; Blocked by: Tickets 002
   and 004)
-- `tickets/006-design-architecture-and-plans-proportionally.md` — Design
-  Architecture And Plans Proportionally (AFK; Work state: Not started; Blocked
+- `tickets/archive/006-design-architecture-and-plans-proportionally.md` — Design
+  Architecture And Plans Proportionally (AFK; Work state: Completed; Blocked
   by: Ticket 002)
 - `tickets/007-navigate-uncertainty-with-wayfinder.md` — Navigate Multi-Session
   Uncertainty With Wayfinder (AFK; Work state: Not started; Blocked by: Tickets
@@ -58,7 +58,7 @@ plan.
    - Why now: provides the decision workflow needed before specs and Wayfinder.
 5. `tickets/archive/005-turn-specs-into-delivery-tickets.md`
    - Why now: establishes the canonical durable planning vocabulary and path.
-6. `tickets/006-design-architecture-and-plans-proportionally.md`
+6. `tickets/archive/006-design-architecture-and-plans-proportionally.md`
    - Why now: completes the architecture and executable-planning route needed
      by Wayfinder destinations.
 7. `tickets/007-navigate-uncertainty-with-wayfinder.md`

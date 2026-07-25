@@ -98,9 +98,9 @@ The integrated registry resolves the V1 names `write-a-prd` and
 `prd-to-issues` as aliases for these canonical skills. Individual installs copy
 only the canonical folders.
 - [`writing-plans`](skills/engineering/writing-plans/SKILL.md): produce just-in-time implementation plans with evidence, gates, and stop conditions.
-- [`plan-codebase-architecture`](skills/engineering/plan-codebase-architecture/SKILL.md): design source-grounded modules, interfaces, seams, test surfaces, and slice order.
+- [`design-codebase-architecture`](skills/engineering/design-codebase-architecture/SKILL.md): design source-grounded modules, interfaces, seams, test surfaces, and slice order.
 - [`architecture-design-map`](skills/engineering/architecture-design-map/SKILL.md): create source-grounded architecture maps, flow maps, and quick zoom-outs.
-- [`improve-codebase-architecture`](skills/engineering/improve-codebase-architecture/SKILL.md): find refactor opportunities that make code easier to understand and test.
+- [`review-codebase-architecture`](skills/engineering/review-codebase-architecture/SKILL.md): review refactor opportunities that could make code easier to understand and test.
 - [`prototype`](skills/engineering/prototype/SKILL.md): explore one product, UI, workflow, data, or technical idea with disposable, runnable evidence.
 - [`tdd`](skills/engineering/tdd/SKILL.md): use test-driven development to drive behavior changes through red, green, and refactor.
 - [`code-refinement`](skills/engineering/code-refinement/SKILL.md): refine recently changed code after implementation while preserving behavior and avoiding unrelated churn; for non-trivial code-producing work, run it or explicitly record why it was skipped.
@@ -145,7 +145,7 @@ session-start-progressive-disclosure
 -> grill-with-docs when gated mandatory
 -> prototype optional
 -> write-a-spec
--> plan-codebase-architecture optional
+-> design-codebase-architecture optional
 -> spec-to-tickets
 -> prototype optional per focused issue
 -> writing-plans

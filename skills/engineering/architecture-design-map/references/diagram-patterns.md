@@ -1,6 +1,6 @@
 # Diagram Patterns
 
-Use this reference when choosing how to represent a source-grounded architecture map. Mermaid is the default source of truth. Other visual formats are secondary and should derive from the same evidence.
+Use this reference when choosing how to represent a source-grounded architecture map. Start with the smallest useful representation. Source references and the evidence table remain authoritative regardless of presentation format.
 
 ## Map Vocabulary
 
@@ -159,17 +159,20 @@ Confidence levels:
 - `Medium`: supported by multiple weak signals or one strong source with a small gap.
 - `Low`: plausible but incomplete, stale, inferred, or not fully traced.
 
-## Optional Formats
+## Format Selection
 
-Use optional formats only when they add value and are available in the current agent environment.
+Use a visual format only when it adds value and is available in the current agent environment.
 
+- Prose or bullets: useful for one relationship, a tiny caller set, or a short orientation.
+- Table: useful for ownership, repeated mappings, interface comparisons, or evidence confidence.
 - ASCII: useful for terminal-only output or tiny maps.
+- Mermaid: useful for multi-node flows, hierarchy, dependency direction, sequence, or runtime topology.
 - Excalidraw: useful for editable whiteboard-style collaboration.
 - Generated image: useful for presentation or visual review, but should be derived from a source-grounded map.
-- HTML: useful for rich reports, but should not replace the Mermaid source unless the user asks.
+- HTML: useful for rich reports when interaction or layout materially improves comprehension.
 - Plugin-backed diagrams: useful when an installed tool can preserve editability or team workflow.
 
-When using an optional format, keep the Mermaid diagram or a clear textual source map as the auditable source of truth.
+Keep source references or an evidence table as the auditable source of truth for every format.
 
 ## Anti-Patterns
 

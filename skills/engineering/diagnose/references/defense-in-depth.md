@@ -74,7 +74,7 @@ When routing to `tdd`, include:
 - Residual risk: <what the layered strategy still does not cover>
 ```
 
-If the suggested public test surface is awkward, wide, private, or fake, route to `improve-codebase-architecture` before implementation.
+If the suggested public test surface is awkward, wide, private, or fake, route to `review-codebase-architecture` before implementation.
 
 ## Anti-Patterns
 

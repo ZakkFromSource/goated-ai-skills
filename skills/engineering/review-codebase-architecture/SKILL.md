@@ -1,17 +1,17 @@
 ---
-name: improve-codebase-architecture
-description: Use when looking for source-grounded architecture improvement opportunities, refactor direction, shallow modules, tightly coupled concepts, hard-to-test areas, deeper modules, clearer seams, or more testable and agent-navigable code structure.
+name: review-codebase-architecture
+description: Use when reviewing existing source and docs for architecture quality, improvement opportunities, shallow modules, tight coupling, weak seams, or hard-to-test structure without designing or implementing the replacement architecture.
 metadata:
   goated-category: engineering
 ---
 
-# Improve Codebase Architecture
+# Review Codebase Architecture
 
 ## Purpose
 
 Review a target project's existing source and docs to find architecture improvement opportunities before implementation begins. Prefer deeper modules: small, meaningful interfaces that hide real behavior, improve locality, and give callers and tests more leverage.
 
-This skill is review/design-only. It ranks opportunities, explains tradeoffs, and routes the next slice or RFC decision. It does not implement refactors, rewrite code, update tests, or mutate project architecture unless the user separately asks for implementation.
+This skill is review-only. It ranks opportunities, explains tradeoffs, and emits one appropriate next-step signal. It does not prescribe a complete replacement architecture, implement refactors, rewrite code, update tests, or mutate project architecture.
 
 ## Inputs
 
@@ -84,10 +84,12 @@ Use target-project names for concrete modules and flows. Keep these review terms
 
 6. Report and route the next step:
    - Return the ranked review inline unless the user requested a durable artifact.
-   - Recommend `architecture-design-map` when a current-state diagram is missing and would reduce uncertainty.
+   - Recommend `architecture-design-map` when a current-state map is missing and would reduce uncertainty.
+   - Recommend `design-codebase-architecture` when an accepted finding needs prescriptive module, interface, ownership, data-flow, dependency, or migration design.
    - Recommend `code-refinement` when a plausible architecture concern turns out to be scoped behavior-preserving cleanup.
    - Recommend `write-a-spec`, `spec-to-tickets`, or an RFC when the chosen direction needs planning before implementation.
    - Recommend `tdd` when the next step is a focused implementation slice with behavior proof through the new or existing interface.
+   - Emit only the next signal justified by the selected finding; do not rebuild the downstream delivery pipeline.
    - Use `verification-before-completion` before claiming the ranking is complete, evidence-backed, or ready for downstream work; for lightweight scans, verify only the recommendation claim being made and state skipped areas.
 
 ## Output Contract
@@ -147,6 +149,7 @@ If subagents are unavailable, run the same passes sequentially with a narrower c
 
 ## Guardrails
 
+- Do not turn findings into a prescriptive architecture blueprint; route accepted design work to `design-codebase-architecture`.
 - Do not implement refactors, edit production code, rewrite tests, run formatters, apply migrations, or mutate architecture as part of this review-only skill.
 - Do not judge architecture before gathering relevant source evidence.
 - Do not rank speculative rewrites, personal taste, folder-layout impressions, or ecosystem best practices as findings without target-project evidence.

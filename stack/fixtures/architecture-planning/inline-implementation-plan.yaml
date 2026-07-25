@@ -1,0 +1,16 @@
+schema_version: 1.0.0
+identifier: inline-implementation-plan
+title: Focused work uses an inline implementation plan
+request: Plan one focused implementation slice that can finish in this session.
+expected:
+  plan:
+    skill: writing-plans
+    mode: inline
+    tracked: false
+    held_in_envelope: true
+    promotion_supported: true
+    next_signal: tdd
+  rebuilds_delivery_pipeline: false
+prohibited_behaviors:
+  - Create a tracked plan for focused single-session work without justification.
+  - Re-run discovery already represented by fresh evidence.

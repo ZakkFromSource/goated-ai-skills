@@ -1,11 +1,11 @@
 ---
-name: plan-codebase-architecture
+name: design-codebase-architecture
 description: Use when a clarified brief, PRD, issue, or grill result needs a source-grounded architecture blueprint before implementation, especially for deep modules, clear interfaces, real seams, dependencies, test surfaces, slice order, risks, or ADR/RFC triggers.
 metadata:
   goated-category: engineering
 ---
 
-# Plan Codebase Architecture
+# Design Codebase Architecture
 
 ## Purpose
 
@@ -33,7 +33,7 @@ Soft:
 - project-context-calibration when root CONTEXT.md or language affects architecture terms
 - project-standards-calibration when standards affect module layout, testing, persistence, or artifact locations
 - architecture-design-map when current architecture must be described before planning additions or changes
-- improve-codebase-architecture when existing-code repair or refactor ranking is the real task
+- review-codebase-architecture when existing-code repair or refactor ranking is the real task
 - spec-to-tickets when the accepted blueprint should become delivery tickets
 - tdd when a blueprint slice moves into implementation and behavior proof
 - verification-before-completion before complete/evidence-backed/issue-breakdown-ready blueprint claims
@@ -76,6 +76,7 @@ Use project terms for concrete names. Keep these hot-path terms inline because t
    - Classify dependencies as in-process, local-substitutable, remote-owned, true external, or unknown.
    - Introduce ports/adapters only where there is a real seam or dependency category justifies variation.
    - Read [Architecture Blueprint Patterns](references/architecture-blueprint-patterns.md) when choosing blueprint mode, module/interface shape, dependency or seam strategy, test surfaces, overdesign checks, or artifact shape.
+   - Use the smallest useful visualization: prose for a simple design, a table for repeated module/interface comparisons, and a diagram only when flow, hierarchy, or topology is materially clearer visually.
 
 5. Check against overdesign and underdesign:
    - Reject architecture that creates interfaces only because future variation might happen.
@@ -88,7 +89,7 @@ Use project terms for concrete names. Keep these hot-path terms inline because t
    - Order the first slices by behavior and risk: smallest useful vertical path first, then dependent modules, integrations, and migration steps.
    - Name test surfaces and first TDD slices, but leave test writing and implementation to `tdd`.
    - Route ticket slicing to `spec-to-tickets` after the blueprint is accepted.
-   - Route current-state diagrams to `architecture-design-map` and existing-code repair opportunities to `improve-codebase-architecture`.
+   - Route current-state diagrams to `architecture-design-map` and existing-code repair opportunities to `review-codebase-architecture`.
    - Route PRD, RFC, or ADR capture to companion workflows when the decision exceeds the blueprint.
 
 7. Write or return the blueprint:
@@ -96,6 +97,7 @@ Use project terms for concrete names. Keep these hot-path terms inline because t
    - Separate settled decisions, assumptions, open questions, and deferred alternatives.
    - Include RFC or ADR triggers when the architecture crosses public interfaces, data ownership, service/package boundaries, deployment topology, security posture, migration strategy, or multiple viable interface designs.
    - Recommend the single next workflow or action.
+   - Emit that recommendation as one next-step signal without reconstructing later implementation, review, documentation, and completion gates.
    - Use `verification-before-completion` before claiming a durable blueprint is complete, evidence-backed, or ready for downstream slicing; for small inline advice or exploratory designs, verify only the claim being made and state uncertainty.
 
 ## Output Contract
@@ -139,7 +141,7 @@ For durable project-wide or feature-specific blueprints, write Markdown shaped l
 
 ## Recommended Next Step
 
-- <spec-to-tickets, tdd, write-a-spec, architecture-design-map, improve-codebase-architecture, ADR/RFC capture, or none>
+- <spec-to-tickets, writing-plans, tdd, write-a-spec, architecture-design-map, review-codebase-architecture, ADR/RFC capture, or none>
 ```
 
 For inline output, include the same core pieces without forcing a durable file path.
@@ -162,7 +164,8 @@ If subagents are unavailable, run the same passes sequentially with a narrower c
 - Do not implement production code, write tests, generate migrations, run formatters, break issues down, or mutate architecture as part of this skill.
 - Do not turn the blueprint into a speculative file tree. Mention paths only when grounded by project evidence or accepted conventions.
 - Do not create interfaces, ports, adapters, or dependency injection just in case. Require a real seam, dependency category, test strategy, or caller-leverage reason.
-- Do not duplicate `write-a-spec`, `spec-to-tickets`, `tdd`, `architecture-design-map`, or `improve-codebase-architecture`; route to them when their job starts.
+- Do not duplicate `write-a-spec`, `spec-to-tickets`, `writing-plans`, `tdd`, `architecture-design-map`, or `review-codebase-architecture`; emit one appropriate next-step signal when their job starts.
+- Do not default to Mermaid or require a diagram when prose or a table is the smaller useful design artifact.
 - Do not hide uncertainty. Mark inferred, stale, missing, weak, or conflicting evidence clearly.
 - Do not include private notes, ignored local scratch files, credentials, client data, sensitive personal context, secrets, or real user data in tracked blueprints.
 - Do not require this source repo's root docs after installation. The skill may rely only on its own installed files and target-project evidence.

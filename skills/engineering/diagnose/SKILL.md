@@ -11,7 +11,7 @@ metadata:
 
 Find and prove the cause of a bug, flaky failure, build or integration break, production symptom, or performance regression before fixing it.
 
-Diagnosis ends with evidence and a routed next action. It does not own the fix cycle. When the cause and correct public-interface seam are known, route implementation and regression proof to `tdd`. When no correct seam exists, tests require private access, or repeated fixes keep failing, route the architecture problem to `improve-codebase-architecture`.
+Diagnosis ends with evidence and a routed next action. It does not own the fix cycle. When the cause and correct public-interface seam are known, route implementation and regression proof to `tdd`. When no correct seam exists, tests require private access, or repeated fixes keep failing, route the architecture problem to `review-codebase-architecture`.
 
 ## Inputs
 
@@ -28,7 +28,7 @@ Soft:
 - session-start-progressive-disclosure for unfamiliar target projects
 - grill-with-docs when reported vs expected behavior, scope, risk, or user impact is unclear
 - tdd when proven cause and fix/regression proof can use a public-interface seam
-- improve-codebase-architecture when no correct seam, false seams, failed fixes, or testability friction appear
+- review-codebase-architecture when no correct seam, false seams, failed fixes, or testability friction appear
 - code-security-review when symptoms touch trust boundaries, auth, permissions, secrets, user data, persistence, execution, or unsafe config
 - doc-sync when diagnosis changes behavior docs, runbooks, architecture docs, or test guidance
 - verification-before-completion before proven-cause, complete, fixed, passing, or implementation-ready claims
@@ -77,7 +77,7 @@ Fallback: If companion skills, docs, commands, profilers, production access, or 
    - Root cause is proven only when evidence explains the exact symptom and the symptom changes predictably when the cause or triggering condition changes.
    - Build a compact evidence packet: repro loop, key observations, hypotheses rejected, confirming probe, cause, affected interface, and residual uncertainty.
    - If a correct public-interface seam exists, route to `tdd` with the desired regression behavior and suggested first failing test.
-   - If no correct seam exists, tests would need private internals, setup is pathological, or repeated fixes failed, route to `improve-codebase-architecture` before implementation.
+   - If no correct seam exists, tests would need private internals, setup is pathological, or repeated fixes failed, route to `review-codebase-architecture` before implementation.
    - If the diagnosis changes docs or runbooks, route to `doc-sync`. If it touches trust boundaries or sensitive data, route to `code-security-review`.
 
 8. Cleanup and verify closeout:
@@ -117,7 +117,7 @@ Return a diagnosis packet shaped like this:
 - Rejected causes: <important falsified hypotheses>
 - Performance evidence: <baseline, profile, benchmark, query plan, bisection, or not applicable>
 - Cleanup: <removed artifacts or remaining controlled artifacts>
-- Routed next action: <tdd, improve-codebase-architecture, verification-before-completion, handoff, or user decision>
+- Routed next action: <tdd, review-codebase-architecture, verification-before-completion, handoff, or user decision>
 - Residual risk: <remaining uncertainty>
 ```
 

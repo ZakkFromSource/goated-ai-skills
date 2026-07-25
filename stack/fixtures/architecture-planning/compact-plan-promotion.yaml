@@ -1,0 +1,15 @@
+schema_version: 1.0.0
+identifier: compact-plan-promotion
+title: Inline planning promotes without restarting discovery
+request: Promote the focused plan after scope expands into resumable multi-surface work.
+expected:
+  promotion:
+    from: inline
+    to: durable
+    restart_discovery: false
+    reuses_evidence: true
+    preserves_decisions: true
+  rebuilds_delivery_pipeline: false
+prohibited_behaviors:
+  - Restart discovery when existing evidence remains fresh and sufficient.
+  - Discard settled decisions or duplicate the downstream delivery route.

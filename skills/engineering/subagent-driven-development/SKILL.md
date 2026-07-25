@@ -31,7 +31,7 @@ Soft:
 - writing-plans before delegation when an approved issue or task needs an executable plan
 - grill-with-docs when behavior, scope, intent, language, or review constraints are unclear
 - prototype when risky implementation choices need disposable evidence before delegation
-- plan-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
+- design-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
 - tdd when delegated work changes behavior, public interfaces, regressions, or testable workflows
 - code-refinement after delegated implementation as a run-or-explicit-skip gate for non-trivial code-producing work before review gates
 - standards-and-spec-review for spec fit, acceptance coverage, and project standards after delegated work
@@ -44,7 +44,7 @@ Fallback: If subagents, companion skills, commands, or review tools are unavaila
 ## Workflow
 
 1. Confirm delegation is appropriate:
-   - Start from a scoped implementation plan or approved task. If the work is not clear enough to delegate, route to `writing-plans`, `grill-with-docs`, `prototype`, or `plan-codebase-architecture` first.
+   - Start from a scoped implementation plan or approved task. If the work is not clear enough to delegate, route to `writing-plans`, `grill-with-docs`, `prototype`, or `design-codebase-architecture` first.
    - Split only tasks that can be owned independently. Avoid parallel implementation when write scopes overlap, task order is uncertain, or one task's result defines another task's interface.
    - Keep tightly coupled, architecture-sensitive, or high-risk integration work with the main agent unless a subagent has a sharply bounded role.
 

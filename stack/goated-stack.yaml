@@ -190,20 +190,20 @@ skills:
     accepts_signals: [scope-changed, evidence-stale]
     emits_signals: [scope-changed, evidence-stale]
 
-  - name: improve-codebase-architecture
-    path: skills/engineering/improve-codebase-architecture/SKILL.md
+  - name: review-codebase-architecture
+    path: skills/engineering/review-codebase-architecture/SKILL.md
     category: engineering
-    aliases: []
+    aliases: [improve-codebase-architecture]
     workflow_role: architecture-review
     domains: [software]
     profile_eligibility: [standard, full]
     accepts_signals: [scope-changed, evidence-stale, refinement-debt]
     emits_signals: [scope-changed, documentation-impact, refinement-debt]
 
-  - name: plan-codebase-architecture
-    path: skills/engineering/plan-codebase-architecture/SKILL.md
+  - name: design-codebase-architecture
+    path: skills/engineering/design-codebase-architecture/SKILL.md
     category: engineering
-    aliases: []
+    aliases: [plan-codebase-architecture]
     workflow_role: architecture-design
     domains: [software]
     profile_eligibility: [standard, full]

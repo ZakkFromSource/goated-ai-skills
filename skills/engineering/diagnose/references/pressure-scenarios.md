@@ -58,7 +58,7 @@ Before routing to implementation, confirm:
 - Temporary instrumentation has a cleanup plan.
 - Performance claims have measurement.
 - Flaky behavior uses a condition, not a guessed delay.
-- The next action is routed to `tdd`, `improve-codebase-architecture`, `verification-before-completion`, `handoff`, or a user decision.
+- The next action is routed to `tdd`, `review-codebase-architecture`, `verification-before-completion`, `handoff`, or a user decision.
 
 ## Evaluation Scenarios
 

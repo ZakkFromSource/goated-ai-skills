@@ -32,7 +32,7 @@ Soft:
 - grill-with-docs when scope, artifact policy, success criteria, or tradeoffs are unclear
 - spec-to-tickets when a scoped spec still needs delivery tickets before planning
 - prototype when risky implementation choices need disposable evidence before exact steps
-- plan-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
+- design-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
 - tdd when implementation changes behavior, public interfaces, regressions, or testable workflows
 - subagent-driven-development for larger, riskier, or parallelizable implementation when available
 - code-refinement after implementation as a run-or-explicit-skip gate for non-trivial code-producing work before review gates
@@ -47,15 +47,16 @@ Fallback: If companion skills, docs, commands, subagents, or source evidence are
 
 1. Confirm the planning target:
    - Identify the exact ticket, spec slice, request, or approved artifact being converted into a plan.
-   - Confirm it is ready for implementation planning. If the work is not scoped, route to `grill-with-docs`, `write-a-spec`, `spec-to-tickets`, `prototype`, or `plan-codebase-architecture` instead of writing an assumption-heavy plan.
+   - Confirm it is ready for implementation planning. If the work is not scoped, route to `grill-with-docs`, `write-a-spec`, `spec-to-tickets`, `prototype`, or `design-codebase-architecture` instead of writing an assumption-heavy plan.
    - Check that the target is small enough to implement as one focused vertical slice. If it is broad, narrow the plan to the first user-verifiable tracer bullet and defer the rest, or route back to `spec-to-tickets`.
    - Separate durable requirements from volatile execution details.
 
-2. Choose the plan artifact:
-   - Default to an inline plan in chat.
-   - Use an ignored local path such as `.local/plans/YYYY-MM-DD-short-title.md` only when the plan is long, resumable, or useful for multi-step local coordination.
-   - Create tracked plan files only when the user explicitly asks or the target project has a clear tracked-plan convention.
-   - Do not hide required implementation context in ignored files if a future agent will need it; summarize any local plan in the chat or durable handoff when needed.
+2. Choose the plan mode:
+   - Use **inline** for focused, single-session work. Hold the ordered steps in the work envelope or conversation without creating a tracked artifact.
+   - Use **durable** for resumable, delegated, architectural, or multi-surface work. Write a tracked plan using the target project's existing convention; if no convention exists, choose a clear project-local plans or architecture path and state it before writing.
+   - Existing project conventions and explicit user artifact instructions win.
+   - Do not hide the only resumable implementation context in ignored local state.
+   - If an inline plan grows into durable work, promote it in place: reuse fresh discovery and evidence, preserve settled decisions and executable steps, add only the durability context now needed, and do not restart discovery.
 
 3. Inspect before writing exact steps:
    - Read the originating artifact and the smallest useful current source, test, docs, config, or schema evidence.
@@ -80,9 +81,10 @@ Fallback: If companion skills, docs, commands, subagents, or source evidence are
    - Do not include issue closure, archive moves, completion status edits, or similar lifecycle cleanup unless the plan first satisfies verification and any required review gate for that action.
    - Include stop conditions for missing source evidence, unexpected test results, broad scope drift, unsafe commands, unclear product choices, or repeated verification failures.
    - Keep steps ordered so each one produces evidence needed by the next.
+   - End with one justified next-step signal, such as direct execution, `tdd`, or `subagent-driven-development`; do not rebuild the remaining delivery pipeline.
 
 6. Review the plan before execution:
-   - Read [Plan Review Checklist](references/plan-review-checklist.md) for non-trivial, risky, delegated, resumable, or local-file plans.
+   - Read [Plan Review Checklist](references/plan-review-checklist.md) for non-trivial, risky, delegated, resumable, or durable plans.
    - Check that every acceptance criterion has a planned proof path.
    - Remove placeholders, vague verbs, stale assumptions, and broad "do the rest" language.
    - Make the plan no more detailed than the work needs. Tiny tasks can use a short inline checklist.
@@ -100,7 +102,7 @@ For most work, return a compact plan shaped like this:
 ## Implementation Plan
 
 - Plan target: <ticket, spec slice, or request>
-- Plan location: <inline | .local/plans/... | tracked path requested by user>
+- Plan mode and location: <inline in envelope/conversation | durable tracked path>
 - Source inspected: <paths, commands, docs, tests, schemas, and skipped evidence if any>
 - Execution route: <direct execution | tdd | subagent-driven-development | sequential fallback>
 - Slice shape: <smallest vertical behavior path | narrow foundation with rationale | not vertical because...>
@@ -121,7 +123,7 @@ For most work, return a compact plan shaped like this:
 
 For tiny tasks, a shorter inline checklist is acceptable if it still names the target, route, evidence, and closeout.
 
-For local plan files, include the same sections in the file and summarize the plan location, route, assumptions, and next step in chat.
+For durable plan files, include the same sections in the file and summarize the plan location, route, assumptions, and next-step signal in chat.
 
 ## Delegation
 
@@ -139,8 +141,10 @@ If subagents are unavailable, run the same checks sequentially with a narrower c
 
 - Do not write exact file paths, commands, snippets, expected outputs, or expected failures before current source inspection.
 - Do not turn durable issues into stale implementation transcripts. Keep stable intent in issues and volatile execution detail in just-in-time plans.
-- Do not create tracked plan files unless the user explicitly asks or the target project convention requires them.
-- Do not rely on ignored `.local/` plans as the only place a future agent can recover important context.
+- Do not create a durable tracked plan for focused single-session work without evidence that persistence is useful.
+- Do not store the only resumable, delegated, architectural, or multi-surface plan in ignored local state.
+- Do not restart discovery during inline-to-durable promotion while the existing evidence remains fresh and sufficient.
+- Do not emit a complete downstream pipeline; emit only the next justified action or skill.
 - Do not turn a broad ticket or spec slice into a broad implementation plan. Narrow to the first user-verifiable vertical slice or route back to ticket slicing.
 - Do not plan horizontal layer batches, broad setup, speculative scaffolding, or multi-behavior milestones unless a narrow foundation is required, named, and verifiable.
 - Do not create shallow pass-through abstractions when a deeper module, smaller public interface, or clearer test surface would keep behavior local.

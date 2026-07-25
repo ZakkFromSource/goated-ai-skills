@@ -1,0 +1,15 @@
+schema_version: 1.0.0
+identifier: architecture-review-only
+title: Architecture assessment remains review-only
+request: Review this subsystem for shallow modules and weak test seams without redesigning it.
+expected:
+  route:
+    skill: review-codebase-architecture
+    intent: review-only
+    prescriptive_blueprint: false
+    mutates_target_architecture: false
+    next_signal: design-codebase-architecture
+  rebuilds_delivery_pipeline: false
+prohibited_behaviors:
+  - Produce a complete replacement architecture.
+  - Implement or mutate the reviewed architecture.

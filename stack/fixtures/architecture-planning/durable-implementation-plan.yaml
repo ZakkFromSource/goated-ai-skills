@@ -1,0 +1,15 @@
+schema_version: 1.0.0
+identifier: durable-implementation-plan
+title: Resumable multi-surface work uses a durable implementation plan
+request: Plan an approved architectural change that will span sessions and contributors.
+expected:
+  plan:
+    skill: writing-plans
+    mode: durable
+    tracked: true
+    respects_project_convention: true
+    next_signal: tdd
+  rebuilds_delivery_pipeline: false
+prohibited_behaviors:
+  - Hide the only resumable plan in ignored local state.
+  - Invent a tracked path that conflicts with the target project's convention.

@@ -26,6 +26,8 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Use progressive disclosure instead of broad context loading. | review-enforced | `AGENT.md`, `skills/README.md`, `docs/agents/context-matrix.md` | Load root guidance, then relevant issue/category/skill sources only as needed. |
 | Treat onboarding intensity as an artifact budget: create or refresh only artifacts with demonstrated retrieval, terminology, standards, architecture, routing, or continuity value. | review-enforced | `docs/specs/2026-07-25-goated-ai-skills-v2.md`, `stack/AGENTS.md`, onboarding skills and fixtures | Lightweight projects may stop after thin policy/routing. Existing artifacts are refreshed incrementally from one shared evidence bundle. |
 | Store durable target-project facts in selected tracked artifacts; keep resumable state under verified-ignored `.local/goated/` with OS temp fallback. | review-enforced | `.gitignore`, `CONTEXT.md`, `docs/install.md`, `skills/agent-workflows/handoff/SKILL.md` | Context, source-map, and standards artifacts are optional and selected by demonstrated need. |
+| Keep descriptive architecture mapping, prescriptive architecture design, and review-only architecture assessment as separate routes. Use the smallest useful representation instead of defaulting to Mermaid. | review-enforced | `docs/specs/2026-07-25-goated-ai-skills-v2.md`, architecture skill bodies, `stack/fixtures/architecture-planning/`, `scripts/validate_skills.py` | Canonical V2 skills are `architecture-design-map`, `design-codebase-architecture`, and `review-codebase-architecture`; old design/review names remain registry aliases only. Fixtures and validator checks enforce the mechanical route contract. |
+| Use inline implementation plans for focused single-session work and durable tracked plans for resumable, delegated, architectural, or multi-surface work. Promote by reusing fresh evidence and settled decisions. | review-enforced | `docs/specs/2026-07-25-goated-ai-skills-v2.md`, `skills/engineering/writing-plans/SKILL.md`, `stack/fixtures/architecture-planning/` | Each plan emits one justified next-step signal rather than duplicating the downstream pipeline. Fixtures and validator checks enforce the mechanical mode and promotion contract. |
 
 ## Inferred Conventions
 
@@ -66,8 +68,8 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | `rg --files` | Discover source files without bulk-reading. | review-enforced | Used by `docs/agents/context-matrix.md` and this pass. |
 | `rg -n` targeted scans | Find headings, schema references, and documented standards. | review-enforced | Used for issue and standards discovery. |
 | Manifest/config discovery with `rg --files -g ...` | Check whether build, test, lint, format, or CI entrypoints exist. | review-enforced | Root `pyproject.toml`, `uv.lock`, and `tests/` support local validation; no CI, formatter, or linter config is present. |
-| `uv run python -m unittest discover -s tests -v` | Exercise registry, adaptive-routing, onboarding, clarification, and planning fixture validation behavior. | tooling-enforced | Added by Ticket 001 and extended by Tickets 002-005. |
-| `uv run python scripts/validate_skills.py` | Validate implemented skills, the integrated registry, routing, onboarding, clarification, and planning fixture contracts, public-boundary checks, and report-only drift. | tooling-enforced | Extended by Tickets 001-005; uses `pyyaml` and `jsonschema` through `uv`. |
+| `uv run python -m unittest discover -s tests -v` | Exercise registry, canonical-reference, adaptive-routing, onboarding, clarification, specification/ticket, architecture, and implementation-planning fixture validation behavior. | tooling-enforced | Added by Ticket 001 and extended by Tickets 002-006. |
+| `uv run python scripts/validate_skills.py` | Validate implemented skills, canonical architecture references, the integrated registry, routing, onboarding, clarification, specification/ticket, architecture, and implementation-planning fixture contracts, public-boundary checks, and report-only drift. | tooling-enforced | Extended by Tickets 001-006; uses `pyyaml` and `jsonschema` through `uv`. |
 | Manual markdown review | Validate docs-only changes while no automated docs tooling exists. | review-enforced | Current practical default. |
 
 ## Enforcement Levels
@@ -80,7 +82,8 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 - Date: 2026-07-25
 - Updated by: Codex
-- Evidence used: prior standards evidence; V2 spec and Tickets 001-005; ADR
-  0002; `stack/`, including routing, onboarding, clarification, and planning fixtures; local validator
+- Evidence used: prior standards evidence; V2 spec and Tickets 001-006; ADR
+  0002; `stack/`, including routing, onboarding, clarification,
+  specification/ticket, architecture, and implementation-planning fixtures; local validator
   tooling and tests; targeted catalog, docs-drift, and ticket-state scans;
   fresh validator and unit-test output.

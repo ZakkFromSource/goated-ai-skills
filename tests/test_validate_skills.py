@@ -10,6 +10,8 @@ from pathlib import Path
 import yaml
 
 from scripts.validate_skills import (
+    validate_architecture_planning_fixtures,
+    validate_canonical_architecture_references,
     validate_clarification_fixtures,
     validate_onboarding_fixtures,
     validate_planning_fixtures,
@@ -57,6 +59,19 @@ def copy_planning_fixtures(destination: Path) -> Path:
     fixture_destination = destination / "stack" / "fixtures" / "planning"
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "planning",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_architecture_planning_fixtures(destination: Path) -> Path:
+    """Copy architecture and implementation-planning fixtures."""
+
+    fixture_destination = (
+        destination / "stack" / "fixtures" / "architecture-planning"
+    )
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "architecture-planning",
         fixture_destination,
     )
     return fixture_destination
@@ -173,7 +188,7 @@ class RegistryValidationTests(unittest.TestCase):
             messages,
         )
 
-    def test_v1_planning_names_resolve_to_one_v2_canonical_skill_each(self) -> None:
+    def test_v1_names_resolve_to_one_v2_canonical_skill_each(self) -> None:
         registry = yaml.safe_load(
             (REPO_ROOT / "stack" / "goated-stack.yaml").read_text(
                 encoding="utf-8"
@@ -188,6 +203,43 @@ class RegistryValidationTests(unittest.TestCase):
         )
         self.assertNotIn("write-a-prd", entries)
         self.assertNotIn("prd-to-issues", entries)
+        self.assertEqual(
+            ["plan-codebase-architecture"],
+            entries["design-codebase-architecture"]["aliases"],
+        )
+        self.assertEqual(
+            ["improve-codebase-architecture"],
+            entries["review-codebase-architecture"]["aliases"],
+        )
+        self.assertNotIn("plan-codebase-architecture", entries)
+        self.assertNotIn("improve-codebase-architecture", entries)
+
+    def test_active_surfaces_use_canonical_architecture_names(self) -> None:
+        self.assertEqual(
+            [],
+            validate_canonical_architecture_references(REPO_ROOT),
+        )
+
+    def test_deprecated_architecture_name_is_rejected_from_active_docs(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            (fixture_root / "README.md").write_text(
+                "Use plan-codebase-architecture for design.",
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_canonical_architecture_references(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "active reference uses deprecated architecture skill name "
+            "'plan-codebase-architecture'; use 'design-codebase-architecture'",
+            messages,
+        )
 
 
 class PlanningFixtureValidationTests(unittest.TestCase):
@@ -279,6 +331,96 @@ class PlanningFixtureValidationTests(unittest.TestCase):
 
         self.assertIn(
             "ticket ticket-001 sample is missing heading: ## Expected Proof",
+            messages,
+        )
+
+
+class ArchitecturePlanningFixtureValidationTests(unittest.TestCase):
+    def test_current_architecture_planning_fixtures_are_valid(self) -> None:
+        self.assertEqual(
+            [],
+            validate_architecture_planning_fixtures(REPO_ROOT),
+        )
+
+    def test_current_state_mapping_cannot_route_to_prescriptive_design(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_architecture_planning_fixtures(fixture_root)
+            fixture_path = (
+                fixture_directory
+                / "current-state-map-vs-architecture-design.yaml"
+            )
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["routes"][0]["skill"] = (
+                "design-codebase-architecture"
+            )
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_architecture_planning_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "current-state-map must route to architecture-design-map",
+            messages,
+        )
+
+    def test_architecture_review_cannot_become_a_prescriptive_blueprint(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_architecture_planning_fixtures(fixture_root)
+            fixture_path = fixture_directory / "architecture-review-only.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["route"]["prescriptive_blueprint"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_architecture_planning_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "architecture review route requires prescriptive_blueprint=False",
+            messages,
+        )
+
+    def test_inline_plan_promotion_reuses_discovery_and_decisions(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_architecture_planning_fixtures(fixture_root)
+            fixture_path = fixture_directory / "compact-plan-promotion.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["promotion"]["restart_discovery"] = True
+            fixture["expected"]["promotion"]["preserves_decisions"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_architecture_planning_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "plan promotion requires restart_discovery=False",
+            messages,
+        )
+        self.assertIn(
+            "plan promotion requires preserves_decisions=True",
             messages,
         )
 

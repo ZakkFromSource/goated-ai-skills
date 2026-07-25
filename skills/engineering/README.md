@@ -25,5 +25,5 @@ Use `verification-before-completion` as the soft final evidence gate before clai
 - `verification-before-completion` - gates completion, correctness, readiness, and success claims on fresh evidence.
 - `commit-message` - drafts concise commit commands from local diffs and evidence.
 - `architecture-design-map` - produces source-grounded architecture maps.
-- `plan-codebase-architecture` - plans source-grounded architecture before implementation.
-- `improve-codebase-architecture` - finds source-grounded architecture improvement opportunities.
+- `design-codebase-architecture` - prescribes source-grounded architecture before implementation.
+- `review-codebase-architecture` - reviews source-grounded architecture improvement opportunities without redesigning or implementing them.
