@@ -370,7 +370,8 @@ contract.
 - **Purpose**: Creates or substantially revises durable documentation from source evidence and audience needs.
 - **Use when**: You need a manual, operator guide, runbook, troubleshooting guide, onboarding guide, product doc, or separate AI-facing guide.
 - **Typical input**: Documentation goal, audience, target-project docs conventions, source evidence, assumptions, and verification expectations.
-- **Typical output**: Created or updated docs, source evidence, audience, scope, AI-guide decision, verification, doc-sync relationship, and remaining gaps.
+- **Typical output**: The requested document first, plus only material paths,
+  evidence, verification, gaps, and doc-sync signals.
 - **Pipeline role**: Planned documentation authoring step before `doc-sync` checks whether related docs drifted.
 
 #### `documentation-cleanup`
@@ -378,7 +379,8 @@ contract.
 - **Purpose**: Audits, tidies, consolidates, and optimizes documentation trees and agent-facing docs.
 - **Use when**: A project has bulky, duplicated, stale, unclear, or hard-to-navigate docs across `docs/`, `docs/agents/`, root routing docs, progress/status docs, or issue workbenches.
 - **Typical input**: Target-project root, docs folders, root README/context files, agent instruction adapters, progress/status docs, and local source-of-truth conventions.
-- **Typical output**: Documentation inventory, role classifications, cleanup findings, recommended actions, approval-needed moves/deletes/archives, optional gated edits, verification, and residual risk.
+- **Typical output**: The cleanup audit, plan, or applied result, with only
+  material findings, approval needs, evidence, changes, and residual risk.
 - **Pipeline role**: Periodic documentation hygiene step. It stays separate from planned authoring (`documentation-writer`) and changed-behavior drift checks (`doc-sync`).
 
 #### `doc-sync`
@@ -386,7 +388,8 @@ contract.
 - **Purpose**: Keeps durable docs aligned with changed behavior, interfaces, architecture, standards, configuration, tests, or workflows.
 - **Use when**: Implementation, review, architecture, standards, or public docs work may have created documentation drift.
 - **Typical input**: Changed facts, diffs, issue/PRD evidence, tests, commands, external-doc lookup evidence, and relevant docs.
-- **Typical output**: Docs checked, updates made or recommended, external-doc lookup notes created or recommended, skipped docs, and residual drift risk.
+- **Typical output**: A compact documentation-impact delta. No-impact results
+  omit empty update sections; required updates retain artifact-level detail.
 - **Pipeline role**: Closeout gate after implementation or documentation-affecting work.
 
 #### `verification-before-completion`
@@ -402,7 +405,8 @@ contract.
 - **Purpose**: Drafts concise commit text from local diffs and evidence.
 - **Use when**: You want a commit message, commit summary, or closeout message for selected local changes.
 - **Typical input**: Git diff/status, changed files, user-selected scope, evidence, and docs/test results.
-- **Typical output**: Copy-pasteable commit command or commit message preview.
+- **Typical output**: Commit message text first. Commands appear only when the
+  user explicitly asks for them.
 - **Pipeline role**: Delivery closeout after verification and doc sync.
 
 #### `architecture-design-map`
@@ -436,7 +440,8 @@ contract.
 - **Purpose**: Turns rough requests into GOATED-aware prompts or portable reusable prompts.
 - **Use when**: You want to improve, rewrite, optimize, or classify a prompt; make a request work with the GOATED workflow; or create a reusable prompt for a coding assistant or reasoning model.
 - **Typical input**: Raw request, rough prompt, existing output, intended recipient, constraints, success criteria, and any context the prompt should preserve.
-- **Typical output**: Detected mode and prompt type, optimized prompt in a code block, recommended GOATED route or model class, assumptions, and short rationale.
+- **Typical output**: The optimized prompt first. Route notes, assumptions, and
+  structural explanation follow only when material or requested.
 - **Pipeline role**: Productivity aid for prompt quality and GOATED-aware request translation. It routes to `grill-with-docs`, `write-a-spec`, `writing-plans`, or `framework-agnostic-skill-creator` when those skills should own the next step.
 
 #### `knowledge-retrieval`
@@ -452,7 +457,8 @@ contract.
 - **Purpose**: Captures durable, reusable lessons as atomic Markdown notes for human reading and future agent reuse.
 - **Use when**: You want to capture what was learned from a session, extract lessons from provided material, document reusable discoveries, or nurture existing knowledge notes.
 - **Typical input**: Current-session context, user-provided notes or excerpts, destination hints, existing related notes, evidence, and privacy constraints.
-- **Typical output**: Approved candidate lesson cards, Obsidian-compatible Markdown notes when a destination is approved, and a chat audit of created, updated, nurtured, skipped, and blocked candidates.
+- **Typical output**: Candidate lesson cards, portable Markdown notes when the
+  active approval mode covers writes, and only non-empty audit categories.
 - **Pipeline role**: Optional learning closeout and knowledge-note workflow. It writes and nurtures notes, but does not replace broad knowledge-base retrieval, synthesis, or Q&A.
 
 #### `caveman`
@@ -460,7 +466,8 @@ contract.
 - **Purpose**: Keeps replies compact when the user explicitly asks for brief, terse, or caveman-style communication.
 - **Use when**: The user wants fewer tokens or compact answers without losing required technical substance.
 - **Typical input**: User preference for compact mode, current task, and required response constraints.
-- **Typical output**: Terse but complete response, plus activation or exit decision when relevant.
+- **Typical output**: Terse but complete response without reducing
+  implementation, evidence, safety, or required artifact detail.
 - **Pipeline role**: Communication-mode override, not a delivery pipeline stage.
 
 #### `grill-me`

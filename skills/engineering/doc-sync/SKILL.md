@@ -11,17 +11,20 @@ metadata:
 
 Keep durable project documentation aligned with the behavior and decisions a target-project change actually introduced.
 
-Use this skill after implementation or review work that could make docs stale. In implementation sessions, update the relevant docs in the same session when the needed change is clear. In planning or review-only sessions, report the required doc updates without mutating files.
+Use after work that could make docs stale. In implementation sessions, update
+clear required drift; in planning or review-only sessions, report it without
+edits.
 
 ## Inputs
 
-- User request, issue, PRD, ticket, accepted plan, review finding, or implementation summary.
+- Request or originating spec, ticket, plan, review, or implementation summary.
 - Target-project root path.
 - Changed files, diffs, commits, staged changes, unstaged changes, generated files, migrations, config changes, or supplied patch.
-- Tests, command output, manual verification notes, TDD evidence, standards/spec review, security review, prototype verdicts, or architecture notes.
-- External documentation lookups, source links, library ids, or attributed notes when vendor or package docs materially informed the work.
-- Existing durable docs such as `README.md`, `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, ADRs, feature docs, API docs, schema docs, runbooks, changelogs, or design docs.
-- Existing local/session artifacts such as OS temp handoffs under `goated-handoffs/<project-name>/`, scratch notes, or temporary plans when they help identify context but should not become source-of-truth docs.
+- Fresh proof and review evidence relevant to changed facts.
+- External documentation lookups when vendor or package docs materially
+  informed the work.
+- Relevant durable docs, indexes, ADRs, feature/API/schema docs, runbooks,
+  changelogs, and standards.
 
 ## Dependencies
 
@@ -29,15 +32,16 @@ Hard: None.
 
 Soft:
 - session-start-progressive-disclosure for unfamiliar target projects
-- context-matrix-map when docs/agents/context-matrix.md exists or doc discovery is broad
-- project-context-calibration when language, boundaries, or durable context changed
-- project-standards-calibration when standards, commands, conventions, or enforcement changed
+- context-matrix-map for broad discovery
+- project-context-calibration or project-standards-calibration when those
+  durable artifacts changed
 - standards-and-spec-review when spec fit or changed scope is unclear
 - code-security-review when security assumptions, trust boundaries, or sensitive behavior changed
 - verification-before-completion before synced, checks-passed, or no-drift claims
 - handoff when unfinished work or residual risk needs continuity
 
-Fallback: If companion skills, git history, or durable docs are unavailable, inspect minimal local evidence, state lower confidence, and report unverifiable drift risk.
+Fallback: Inspect minimal evidence, state lower confidence, and report
+unverifiable drift risk.
 
 ## Workflow
 
@@ -51,12 +55,15 @@ Fallback: If companion skills, git history, or durable docs are unavailable, ins
    - Identify the target-project root and the change set under review.
    - In git projects, inspect status, changed paths, and relevant diffs from the requested fixed point or current working tree.
    - Read the originating issue, PRD, ticket, user request, accepted plan, tests, and review notes when they define intended behavior.
-   - Summarize the changed behavior, public interfaces, architecture decisions, standards, commands, schemas, migrations, configuration, tests, security assumptions, or user-visible workflows.
+   - Summarize only durable changed facts and affected public or operator
+     expectations.
    - Separate verified facts from assumptions, proposed future work, and unresolved questions.
 
 3. Discover relevant docs with progressive disclosure:
    - Use `docs/agents/context-matrix.md` when present to choose likely docs first.
-   - Check root docs, docs indexes, feature docs, API docs, ADRs, standards profiles, schema docs, runbooks, changelogs, issue handoffs, existing external-doc lookup notes, and nearby package or command docs only as relevant to the changed facts.
+   - Check only doc families relevant to the changed facts: root/index docs,
+     feature/API/schema docs, ADRs, standards, runbooks, changelogs, and nearby
+     package or command docs.
    - Search docs for changed names, commands, APIs, routes, flags, schema terms, feature names, standards, and architecture vocabulary.
    - Do not bulk-read generated output, dependency folders, old build artifacts, large logs, or unrelated historical notes.
 
@@ -78,63 +85,42 @@ Fallback: If companion skills, git history, or durable docs are unavailable, ins
 6. Verify the documentation result:
    - Re-read edited sections and nearby headings.
    - Run doc lint, format, link check, or generated-doc commands only when the project defines them and they are safe for the session.
-   - Confirm all required updates are made or explicitly reported.
-   - Record skipped checks, unavailable sources, weak evidence, and residual drift risk.
+   - Confirm required updates are made or reported; preserve material proof
+     gaps and residual drift risk.
 
 7. Route the next closeout step:
-   - Recommend `standards-and-spec-review` when the changed scope or spec fit remains unclear.
-   - Recommend `code-security-review` when docs describe security-relevant behavior or trust boundaries that were not reviewed.
-   - Recommend `project-context-calibration` or `project-standards-calibration` when durable context or standards need deeper curation.
-   - Recommend `commit-message` or `handoff` only after doc sync obligations are handled or intentionally deferred.
+   - Emit the applicable route signal when scope/spec fit, security, durable
+     context, or standards need deeper review.
+   - Recommend `commit-message` or `handoff` only after doc obligations are
+     handled or intentionally deferred.
    - Use `verification-before-completion` before claiming docs are synced, doc checks passed, no required updates remain, or the change is ready for commit; for planning or review-only reports, verify only the documentation claim being made and state residual risk.
 
 ## Output Contract
 
-Return a compact report shaped like this:
+In integrated use, return a compact delta to the main agent:
 
 ```markdown
-## Doc Sync
-
-- Mode: <implementation | planning | review-only>
-- Changed facts checked: <behavior, interface, architecture, standards, config, tests, docs, or "none found">
-- Evidence inspected: <diffs, docs, commands, specs, tests, or assumptions>
-
-## Docs Checked
-
-| Doc | Why checked | Result |
-| --- | --- | --- |
-| <path> | <changed fact or search reason> | <required update, already covered, recommended follow-up, skipped> |
-
-## Updates Made
-
-- <path>: <summary of edit>
-
-## Recommended Updates
-
-- <path or artifact>: <needed update, owner or blocker, and why>
-
-## Skipped Docs
-
-- <path>: <reason skipped or not applicable>
-
-## Residual Drift Risk
-
-- <unverified docs, missing artifacts, skipped commands, assumptions, or "Low">
+Documentation impact: <none | required | deferred>
+Updates: <paths and concise changed facts, when any>
+Evidence: <fresh sources or checks that support the result>
+Risk: <material skipped evidence, blocker, or residual drift risk>
 ```
 
-When there are no required updates, say so explicitly and still list the docs checked and residual risk.
+For no durable impact, return only the result and the evidence needed to trust
+it, for example: `Documentation impact: none. Checked the changed public
+contracts and their owning docs; no durable fact changed.` Do not emit empty
+updates, recommendations, skipped-docs, or `None` sections.
+
+Standalone use returns the same compact local closeout. Include artifact-level
+detail only when updates, deferrals, or material risk exist. Do not repeat
+paths, checks, or the main task closeout.
 
 ## Delegation
 
-Main owns session mode, source-of-truth judgment, final doc edits, conflict decisions, and user communication.
-
-Delegate only bounded documentation review passes: summarize changed behavior, find docs for one term/feature/interface/command/schema, check one doc family, verify edited docs against final behavior, or collect residual-risk notes for uninspected docs.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run or skipped; exact source evidence; doc status per artifact (`required update`, `already covered`, `recommended follow-up`, or `skipped`); assumptions, confidence, residual drift risk; and suggested edits/findings rather than broad rewrites.
-
-Status handling: `DONE` integrates doc status, suggestions, and residual drift risk; `DONE_WITH_CONCERNS` requires review of source-of-truth conflicts, stale docs, incomplete coverage, or risky wording before editing/reporting; `NEEDS_CONTEXT` gets the missing diff, behavior, schema, command output, doc family, or source artifact before re-dispatch; `BLOCKED` narrows the doc family, defers broad edits, switches to recommendation-only output, or escalates.
-
-If subagents are unavailable, run the same checks sequentially with a narrower context budget.
+Main owns mode, source-of-truth judgment, edits, conflicts, and communication.
+Delegate only one changed fact or doc family. Subagents return paths, source
+evidence, per-artifact status, assumptions, confidence, risk, and suggested
+edits—not broad rewrites.
 
 ## Guardrails
 
@@ -143,12 +129,11 @@ If subagents are unavailable, run the same checks sequentially with a narrower c
 - Do not update a PRD, issue, or handoff to hide a mismatch between intended and implemented behavior. Report the mismatch or route it to the appropriate review skill.
 - Do not create new durable artifacts such as ADRs, context files, standards profiles, or docs indexes unless the current task or project convention clearly calls for them.
 - Do not bulk rewrite docs, reorganize documentation architecture, or modernize stale areas unrelated to the current change.
-- Do not paste raw vendor documentation, long copyrighted excerpts, private prompts, credentials, proprietary code, client data, sensitive context, or private workflow assumptions into external-doc lookup notes.
-- Do not imply automatic Context7 usage, MCP installation, background refresh, generated indexes, rate-limit workarounds, or any other tool-specific automation for external-doc lookup notes.
+- Keep external-doc lookup notes attributed, concise, public-safe, and free of
+  invented automation claims.
 - Do not include private notes, ignored scratch content, credentials, client data, sensitive personal context, secrets, or real user data in tracked docs.
 - Do not claim a doc check passed when the relevant file, command, or generated output was not inspected.
 - Do not require this source repo's root docs after installation. The skill may rely only on its own instructions and target-project evidence.
-- Prefer explicit skipped-doc reasons and residual risk over guessing.
 
 ## References
 

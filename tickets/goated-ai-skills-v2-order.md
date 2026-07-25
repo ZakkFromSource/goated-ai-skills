@@ -35,10 +35,10 @@ plan.
 - `tickets/archive/009-prove-behaviour-without-mandatory-refinement.md` — Prove
   Behaviour Without Mandatory Refinement (AFK; Work state: Completed; Blocked
   by: Ticket 002)
-- `tickets/010-review-and-verify-conditionally.md` — Review And Verify
-  Conditionally (AFK; Work state: Not started; Blocked by: Tickets 002 and 009)
-- `tickets/011-produce-concise-docs-prompts-and-closeouts.md` — Produce Concise
-  Docs, Prompts, And Closeouts (AFK; Work state: Not started; Blocked by:
+- `tickets/archive/010-review-and-verify-conditionally.md` — Review And Verify
+  Conditionally (AFK; Work state: Completed; Blocked by: Tickets 002 and 009)
+- `tickets/archive/011-produce-concise-docs-prompts-and-closeouts.md` — Produce Concise
+  Docs, Prompts, And Closeouts (AFK; Work state: Completed; Blocked by:
   Tickets 002, 005, and 010)
 - `tickets/012-complete-and-accept-v2-migration.md` — Complete And Accept The V2
   Migration (HITL; Work state: Not started; Blocked by: Tickets 001 through
@@ -68,10 +68,10 @@ plan.
      stable.
 9. `tickets/archive/009-prove-behaviour-without-mandatory-refinement.md`
    - Why now: migrates the implementation proof route on top of central gates.
-10. `tickets/010-review-and-verify-conditionally.md`
+10. `tickets/archive/010-review-and-verify-conditionally.md`
     - Why now: consumes implementation evidence and makes specialist closeout
       conditional.
-11. `tickets/011-produce-concise-docs-prompts-and-closeouts.md`
+11. `tickets/archive/011-produce-concise-docs-prompts-and-closeouts.md`
     - Why now: completes user-facing artifacts after routing and review
       behaviour are stable.
 12. `tickets/012-complete-and-accept-v2-migration.md`

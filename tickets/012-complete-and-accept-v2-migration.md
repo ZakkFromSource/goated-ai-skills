@@ -73,14 +73,14 @@ public V2 document, and present the complete release for maintainer acceptance.
 - `tickets/archive/001-establish-v2-integrated-stack-foundation.md`
 - `tickets/archive/002-route-work-through-adaptive-gates.md`
 - `tickets/archive/003-onboard-and-resume-projects-proportionally.md`
-- `tickets/004-clarify-decisions-proportionally.md`
-- `tickets/005-turn-specs-into-delivery-tickets.md`
-- `tickets/006-design-architecture-and-plans-proportionally.md`
+- `tickets/archive/004-clarify-decisions-proportionally.md`
+- `tickets/archive/005-turn-specs-into-delivery-tickets.md`
+- `tickets/archive/006-design-architecture-and-plans-proportionally.md`
 - `tickets/archive/007-navigate-uncertainty-with-wayfinder.md`
 - `tickets/archive/008-retrieve-durable-knowledge-safely.md`
 - `tickets/archive/009-prove-behaviour-without-mandatory-refinement.md`
-- `tickets/010-review-and-verify-conditionally.md`
-- `tickets/011-produce-concise-docs-prompts-and-closeouts.md`
+- `tickets/archive/010-review-and-verify-conditionally.md`
+- `tickets/archive/011-produce-concise-docs-prompts-and-closeouts.md`
 
 ## User Stories Addressed
 

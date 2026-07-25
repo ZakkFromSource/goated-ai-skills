@@ -1,6 +1,7 @@
 # Commit Output Variants
 
-Read this reference when the selected scope is already staged, when the dirty tree should be split into independent commit groups, or when the default single-command shape in `SKILL.md` is not enough.
+Read this reference only when the user explicitly asks for staging or commit
+commands. The default `commit-message` result is message text without commands.
 
 The `SKILL.md` workflow owns scope selection, read-only git behavior, quote safety, verification caveats, and private-detail sanitization. These variants preserve output shape; they do not loosen those gates.
 

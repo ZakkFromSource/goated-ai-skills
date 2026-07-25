@@ -1,0 +1,13 @@
+schema_version: 1.0.0
+identifier: caveman-structured-artifact
+title: Compact mode preserves required artifact structure
+request: In caveman mode, produce a decision record with its required schema.
+expected:
+  verbosity: compact
+  required_artifact_schema_preserved: true
+  artifact_detail_reduced: false
+  code_and_exact_text_preserved: true
+  optional_explanation_compressed: true
+prohibited_behaviors:
+  - Drop required artifact fields or evidence to make the response shorter.
+  - Rewrite exact code, commands, identifiers, or quoted text.

@@ -43,6 +43,8 @@ Fallback: If companion skills, docs, source access, or review tools are unavaila
 1. Confirm the documentation contract:
    - Identify whether the task is a new doc, substantial revision, AI-facing guide, or drift-only check.
    - Route drift-only work to `doc-sync`; route unsettled product intent to `write-a-spec`; route unclear audience or scope to `grill-with-docs`.
+   - Do not load `documentation-cleanup` unless the task also has an evidenced
+     structural hygiene need.
    - State the intended doc type, audience, scope, owner if known, and readiness claim being pursued.
    - Ask only for product intent or preference that cannot be discovered from local evidence.
 
@@ -83,36 +85,21 @@ Fallback: If companion skills, docs, source access, or review tools are unavaila
 
 ## Output Contract
 
-Return a compact report shaped like this:
+The requested document is the primary output. In integrated use, return only
+the artifact delta needed by the main agent: created or updated paths, source
+evidence, verification, material gaps, and a `documentation-impact` route
+signal when sync may be needed. Omit empty fields and do not repeat the task
+closeout.
 
-```markdown
-## Documentation Writer
-
-- Mode: <new doc | substantial revision | AI-facing guide | recommendation-only>
-- Audience: <human audience and/or AI agent/model audience>
-- Doc type and scope: <manual, operator guide, runbook, onboarding guide, product doc, AI guide, or other>
-- Created or updated docs: <paths, or "none">
-- Location decision: <project convention used or fallback assumption>
-- Source evidence used: <docs, source files, tests, commands, PRDs, issues, user context, or assumptions>
-- Skipped evidence: <sources/checks skipped and why, or "None">
-- Assumptions and gaps: <assumptions, conflicts, unresolved questions, or "None">
-- AI-facing guide decision: <created path, deferred, not needed, or not requested>
-- Verification: <manual review, commands, link checks, rendered artifacts, source checks, or skipped checks>
-- Doc-sync relationship: <not needed | routed to doc-sync | required follow-up and why>
-- Remaining gaps: <owner, source, verification, or product gaps, or "None">
-```
-
-When no doc should be written, say so and explain the route, such as `doc-sync`, `write-a-spec`, `grill-with-docs`, or a user decision.
+Standalone use adds a compact local closeout after the document. When no doc
+should be written, state the reason and owning route, such as `doc-sync`,
+`write-a-spec`, `grill-with-docs`, or a user decision.
 
 ## Delegation
 
 Main owns audience judgment, source-of-truth decisions, final wording, target location, verification claims, and user communication.
 
 Delegate only bounded independent passes: summarize one source/doc/PRD/issue/command family, discover docs conventions, review outline and audience fit, evaluate AI-facing guide usefulness, or QA unsupported claims, private-data risk, broken links, stale wording, and static-site scope creep.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths/docs/source/commands/artifacts/links inspected; exact and skipped evidence with reasons; assumptions, confidence, concerns, residual risk; and suggested findings/edits rather than final publication.
-
-Status handling: `DONE` integrates evidence after checking important claims; `DONE_WITH_CONCERNS` requires concern review before writing/reporting; `NEEDS_CONTEXT` gets the missing source, doc type, scope, audience, command, artifact, or product decision before re-dispatch or local continuation; `BLOCKED` narrows scope, chooses recommendation-only output, or asks for the missing decision.
 
 If subagents are unavailable, run the same checks sequentially with a narrower context budget.
 

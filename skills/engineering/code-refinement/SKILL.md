@@ -95,13 +95,14 @@ Fallback: If companion skills, tests, commands, or clean diffs are unavailable, 
    - Rerun focused checks that match the refined scope. Run broader nearby checks when the local proof is too narrow for the risk.
    - Review the final diff for accidental behavior changes, unrelated churn, public-interface changes, weakened tests, and docs drift.
    - Use `verification-before-completion` before saying behavior was preserved, checks pass, refinement is done, or the change is ready for review.
-   - Assemble the closeout packet before the final response. The wording may be compact or natural, but every required Output Contract field must be accounted for with a value, `None`, `not applicable`, or a short fallback reason.
-   - Report skipped checks, known weak proof, deferred architecture opportunities, docs follow-up, and residual risk.
-   - Include a compact contract-coverage line and the narrowest closeout claim allowed by the evidence.
+   - Return a compact refinement delta: result, changed paths, proof, material
+     interface/docs/security impact, deferred work, and residual risk.
+   - Omit empty fields and repeated paths/checks. Do not produce a competing
+     task closeout.
 
 ## Output Contract
 
-After edit mode, report all required fields below. The final response may use compact or natural wording, but it must account for each field. Do not omit a field because it feels obvious; use `None`, `not applicable`, or a short fallback reason when needed.
+In integrated use, return only material fields from this delta:
 
 ```markdown
 ## Code Refinement
@@ -116,10 +117,10 @@ After edit mode, report all required fields below. The final response may use co
 - Deferred candidates: <architecture/TDD/standards follow-up, or none>
 - Residual risk: <skipped checks, weak proof, mixed user changes, or low>
 - Closeout claim: <narrow claim allowed by verification-before-completion>
-- Contract coverage: <all required fields accounted for, or incomplete - missing fields/reason>
 ```
 
-After proposal mode, report all required fields below. Proposal mode is not an edit claim; make that explicit in the closeout claim.
+After proposal mode, return only the reason for not editing, useful candidates,
+proof needed, and next step. Make the proposal-only claim explicit.
 
 ```markdown
 ## Code Refinement Proposal
@@ -130,7 +131,6 @@ After proposal mode, report all required fields below. Proposal mode is not an e
 - Proof needed: <tests/checks/manual verification before/after>
 - Recommended next step: <approve narrowed edits, route to TDD, route to architecture, or skip>
 - Closeout claim: <proposal-only claim, such as no files changed and behavior preservation not verified>
-- Contract coverage: <all required fields accounted for, or incomplete - missing fields/reason>
 ```
 
 ## Delegation
@@ -156,8 +156,8 @@ If subagents are unavailable, run the same review sequentially with a narrower c
 - Do not delete, weaken, or rewrite tests to match the refined implementation unless equivalent behavior proof remains through the public interface.
 - Do not hand-edit generated files unless the project explicitly treats them as source.
 - Do not claim behavior preservation from a clean diff alone. Use fresh proof or report weaker confidence.
-- Do not replace the Output Contract with loose prose such as "cleaned up and tests pass"; final closeout must account for every required field or explicitly report the skip reason.
-- Do not omit required Output Contract facts because the value is `None`, `not applicable`, or inconvenient. State the value or fallback reason.
+- Do not hide changed interfaces, skipped proof, failures, or residual risk.
+- Omit empty or non-material fields unless omission would mislead.
 - Do not claim code was refined after proposal mode; say proposal-only when no refinement edits were made.
 - Do not replace `tdd`, `review-codebase-architecture`, `standards-and-spec-review`, `code-security-review`, `doc-sync`, or `verification-before-completion`.
 - Do not include private notes, ignored scratch content, credentials, client data, sensitive personal context, secrets, or real user data in reports or examples.

@@ -9,19 +9,21 @@ metadata:
 
 ## Purpose
 
-Draft clear copy-pasteable commit commands from the actual change set and its verified context. The message should help future readers understand what changed, why it changed, how it was checked, and what remains uncertain.
+Draft clear commit text from the actual change set and verified context. Help
+future readers understand what changed, why, how it was checked, and what
+remains uncertain.
 
-This skill is read-only. It prepares a shell-ready `git add -- ... && git commit -m ...` command for the user or a separate publishing workflow; it does not run staging, commit, push, tag, or publish commands.
+This skill is read-only. It returns message text by default and never stages,
+commits, pushes, tags, or publishes.
 
 ## Inputs
 
-- User request, issue, PRD, ticket, accepted plan, review summary, doc-sync report, or implementation notes.
+- User request and originating intent.
 - Target-project root path.
 - Git status, staged changes, unstaged changes, untracked files, recent commits, branch context, or supplied patch.
-- Relevant local diffs, file names, issue acceptance criteria, PRD requirements, ADRs, standards notes, and nearby docs needed to understand intent.
+- Relevant diffs and nearby intent or standards evidence.
 - Verification evidence such as tests, linters, formatters, manual checks, review gates, doc-sync results, skipped checks, or known failures.
-- Target shell or shell constraints when message or path quoting is not cross-shell safe.
-- Optional platform context such as pull request title, issue ID, CI result, or review thread when available and relevant.
+- Shell constraints only when commands are explicitly requested.
 
 ## Dependencies
 
@@ -48,11 +50,9 @@ Fallback: If companion skills, git metadata, specs, or verification evidence are
    - Do not mutate the index, working tree, branches, remotes, tags, or issue state.
 
 2. Resolve messy working trees:
-   - When no scope is explicit and the dirty tree has obvious clusters, draft a multi-commit plan instead of one blended message.
-   - Treat separate issue or PRD work, separate skill folders, archive moves, and unrelated docs updates as likely cluster boundaries.
-   - Pair deleted issue files with matching `issues/archive/...` files in the same group.
-   - Keep support docs in a group only when they directly belong to that change.
-   - If clusters are not obvious, draft one all-dirty commit and call out the risk that unrelated work may be combined.
+   - Split obvious independent clusters instead of blending unrelated work.
+   - Keep direct support docs and matching archive moves with their owning
+     change. If grouping remains ambiguous, state the risk.
 
 3. Ground the message in intent:
    - Read the originating issue, PRD, ticket, user request, accepted plan, review notes, or doc-sync report when available.
@@ -67,17 +67,12 @@ Fallback: If companion skills, git metadata, specs, or verification evidence are
    - If no checks were run or provided, say so in the caveats instead of inventing confidence.
    - Treat platform-specific checks, pull request metadata, issue IDs, and CI context as optional aids, not required inputs.
 
-5. Choose the command and message shape:
+5. Choose the message shape:
    - Use the project's existing commit style when it is discoverable from recent history or standards docs.
    - If no style is discoverable, default to a concise imperative subject without a prefix.
    - Keep the subject focused on the user-visible or maintainer-meaningful outcome, usually 72 characters or fewer when practical.
    - Add a body only when it helps: multi-part changes, non-obvious rationale, migration notes, verification details, caveats, or reviewer context.
-   - Keep body paragraphs shell-safe and concise because each paragraph becomes an additional `-m` argument.
-   - Rewrite unsafe wording before output instead of dropping command output. Prefer removing embedded quotes, backticks, shell metacharacters, and fragile punctuation from the subject/body.
-   - For unstaged, untracked, deleted, or all-dirty scopes, prepare a single combined `git add -- ... && git commit -m ...` command that stages exactly the selected paths and commits only if staging succeeds.
-   - For staged-only scopes, do not include a `git add -- ...` segment. State exactly: `No git add command needed; selected changes are already staged.`
-   - Always prepare a `git commit -m "Subject"` command for each successful draft. Add body paragraphs with additional `-m "Body paragraph"` flags on the same physical command line.
-   - When the user asks for a commit message, return the command block first. Do not make the user extract the usable command from notes, previews, or prose.
+   - Return message text only by default. Do not add staging, commit, push, or shell-command suggestions unless the user explicitly asks for commands or repository mutation.
 
 6. Sanitize public text:
    - Do not include secrets, tokens, private user data, sensitive logs, credentials, or ignored scratch content in commit text.
@@ -89,75 +84,50 @@ Fallback: If companion skills, git metadata, specs, or verification evidence are
    - Ensure the subject matches the actual diff, not just the original plan.
    - Ensure the body does not claim checks, reviews, security coverage, or doc updates that did not happen.
    - Ensure known caveats are visible, especially skipped verification, unrelated changes, partial scope, generated files not inspected, or lower-confidence intent.
-   - Keep verification notes and caveats outside the copy-pasteable command block.
-   - Put selected staging and commit operations in one `Git Command` code block.
-   - Put each command on its own single physical line; do not use shell-specific line continuations such as PowerShell backticks or Bash backslashes.
-   - Use project-relative paths in the `git add -- ...` segment and quote paths that contain spaces or shell-sensitive characters.
-   - If a safe combined command would be too long or hard to review, split the selected scope into separate named commit groups or state the blocker rather than hiding files or emitting unclear staging commands.
-   - Ensure quote wrapping or escaping is safe for every command shown. When message quote safety is uncertain, rewrite the message into safe wording before omitting command output.
-   - Omit command blocks only when a safe command cannot be produced after rewriting and path review; state the blocker plainly and provide the closest safe preview.
-   - If the safest output is multiple commit groups, list them in the order the user should run them.
+   - Put the finished message first. Add scope, verification, or caveat notes only when they prevent an inaccurate or wrong-scope commit.
+   - When multiple commit groups are genuinely needed, put each finished message before its compact scope note.
+   - If the user explicitly requests commands, read [Commit Output Variants](./references/commit-output-variants.md) and keep commands separate from the default message-only result.
 
 ## Output Contract
 
-Return copy-pasteable commands first; use local variants when the default command shape does not fit.
-
-For a single clear unstaged, untracked, deleted, or all-dirty commit, start with one combined command block:
+Return the finished commit message first:
 
 ````markdown
-## Git Command
-
-```powershell
-git add -- "path/or/group" && git commit -m "Subject" -m "Optional body paragraph"
-```
-
-## Commit Message Preview
-
 ```text
 Subject
 
 Optional body paragraph
 ```
-
-## Commit Scope
-
-Included files:
-- `path/or/group`: reason included
-
-Not included:
-- None
 ````
 
-Always include `Commit Scope` after the preview. Use `Included files` for selected paths. Use `Not included` with `None` when there are no excluded dirty files, or list each excluded path with a reason such as unrelated dirty work, untracked scratch file, outside requested scope, already staged outside requested scope, or not inspected enough to safely include.
+After the message, include only material context:
 
-After the command, preview, and scope, include compact notes only when they prevent overclaiming or wrong-scope commits. If scope is ambiguous or contains unrelated change sets, return separate candidate command groups, name each selected scope, and keep every emitted command directly copy-pasteable.
+- selected or excluded scope when the working tree is ambiguous;
+- verification caveats when the body would otherwise overclaim;
+- uncertainty about grouping or intent.
+
+Omit empty scope, caveat, verification, and `None` sections. In integrated use,
+return the message plus any material scope or risk delta to the main agent; do
+not produce a competing task closeout.
 
 ## Delegation
 
-Main owns scope selection, final message wording, caveat judgment, and user communication.
-
-Delegate only bounded evidence gathering: summarize diff intent for one area, extract acceptance criteria/rationale, collect verification output, check recent message style, or review a draft for mismatch, overclaiming, private details, and missing caveats.
-
-Require paths inspected, commands run or skipped, source/diff/verification evidence, assumptions/confidence/residual risk, and candidate wording or concerns. Never delegate unsupervised staging or committing. If subagents are unavailable, run the same checks sequentially with a narrower context budget.
+Main owns scope, wording, caveats, and communication. Delegate only bounded
+diff, intent, verification, style, or draft review. Never delegate staging or
+committing.
 
 ## Guardrails
 
 - Do not run `git add`, `git commit`, push, tag, create branches, amend commits, rewrite history, publish releases, or open pull requests.
-- Do not answer a commit-message request with only notes, only a summary, only a message preview, or only prose when safe command blocks can be produced.
+- Do not add staging, commit, push, or command suggestions unless the user explicitly asks for them.
 - Do not silently collapse unrelated work into one tidy commit. Split obvious clusters or call out the risk.
-- Do not run mutating commands such as formatters, generators, migrations, autofixers, or cleanup scripts while drafting a message unless the user separately asks for implementation work.
-- Do not draft from the originating issue alone; inspect the local diff or supplied patch before writing the final message.
-- Do not omit the combined `Git Command` or staged-only commit command merely because the prose preview is available.
-- Do not emit `git add -- ... && git commit -m ...` or staged-only `git commit -m ...` commands unless paths and message quotes are safe for the displayed command; rewrite unsafe message wording first.
-- Do not use shell-specific line continuation characters in generated commit commands unless the user explicitly requests a specific shell format.
-- Do not emit a `git commit -m '...'` or `git commit -m "..."` command containing unescaped matching quote characters that would break shell parsing.
+- Draft from the inspected diff or patch, not the originating issue alone.
+- When commands are explicitly requested, do not emit unsafe paths, quoting, or shell-specific continuations.
 - Do not claim tests, CI, reviews, doc sync, security review, or standards review passed unless there is evidence.
-- Do not hide skipped checks or known failures in a vague positive message.
-- Do not combine unrelated work into one tidy story without warning the user.
+- Do not hide skipped checks, failures, or unrelated work.
 - Do not include private notes, ignored scratch content, credentials, secrets, sensitive personal context, client data, or real user data in commit text.
-- Do not require GitHub, GitLab, Bitbucket, Jira, Linear, or any hosting platform. Use platform metadata only when available and helpful.
 - Do not require this source repo's root docs after installation. The skill may rely only on its own instructions and target-project evidence.
 
 ## References
 
-- [Commit Output Variants](./references/commit-output-variants.md) - read when selected changes are already staged, when obvious independent change groups need separate commands, or when compact notes are needed to avoid overclaiming.
+- [Commit Output Variants](./references/commit-output-variants.md) - read only when the user explicitly requests commands or command-oriented variants.

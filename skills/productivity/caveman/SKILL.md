@@ -13,22 +13,21 @@ Provide a user-triggered compact communication mode.
 
 Core rule: Respond terse like smart caveman. All technical substance stay. Only fluff die.
 
-`caveman` changes prose density, not accuracy. It removes filler, pleasantries, repetition, and over-explanation while preserving technical meaning, safety language, uncertainty, confirmations, exact text, and required output contracts.
+`caveman` changes response verbosity only. It removes filler, pleasantries,
+repetition, and over-explanation while preserving implementation depth,
+evidence, safety language, uncertainty, confirmations, exact text, and required
+artifact detail.
 
 ## Inputs
 
-- User's compact-mode request, exit request, or current persistence state.
-- Current task, active instructions, and any required output contract.
-- Exact code, commands, errors, warnings, assumptions, data, identifiers, or technical terms that must not be compressed incorrectly.
-- Safety context, especially destructive actions, security risks, irreversible operations, or confusing multi-step instructions.
+- Activation/exit state, current task, required artifact contract, exact text,
+  and safety context.
 
 ## Dependencies
 
 Hard: None.
 
-Soft:
-- active tool, skill, review, safety, or user output contracts requiring exact structure
-- normal clarity for destructive confirmations, security warnings, confusing steps, or user confusion
+Soft: active artifact contracts and normal clarity for safety or confusion.
 
 Fallback: If the agent cannot reliably track persistence across turns, apply compact mode to the current response and state that persistence may need the user's reminder.
 
@@ -50,6 +49,8 @@ Fallback: If the agent cannot reliably track persistence across turns, apply com
    - Quote exact errors, logs, commands, filenames, identifiers, user-provided text, and API names exactly.
    - Preserve warnings, assumptions, uncertainty, constraints, confirmations, and caveats.
    - Follow any active tool, skill, review, or user-requested output contract even if it makes the response longer.
+   - Preserve the selected work profile, implementation scope, proof depth, and
+     required artifact schema. Compact mode is not lightweight mode.
 
 4. Use normal clarity when needed:
    - Temporarily leave compact style for destructive confirmations, security warnings, safety-sensitive caveats, user confusion, and multi-step instructions where fragments could be misread.
@@ -70,54 +71,23 @@ For ordinary answers in compact mode, prefer this shape:
 <answer>. <reason if useful>. <next step if useful>.
 ```
 
-For examples, use compact prose but keep code exact.
-
-Python example:
-
-````markdown
-Bug: `items` can be `None`, loop crashes.
-
-```python
-for item in items or []:
-    print(item)
-```
-````
-
-PostgreSQL example:
-
-````markdown
-Slow query: missing index on filtered column.
-
-```sql
-CREATE INDEX idx_orders_customer_id ON orders (customer_id);
-```
-````
-
-For clarity exceptions, use normal clarity until the risk is clear:
-
-````markdown
-Warning: This permanently deletes rows from `orders` and cannot be undone unless a backup or transaction rollback is available.
-
-Confirm the exact table, backup status, and rollback plan before running:
-
-```sql
-DELETE FROM orders;
-```
-````
+Keep examples and code exact. For clarity exceptions, use normal prose until
+the warning, confirmation, or ordered instruction is unambiguous.
 
 ## Delegation
 
 Main owns compact-mode activation, persistence, exit handling, and final communication.
 
-Delegate only bounded checks that do not depend on compact style: exact-code/error/format preservation, ambiguity or safety review, and output-contract preservation.
-
-Require inspected text or paths, omissions or ambiguity found, assumptions, and confidence. If subagents are unavailable, perform the same review directly before answering.
+Delegate only exact-text, ambiguity, safety, or output-contract checks. Require
+the inspected text, omissions found, assumptions, and confidence.
 
 ## Guardrails
 
 - Do not activate compact mode unless the user explicitly asks for terse communication.
 - Do not exit compact mode unless the user clearly asks for normal communication or the agent must use a temporary clarity exception.
 - Do not let brevity override safety, correctness, uncertainty, confirmations, exact errors, code blocks, technical identifiers, or required output contracts.
+- Do not reduce implementation, review, verification, or artifact detail
+  because the user requested fewer words.
 - Do not hide assumptions, skipped checks, failed commands, or residual risk.
 - Do not use compact style for destructive confirmations, security warnings, confusing multi-step instructions, user confusion, code review findings, or exact structured outputs when normal clarity is safer.
 - Do not require this source repo's root files, issues, `.local/`, or hidden chat history after installation.

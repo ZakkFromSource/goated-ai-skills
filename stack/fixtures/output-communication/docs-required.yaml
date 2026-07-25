@@ -1,0 +1,14 @@
+schema_version: 1.0.0
+identifier: docs-required
+title: Targeted drift stays with documentation sync
+request: Update an existing operator guide after a command flag changes.
+expected:
+  documentation_impact: required
+  sync_owns_targeted_drift: true
+  documentation_writer_loaded: false
+  documentation_cleanup_loaded: false
+  artifact_specific_detail_preserved: true
+  duplicate_task_closeout: false
+prohibited_behaviors:
+  - Load documentation writing for a targeted changed-fact correction.
+  - Load documentation cleanup without a structural hygiene need.

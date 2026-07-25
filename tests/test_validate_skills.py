@@ -16,6 +16,7 @@ from scripts.validate_skills import (
     validate_clarification_fixtures,
     validate_knowledge_retrieval_fixtures,
     validate_onboarding_fixtures,
+    validate_output_communication_fixtures,
     validate_planning_fixtures,
     validate_registry,
     validate_review_verification_fixtures,
@@ -126,6 +127,19 @@ def copy_review_verification_fixtures(destination: Path) -> Path:
     )
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "review-verification",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_output_communication_fixtures(destination: Path) -> Path:
+    """Copy output and communication fixtures and return their directory."""
+
+    fixture_destination = (
+        destination / "stack" / "fixtures" / "output-communication"
+    )
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "output-communication",
         fixture_destination,
     )
     return fixture_destination
@@ -1476,6 +1490,69 @@ class ReviewVerificationFixtureValidationTests(unittest.TestCase):
         self.assertIn(
             "missing required review-verification fixture: "
             "review-feedback-classification",
+            messages,
+        )
+
+
+class OutputCommunicationFixtureValidationTests(unittest.TestCase):
+    def test_current_output_communication_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_output_communication_fixtures(REPO_ROOT))
+
+    def test_message_only_and_prompt_first_defaults_cannot_be_weakened(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_output_communication_fixtures(fixture_root)
+
+            commit_fixture_path = fixture_directory / "message-only-commit.yaml"
+            commit_fixture = yaml.safe_load(
+                commit_fixture_path.read_text(encoding="utf-8")
+            )
+            commit_fixture["expected"]["suggests_commands"] = True
+            commit_fixture_path.write_text(
+                yaml.safe_dump(commit_fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            prompt_fixture_path = fixture_directory / "prompt-first.yaml"
+            prompt_fixture = yaml.safe_load(
+                prompt_fixture_path.read_text(encoding="utf-8")
+            )
+            prompt_fixture["expected"]["first_output"] = "route-metadata"
+            prompt_fixture_path.write_text(
+                yaml.safe_dump(prompt_fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_output_communication_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "message-only-commit behavior requires suggests_commands=False",
+            messages,
+        )
+        self.assertIn(
+            "prompt-first behavior requires first_output='finished-prompt'",
+            messages,
+        )
+
+    def test_required_output_scenario_cannot_be_removed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_output_communication_fixtures(fixture_root)
+            (
+                fixture_directory / "multi-skill-consolidated-closeout.yaml"
+            ).unlink()
+
+            messages = [
+                finding.message
+                for finding in validate_output_communication_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "missing required output-communication fixture: "
+            "multi-skill-consolidated-closeout",
             messages,
         )
 

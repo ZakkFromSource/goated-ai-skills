@@ -1,0 +1,13 @@
+schema_version: 1.0.0
+identifier: prompt-first
+title: Finished prompt appears before optional explanation
+request: Turn a scoped rough request into a reusable prompt.
+expected:
+  first_output: finished-prompt
+  explanation_default: omitted
+  explanation_available_on_request: true
+  empty_assumptions_omitted: true
+  route_metadata_before_prompt: false
+prohibited_behaviors:
+  - Put classification, principles, or route commentary before the prompt.
+  - Emit empty assumptions or an explanation the user did not request.

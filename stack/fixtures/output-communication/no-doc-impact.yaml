@@ -1,0 +1,14 @@
+schema_version: 1.0.0
+identifier: no-doc-impact
+title: Documentation sync finds no durable impact
+request: Check documentation impact after an internal refactor with no changed behavior or public contract.
+expected:
+  documentation_impact: none
+  durable_doc_updates: []
+  specialist_output: compact-delta
+  explicit_no_update_result: true
+  duplicate_task_closeout: false
+  empty_fields_omitted: true
+prohibited_behaviors:
+  - Emit an empty documentation report with None-valued sections.
+  - Repeat paths, checks, or the controller's final task closeout.

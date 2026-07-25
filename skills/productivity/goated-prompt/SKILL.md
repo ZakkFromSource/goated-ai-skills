@@ -36,7 +36,7 @@ Soft:
 - grill-with-docs when docs, standards, ADRs, source behavior, tests, schemas, or public facts matter
 - write-a-spec when the prompt should ask for a scoped spec before implementation
 - writing-plans when an approved issue or task needs exact implementation steps
-- framework-agnostic-skill-creator when the user wants the prompt turned into an installable GOATED skill
+- framework-agnostic-skill-creator for an installable skill
 
 Fallback: If companion skills or project evidence are unavailable, use conversation context, state assumptions, and avoid undiscovered project-fact claims.
 
@@ -77,6 +77,8 @@ Fallback: If companion skills or project evidence are unavailable, use conversat
    - Prefer generic model classes such as fast capable model, reasoning model, code-specialized model, or general model instead of current model-name claims.
    - For GOATED Prompt mode, name the likely route, such as `using-goated-ai-skills`, `grill-with-docs`, `write-a-spec`, `writing-plans`, `tdd`, `doc-sync`, or `framework-agnostic-skill-creator`, without pretending routing is automatic.
    - Put the final prompt in a clearly labeled code block.
+   - Put the finished prompt before classification, route notes, assumptions,
+     or explanation.
 
 6. Review before delivering:
    - Read [Prompt Review Checklist](references/prompt-review-checklist.md) for non-trivial, GOATED-aware, security-sensitive, or reusable prompts.
@@ -86,21 +88,18 @@ Fallback: If companion skills or project evidence are unavailable, use conversat
 
 ## Output Contract
 
-Return this shape by default:
+Return the finished prompt first by default:
 
 ````markdown
-**Prompt Mode**: <GOATED Prompt | Reusable Prompt | GOATED + Reusable>
-**Prompt Type**: <Spec/build | Focused task | Planning/design | Iterative/refinement | General>
-**Principles Applied**: <KISS, context/model/prompt alignment, IDK, balance-to-complexity, plan-is-prompt, TCREI, or other relevant principles>
-**Recommended Recipient**: <GOATED-enabled agent route or generic model class>
-
 ```text
 <optimized prompt>
 ```
-
-**Assumptions**: <explicit assumptions, or "None">
-**Why This Structure**: <2-4 concise sentences explaining classification, context choices, and format>
 ````
+
+Add assumptions, recipient or route guidance, and explanation after the prompt
+only when they materially affect use or the user requests them. Omit empty
+fields, including `Assumptions: None`. Explanation is optional, not part of the
+default artifact.
 
 When one critical question must be answered first, return:
 
@@ -113,11 +112,9 @@ When one critical question must be answered first, return:
 
 ## Delegation
 
-Main owns mode selection, prompt type classification, final prompt quality, privacy judgment, and user communication.
-
-Delegate only bounded prompt-improvement support: context sufficiency for one domain/code area, alternate structures, checklist review, privacy/stale-tool/success-criteria gaps, or pressure scenarios.
-
-Require inspected inputs, prompt type recommendation, assumptions, privacy concerns, missing context, suggested changes, and confidence. If subagents are unavailable, run the same checks directly with a smaller context budget.
+Main owns classification, prompt quality, privacy, and communication. Delegate
+only bounded context, alternate-structure, checklist, privacy, or
+success-criteria review.
 
 ## Guardrails
 
@@ -129,6 +126,7 @@ Require inspected inputs, prompt type recommendation, assumptions, privacy conce
 - Do not recommend specific current model names unless the user provides them or current official docs were checked.
 - Do not include private paths, credentials, client data, proprietary excerpts, raw private notes, source clone URLs, ignored scratch content, or sensitive personal context in reusable prompts.
 - Do not present one framework's command syntax, file mention syntax, plugin behavior, or automation as universal.
+- Do not put route metadata or explanation before the finished prompt.
 - Do not require this source repo's root files, issue files, `.local/`, or hidden chat history after installation.
 
 ## References

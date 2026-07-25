@@ -318,6 +318,83 @@ REQUIRED_REVIEW_VERIFICATION_FIXTURE_CONTRACTS = {
         "repetitive_response_template_required": False,
     },
 }
+REQUIRED_OUTPUT_COMMUNICATION_FIXTURE_CONTRACTS = {
+    "no-doc-impact": {
+        "documentation_impact": "none",
+        "durable_doc_updates": [],
+        "specialist_output": "compact-delta",
+        "explicit_no_update_result": True,
+        "duplicate_task_closeout": False,
+        "empty_fields_omitted": True,
+    },
+    "docs-required": {
+        "documentation_impact": "required",
+        "sync_owns_targeted_drift": True,
+        "documentation_writer_loaded": False,
+        "documentation_cleanup_loaded": False,
+        "artifact_specific_detail_preserved": True,
+        "duplicate_task_closeout": False,
+    },
+    "message-only-commit": {
+        "first_output": "commit-message-text",
+        "message_text_only_by_default": True,
+        "stages_files": False,
+        "creates_commit": False,
+        "pushes": False,
+        "suggests_commands": False,
+        "optional_context_only_when_material": True,
+    },
+    "prompt-first": {
+        "first_output": "finished-prompt",
+        "explanation_default": "omitted",
+        "explanation_available_on_request": True,
+        "empty_assumptions_omitted": True,
+        "route_metadata_before_prompt": False,
+    },
+    "caveman-safety": {
+        "verbosity": "compact",
+        "safety_warning_preserved": True,
+        "approval_requirement_preserved": True,
+        "uncertainty_preserved": True,
+        "skipped_checks_preserved": True,
+        "implementation_depth_reduced": False,
+    },
+    "caveman-structured-artifact": {
+        "verbosity": "compact",
+        "required_artifact_schema_preserved": True,
+        "artifact_detail_reduced": False,
+        "code_and_exact_text_preserved": True,
+        "optional_explanation_compressed": True,
+    },
+    "learning-confirm-each": {
+        "approval_mode": "confirm-each-write",
+        "candidate_review_required": True,
+        "approval_requested_for_each_write": True,
+        "writes_before_approval": False,
+        "scope_or_reach_changed": False,
+        "sensitive_content_excluded": True,
+    },
+    "learning-standing-consent": {
+        "approval_mode": "standing-session-consent",
+        "candidate_review_required": True,
+        "existing_consent_covers_writes": True,
+        "approval_requested_again": False,
+        "scope_or_reach_changed": False,
+        "writes_within_destination_scope": True,
+        "sensitive_content_excluded": True,
+    },
+    "multi-skill-consolidated-closeout": {
+        "specialist_outputs": "internal-deltas",
+        "final_closeout_owner": "main-agent",
+        "task_closeout_count": 1,
+        "outcome_first": True,
+        "important_changes_included": True,
+        "fresh_proof_included": True,
+        "material_risk_included": True,
+        "empty_fields_omitted": True,
+        "repeated_paths_or_checks_omitted": True,
+    },
+}
 REQUIRED_KNOWLEDGE_RETRIEVAL_FIXTURE_IDENTIFIERS = {
     "authoritative-source",
     "conflicting-note",
@@ -2747,6 +2824,102 @@ def validate_review_verification_fixtures(repo: Path) -> list[Finding]:
     return errors
 
 
+def validate_output_communication_fixtures(repo: Path) -> list[Finding]:
+    """Validate concise artifact output and consolidated closeout behavior."""
+
+    fixture_root = repo / "stack" / "fixtures" / "output-communication"
+    fixture_paths = sorted(fixture_root.glob("*.yaml"))
+    if not fixture_paths:
+        return [
+            Finding(
+                "stack/fixtures/output-communication",
+                "no output-communication fixtures found",
+            )
+        ]
+
+    errors: list[Finding] = []
+    identifiers: set[str] = set()
+    for fixture_path in fixture_paths:
+        fixture_label = relative(fixture_path, repo)
+        fixture, fixture_errors = load_mapping(fixture_path, fixture_label)
+        errors.extend(fixture_errors)
+        if fixture is None:
+            continue
+
+        if fixture.get("schema_version") != "1.0.0":
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "unsupported output-communication fixture schema_version",
+                )
+            )
+
+        identifier = fixture.get("identifier")
+        if not isinstance(identifier, str):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "output-communication fixture identifier must be a string",
+                )
+            )
+            continue
+        if identifier in identifiers:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"duplicate output-communication fixture identifier: {identifier}",
+                )
+            )
+        identifiers.add(identifier)
+
+        expected = fixture.get("expected")
+        if not isinstance(expected, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "output-communication fixture expected must be a mapping",
+                )
+            )
+            continue
+        if not is_string_list(fixture.get("prohibited_behaviors"), allow_empty=False):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "output-communication prohibited_behaviors must be a "
+                    "non-empty string list",
+                )
+            )
+
+        contract = REQUIRED_OUTPUT_COMMUNICATION_FIXTURE_CONTRACTS.get(identifier)
+        if contract is None:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"unsupported output-communication fixture: {identifier}",
+                )
+            )
+            continue
+        errors.extend(
+            validate_fixture_contract_values(
+                expected,
+                contract,
+                fixture_label,
+                f"{identifier} behavior",
+            )
+        )
+
+    errors.extend(
+        Finding(
+            "stack/fixtures/output-communication",
+            f"missing required output-communication fixture: {identifier}",
+        )
+        for identifier in sorted(
+            set(REQUIRED_OUTPUT_COMMUNICATION_FIXTURE_CONTRACTS) - identifiers
+        )
+    )
+    return errors
+
+
 def validate_knowledge_retrieval_fixtures(repo: Path) -> list[Finding]:
     """Validate the portable knowledge-retrieval behavior fixtures."""
 
@@ -3848,6 +4021,7 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
     errors.extend(validate_architecture_planning_fixtures(repo))
     errors.extend(validate_behavior_proof_fixtures(repo))
     errors.extend(validate_review_verification_fixtures(repo))
+    errors.extend(validate_output_communication_fixtures(repo))
     errors.extend(validate_knowledge_retrieval_fixtures(repo))
     errors.extend(validate_wayfinding_fixtures(repo))
 
@@ -3902,6 +4076,13 @@ def main() -> int:
     review_verification_fixture_count = len(
         list(
             (repo / "stack" / "fixtures" / "review-verification").glob(
+                "*.yaml"
+            )
+        )
+    )
+    output_communication_fixture_count = len(
+        list(
+            (repo / "stack" / "fixtures" / "output-communication").glob(
                 "*.yaml"
             )
         )
@@ -3967,6 +4148,10 @@ def main() -> int:
         print(
             "Review-and-verification fixture validation passed for "
             f"{review_verification_fixture_count} scenarios."
+        )
+        print(
+            "Output-and-communication fixture validation passed for "
+            f"{output_communication_fixture_count} scenarios."
         )
         print(
             "Knowledge-retrieval fixture validation passed for "

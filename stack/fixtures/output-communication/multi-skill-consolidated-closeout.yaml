@@ -1,0 +1,17 @@
+schema_version: 1.0.0
+identifier: multi-skill-consolidated-closeout
+title: Several skills produce one task closeout
+request: Implement, review, sync docs, verify, and close out one task.
+expected:
+  specialist_outputs: internal-deltas
+  final_closeout_owner: main-agent
+  task_closeout_count: 1
+  outcome_first: true
+  important_changes_included: true
+  fresh_proof_included: true
+  material_risk_included: true
+  empty_fields_omitted: true
+  repeated_paths_or_checks_omitted: true
+prohibited_behaviors:
+  - Emit a full user-facing report from every specialist skill.
+  - Repeat unchanged path lists, check summaries, or empty None fields.

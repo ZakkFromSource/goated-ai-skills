@@ -181,6 +181,10 @@ proof gaps, or route deltas, not repeated discovery or competing closeouts.
 Report decisions, blockers, material scope or risk changes, and long-running
 work concisely. Avoid repeated routes and skill closeouts. The main agent
 produces one final outcome with important changes, proof, and residual risk.
+Specialists return internal deltas unless their artifact schema is itself the
+requested result. Omit empty fields and repeated path or check summaries unless
+omission would mislead. Put the requested artifact or decision before optional
+explanation.
 
 This policy does not replace specialist procedures, project-specific rules, or
 host-framework safety controls.

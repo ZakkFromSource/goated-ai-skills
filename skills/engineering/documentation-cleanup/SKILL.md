@@ -19,8 +19,9 @@ Default to audit-first. Do not move, delete, archive, or change source-of-truth 
 
 - User request, target-project root, requested mode, and cleanup goal.
 - Existing project instructions, such as `AGENT.md`, `AGENTS.md`, `CLAUDE.md`, framework config, or routing notes.
-- Root docs such as `README.md`, `CONTEXT.md`, progress/status files, roadmap files, project skill maps, or operator guides.
-- Documentation folders such as `docs/`, `docs/agents/`, `docs/adr/`, `docs/decisions/`, `docs/specs/`, existing legacy `docs/prds/`, feature docs, layer docs, external-doc lookup notes, architecture docs, and ticket workbench docs when in scope.
+- Root docs, progress/status files, roadmaps, skill maps, and operator guides.
+- In-scope documentation folders, indexes, decisions, feature docs, agent
+  guides, and workbench docs.
 - Project conventions for archives, immutable decisions, generated docs, private scratch areas, and source-of-truth precedence.
 - Optional inventory output from `scripts/inventory_docs.py`.
 
@@ -30,15 +31,15 @@ Hard: None.
 
 Soft:
 - session-start-progressive-disclosure for unfamiliar target projects
-- context-matrix-map when docs/agents/context-matrix.md is missing, stale, or central to the cleanup
-- project-context-calibration when root CONTEXT.md, language, boundaries, or artifact meanings need refresh
-- project-standards-calibration when standards, commands, or enforcement levels need refresh
-- agent-instructions-integrator when root agent instructions or installed-skill routing need repair
-- documentation-writer when cleanup reveals missing or rewritten durable docs
+- context-matrix-map, project-context-calibration,
+  project-standards-calibration, or agent-instructions-integrator when the
+  corresponding artifact needs deeper work
+- documentation-writer when cleanup reveals a missing or rewritten durable doc
 - doc-sync when recent behavior, interface, architecture, test, or workflow changes created drift
 - verification-before-completion before cleaned/organized/safe/synced/future-ready docs claims
 
-Fallback: If companion skills, Python, git, or conventions are unavailable, inspect the smallest useful docs set, report lower confidence, and avoid destructive cleanup claims.
+Fallback: Inspect the smallest useful docs set, report lower confidence, and
+avoid destructive cleanup claims.
 
 ## Workflow
 
@@ -47,6 +48,9 @@ Fallback: If companion skills, Python, git, or conventions are unavailable, insp
    - **Plan mode** produces a decision-complete cleanup plan for a future implementation pass, including exact approval-needed actions.
    - **Implementation mode** may edit docs only after audit evidence exists and the action is safe under user intent and project conventions.
    - If the user asks for broad cleanup but intent is ambiguous, start in audit mode and state that assumption.
+   - Do not load `documentation-writer` unless the audit identifies a real
+     missing or substantially rewritten artifact. Do not load `doc-sync`
+     unless a specific changed fact created drift.
 
 2. Confirm the project boundary and local authority order:
    - Identify the target-project root from the request, current directory, or repository metadata.
@@ -87,7 +91,9 @@ Fallback: If companion skills, Python, git, or conventions are unavailable, insp
 
 ## Output Contract
 
-Use the shape in [Cleanup Report Template](references/cleanup-report-template.md). At minimum, report:
+The cleanup audit, plan, or applied cleanup result is the primary artifact. Use
+the shape in [Cleanup Report Template](references/cleanup-report-template.md)
+when its structure helps the decision. Preserve:
 
 - Mode: audit, plan, or implementation.
 - Scope inspected and skipped.
@@ -98,19 +104,19 @@ Use the shape in [Cleanup Report Template](references/cleanup-report-template.md
 - Verification performed and skipped.
 - Companion-skill routes and residual risk.
 
-When no cleanup is needed, say that clearly and still list the evidence inspected and residual risk.
+In integrated use, return only material findings, changes, approval needs,
+evidence, residual risk, and route signals to the main agent. Omit empty
+categories, repeated inventories, and a competing task closeout.
+
+When no cleanup is needed, say that clearly with the evidence needed to support
+the decision. Standalone use returns the same compact local closeout.
 
 ## Delegation
 
-Main owns scope, source-of-truth judgment, cleanup recommendations, file edits, approval gates, and user communication.
-
-Delegate only bounded independent passes: inventory one docs tree/family, check duplicate guidance in one source family, review one `docs/agents/` set, check private/local leakage risk, or verify edited links/headings/source-of-truth consistency.
-
-Require `Status`: `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`; paths inspected; commands run; findings, assumptions, confidence, skipped areas, and recommended actions. Subagents suggest cleanup; they do not decide deletion, broad moves, or publication.
-
-Status handling: `DONE` integrates findings; `DONE_WITH_CONCERNS` requires concern review before editing/reporting; `NEEDS_CONTEXT` gets missing scope, convention, source document, or approval before useful re-dispatch; `BLOCKED` narrows scope, switches to report-only output, or asks the user.
-
-If subagents are unavailable, run the same checks sequentially with a narrower context budget.
+Main owns source-of-truth judgment, edits, approvals, and communication.
+Delegate only bounded inventories or reviews. Subagents return paths, evidence,
+findings, assumptions, confidence, and recommendations; they do not decide
+deletion, broad moves, or publication.
 
 ## Guardrails
 
