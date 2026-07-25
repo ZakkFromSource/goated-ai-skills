@@ -61,7 +61,7 @@ information their artifact or decision genuinely requires.
 
 ## Blocked By
 
-- `tickets/002-route-work-through-adaptive-gates.md`
+- `tickets/archive/002-route-work-through-adaptive-gates.md`
 - `tickets/005-turn-specs-into-delivery-tickets.md`
 - `tickets/010-review-and-verify-conditionally.md`
 

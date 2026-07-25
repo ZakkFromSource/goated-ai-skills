@@ -1,6 +1,6 @@
 ---
 name: using-goated-ai-skills
-description: Use when an installed GOATED skill stack needs to choose the right skill path for a user request, especially across source-repo maintenance, onboarding, delivery, installation, prompt-crafting, tiny tasks, or explicit overrides.
+description: Use when an installed GOATED stack should select or revise a proportionate route for delivery, onboarding, source maintenance, installation, prompt work, or a tiny direct task.
 metadata:
   goated-category: agent-workflows
 ---
@@ -9,135 +9,163 @@ metadata:
 
 ## Purpose
 
-Choose the right GOATED skill path without making the user memorize the stack.
+Select one proportionate route for the task, reuse shared evidence and consent,
+and revise only the affected route parts at controlled checkpoints.
 
-Use this router at the start of installed-skill work, when a user asks which skill applies, or when a request could fall into more than one GOATED workflow. The router describes decision behavior only. It does not install hooks, generate adapter manifests, require automatic activation, or override the user's agent framework.
+Use this router when work begins, an existing work envelope needs refreshing,
+or a material route signal appears. Do not load it again merely because one
+selected skill finished. For an obvious tiny request, apply the lightweight
+path silently.
 
 ## Inputs
 
-- User request, direct instructions, and any explicit skill names.
-- Current working directory and project boundary, when available.
-- Target-project instructions, repo instructions, or framework guidance that applies to the workspace.
-- Installed GOATED skill list or known skill folder location, when available.
-- Existing target-project artifacts, when present, such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, or `docs/agents/project-standards.md`.
+- User request, instructions, constraints, and selected approval mode.
+- Current project boundary and applicable project instructions.
+- Existing work envelope, decisions, approvals, and evidence entries.
+- Integrated registry metadata when installed, or the available skill list.
+- Material route signals returned by skills.
 
 ## Dependencies
 
 Hard: None.
 
 Soft:
-- session-start-progressive-disclosure for serious, unfamiliar, cross-file, PRD-level, architectural, repeated, or public-facing work
-- grill-with-docs for docs-grounded intent, scope, criteria, language, or public behavior
-- framework-agnostic-skill-creator when creating, porting, adapting, sanitizing, or publishing GOATED skills
-- agent-instructions-integrator for target-project routing to installed skills and artifacts
-- code-refinement as a default run-or-explicit-skip closeout gate for non-trivial code-producing delivery work, and for explicit cleanup, simplification, or behavior-preserving refactor requests
-- goated-prompt for prompt improvement, reusable prompts, and GOATED-aware request translation
+- shared integrated policy and registry for common behavior and skill metadata
+- `session-start-progressive-disclosure` when the project, source area,
+  boundary, or evidence is unfamiliar, cross-area, or stale
+- specialist skills selected as gates below
 
-Fallback: If companion skills are unavailable, classify directly, obey user/project instructions, keep reads narrow, and state lower confidence.
+Fallback: Without the shared policy or registry, use the compact profile, gate,
+approval, evidence, and checkpoint rules in this file. Never depend on the
+GOATED source repository or hidden session files.
 
 ## Workflow
 
-1. Apply instruction precedence first:
-   - Follow direct user instructions and applicable target-project instructions before GOATED routing advice.
-   - If the user explicitly says to use or skip a skill, honor that unless it conflicts with safety, policy, or stronger project instructions.
-   - If instructions conflict, surface the conflict and ask only for the decision that cannot be discovered locally.
+1. **Apply precedence and establish the boundary.**
+   - Follow system, user, and applicable project instructions before GOATED
+     defaults. Honor explicit use or skip requests unless unsafe.
+   - Stop before writes only when an unresolved conflict, project boundary, or
+     material user decision blocks safe progress.
 
-2. Classify the task surface:
-   - **Source repo maintenance**: changing GOATED's public source repo, issue handoffs, docs, skill folders, or maintainer artifacts.
-   - **Skill installation/adaptation**: copying, installing, adapting, or routing installed GOATED skills into an agent framework or target project.
-   - **Prompt crafting**: improving, rewriting, optimizing, or creating reusable prompts; translating rough requests into GOATED-aware prompts; or asking for spec, task, planning, or refinement prompts.
-   - **Target Project Onboarding**: preparing a target project for durable, repeated, cross-file, PRD-level, architectural, or public-facing work.
-   - **Target Project Delivery**: planning, implementing, reviewing, documenting, or handing off one target-project change.
-   - **Tiny one-off task**: a small, obvious, low-risk request such as a typo fix, one-line rename, formatting-only edit, or direct command the user already specified.
-   - **Explicit override**: the user names a different path or asks to bypass normal routing.
+2. **Initialize or reuse one work envelope.**
+   - Record the goal and agreed scope.
+   - Record every profile dimension: task size, intent maturity, domain,
+     continuity, execution, data sensitivity, action reach, and applicable risk
+     flags.
+   - Derive workflow intensity: `lightweight` for local, clear, reversible work;
+     `standard` for scoped cross-file or proof-bearing work; `full` for large,
+     branching, resumable, delegated, restricted, architectural, security, or
+     external-changing work.
+   - Reuse a fresh envelope. Keep single-session state in conversation or
+     framework state; use an ignored local artifact only for resumable work.
 
-3. Choose the route:
-   - For source repo maintenance, follow that repo's maintainer instructions first, then use the relevant GOATED authoring, review, doc-sync, or handoff skill only when it applies.
-   - For installation/adaptation, use `session-start-progressive-disclosure` if the environment is unfamiliar, then `agent-instructions-integrator` for project routing or `framework-agnostic-skill-creator` for creating, porting, or adapting skills.
-   - For prompt crafting, use `goated-prompt`; let it name companion skill routes when the prompt needs docs-grounded clarification, PRD capture, implementation planning, execution, review, or skill creation.
-   - For onboarding, start with `session-start-progressive-disclosure`, then use `grill-with-docs` before durable onboarding decisions; route to `write-a-prd` only when onboarding itself needs project-level product scope, roadmap intent, or acceptance criteria before architecture planning or issue breakdown.
-   - For delivery, start with `session-start-progressive-disclosure`; use `grill-with-docs` when the request is PRD-level, architectural, cross-file, repeated, public-facing, unclear, or standards-sensitive. For non-trivial code-producing work, include `code-refinement` as a run-or-explicit-skip gate after implementation proof and before review gates.
-   - For tiny one-off tasks, proceed directly with the smallest useful context and skip full onboarding, grilling, or planning ceremony.
-   - For explicit overrides, follow the override and record any skipped GOATED step and residual risk.
+3. **Reuse evidence before discovery.**
+   - Reuse an entry when its source, applicable scope, freshness, depth, and
+     confidence support the next claim.
+   - Refresh only missing, stale, changed, contradictory, or too-shallow
+     evidence. Prefer current source and executable proof for exact or
+     high-risk claims.
 
-4. Use a compact next-skill map when the first route is clear:
-   - Fuzzy feature idea, client brief, roadmap item, or onboarding-discovered product scope, roadmap intent, or acceptance criteria -> `write-a-prd`.
-   - Prompt improvement, reusable prompt, GOATED-aware prompt, spec prompt, task prompt, planning prompt, or refinement prompt -> `goated-prompt`.
-   - Approved PRD, product spec, or scoped plan -> `prd-to-issues`.
-   - Approved issue, scoped task, or implementation slice ready for executable steps -> `writing-plans`.
-   - Broad implementation or refactor request that is not yet a focused vertical slice -> `prd-to-issues`, `writing-plans`, or `plan-codebase-architecture` before direct execution.
-   - Implementation, bug fix, public interface change, or regression coverage -> `tdd`.
-   - Non-trivial code-producing implementation after proof -> `code-refinement` as a run-or-explicit-skip gate before standards/spec review, security review, doc-sync, and final verification.
-   - Simplify, clean up, or refactor recently changed code while preserving behavior -> `code-refinement` after the scope and proof are clear.
-   - Architecture blueprint needed before implementation, especially when deep modules or small public interfaces are at stake -> `plan-codebase-architecture`.
-   - Descriptive architecture map, module map, or dependency map -> `architecture-design-map`.
-   - Review of a diff, patch, or issue fit -> `standards-and-spec-review`; use `code-security-review` for security-relevant paths.
-   - Behavior, interface, standards, or public docs may have drifted -> `doc-sync`.
-   - Closeout message, commit text, or continuity note -> `commit-message` or `handoff`.
+4. **Select the route once.**
+   - Put justified gates in `required_gates` or `conditional_gates`. Record a
+     skipped gate only when the omission explains a meaningful decision.
+   - Choose the smallest path that preserves correctness and safety:
 
-5. Load only the next useful skill:
-   - Prefer the smallest skill or local evidence needed for the next safe action.
-   - Do not bulk-load the full GOATED stack just because it is installed.
-   - Do not treat this source repo's root files, issues, or local research folders as runtime requirements for installed skills.
+| Gate | Select when |
+| --- | --- |
+| Proportional orientation | Always; near-zero ceremony for fresh tiny work |
+| Clarification or diagnosis | Intent or root cause materially blocks action |
+| Spec, architecture, or tickets | Durable intent, module strategy, or multiple resumable slices must be settled |
+| Writing plan | A scoped task still needs executable steps |
+| TDD or equivalent proof | Behavior, a public interface, or regression risk changes |
+| Standards/spec or security review | Scope fit, conventions, or a trust boundary remains materially uncertain |
+| Documentation sync | Durable behavior, interfaces, configuration, architecture, or operator expectations may drift |
+| Full verification | Work is complex, high-risk, delegated, multi-surface, or explicitly audited |
+| Handoff | Work is resumable, interrupted, cross-session delegated, or unfinished |
 
-6. Watch for routing shortcuts:
-   - "This is too small" is valid only when the request is truly low risk and local.
-   - "I already know the workflow" does not replace checking the current installed skill when a non-tiny task depends on it.
-   - "I need to inspect everything first" is usually a sign to use `session-start-progressive-disclosure`.
-   - "The user said implement" does not skip clarification when project instructions, public behavior, architecture, or cross-file scope make intent unclear.
-   - "Write a prompt for this" is prompt-crafting work; route to `goated-prompt` unless the user asks the agent to execute the underlying task instead.
-   - Broad horizontal work, speculative scaffolding, or deep module and public interface decisions should not be routed through the tiny one-off path.
-   - Do not silently skip `code-refinement` for non-trivial code-producing delivery work; either run it or name the skip reason.
+   - Full orientation loads only for unfamiliar, cross-area, stale, or
+     boundary-uncertain work. Code refinement loads only for observed
+     refinement debt or an explicit cleanup request.
+   - Tiny work uses direct action plus narrow proof. Do not silently turn it
+     into clarification, planning, review, and handoff.
 
-7. Report the route briefly, then continue:
-   - Name the selected task surface and next skill or direct action.
-   - State any explicit override, tiny-task decision, or lower-confidence fallback.
-   - Continue when the next action is safe; ask only when a user decision materially changes the route.
+5. **Apply approval once for the current reach.**
+   - With no selected mode, use the risk-adaptive default: safe reads and
+     diagnostics proceed; scoped reversible project writes may use one batch;
+     destructive, credential, protected-branch, deployment, publication, and
+     external-changing actions need explicit approval.
+   - Honor `confirm-each-write`, `approve-batch`,
+     `standing-session-consent`, or `draft-without-applying`.
+   - Reuse consent while its scope and action reach still cover the work. A
+     material change to either invalidates consent where relevant and requires
+     a fresh decision before the expanded action.
+
+6. **Execute through selected gates.**
+   - Give each skill the relevant envelope slice and fresh evidence instead of
+     asking it to rediscover the task.
+   - Skills return internal deltas: result, evidence, changes, risks, route
+     signals, and skipped checks. They do not reconstruct the downstream route
+     or produce competing task closeouts.
+   - Do not narrate routine routing. Report only decisions, blockers, approval
+     needs, material scope or risk changes, or useful long-work progress.
+
+7. **Re-evaluate only when allowed.**
+   - Scheduled checkpoints are after clarification or diagnosis, after
+     planning, after implementation, and before final completion.
+   - A material signal such as `scope-changed`, `evidence-stale`,
+     `security-impact`, `documentation-impact`, or `refinement-debt` may trigger
+     an earlier checkpoint before affected work continues.
+   - Compare the signal with the envelope, change only affected gates, and
+     record the reason. Do not restart discovery or activate a long pipeline.
+   - After project changes, invalidate affected pre-change evidence and collect
+     fresh proof. Preserve unaffected evidence and approvals.
+
+8. **Close out once.**
+   - The main agent integrates skill deltas and produces one response with the
+     outcome, important changes, fresh proof, skipped checks, and residual risk.
 
 ## Output Contract
 
-Return a compact routing note before continuing when the route is not obvious:
+Update or initialize a compact work envelope containing:
 
-```markdown
-**GOATED Skill Route**
-- Task surface: <source repo maintenance | installation/adaptation | prompt crafting | onboarding | delivery | tiny one-off | explicit override>
-- Instruction precedence: <user/project instruction applied, or "none beyond normal rules">
-- Route: <skill name(s) or direct action>
-- Reason: <one sentence>
-- Assumptions or skipped steps: <short list or "None">
-```
+- agreed profile, sensitivity, action reach, risk flags, and scope;
+- current checkpoint and selected required, conditional, and meaningful
+  skipped gates;
+- approval mode and covered scope/reach;
+- reusable evidence and invalidated entries;
+- proof strategy, route signals, decisions, work state, and next action.
 
-For tiny one-off tasks, a one-sentence note is enough. For explicit overrides, name what was skipped and the risk, if any.
+Routine routing stays internal. When route visibility materially helps the
+user, report only the chosen intensity, gates that affect their decisions,
+approval needs, and the reason for any route change.
+
+Standalone invocation returns the same compact route decision and local
+closeout without assuming integrated policy, registry, or source-repo access.
 
 ## Delegation
 
-Main owns routing, instruction precedence, user communication, and final judgment.
+The main agent owns the envelope, routing, consent interpretation, integration,
+and user communication. Delegate only bounded work with non-overlapping
+ownership. Require inspected paths, commands, evidence, assumptions,
+uncertainty, status, and envelope deltas; review them before use.
 
-Delegate only bounded route evidence: applicable agent instructions, installed GOATED skill locations, one docs/standards artifact, or whether the request is tiny or standards-sensitive.
-
-Require paths inspected, commands run, assumptions, uncertainty, and a routing recommendation. If subagents are unavailable, run the same scan sequentially with a smaller context budget.
-
-## Adapter Notes
-
-- **Codex**: use the environment's native skill-loading behavior when available. Use plans or subagents only when the active workflow calls for them.
-- **Claude Code**: load the relevant installed skill through the supported skill or command mechanism for that environment.
-- **Hermes**: use the configured Hermes skill or workflow registry when present; otherwise follow the copied skill folder directly.
-- **OpenCode**: use the project's configured reusable instruction or skill location; keep any single instruction file as a router, not a copy of every skill body.
-- **Generic agents**: read the installed skill's `SKILL.md` and any directly linked local support files needed for the active workflow.
-
-These notes are compatibility guidance, not bootstrap automation.
+Remain single-agent-compatible when delegation is unavailable.
 
 ## Guardrails
 
-- Do not override direct user instructions or applicable target-project instructions with GOATED defaults.
-- Do not require full onboarding for tiny one-off tasks.
-- Do not make `write-a-prd` or `docs/prds/` mandatory for every onboarding run, and do not imply automatic PRD generation.
-- Do not skip `session-start-progressive-disclosure` and `grill-with-docs` for serious, repeated, cross-file, PRD-level, architectural, unclear, standards-sensitive, or public-facing work.
-- Do not implement runtime bootstrap, automatic skill loading, hook installation, adapter manifest generation, installer scripts, or framework detection automation from this router.
-- Do not assume one instruction filename, command syntax, tool name, or skill registry is universal.
-- Do not make installed skills depend on this source repo's root `AGENT.md`, `README.md`, `CONTEXT.md`, issue files, `.local/` notes, or research folders.
-- Do not copy full GOATED workflows into target-project adapters; route to installed skills by name.
+- Do not override user or project instructions with routing defaults.
+- Do not add model, provider, cost, resource-tier, or Factory metrics.
+- Do not treat the envelope as a mandatory tracked artifact.
+- Do not repeat approvals, discovery, tests, or closeouts when fresh coverage
+  already exists.
+- Do not let one specialist silently select the remaining pipeline.
+- Do not weaken proof, privacy, security, or scope control for lightweight work.
+- Do not expose restricted data, credentials, private notes, or user content in
+  tracked state or public output.
+- Do not require unavailable skills; use the closest safe direct procedure and
+  state the missing capability or residual risk.
 
 ## References
 
-No external references are required. This skill is self-contained after installation.
+No external reference is required. Integrated installations may supply shared
+policy and registry metadata; this file retains the standalone fallback.

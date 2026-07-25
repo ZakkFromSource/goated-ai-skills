@@ -1,0 +1,64 @@
+schema_version: 1.0.0
+identifier: standard-work
+title: Scoped cross-file work receives a compact standard route
+request: Implement the approved parser ticket and add regression coverage.
+project_context:
+  - The ticket defines behavior and acceptance criteria.
+  - Existing source and unit-test commands are discoverable.
+expected:
+  profile:
+    task_size: standard
+    intent_maturity: implementation-ready
+    workflow_intensity: standard
+    domain: software
+    risk_flags:
+      - public-facing
+    continuity: single-session
+    execution: single-agent
+  data_sensitivity: public
+  action_reach: project-changing
+  route_signals:
+    - documentation-impact
+  proof_strategy: Use test-first regression proof, then targeted and repository validation.
+  route:
+    required_gates:
+      - proportional-orientation
+      - session-start-progressive-disclosure
+      - writing-plans
+      - tdd
+      - direct-proof
+      - consolidated-closeout
+    conditional_gates:
+      - standards-and-spec-review
+      - doc-sync
+      - verification-before-completion
+    skipped_gates:
+      - grill-with-docs
+  checkpoint_events:
+    - checkpoint: after-implementation
+      trigger: documentation-impact
+      route_delta:
+        add_required:
+          - doc-sync
+        add_conditional: []
+        remove:
+          - doc-sync
+  approval:
+    mode: approve-batch
+    consent_reused: true
+    fresh_approval_required: false
+    scope_or_reach_changed: false
+    reason: One approval covers the scoped project files and test writes.
+  evidence:
+    reuse:
+      - approved-ticket
+      - current-parser-source
+      - existing-test-command
+    invalidate:
+      - current-parser-source
+  closeout:
+    skill_reports_internal_deltas: true
+    main_agent_consolidates: true
+prohibited_behaviors:
+  - Ask every specialist to rediscover the ticket and source.
+  - Activate every conditional closeout gate before its condition exists.

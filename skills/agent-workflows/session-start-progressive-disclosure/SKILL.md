@@ -1,6 +1,6 @@
 ---
 name: session-start-progressive-disclosure
-description: Use when starting a new agent session, orienting to unfamiliar work, or deciding what context to load before planning or implementation.
+description: Use when work begins with an unfamiliar project, cross-area scope, stale evidence, or uncertain project boundary and needs focused orientation before planning or implementation.
 metadata:
   goated-category: agent-workflows
 ---
@@ -9,97 +9,126 @@ metadata:
 
 ## Purpose
 
-Start work with enough context to be useful and no more. Classify the session, read the nearest reliable sources, name assumptions, and recommend the next workflow step.
+Collect the smallest fresh evidence needed to orient unfamiliar, cross-area,
+stale, or boundary-uncertain work.
 
-Use this skill to prevent broad context loading at the beginning of serious or repeated agent work.
+Do not activate this full skill for a fresh, obvious tiny task. The shared
+router owns proportional orientation and can initialize a lightweight envelope
+silently.
 
 ## Inputs
 
-- User request or session goal.
-- Current working directory, when available.
-- Local agent instruction files, when present.
-- Existing target-project artifacts, when present, such as root `CONTEXT.md`, `docs/agents/context-matrix.md`, or `docs/agents/project-standards.md`.
+- User request, current directory, and applicable instructions.
+- Existing work envelope, scope, decisions, and evidence entries.
+- Explicit ticket, spec, artifact, source path, or command.
+- Existing project context, source maps, and standards when relevant.
 
 ## Dependencies
 
 Hard: None.
 
 Soft:
-- context-matrix-map when a target project has or needs a durable context map
-- project-context-calibration when a target project has or needs root CONTEXT.md
-- project-standards-calibration when project standards affect the work
+- `context-matrix-map` when repeated source retrieval has a demonstrated gap
+- `project-context-calibration` when shared terminology or boundaries are absent
+- `project-standards-calibration` when conventions materially affect the task
 
-Fallback: If companion skills are unavailable, inspect minimal relevant files and state lower confidence.
+Fallback: Inspect only the user-named artifact, nearest instructions, and
+current source needed for the next safe action. Record lower confidence when an
+expected source is unavailable.
 
 ## Workflow
 
-1. Classify the task surface:
-   - **Source repo maintenance**: changing this public skill-library repo or its issue/docs scaffold.
-   - **Skill pack installation/adaptation**: copying, installing, adapting, or routing installed skills into an agent framework.
-   - **Target Project Onboarding**: preparing a user's project for serious agent work.
-   - **Target Project Delivery**: planning, implementing, reviewing, documenting, or handing off one target-project change.
-   - **Unknown**: insufficient evidence; inspect one more local source or ask a focused question.
+1. **Classify the surface.**
+   - Distinguish source-repo maintenance, skill installation or adaptation,
+     target-project onboarding, target-project delivery, prompt crafting, and
+     unknown work.
+   - Preserve the boundary between a skill source repository, installed skill
+     folders, and the target project.
 
-2. Read the smallest useful context:
-   - Start with the user's request and any explicit file, issue, PRD, or skill path.
-   - Read local agent instructions only if they apply to the current workspace.
-   - For source repo maintenance, read the repo maintainer guidance, public context, and the relevant issue or PRD.
-   - For installation/adaptation, read install guidance and the specific skill folders or adapter files involved.
-   - For target-project onboarding, look for existing `docs/agents/` artifacts, project instructions, README, package or build metadata, and relevant docs.
-   - For target-project delivery, read the originating issue or PRD, relevant standards/context artifacts, and only the code or docs needed to plan the next action.
+2. **Reuse the envelope and evidence.**
+   - Read the current goal, scope, profile, checkpoint, proof strategy, and next
+     action when an envelope exists.
+   - Reuse evidence whose locator, applicable scope, freshness, and confidence
+     support this task. Do not reread it merely because a new skill started.
+   - Emit `evidence-stale` when a source changed, contradicts an entry, or is too
+     shallow for the intended claim.
 
-3. Defer deeper context until it is needed:
-   - Do not bulk-read source trees, long docs, references, or generated artifacts just in case.
-   - Do not load private or local scratch notes unless the user explicitly points to them or the active workflow requires them.
-   - Do not read skill `references/` files until the active skill tells you when they matter.
+3. **Read one layer at a time.**
+   - Start with the request and explicit file, ticket, spec, or artifact.
+   - Read applicable local agent instructions.
+   - For source maintenance, read maintainer guidance, public context, and the
+     relevant ticket or spec.
+   - For installation or adaptation, read install guidance and only the
+     affected skill or adapter files.
+   - For onboarding, inspect existing project instructions, context, standards,
+     source maps, README, and build metadata only as needed.
+   - For delivery, inspect the originating requirement, relevant standards, and
+     the smallest current source and test surface.
 
-4. Stop exploring when one of these is true:
-   - The next safe action is clear and low risk.
-   - The remaining uncertainty is a user preference or product decision.
-   - Further reading would be broad context collection instead of targeted discovery.
-   - A companion skill should take over, such as `grill-with-docs`, `context-matrix-map`, `project-context-calibration`, `project-standards-calibration`, or `prd-to-issues`.
+4. **Stop discovery when the next action is safe.**
+   - Stop when the next local action and proof path are clear, remaining
+     uncertainty is a user decision, or further reading would be broad
+     collection rather than targeted evidence.
+   - Hand off to clarification, context calibration, standards calibration,
+     architecture, planning, or direct work only when the discovered need
+     justifies it.
 
-5. Produce the orientation before continuing:
-   - State the task surface.
-   - Name the sources read.
-   - Name assumptions and missing context.
-   - Recommend the next skill or direct next action.
-   - Keep the orientation brief enough that it helps rather than becoming a handoff.
+5. **Update state without rebuilding the route.**
+   - Return the task-surface result, sources inspected, new or refreshed
+     evidence, assumptions, uncertainty, and any `scope-changed` or
+     `evidence-stale` signal.
+   - Let the main router apply signals at a defined checkpoint. Do not select a
+     long downstream pipeline.
+   - Keep routine orientation internal. Surface a report only for a conflict,
+     blocker, missing decision, material scope or risk change, or when the user
+     explicitly asks for orientation.
 
 ## Output Contract
 
-Return a compact orientation with this shape:
+Return an internal work-envelope delta containing:
+
+- task surface and boundary;
+- inspected sources and fresh evidence references;
+- assumptions, missing context, and confidence;
+- route signals, if any;
+- recommended next action.
+
+When a visible report is justified, keep it compact:
 
 ```markdown
 **Session Orientation**
-- Task surface: <source repo maintenance | installation/adaptation | onboarding | delivery | unknown>
-- Goal: <one sentence>
-- Read: <paths or artifacts>
-- Deferred: <paths or artifact types intentionally not loaded>
-- Assumptions: <short list or "None">
-- Missing context: <short list or "None">
-- Next step: <recommended skill or direct action>
+- Surface: <classification>
+- Read: <sources>
+- Material finding: <decision, blocker, scope change, or missing context>
+- Next: <focused action>
 ```
 
-If the user asked for immediate implementation and the next action is safe, continue after the orientation instead of waiting for approval.
+Standalone invocation uses the same focused discovery and returns this compact
+local result without requiring shared policy, registry, or source-repo files.
 
 ## Delegation
 
-Main owns classification, user intent, final judgment, and user communication.
+The main agent owns classification, boundary judgment, evidence acceptance, and
+communication. Delegate only bounded source discovery with paths, commands,
+findings, freshness, assumptions, and uncertainty. Review returned evidence
+before adding it to the envelope.
 
-Delegate only bounded scans that return evidence without blocking the main next step: find instruction files, summarize one docs folder, check context artifacts, or compare candidate entrypoints.
-
-Require file paths, commands run, source docs, assumptions, and uncertainty. If subagents are unavailable, run the same scan sequentially with a narrower read set.
+Remain single-agent-compatible when delegation is unavailable.
 
 ## Guardrails
 
-- Keep source repo guidance separate from installed skill runtime guidance.
-- Do not assume a target project has adopted GOATED artifacts unless they exist or the user says so.
-- Do not treat `AGENT.md`, `AGENTS.md`, `CLAUDE.md`, or any one instruction filename as universal across frameworks.
-- Do not read ignored local/private folders by default.
-- Do not turn the orientation into an architecture review, standards audit, security review, or handoff.
-- Be explicit when confidence is lower because expected docs or artifacts are missing.
+- Do not load private or ignored notes unless the user names them or the active
+  task requires them.
+- Do not bulk-read source trees, documentation, or skill references just in
+  case.
+- Do not infer that a target project adopted GOATED artifacts merely because
+  the installed stack supports them.
+- Do not treat one instruction filename or framework convention as universal.
+- Do not turn orientation into architecture review, standards audit, security
+  review, planning, or handoff.
+- Do not narrate routine routing or duplicate a task closeout.
 
 ## References
 
-No external references are required. This skill is self-contained after installation.
+No external reference is required. This skill is self-contained after
+installation.

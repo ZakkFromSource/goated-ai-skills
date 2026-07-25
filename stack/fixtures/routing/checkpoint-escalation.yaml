@@ -1,0 +1,59 @@
+schema_version: 1.0.0
+identifier: checkpoint-escalation
+title: A material security signal escalates the route at a checkpoint
+request: Add support for a new configuration value to the existing parser.
+project_context:
+  - Initial inspection suggests a standard local parser change.
+  - Planning later discovers that the value can contain an executable command.
+expected:
+  profile:
+    task_size: standard
+    intent_maturity: implementation-ready
+    workflow_intensity: standard
+    domain: software
+    risk_flags:
+      - security
+    continuity: single-session
+    execution: single-agent
+  data_sensitivity: private
+  action_reach: project-changing
+  route_signals:
+    - security-impact
+  proof_strategy: Add regression proof and require focused trust-boundary review.
+  route:
+    required_gates:
+      - proportional-orientation
+      - writing-plans
+      - tdd
+      - direct-proof
+      - consolidated-closeout
+    conditional_gates:
+      - code-security-review
+      - verification-before-completion
+    skipped_gates: []
+  checkpoint_events:
+    - checkpoint: after-planning
+      trigger: security-impact
+      route_delta:
+        add_required:
+          - code-security-review
+        add_conditional: []
+        remove:
+          - code-security-review
+  approval:
+    mode: standing-session-consent
+    consent_reused: true
+    fresh_approval_required: false
+    scope_or_reach_changed: false
+    reason: Security risk changed the proof route but not the agreed scope or action reach.
+  evidence:
+    reuse:
+      - parser-source
+      - planning-discovery
+    invalidate: []
+  closeout:
+    skill_reports_internal_deltas: true
+    main_agent_consolidates: true
+prohibited_behaviors:
+  - Escalate before the security-impact signal is discovered.
+  - Ask for write approval again when scope and action reach remain covered.

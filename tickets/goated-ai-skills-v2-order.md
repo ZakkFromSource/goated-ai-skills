@@ -14,8 +14,8 @@ plan.
 - `tickets/archive/001-establish-v2-integrated-stack-foundation.md` — Establish
   The V2 Integrated-Stack Foundation (AFK; Work state: Completed; Blocked by:
   None)
-- `tickets/002-route-work-through-adaptive-gates.md` — Route Work Through
-  Adaptive Gates (AFK; Work state: Not started; Blocked by: Ticket 001)
+- `tickets/archive/002-route-work-through-adaptive-gates.md` — Route Work
+  Through Adaptive Gates (AFK; Work state: Completed; Blocked by: Ticket 001)
 - `tickets/003-onboard-and-resume-projects-proportionally.md` — Onboard And
   Resume Projects Proportionally (AFK; Work state: Not started; Blocked by:
   Ticket 002)
@@ -49,7 +49,7 @@ plan.
 1. `tickets/archive/001-establish-v2-integrated-stack-foundation.md`
    - Why now: establishes the shared policy, registry, validation, and V1
      baseline used by every V2 slice.
-2. `tickets/002-route-work-through-adaptive-gates.md`
+2. `tickets/archive/002-route-work-through-adaptive-gates.md`
    - Why now: establishes the central route and shared state used by all
      workflow migrations.
 3. `tickets/003-onboard-and-resume-projects-proportionally.md`

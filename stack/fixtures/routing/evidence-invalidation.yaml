@@ -1,0 +1,58 @@
+schema_version: 1.0.0
+identifier: evidence-invalidation
+title: Post-change evidence invalidates affected pre-change findings
+request: Update the validator rule and prove the new behavior.
+project_context:
+  - Source inspection and a failing test were recorded before implementation.
+  - The implementation changes both the validator source and test result.
+expected:
+  profile:
+    task_size: standard
+    intent_maturity: implementation-ready
+    workflow_intensity: standard
+    domain: software
+    risk_flags: []
+    continuity: single-session
+    execution: single-agent
+  data_sensitivity: public
+  action_reach: project-changing
+  route_signals:
+    - evidence-stale
+  proof_strategy: Re-read affected source and rerun the focused and repository checks after implementation.
+  route:
+    required_gates:
+      - proportional-orientation
+      - tdd
+      - direct-proof
+      - consolidated-closeout
+    conditional_gates:
+      - verification-before-completion
+    skipped_gates: []
+  checkpoint_events:
+    - checkpoint: after-implementation
+      trigger: evidence-stale
+      route_delta:
+        add_required:
+          - verification-before-completion
+        add_conditional: []
+        remove:
+          - verification-before-completion
+  approval:
+    mode: standing-session-consent
+    consent_reused: true
+    fresh_approval_required: false
+    scope_or_reach_changed: false
+    reason: Implementation remains inside the approved validator and test scope.
+  evidence:
+    reuse:
+      - originating-ticket
+      - pre-change-red-test
+    invalidate:
+      - pre-change-validator-source
+      - pre-change-test-result
+  closeout:
+    skill_reports_internal_deltas: true
+    main_agent_consolidates: true
+prohibited_behaviors:
+  - Reuse the pre-change source inspection as proof of the final implementation.
+  - Report focused GREEN as full completion proof.

@@ -13,10 +13,13 @@ relevant and fresh.
   freshness: # commit, modification time, retrieval date, or equivalent
   confidence:
   uncertainty:
+  validity: # current | invalidated
+  invalidated_by: # changed path, command, checkpoint, or contradictory evidence
 ```
 
-Reuse an entry unless required evidence is missing, its source changed, it is
-stale or too shallow for the intended claim, or contradictory evidence
-appears. Project changes invalidate affected entries at the
-post-implementation checkpoint. Prefer current source and executable evidence
-over summaries for exact or high-risk claims.
+Reuse a current entry unless required evidence is missing, its source changed,
+it is stale or too shallow for the intended claim, or contradictory evidence
+appears. Project changes invalidate only affected entries at the
+post-implementation checkpoint; retain the locator and invalidation reason
+rather than silently deleting the history. Prefer current source and
+executable evidence over summaries for exact or high-risk claims.

@@ -26,17 +26,30 @@ route:
   required_gates: []
   conditional_gates: []
   skipped_gates: []
+route_signals: []
 evidence: []
 decisions: []
 open_questions: []
+approval:
+  mode: # risk-adaptive-default | confirm-each-write | approve-batch |
+        # standing-session-consent | draft-without-applying
+  covered_scope: []
+  covered_action_reach:
+  consent_state: # valid | fresh-approval-required
 proof_strategy:
+changes: []
 work_state:
 next:
 ```
 
-Optional extensions may record a fixed point, approvals, artifacts, delegated
-work, route signals, risks, changes, or resume information. Do not add runtime
-cost, provider, model-ranking, or Factory metric fields.
+The `approval`, `route_signals`, and `changes` blocks are optional; omit them
+when they add no decision value. Approval remains valid while its covered scope
+and action reach still cover the work. A material change to either marks it
+`fresh-approval-required` before the expanded action.
+
+Other optional extensions may record a fixed point, artifacts, delegated work,
+risks, or resume information. Do not add runtime cost, provider, model-ranking,
+or Factory metric fields.
 
 Keep single-session state in conversation or framework-native state. For
 resumable work, use

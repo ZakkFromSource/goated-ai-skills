@@ -57,7 +57,7 @@ work.
 
 ## Blocked By
 
-- `tickets/002-route-work-through-adaptive-gates.md`
+- `tickets/archive/002-route-work-through-adaptive-gates.md`
 
 ## User Stories Addressed
 

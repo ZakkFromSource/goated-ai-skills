@@ -55,7 +55,7 @@ supporting old skill names through registry aliases.
 
 ## Blocked By
 
-- `tickets/002-route-work-through-adaptive-gates.md`
+- `tickets/archive/002-route-work-through-adaptive-gates.md`
 - `tickets/004-clarify-decisions-proportionally.md`
 
 ## User Stories Addressed

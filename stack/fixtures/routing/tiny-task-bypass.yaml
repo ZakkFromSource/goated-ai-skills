@@ -1,0 +1,48 @@
+schema_version: 1.0.0
+identifier: tiny-task-bypass
+title: Tiny reversible edit bypasses the specialist pipeline
+request: Fix one spelling error in a public Markdown file.
+project_context:
+  - The exact file and replacement are known.
+  - The working tree is available for inspection.
+expected:
+  profile:
+    task_size: tiny
+    intent_maturity: implementation-ready
+    workflow_intensity: lightweight
+    domain: documentation
+    risk_flags: []
+    continuity: single-session
+    execution: single-agent
+  data_sensitivity: public
+  action_reach: project-changing
+  route_signals: []
+  proof_strategy: Inspect the exact diff and render or reread the changed line.
+  route:
+    required_gates:
+      - proportional-orientation
+      - direct-proof
+    conditional_gates: []
+    skipped_gates:
+      - grill-with-docs
+      - writing-plans
+      - verification-before-completion
+  checkpoint_events: []
+  approval:
+    mode: risk-adaptive-default
+    consent_reused: true
+    fresh_approval_required: false
+    scope_or_reach_changed: false
+    reason: The request already covers one reversible project write.
+  evidence:
+    reuse:
+      - exact-file-inspection
+    invalidate:
+      - exact-file-inspection
+  closeout:
+    skill_reports_internal_deltas: true
+    main_agent_consolidates: true
+prohibited_behaviors:
+  - Load a clarification, planning, review, and handoff pipeline.
+  - Narrate a route report when no decision, approval, or risk materially matters.
+loaded_context_budget_words: 700

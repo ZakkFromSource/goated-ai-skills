@@ -5,6 +5,7 @@ contracts:
   shared_policy: 1.0.0
   work_envelope: 1.0.0
   evidence_entry: 1.0.0
+  routing_fixture: 1.0.0
 
 route_signals:
   - name: scope-changed
