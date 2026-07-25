@@ -1,0 +1,9 @@
+schema_version: 1.0.0
+identifier: refinement-debt
+title: Concrete debt activates full refinement
+request: Review a green implementation with confusing branches and repeated choreography.
+expected:
+  concrete_debt_observed: true
+  activate_full_refinement: true
+prohibited_behaviors:
+  - Ignore observed refinement debt before later review gates.

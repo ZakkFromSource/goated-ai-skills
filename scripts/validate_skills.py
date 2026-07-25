@@ -190,6 +190,80 @@ REQUIRED_ARCHITECTURE_PLANNING_FIXTURE_IDENTIFIERS = {
     "durable-implementation-plan",
     "compact-plan-promotion",
 }
+REQUIRED_BEHAVIOR_PROOF_FIXTURE_CONTRACTS = {
+    "root-cause-bug-fix": {
+        "continues_to": "tdd",
+        "diagnosis_evidence_reused": True,
+        "fresh_authorization_required": False,
+        "regression_proof_required": True,
+    },
+    "pure-unit-proof": {
+        "selected_surface": "unit",
+        "stable_observable_boundary": "pure-function",
+        "broader_surface_preferred": False,
+    },
+    "property-proof": {
+        "selected_surface": "property",
+        "stable_observable_boundary": "invariant",
+        "broader_surface_preferred": False,
+    },
+    "component-proof": {
+        "selected_surface": "component",
+        "stable_observable_boundary": "rendered-component",
+        "broader_surface_preferred": False,
+    },
+    "contract-proof": {
+        "selected_surface": "contract",
+        "stable_observable_boundary": "provider-consumer-contract",
+        "broader_surface_preferred": False,
+    },
+    "integration-proof": {
+        "selected_surface": "integration",
+        "stable_observable_boundary": "owned-subsystem-interaction",
+        "broader_surface_preferred": False,
+    },
+    "end-to-end-proof": {
+        "selected_surface": "end-to-end",
+        "stable_observable_boundary": "user-workflow",
+        "broader_surface_preferred": False,
+    },
+    "justified-non-tdd": {
+        "tdd_suitable": False,
+        "equivalent_proof_allowed": True,
+        "reason_recorded": True,
+    },
+    "refactor-after-green": {
+        "inside_tdd_cycle": True,
+        "full_refinement_activated": False,
+    },
+    "refinement-debt": {
+        "concrete_debt_observed": True,
+        "activate_full_refinement": True,
+    },
+    "no-refinement-debt": {
+        "explicit_request": False,
+        "concrete_debt_observed": False,
+        "activate_full_refinement": False,
+        "skip_report_required": False,
+    },
+    "generated-code-cleanup": {
+        "substantially_generated": True,
+        "cleanup_debt_observed": True,
+        "activate_full_refinement": True,
+    },
+    "independent-delegation": {
+        "concrete_task_board": True,
+        "non_overlapping_write_scopes": True,
+        "shared_interfaces_settled": True,
+        "parallel_delegation_allowed": True,
+    },
+    "overlapping-delegation": {
+        "concrete_task_board": True,
+        "non_overlapping_write_scopes": False,
+        "parallel_delegation_allowed": False,
+        "execution": "sequential",
+    },
+}
 REQUIRED_KNOWLEDGE_RETRIEVAL_FIXTURE_IDENTIFIERS = {
     "authoritative-source",
     "conflicting-note",
@@ -2428,6 +2502,101 @@ def validate_architecture_planning_fixtures(repo: Path) -> list[Finding]:
     return errors
 
 
+def validate_behavior_proof_fixtures(repo: Path) -> list[Finding]:
+    """Validate diagnosis, proof, refinement, and delegation behavior."""
+
+    fixture_root = repo / "stack" / "fixtures" / "behavior-proof"
+    fixture_paths = sorted(fixture_root.glob("*.yaml"))
+    if not fixture_paths:
+        return [
+            Finding(
+                "stack/fixtures/behavior-proof",
+                "no behavior-proof fixtures found",
+            )
+        ]
+
+    errors: list[Finding] = []
+    identifiers: set[str] = set()
+    for fixture_path in fixture_paths:
+        fixture_label = relative(fixture_path, repo)
+        fixture, fixture_errors = load_mapping(fixture_path, fixture_label)
+        errors.extend(fixture_errors)
+        if fixture is None:
+            continue
+
+        if fixture.get("schema_version") != "1.0.0":
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "unsupported behavior-proof fixture schema_version",
+                )
+            )
+
+        identifier = fixture.get("identifier")
+        if not isinstance(identifier, str):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "behavior-proof fixture identifier must be a string",
+                )
+            )
+            continue
+        if identifier in identifiers:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"duplicate behavior-proof fixture identifier: {identifier}",
+                )
+            )
+        identifiers.add(identifier)
+
+        expected = fixture.get("expected")
+        if not isinstance(expected, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "behavior-proof fixture expected must be a mapping",
+                )
+            )
+            continue
+        if not is_string_list(fixture.get("prohibited_behaviors"), allow_empty=False):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "behavior-proof prohibited_behaviors must be a non-empty string list",
+                )
+            )
+
+        contract = REQUIRED_BEHAVIOR_PROOF_FIXTURE_CONTRACTS.get(identifier)
+        if contract is None:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"unsupported behavior-proof fixture: {identifier}",
+                )
+            )
+            continue
+        errors.extend(
+            validate_fixture_contract_values(
+                expected,
+                contract,
+                fixture_label,
+                f"{identifier} behavior",
+            )
+        )
+
+    errors.extend(
+        Finding(
+            "stack/fixtures/behavior-proof",
+            f"missing required behavior-proof fixture: {identifier}",
+        )
+        for identifier in sorted(
+            set(REQUIRED_BEHAVIOR_PROOF_FIXTURE_CONTRACTS) - identifiers
+        )
+    )
+    return errors
+
+
 def validate_knowledge_retrieval_fixtures(repo: Path) -> list[Finding]:
     """Validate the portable knowledge-retrieval behavior fixtures."""
 
@@ -3527,6 +3696,7 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
     errors.extend(validate_onboarding_fixtures(repo))
     errors.extend(validate_planning_fixtures(repo))
     errors.extend(validate_architecture_planning_fixtures(repo))
+    errors.extend(validate_behavior_proof_fixtures(repo))
     errors.extend(validate_knowledge_retrieval_fixtures(repo))
     errors.extend(validate_wayfinding_fixtures(repo))
 
@@ -3574,6 +3744,9 @@ def main() -> int:
                 "*.yaml"
             )
         )
+    )
+    behavior_proof_fixture_count = len(
+        list((repo / "stack" / "fixtures" / "behavior-proof").glob("*.yaml"))
     )
     knowledge_retrieval_fixture_count = len(
         list(
@@ -3628,6 +3801,10 @@ def main() -> int:
         print(
             "Architecture and implementation-planning fixture validation passed for "
             f"{architecture_planning_fixture_count} scenarios."
+        )
+        print(
+            "Behavior-proof fixture validation passed for "
+            f"{behavior_proof_fixture_count} scenarios."
         )
         print(
             "Knowledge-retrieval fixture validation passed for "

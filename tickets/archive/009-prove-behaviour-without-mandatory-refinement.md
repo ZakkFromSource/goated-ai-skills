@@ -32,17 +32,17 @@ work.
 
 ## Acceptance Criteria
 
-- [ ] A requested bug fix continues from established diagnosis into
+- [x] A requested bug fix continues from established diagnosis into
       implementation without redundant authorization.
-- [ ] Unit, property, component, contract, integration, and end-to-end tests
+- [x] Unit, property, component, contract, integration, and end-to-end tests
       are selected by the smallest stable observable boundary.
-- [ ] Integration tests are not preferred merely for being broader.
-- [ ] Equivalent proof requires a recorded reason when TDD is unsuitable.
-- [ ] Refactor-after-green remains inside the TDD cycle.
-- [ ] Full `code-refinement` activates only from explicit request or concrete
+- [x] Integration tests are not preferred merely for being broader.
+- [x] Equivalent proof requires a recorded reason when TDD is unsuitable.
+- [x] Refactor-after-green remains inside the TDD cycle.
+- [x] Full `code-refinement` activates only from explicit request or concrete
       refinement debt.
-- [ ] Run-or-explicit-skip refinement language is removed.
-- [ ] Delegated development requires a concrete task board with non-overlapping
+- [x] Run-or-explicit-skip refinement language is removed.
+- [x] Delegated development requires a concrete task board with non-overlapping
       write scopes and settled shared interfaces.
 
 ## Expected Proof
@@ -75,3 +75,26 @@ work.
 - Do not weaken readability, regression proof, or completion evidence.
 - Do not introduce runtime worker orchestration, worktrees, or Factory task
   boards.
+
+## Implementation Proof
+
+- Diagnosis, TDD, code-refinement, delegated-development, writing-plan, shared
+  policy, and public usage guidance now implement direct fix continuation,
+  smallest-stable proof selection, justified equivalent proof, local
+  refactor-after-green, conditional full refinement, and concrete delegation
+  boards.
+- Fourteen portable fixtures under `stack/fixtures/behavior-proof/` cover the
+  root-cause route, all six proof surfaces, justified non-TDD proof,
+  refactor-after-green, debt/no-debt and generated-code refinement, and
+  independent/overlapping delegation.
+- `uv run python -m unittest
+  tests.test_validate_skills.BehaviorProofFixtureValidationTests -v` passed all
+  5 focused validator tests. `uv run python -m unittest discover -s tests -v`
+  passed all 68 tests.
+- `uv run python scripts/validate_skills.py` passed 34 implemented skills, 34
+  registry entries, and every fixture family, including 14 behavior-proof
+  scenarios. The shared policy is 1,197 words, within its 800-1,200 target.
+- `git diff --check` passed after fixture cleanup. Standards/spec review found
+  and fixed the remaining mandatory-looking refinement route in public flow
+  diagrams. Security review was not applicable because no trust boundary,
+  credential, persistence path, dependency, or external action changed.

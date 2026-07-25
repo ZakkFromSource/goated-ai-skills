@@ -11,6 +11,7 @@ import yaml
 
 from scripts.validate_skills import (
     validate_architecture_planning_fixtures,
+    validate_behavior_proof_fixtures,
     validate_canonical_architecture_references,
     validate_clarification_fixtures,
     validate_knowledge_retrieval_fixtures,
@@ -74,6 +75,19 @@ def copy_architecture_planning_fixtures(destination: Path) -> Path:
     )
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "architecture-planning",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_behavior_proof_fixtures(destination: Path) -> Path:
+    """Copy behavior-proof fixtures and return their destination directory."""
+
+    fixture_destination = (
+        destination / "stack" / "fixtures" / "behavior-proof"
+    )
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "behavior-proof",
         fixture_destination,
     )
     return fixture_destination
@@ -447,6 +461,115 @@ class ArchitecturePlanningFixtureValidationTests(unittest.TestCase):
         )
         self.assertIn(
             "plan promotion requires preserves_decisions=True",
+            messages,
+        )
+
+
+class BehaviorProofFixtureValidationTests(unittest.TestCase):
+    def test_current_behavior_proof_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_behavior_proof_fixtures(REPO_ROOT))
+
+    def test_broader_proof_surface_is_not_preferred(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_behavior_proof_fixtures(fixture_root)
+            fixture_path = fixture_directory / "pure-unit-proof.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["selected_surface"] = "integration"
+            fixture["expected"]["broader_surface_preferred"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_behavior_proof_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "pure-unit-proof behavior requires selected_surface='unit'",
+            messages,
+        )
+        self.assertIn(
+            "pure-unit-proof behavior requires broader_surface_preferred=False",
+            messages,
+        )
+
+    def test_non_tdd_proof_requires_a_recorded_reason(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_behavior_proof_fixtures(fixture_root)
+            fixture_path = fixture_directory / "justified-non-tdd.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["reason_recorded"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_behavior_proof_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "justified-non-tdd behavior requires reason_recorded=True",
+            messages,
+        )
+
+    def test_no_debt_does_not_require_refinement_or_a_skip_report(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_behavior_proof_fixtures(fixture_root)
+            fixture_path = fixture_directory / "no-refinement-debt.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["activate_full_refinement"] = True
+            fixture["expected"]["skip_report_required"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_behavior_proof_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "no-refinement-debt behavior requires activate_full_refinement=False",
+            messages,
+        )
+        self.assertIn(
+            "no-refinement-debt behavior requires skip_report_required=False",
+            messages,
+        )
+
+    def test_overlapping_delegation_must_remain_sequential(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_behavior_proof_fixtures(fixture_root)
+            fixture_path = fixture_directory / "overlapping-delegation.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["parallel_delegation_allowed"] = True
+            fixture["expected"]["execution"] = "parallel"
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_behavior_proof_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "overlapping-delegation behavior requires "
+            "parallel_delegation_allowed=False",
+            messages,
+        )
+        self.assertIn(
+            "overlapping-delegation behavior requires execution='sequential'",
             messages,
         )
 

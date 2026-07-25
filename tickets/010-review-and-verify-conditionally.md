@@ -57,7 +57,7 @@ preserving universal evidence-backed completion discipline.
 ## Blocked By
 
 - `tickets/archive/002-route-work-through-adaptive-gates.md`
-- `tickets/009-prove-behaviour-without-mandatory-refinement.md`
+- `tickets/archive/009-prove-behaviour-without-mandatory-refinement.md`
 
 ## User Stories Addressed
 

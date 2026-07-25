@@ -1,0 +1,10 @@
+schema_version: 1.0.0
+identifier: justified-non-tdd
+title: Equivalent proof records why TDD is unsuitable
+request: Verify behavior where the available surface cannot support practical automated TDD.
+expected:
+  tdd_suitable: false
+  equivalent_proof_allowed: true
+  reason_recorded: true
+prohibited_behaviors:
+  - Skip TDD without recording the practical constraint and equivalent proof.

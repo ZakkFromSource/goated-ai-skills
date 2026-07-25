@@ -1,0 +1,11 @@
+schema_version: 1.0.0
+identifier: independent-delegation
+title: Independent tasks may be delegated in parallel
+request: Execute two settled tasks that write separate files behind settled interfaces.
+expected:
+  concrete_task_board: true
+  non_overlapping_write_scopes: true
+  shared_interfaces_settled: true
+  parallel_delegation_allowed: true
+prohibited_behaviors:
+  - Delegate before owners, scopes, dependencies, evidence, and review paths are recorded.

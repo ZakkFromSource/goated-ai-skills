@@ -1,0 +1,10 @@
+schema_version: 1.0.0
+identifier: property-proof
+title: Broad invariant uses property proof
+request: Prove a serializer round-trip invariant across generated values.
+expected:
+  selected_surface: property
+  stable_observable_boundary: invariant
+  broader_surface_preferred: false
+prohibited_behaviors:
+  - Replace invariant coverage with a few broader example flows.

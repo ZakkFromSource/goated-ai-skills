@@ -11,7 +11,13 @@ metadata:
 
 Find and prove the cause of a bug, flaky failure, build or integration break, production symptom, or performance regression before fixing it.
 
-Diagnosis ends with evidence and a routed next action. It does not own the fix cycle. When the cause and correct public-interface seam are known, route implementation and regression proof to `tdd`. When no correct seam exists, tests require private access, or repeated fixes keep failing, route the architecture problem to `review-codebase-architecture`.
+Diagnosis ends with evidence and a routed next action. It does not own the fix
+cycle. When the user already requested a fix and the cause and correct
+public-interface seam are known, continue directly into `tdd` without asking
+for redundant authorization. Ask again only when the fix would materially
+change the agreed scope, action reach, risk, or public contract. When no correct
+seam exists, tests require private access, or repeated fixes keep failing, route
+the architecture problem to `review-codebase-architecture`.
 
 ## Inputs
 
@@ -77,6 +83,7 @@ Fallback: If companion skills, docs, commands, profilers, production access, or 
    - Root cause is proven only when evidence explains the exact symptom and the symptom changes predictably when the cause or triggering condition changes.
    - Build a compact evidence packet: repro loop, key observations, hypotheses rejected, confirming probe, cause, affected interface, and residual uncertainty.
    - If a correct public-interface seam exists, route to `tdd` with the desired regression behavior and suggested first failing test.
+   - If the original request already includes the fix, reuse the diagnosis packet and continue automatically. Do not pause for authorization that the user has already supplied.
    - If no correct seam exists, tests would need private internals, setup is pathological, or repeated fixes failed, route to `review-codebase-architecture` before implementation.
    - If the diagnosis changes docs or runbooks, route to `doc-sync`. If it touches trust boundaries or sensitive data, route to `code-security-review`.
 

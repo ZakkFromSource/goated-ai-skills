@@ -1,0 +1,10 @@
+schema_version: 1.0.0
+identifier: component-proof
+title: Rendered interaction uses component proof
+request: Change one component's visible state transition.
+expected:
+  selected_surface: component
+  stable_observable_boundary: rendered-component
+  broader_surface_preferred: false
+prohibited_behaviors:
+  - Require an end-to-end browser flow for isolated component behavior.

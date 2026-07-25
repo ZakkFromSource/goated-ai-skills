@@ -130,11 +130,9 @@ Re-evaluate the route at controlled checkpoints:
 - after implementation;
 - before final completion.
 
-Skills may emit signals such as changed scope, stale evidence, security impact,
-documentation impact, or refinement debt. Treat signals as inputs to the next
-checkpoint; do not let an individual skill silently reconstruct a long
-pipeline. A changed risk, scope, action reach, or evidence state may add,
-remove, or preserve gates with a recorded reason.
+Treat scope, risk, action-reach, evidence, security, documentation, and
+refinement signals as checkpoint inputs that may change gates with a recorded
+reason. No individual skill may silently reconstruct a long pipeline.
 
 ## Proportional Clarification
 
@@ -151,8 +149,9 @@ that improves a live decision, never as production work.
 ## Ownership And Delegation
 
 The main agent owns user intent, orchestration, integration, final judgment,
-and user communication. Delegate only concrete, bounded, independently ownable
-work. Keep overlapping writes and unsettled shared interfaces sequential.
+and user communication. Delegate from a concrete task board with owners,
+scopes, dependencies, evidence, review paths, and settled interfaces. Keep
+overlapping writes or dependent work sequential.
 Require delegated work to return inspected paths, commands, evidence,
 assumptions, uncertainty, and status. The main agent reviews and integrates the
 result rather than forwarding it unexamined.
@@ -165,6 +164,10 @@ Prefer clear domain names, explicit control flow, local reasoning, and comments
 that explain non-obvious intent or constraints. Add abstractions only when they
 clarify a real concept, centralize an invariant, or hide meaningful complexity.
 Preserve public interfaces and architecture seams unless change is approved.
+
+Choose the smallest stable observable test boundary; breadth is not strength.
+Record why equivalent non-TDD proof is needed. Keep refactor-after-green in
+TDD; load full refinement only on request or concrete debt.
 
 Match every material claim to fresh evidence. Do not claim work is complete,
 correct, passing, secure, compatible, or ready when the relevant check was not

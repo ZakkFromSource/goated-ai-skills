@@ -2,6 +2,26 @@
 
 Read this reference when choosing the shape of a behavior test, naming tests, or deciding whether a test is coupled to implementation.
 
+## Choose The Smallest Stable Observable Boundary
+
+Start with the narrowest boundary that is public or behaviorally stable enough
+to catch the regression without coupling the test to internals.
+
+| Surface | Choose it when the behavior is observable at... |
+| --- | --- |
+| Unit | one pure or cohesive module interface |
+| Property | an invariant across many generated inputs or sequences |
+| Component | one rendered component and its caller-visible interactions |
+| Contract | a provider-consumer schema or protocol boundary |
+| Integration | interaction between owned subsystems or a real dependency seam |
+| End-to-end | a user outcome whose risk appears only across the whole workflow |
+
+Move broader only when the narrower surface cannot observe the important
+behavior or would replace the real risk with a fake. Integration and end-to-end
+tests cost more to set up, run, and diagnose, so breadth must earn its place.
+The smallest surface is not automatically a unit test; stability and
+observability decide.
+
 ## Good Tests
 
 Good tests are behavior tests. They exercise the public interface that a real caller, user, job, command, route, or downstream module would use.

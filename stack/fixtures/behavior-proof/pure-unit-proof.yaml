@@ -1,0 +1,10 @@
+schema_version: 1.0.0
+identifier: pure-unit-proof
+title: Pure transformation uses unit proof
+request: Change a deterministic parser with no I/O or collaborators.
+expected:
+  selected_surface: unit
+  stable_observable_boundary: pure-function
+  broader_surface_preferred: false
+prohibited_behaviors:
+  - Require integration setup for pure deterministic behavior.

@@ -30,6 +30,22 @@ Better:
 - Use existing fixtures, commands, or public APIs before inventing new infrastructure.
 - If test support is genuinely missing, document the gap and add the smallest useful fallback proof.
 
+## Anti-Pattern: Preferring Breadth
+
+Symptoms:
+
+- An integration or end-to-end test is chosen because it seems more realistic.
+- A pure rule, invariant, component interaction, or contract requires unrelated setup.
+- Failures are slow or ambiguous even though a smaller stable boundary exists.
+
+Better:
+
+- Choose the smallest stable observable boundary that can catch the behavior.
+- Use integration proof only for real subsystem interaction and end-to-end proof
+  only for risk that emerges across the full workflow.
+- If automated TDD is unsuitable, record why and use named equivalent proof;
+  never let "manual is easier" stand in for the reason.
+
 ## Anti-Pattern: Tests After Implementation Called TDD
 
 Symptoms:
@@ -223,4 +239,3 @@ Recovery path:
 6. Report any missing RED evidence, fallback proof, or residual risk honestly.
 
 If earlier exploratory implementation exists, do not rewrite unrelated user work. For the agent's own safe exploratory changes, pause, establish proof, and discard or redo only what is appropriate to regain a trustworthy cycle.
-

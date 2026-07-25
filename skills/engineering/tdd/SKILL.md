@@ -13,7 +13,11 @@ Use behavior-first TDD to implement target-project changes with proof. The loop 
 
 The core principle is simple: tests should verify behavior through public interfaces, not implementation details. Code can change entirely; tests should keep proving the same capability.
 
-Good tests are integration-style. They exercise real code paths through public APIs, command surfaces, UI flows, service interfaces, or other stable project entrypoints. They describe what the system does, not how it happens internally. A good test reads like a specification: the behavior is clear even if the implementation is replaced later.
+Choose the smallest stable observable boundary that can prove the behavior.
+That may be a unit, property, component, contract, integration, or end-to-end
+test. Broader is not automatically stronger: integration tests are appropriate
+only when the behavior crosses a real integration boundary. A good test reads
+like a specification and survives internal replacement.
 
 Bad tests are coupled to implementation. They mock internal collaborators, test private helpers, assert call order, or verify through external backdoors when a public interface could prove the behavior. The warning sign is a test that fails during a harmless refactor while the behavior still works.
 
@@ -35,7 +39,7 @@ Soft:
 - spec-to-tickets when implementing a planned vertical delivery ticket
 - prototype when risky behavior or interfaces need disposable evidence before production tests
 - project-standards-calibration when test, fixture, naming, or quality standards affect implementation
-- code-refinement after green as a run-or-explicit-skip gate for non-trivial code-producing work before review gates
+- code-refinement after green only when explicitly requested or concrete refinement debt is observed
 - standards-and-spec-review after implementation when available
 - code-security-review after implementation when trust boundaries, persistence, auth, or user data are touched
 - doc-sync after behavior, public interface, architecture, or testing-doc changes
@@ -54,6 +58,7 @@ Fallback: If companion skills or docs are unavailable, inspect minimal evidence,
 
 2. Plan tests as behaviors, not implementation steps:
    - List behavior candidates in priority order.
+   - Select the smallest stable observable boundary that can catch the regression or missing behavior. Do not prefer integration tests merely because they exercise more code.
    - Choose the first tracer bullet: the smallest end-to-end behavior that proves the path works.
    - Prefer critical paths, regression risks, and complex logic over exhaustive edge-case theater.
    - Read [Test Design](references/test-design.md) when test shape, naming, public-interface proof, or good-vs-bad test judgment matters.
@@ -67,6 +72,7 @@ Fallback: If companion skills or docs are unavailable, inspect minimal evidence,
    - Run the smallest useful test command and confirm it fails for the expected reason.
    - If it passes before implementation, the test is not proving the missing behavior; tighten the setup or choose a better behavior.
    - If no feasible behavior test exists, use the infrastructure fallback and do not describe fallback proof as RED evidence.
+   - When automated TDD is genuinely unsuitable, record the practical reason in the work envelope, use the strongest equivalent proof available, and state the residual risk.
    - Capture red evidence: command, failing test name, and failure reason.
 
 4. GREEN: implement only enough code to pass:
@@ -86,7 +92,7 @@ Fallback: If companion skills or docs are unavailable, inspect minimal evidence,
    - Read [Refactor After Green](references/refactor-after-green.md) before non-trivial cleanup.
    - Improve names, duplication, structure, locality, and interface shape only while tests are passing.
    - Prefer deeper modules when a smaller interface can hide real complexity and reduce caller/test burden.
-   - Use `code-refinement` as a run-or-explicit-skip gate for scoped post-change cleanup after green proof and before review gates.
+   - Keep ordinary local refactoring inside this TDD cycle. Load `code-refinement` only for an explicit cleanup request or observed debt such as confusing names, duplication, excessive branching, shallow indirection, unnecessary abstraction, or difficult local reasoning.
    - Run tests after each meaningful refactor step.
    - Never refactor while red. Get to green first.
 

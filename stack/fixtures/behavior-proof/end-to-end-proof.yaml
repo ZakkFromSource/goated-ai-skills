@@ -1,0 +1,10 @@
+schema_version: 1.0.0
+identifier: end-to-end-proof
+title: Cross-system user outcome uses end-to-end proof
+request: Change a critical user workflow whose risk appears only across systems.
+expected:
+  selected_surface: end-to-end
+  stable_observable_boundary: user-workflow
+  broader_surface_preferred: false
+prohibited_behaviors:
+  - Substitute a narrower test that cannot observe the cross-system outcome.

@@ -1,0 +1,11 @@
+schema_version: 1.0.0
+identifier: overlapping-delegation
+title: Overlapping work remains sequential
+request: Execute tasks that both edit one shared interface.
+expected:
+  concrete_task_board: true
+  non_overlapping_write_scopes: false
+  parallel_delegation_allowed: false
+  execution: sequential
+prohibited_behaviors:
+  - Dispatch parallel writers against overlapping scopes or unsettled interfaces.

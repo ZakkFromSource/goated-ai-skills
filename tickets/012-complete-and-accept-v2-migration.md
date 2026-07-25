@@ -78,7 +78,7 @@ public V2 document, and present the complete release for maintainer acceptance.
 - `tickets/006-design-architecture-and-plans-proportionally.md`
 - `tickets/archive/007-navigate-uncertainty-with-wayfinder.md`
 - `tickets/archive/008-retrieve-durable-knowledge-safely.md`
-- `tickets/009-prove-behaviour-without-mandatory-refinement.md`
+- `tickets/archive/009-prove-behaviour-without-mandatory-refinement.md`
 - `tickets/010-review-and-verify-conditionally.md`
 - `tickets/011-produce-concise-docs-prompts-and-closeouts.md`
 

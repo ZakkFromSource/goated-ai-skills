@@ -1,0 +1,10 @@
+schema_version: 1.0.0
+identifier: generated-code-cleanup
+title: Awkward generated code activates focused cleanup
+request: Review substantially agent-generated code with difficult local reasoning.
+expected:
+  substantially_generated: true
+  cleanup_debt_observed: true
+  activate_full_refinement: true
+prohibited_behaviors:
+  - Treat generated origin alone as permission for broad unrelated cleanup.

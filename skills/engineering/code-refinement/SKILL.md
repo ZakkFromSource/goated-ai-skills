@@ -1,6 +1,6 @@
 ---
 name: code-refinement
-description: Use after implementation or when asked to simplify, clean up, or refactor recently changed code while preserving behavior and avoiding unrelated churn.
+description: Use when explicitly asked to simplify or refactor code, or when concrete refinement debt is observed in a recent change and behavior must stay stable.
 metadata:
   goated-category: engineering
 ---
@@ -9,7 +9,13 @@ metadata:
 
 ## Purpose
 
-Refine recently changed target-project code without changing behavior. Use this as a scoped post-change pass after implementation, generated code, or TDD green evidence, and before standards/spec review, security review when relevant, doc sync, and final verification. For non-trivial code-producing delivery work, treat this skill as a default run-or-explicit-skip closeout gate.
+Refine recently changed target-project code without changing behavior. Activate
+this full workflow only for an explicit cleanup request or concrete refinement
+debt: confusing names, duplication, excessive branching, unnecessary
+abstraction, shallow indirection, difficult local reasoning, or substantially
+generated or agent-written code that exhibits those problems. Ordinary
+readability review and TDD's local refactor-after-green do not require this
+skill.
 
 This skill optimizes in this order:
 
@@ -48,9 +54,9 @@ Fallback: If companion skills, tests, commands, or clean diffs are unavailable, 
 ## Workflow
 
 1. Confirm activation and scope:
-   - Use this skill for non-trivial post-change cleanup, generated or agent-written awkward code, recently changed code that should be simplified, or explicit requests such as "clean this up", "simplify this diff", "make this easier to read", or "refactor this without behavior changes".
-   - For non-trivial code-producing delivery work, either run this skill or explicitly skip it with a short reason before moving to later review gates.
-   - Skip this skill for tiny mechanical edits, generated files that should not be hand-edited, docs-only changes, formatting-only changes, no meaningful refinement candidates, user override, and already-clear one-line fixes.
+   - Activate for explicit requests such as "clean this up", "simplify this diff", "make this easier to read", or "refactor this without behavior changes".
+   - Otherwise activate only after naming concrete debt in the scoped change. Substantially generated or agent-written code qualifies when focused review finds awkwardness or difficult local reasoning; its origin alone is not debt.
+   - If there is no explicit request or concrete debt, return to the current workflow without loading this skill or producing a formal skip report.
    - Identify the target-project root and the refinement scope: current diff, staged diff, task-touched files, explicit user paths, or supplied patch.
    - Inspect working-tree state before editing. If files contain unrelated user-authored changes mixed with the refinement scope, edit around them carefully or propose changes first.
    - Do not expand from a known scope into nearby cleanup unless the user explicitly approves the broader scope.
@@ -127,17 +133,6 @@ After proposal mode, report all required fields below. Proposal mode is not an e
 - Contract coverage: <all required fields accounted for, or incomplete - missing fields/reason>
 ```
 
-When skipped as the regular closeout gate before edit or proposal mode, report a compact skip note:
-
-```markdown
-## Code Refinement Skip
-
-- Scope: <changed files, current diff, explicit paths, or "not applicable">
-- Skip reason: <tiny change, docs-only, generated file, no meaningful refinement candidate, user override, weak proof requiring later proposal, or other reason>
-- Next gate: <standards/spec review, security review, doc-sync, verification-before-completion, or other next step>
-- Contract coverage: skip reason accounted for; edit/proposal fields not applicable because refinement mode did not run
-```
-
 ## Delegation
 
 Main owns scope, dirty-worktree judgment, edit/proposal mode, final edits, proof interpretation, and user communication.
@@ -163,7 +158,7 @@ If subagents are unavailable, run the same review sequentially with a narrower c
 - Do not claim behavior preservation from a clean diff alone. Use fresh proof or report weaker confidence.
 - Do not replace the Output Contract with loose prose such as "cleaned up and tests pass"; final closeout must account for every required field or explicitly report the skip reason.
 - Do not omit required Output Contract facts because the value is `None`, `not applicable`, or inconvenient. State the value or fallback reason.
-- Do not claim code was refined after proposal mode or skip mode; say proposal-only or skipped when no refinement edits were made.
+- Do not claim code was refined after proposal mode; say proposal-only when no refinement edits were made.
 - Do not replace `tdd`, `review-codebase-architecture`, `standards-and-spec-review`, `code-security-review`, `doc-sync`, or `verification-before-completion`.
 - Do not include private notes, ignored scratch content, credentials, client data, sensitive personal context, secrets, or real user data in reports or examples.
 - Do not require this source repo's root files, issue files, `.local` notes, or hidden chat history after installation. The skill may rely only on its own instructions, local support files, and target-project evidence.

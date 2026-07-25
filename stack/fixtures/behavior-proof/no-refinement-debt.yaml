@@ -1,0 +1,11 @@
+schema_version: 1.0.0
+identifier: no-refinement-debt
+title: Clear code does not activate full refinement
+request: Continue after a readable green implementation with no cleanup finding.
+expected:
+  explicit_request: false
+  concrete_debt_observed: false
+  activate_full_refinement: false
+  skip_report_required: false
+prohibited_behaviors:
+  - Require a full refinement run or formal skip report without activation.

@@ -33,7 +33,7 @@ Soft:
 - prototype when risky implementation choices need disposable evidence before delegation
 - design-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
 - tdd when delegated work changes behavior, public interfaces, regressions, or testable workflows
-- code-refinement after delegated implementation as a run-or-explicit-skip gate for non-trivial code-producing work before review gates
+- code-refinement after delegated implementation only when explicitly requested or concrete refinement debt is observed
 - standards-and-spec-review for spec fit, acceptance coverage, and project standards after delegated work
 - code-security-review when delegated work touches trust boundaries, auth, permissions, user data, persistence, execution, or unsafe config
 - doc-sync after delegated behavior, interface, architecture, standard, config, test, or doc changes
@@ -45,11 +45,12 @@ Fallback: If subagents, companion skills, commands, or review tools are unavaila
 
 1. Confirm delegation is appropriate:
    - Start from a scoped implementation plan or approved task. If the work is not clear enough to delegate, route to `writing-plans`, `grill-with-docs`, `prototype`, or `design-codebase-architecture` first.
-   - Split only tasks that can be owned independently. Avoid parallel implementation when write scopes overlap, task order is uncertain, or one task's result defines another task's interface.
+   - Delegate implementation only from a concrete task board. Split only tasks that can be owned independently. Keep implementation sequential when write scopes overlap, task order is uncertain, or one task's result defines another task's interface.
    - Keep tightly coupled, architecture-sensitive, or high-risk integration work with the main agent unless a subagent has a sharply bounded role.
 
 2. Prepare the task board:
    - List each task, owner, allowed write scope, dependencies, expected evidence, and review path.
+   - Settle shared interfaces before parallel dispatch and record which task owns any shared-interface change.
    - Choose sequential order for dependent tasks and parallel dispatch only for genuinely independent scopes.
    - Name the single-agent fallback for each task: the main agent performs the same implement, spec review, quality review, final review, and verification steps sequentially.
    - Before dispatching an implementer, read [Implementer Prompt](references/implementer-prompt.md) and fill in the scoped context.
@@ -85,7 +86,7 @@ Fallback: If subagents, companion skills, commands, or review tools are unavaila
 
 8. Run final review and closeout:
    - After all task-level reviews pass or residual risks are accepted, run a **final review** over the combined change for issue fit, standards, integration, docs, and security-sensitive paths when relevant.
-   - Use `code-refinement` as a run-or-explicit-skip gate for non-trivial code-producing work, then `standards-and-spec-review`, `code-security-review`, and `doc-sync` according to the change surface.
+   - Use `code-refinement` only for an explicit cleanup request or concrete refinement debt, then route `standards-and-spec-review`, `code-security-review`, and `doc-sync` according to the change surface.
    - Use `verification-before-completion` before claiming delegated work is complete, correct, passing, review-ready, documentation-synced, or ready for lifecycle movement.
 
 ## Output Contract

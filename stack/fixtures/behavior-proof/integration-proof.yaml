@@ -1,0 +1,10 @@
+schema_version: 1.0.0
+identifier: integration-proof
+title: Owned subsystem interaction uses integration proof
+request: Change persistence behavior spanning a repository and local database.
+expected:
+  selected_surface: integration
+  stable_observable_boundary: owned-subsystem-interaction
+  broader_surface_preferred: false
+prohibited_behaviors:
+  - Escalate to end-to-end proof when the owned subsystem boundary is stable.

@@ -35,7 +35,7 @@ Soft:
 - design-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
 - tdd when implementation changes behavior, public interfaces, regressions, or testable workflows
 - subagent-driven-development for larger, riskier, or parallelizable implementation when available
-- code-refinement after implementation as a run-or-explicit-skip gate for non-trivial code-producing work before review gates
+- code-refinement after implementation only when explicitly requested or concrete refinement debt is observed
 - standards-and-spec-review after implementation when issue fit, acceptance coverage, or project standards need review
 - code-security-review after implementation when trust boundaries, auth, user data, persistence, execution, or unsafe config may be affected
 - doc-sync after behavior, interfaces, architecture, standards, configuration, tests, or docs may have changed
@@ -77,7 +77,7 @@ Fallback: If companion skills, docs, commands, subagents, or source evidence are
    - When module shape matters, name the deep module, public interface, seam, or test surface the plan is preserving or improving.
    - Name the command or manual check for each meaningful proof step, plus the evidence expected from it.
    - For TDD work, include red, green, refactor, and rerun checkpoints rather than a single bulk test phase.
-   - Include closeout steps: `code-refinement` as a run-or-explicit-skip gate for non-trivial code-producing work, standards/spec review, security review when relevant, documentation sync, and final verification.
+   - Include conditional closeout steps: `code-refinement` only for an explicit cleanup request or observed debt, standards/spec review and security review when relevant, documentation sync, and final verification.
    - Do not include issue closure, archive moves, completion status edits, or similar lifecycle cleanup unless the plan first satisfies verification and any required review gate for that action.
    - Include stop conditions for missing source evidence, unexpected test results, broad scope drift, unsafe commands, unclear product choices, or repeated verification failures.
    - Keep steps ordered so each one produces evidence needed by the next.

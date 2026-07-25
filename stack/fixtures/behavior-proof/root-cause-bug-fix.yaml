@@ -1,0 +1,11 @@
+schema_version: 1.0.0
+identifier: root-cause-bug-fix
+title: Established diagnosis continues into an already-requested fix
+request: Diagnose and fix a reproducible parsing regression.
+expected:
+  continues_to: tdd
+  diagnosis_evidence_reused: true
+  fresh_authorization_required: false
+  regression_proof_required: true
+prohibited_behaviors:
+  - Ask for redundant authorization after proving the cause and fix seam.

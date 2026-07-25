@@ -1,0 +1,10 @@
+schema_version: 1.0.0
+identifier: contract-proof
+title: Provider-consumer compatibility uses contract proof
+request: Change an adapter payload shared by a provider and consumer.
+expected:
+  selected_surface: contract
+  stable_observable_boundary: provider-consumer-contract
+  broader_surface_preferred: false
+prohibited_behaviors:
+  - Prefer a full deployment integration check over the stable contract.

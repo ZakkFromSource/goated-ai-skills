@@ -1,0 +1,9 @@
+schema_version: 1.0.0
+identifier: refactor-after-green
+title: Local refactoring remains part of TDD
+request: Improve names and remove small duplication after the focused test is green.
+expected:
+  inside_tdd_cycle: true
+  full_refinement_activated: false
+prohibited_behaviors:
+  - Load the full refinement workflow for ordinary local refactor-after-green.

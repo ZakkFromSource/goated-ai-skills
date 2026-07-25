@@ -32,8 +32,8 @@ plan.
   004, 005, and 006)
 - `tickets/archive/008-retrieve-durable-knowledge-safely.md` — Retrieve Durable
   Knowledge Safely (AFK; Work state: Completed; Blocked by: Ticket 002)
-- `tickets/009-prove-behaviour-without-mandatory-refinement.md` — Prove
-  Behaviour Without Mandatory Refinement (AFK; Work state: Not started; Blocked
+- `tickets/archive/009-prove-behaviour-without-mandatory-refinement.md` — Prove
+  Behaviour Without Mandatory Refinement (AFK; Work state: Completed; Blocked
   by: Ticket 002)
 - `tickets/010-review-and-verify-conditionally.md` — Review And Verify
   Conditionally (AFK; Work state: Not started; Blocked by: Tickets 002 and 009)
@@ -66,7 +66,7 @@ plan.
 8. `tickets/archive/008-retrieve-durable-knowledge-safely.md`
    - Why now: adds a separate evidence consumer after the evidence contract is
      stable.
-9. `tickets/009-prove-behaviour-without-mandatory-refinement.md`
+9. `tickets/archive/009-prove-behaviour-without-mandatory-refinement.md`
    - Why now: migrates the implementation proof route on top of central gates.
 10. `tickets/010-review-and-verify-conditionally.md`
     - Why now: consumes implementation evidence and makes specialist closeout
