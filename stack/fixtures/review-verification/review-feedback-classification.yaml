@@ -1,0 +1,19 @@
+schema_version: 1.0.0
+identifier: review-feedback-classification
+title: Review feedback retains distinct outcomes
+request: Evaluate a mixed set of technically valid, invalid, unclear, and product-decision comments.
+expected:
+  classifications:
+    - accepted
+    - rejected-with-technical-rationale
+    - unclear
+    - user-decision
+  repetitive_response_template_required: false
+  fresh_evidence_required: true
+  claim_scope_limited_to_evidence: true
+  reuse_envelope_evidence: true
+  duplicate_full_closeout: false
+  specialist_output: findings-or-route-delta
+prohibited_behaviors:
+  - Collapse every review comment into handled.
+  - Require a full repeated report template for each comment.

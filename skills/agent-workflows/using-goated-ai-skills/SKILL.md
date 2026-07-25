@@ -81,7 +81,8 @@ GOATED source repository or hidden session files.
 | Spec, architecture, or tickets | Durable intent, module strategy, or multiple resumable slices must be settled |
 | Writing plan | A scoped task still needs executable steps |
 | TDD or equivalent proof | Behavior, a public interface, or regression risk changes |
-| Standards/spec or security review | Scope fit, conventions, or a trust boundary remains materially uncertain |
+| Standards/spec review | Diff size, risk, acceptance, scope, or convention uncertainty warrants specialist review |
+| Security review | A trust boundary changes or auth, permissions, secrets, private data, persistence policy, execution, dependency, deployment, or another sensitive surface is affected |
 | Documentation sync | Durable behavior, interfaces, configuration, architecture, or operator expectations may drift |
 | Full verification | Work is complex, high-risk, delegated, multi-surface, or explicitly audited |
 | Handoff | Work is resumable, interrupted, cross-session delegated, or unfinished |

@@ -153,12 +153,12 @@ session-start-progressive-disclosure
 -> writing-plans
 -> subagent-driven-development optional
 -> tdd
--> standards-and-spec-review
--> code-security-review
+-> standards-and-spec-review when acceptance, scope, or conventions are uncertain
+-> code-security-review when a trust boundary or sensitive surface changes
 -> documentation-writer optional when planned docs are part of scope
 -> documentation-cleanup optional when docs structure or agent docs need broader hygiene
--> doc-sync
--> verification-before-completion
+-> doc-sync when durable facts may drift
+-> direct fresh proof, or verification-before-completion for complex/risky/delegated/multi-surface/audited work
 -> commit-message
 -> handoff optional
 ```

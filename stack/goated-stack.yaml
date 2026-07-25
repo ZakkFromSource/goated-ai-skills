@@ -286,7 +286,7 @@ skills:
     aliases: []
     workflow_role: verification
     domains: [software, research, documentation, content, other]
-    profile_eligibility: [lightweight, standard, full]
+    profile_eligibility: [standard, full]
     accepts_signals: [scope-changed, evidence-stale, security-impact, documentation-impact, refinement-debt]
     emits_signals: [evidence-stale, scope-changed]
 

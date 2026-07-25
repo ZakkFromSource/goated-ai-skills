@@ -1,6 +1,6 @@
 ---
 name: receiving-code-review
-description: Use when handling code review feedback, PR comments, reviewer suggestions, requested changes, or critique before deciding whether to clarify, push back, or implement.
+description: Use when review feedback must be classified as accepted, rejected, unclear, or requiring a user decision before implementation or response.
 metadata:
   goated-category: engineering
 ---
@@ -13,7 +13,17 @@ Handle review feedback as technical input to evaluate, not orders to obey or soc
 
 This skill is the controller for review feedback. It inventories comments, verifies them against the target project, decides which items are accepted, rejected, unclear, or non-actionable, then routes accepted work to the right implementation and proof workflow. It does not replace standards/spec review, security review, TDD, doc sync, or final verification.
 
-The default posture is respectful skepticism: understand the reviewer, check the source, then act or respond with evidence.
+The default posture is respectful skepticism: understand the reviewer, check
+the source, then act or respond with evidence.
+
+## Activation
+
+Load this skill when feedback from a person, tool, PR, issue, or reviewer agent
+needs technical classification. Do not load it for a general standards/spec or
+security review when no feedback is being received.
+
+Reuse fresh work-envelope evidence and existing review scope. Refresh only
+evidence invalidated by the change or too weak for the feedback claim.
 
 ## Inputs
 
@@ -37,7 +47,9 @@ Soft:
 - code-security-review when feedback touches trust boundaries, auth, permissions, user data, persistence, execution, secrets, or security config
 - subagent-driven-development when large or parallelizable feedback needs delegated implementation or review
 - doc-sync when accepted feedback changes behavior, interfaces, architecture, standards, configuration, tests, or public docs
-- verification-before-completion before fixed/resolved/clean/implemented/passing/ready/complete feedback claims
+- verification-before-completion for complex, high-risk, delegated,
+  multi-surface, or explicitly audited feedback closeout; otherwise verify the
+  narrow claim directly with fresh evidence
 
 Fallback: If companion skills, review tools, git history, tests, docs, or subagents are unavailable, inspect minimal source evidence, classify uncertainty, implement only safe accepted items, and downgrade unsupported claims.
 
@@ -52,7 +64,11 @@ Fallback: If companion skills, review tools, git history, tests, docs, or subage
 2. Understand each item:
    - Restate the technical requirement in your own working notes: what behavior, code path, standard, risk, or expectation is the reviewer pointing at?
    - Identify whether the item is about correctness, security, spec fit, standards, tests, docs, architecture, style, maintainability, performance, or non-actionable commentary.
-   - If the requirement, affected scope, or expected outcome is unclear, classify it as `needs clarification`.
+   - If the technical meaning or affected scope is unclear, classify it as
+     `unclear`.
+   - If the comment is technically clear but selecting an outcome requires
+     product intent, risk acceptance, preference, or authority the agent does
+     not own, classify it as `user decision`.
    - If unclear items may affect implementation order, shared interfaces, architecture, or correctness, stop and ask before editing related items.
 
 3. Verify against project reality:
@@ -64,9 +80,11 @@ Fallback: If companion skills, review tools, git history, tests, docs, or subage
 4. Classify every item:
    - `accepted`: evidence supports the feedback, and the requested change is in scope or explicitly approved.
    - `rejected with technical rationale`: evidence shows the suggestion is wrong, harmful, obsolete, out of scope, duplicative, incompatible, or conflicts with accepted project intent.
-   - `needs clarification`: the item is ambiguous, missing context, has multiple plausible fixes, or requires a user or maintainer decision.
-   - `non-actionable commentary`: the item is observation, praise, preference, or context that does not require code, docs, tests, or a response beyond acknowledgement when appropriate.
-   - Keep these statuses distinct. Do not hide rejected or unclear feedback inside a generic "handled" summary.
+   - `unclear`: the technical requirement, evidence, or affected scope is not understood well enough to judge.
+   - `user decision`: the options are understood, but authority or product intent is required before choosing.
+   - Preserve non-actionable commentary in the inventory only when context
+     matters; do not manufacture a fifth action status or hide rejected,
+     unclear, or user-decision items inside a generic "handled" bucket.
 
 5. Choose the route for accepted or disputed work:
    - Use `code-security-review` for exploitable risk, trust boundaries, auth, permissions, secrets, user data, persistence, unsafe execution, or security-sensitive config.
@@ -93,51 +111,35 @@ Fallback: If companion skills, review tools, git history, tests, docs, or subage
 8. Respond with evidence, not performance:
    - For accepted items, state the technical fix and verification evidence.
    - For rejected items, give the shortest accurate technical rationale and cite the source, test, spec, or constraint that supports it.
-   - For unclear items, ask the specific question that would change the implementation.
-   - For non-actionable commentary, acknowledge only as needed and do not invent work.
+   - For unclear items, ask for the missing technical fact.
+   - For user-decision items, present the decision, recommendation, and tradeoff.
+   - Acknowledge non-actionable commentary only as needed and do not invent work.
    - When using hosted review tools, reply in the original review context or thread when the tool supports it; do not require one specific host or command.
 
 9. Close through verification:
    - Run or inspect the evidence that matches the fixed items: tests, builds, diffs, source reads, docs checks, rendered artifacts, CI, manual checks, or reviewer-thread state.
-   - Use `verification-before-completion` before claiming feedback is fixed, resolved, clean, ready, implemented, passing, or complete.
-   - If any feedback remains unclear, rejected, deferred, unverified, or blocked, say so plainly and keep the final claim narrow.
+   - Match fixed, resolved, implemented, passing, or complete claims to fresh
+     evidence. Load `verification-before-completion` only when the closeout is
+     complex, high-risk, delegated, multi-surface, or explicitly audited.
+   - If any feedback remains unclear, rejected, awaiting a user decision,
+     deferred, unverified, or blocked, keep the claim narrow.
+   - Update the envelope with classifications, findings, evidence changes, and
+     route deltas. Leave one consolidated closeout to the controlling agent.
 
 ## Output Contract
 
-Return a compact review-feedback report shaped like this:
+Return the smallest useful feedback delta. A sentence or short list is enough
+for one obvious item. Use a table for multiple or mixed classifications:
 
 ```markdown
-## Review Feedback Handling
-
-- Scope: <review source, diff/PR/issue/patch, changed files, or supplied comments>
-- Feedback inventory: <count and short summary of items>
-- Evidence inspected: <source, tests, docs, diffs, commands, threads, or assumptions>
-
-## Feedback Status
-
 | Item | Status | Evidence | Route or action |
 | --- | --- | --- | --- |
-| <comment id or summary> | <accepted | rejected with technical rationale | needs clarification | non-actionable commentary> | <source evidence or missing evidence> | <fix, ask, push back, route, or no action> |
-
-## Work Performed
-
-- <accepted item fixed, paths touched, and verification evidence>
-
-## Responses Needed
-
-- Clarification: <questions, or "None">
-- Technical pushback: <rejected items and rationale, or "None">
-- Deferred or non-actionable: <items and reason, or "None">
-
-## Verification
-
-- Evidence: <commands, source reads, diffs, docs, rendered artifacts, CI, or manual checks>
-- Skipped checks: <checks skipped with reasons, or "None">
-- Residual risk: <remaining uncertainty, or "Low">
-- Completion claim: <claim allowed by verification-before-completion>
+| <comment id or summary> | <accepted | rejected with technical rationale | unclear | user decision> | <fresh source evidence or missing evidence> | <fix, push back, clarify, decide, or route> |
 ```
 
-For tiny feedback sets, a shorter response is acceptable only if it still separates accepted, rejected, unclear, and non-actionable items when those statuses exist.
+Include only material work performed, changed evidence, skipped checks,
+residual risk, and route signals. Do not repeat the full work envelope,
+standards/security reports, or a separate completion summary.
 
 ## Delegation
 
@@ -158,7 +160,7 @@ If subagents are unavailable, run the same intake, classification, implementatio
 - Do not agree performatively or imply correctness before checking the source.
 - Do not reject feedback defensively; reject only with technical evidence or explicit scope rationale.
 - Do not partially implement a multi-item review while unresolved items could change the shared design, interface, or correctness path.
-- Do not collapse accepted, rejected, unclear, and non-actionable feedback into one "done" bucket.
+- Do not collapse accepted, rejected, unclear, and user-decision feedback into one "done" bucket.
 - Do not broaden accepted feedback into unrelated refactors, horizontal layers, speculative cleanup, or shallow abstractions.
 - Do not claim security confidence from normal tests or standards review; route security-relevant feedback to `code-security-review`.
 - Do not claim behavior is fixed without behavior proof when `tdd` or an equivalent public-interface check is feasible.

@@ -264,6 +264,60 @@ REQUIRED_BEHAVIOR_PROOF_FIXTURE_CONTRACTS = {
         "execution": "sequential",
     },
 }
+REVIEW_VERIFICATION_SHARED_CONTRACT = {
+    "fresh_evidence_required": True,
+    "claim_scope_limited_to_evidence": True,
+    "reuse_envelope_evidence": True,
+    "duplicate_full_closeout": False,
+    "specialist_output": "findings-or-route-delta",
+}
+REQUIRED_REVIEW_VERIFICATION_FIXTURE_CONTRACTS = {
+    "tiny-diff-verification": {
+        **REVIEW_VERIFICATION_SHARED_CONTRACT,
+        "verification_route": "direct-proof",
+        "full_verification_activated": False,
+    },
+    "spec-sensitive-review": {
+        **REVIEW_VERIFICATION_SHARED_CONTRACT,
+        "standards_spec_review_activated": True,
+        "review_axis": "spec",
+        "activation_reason": "acceptance-ambiguity",
+    },
+    "standards-sensitive-review": {
+        **REVIEW_VERIFICATION_SHARED_CONTRACT,
+        "standards_spec_review_activated": True,
+        "review_axis": "standards",
+        "activation_reason": "convention-uncertainty",
+    },
+    "trust-boundary-security-review": {
+        **REVIEW_VERIFICATION_SHARED_CONTRACT,
+        "security_review_activated": True,
+        "trust_boundary_changed": True,
+        "sensitive_surface": "authorization",
+    },
+    "non-security-change": {
+        **REVIEW_VERIFICATION_SHARED_CONTRACT,
+        "security_review_activated": False,
+        "trust_boundary_changed": False,
+        "security_skip_report_required": False,
+    },
+    "delegated-combined-change-verification": {
+        **REVIEW_VERIFICATION_SHARED_CONTRACT,
+        "full_verification_activated": True,
+        "activation_reasons": ["delegated", "multi-surface"],
+        "main_agent_sanity_check_required": True,
+    },
+    "review-feedback-classification": {
+        **REVIEW_VERIFICATION_SHARED_CONTRACT,
+        "classifications": [
+            "accepted",
+            "rejected-with-technical-rationale",
+            "unclear",
+            "user-decision",
+        ],
+        "repetitive_response_template_required": False,
+    },
+}
 REQUIRED_KNOWLEDGE_RETRIEVAL_FIXTURE_IDENTIFIERS = {
     "authoritative-source",
     "conflicting-note",
@@ -2597,6 +2651,102 @@ def validate_behavior_proof_fixtures(repo: Path) -> list[Finding]:
     return errors
 
 
+def validate_review_verification_fixtures(repo: Path) -> list[Finding]:
+    """Validate conditional review and evidence-backed closeout behavior."""
+
+    fixture_root = repo / "stack" / "fixtures" / "review-verification"
+    fixture_paths = sorted(fixture_root.glob("*.yaml"))
+    if not fixture_paths:
+        return [
+            Finding(
+                "stack/fixtures/review-verification",
+                "no review-verification fixtures found",
+            )
+        ]
+
+    errors: list[Finding] = []
+    identifiers: set[str] = set()
+    for fixture_path in fixture_paths:
+        fixture_label = relative(fixture_path, repo)
+        fixture, fixture_errors = load_mapping(fixture_path, fixture_label)
+        errors.extend(fixture_errors)
+        if fixture is None:
+            continue
+
+        if fixture.get("schema_version") != "1.0.0":
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "unsupported review-verification fixture schema_version",
+                )
+            )
+
+        identifier = fixture.get("identifier")
+        if not isinstance(identifier, str):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "review-verification fixture identifier must be a string",
+                )
+            )
+            continue
+        if identifier in identifiers:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"duplicate review-verification fixture identifier: {identifier}",
+                )
+            )
+        identifiers.add(identifier)
+
+        expected = fixture.get("expected")
+        if not isinstance(expected, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "review-verification fixture expected must be a mapping",
+                )
+            )
+            continue
+        if not is_string_list(fixture.get("prohibited_behaviors"), allow_empty=False):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "review-verification prohibited_behaviors must be a "
+                    "non-empty string list",
+                )
+            )
+
+        contract = REQUIRED_REVIEW_VERIFICATION_FIXTURE_CONTRACTS.get(identifier)
+        if contract is None:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"unsupported review-verification fixture: {identifier}",
+                )
+            )
+            continue
+        errors.extend(
+            validate_fixture_contract_values(
+                expected,
+                contract,
+                fixture_label,
+                f"{identifier} behavior",
+            )
+        )
+
+    errors.extend(
+        Finding(
+            "stack/fixtures/review-verification",
+            f"missing required review-verification fixture: {identifier}",
+        )
+        for identifier in sorted(
+            set(REQUIRED_REVIEW_VERIFICATION_FIXTURE_CONTRACTS) - identifiers
+        )
+    )
+    return errors
+
+
 def validate_knowledge_retrieval_fixtures(repo: Path) -> list[Finding]:
     """Validate the portable knowledge-retrieval behavior fixtures."""
 
@@ -3697,6 +3847,7 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
     errors.extend(validate_planning_fixtures(repo))
     errors.extend(validate_architecture_planning_fixtures(repo))
     errors.extend(validate_behavior_proof_fixtures(repo))
+    errors.extend(validate_review_verification_fixtures(repo))
     errors.extend(validate_knowledge_retrieval_fixtures(repo))
     errors.extend(validate_wayfinding_fixtures(repo))
 
@@ -3747,6 +3898,13 @@ def main() -> int:
     )
     behavior_proof_fixture_count = len(
         list((repo / "stack" / "fixtures" / "behavior-proof").glob("*.yaml"))
+    )
+    review_verification_fixture_count = len(
+        list(
+            (repo / "stack" / "fixtures" / "review-verification").glob(
+                "*.yaml"
+            )
+        )
     )
     knowledge_retrieval_fixture_count = len(
         list(
@@ -3805,6 +3963,10 @@ def main() -> int:
         print(
             "Behavior-proof fixture validation passed for "
             f"{behavior_proof_fixture_count} scenarios."
+        )
+        print(
+            "Review-and-verification fixture validation passed for "
+            f"{review_verification_fixture_count} scenarios."
         )
         print(
             "Knowledge-retrieval fixture validation passed for "

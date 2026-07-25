@@ -1,0 +1,18 @@
+schema_version: 1.0.0
+identifier: delegated-combined-change-verification
+title: Delegated multi-surface work activates full verification
+request: Verify delegated changes spanning source, tests, configuration, and docs.
+expected:
+  full_verification_activated: true
+  activation_reasons:
+    - delegated
+    - multi-surface
+  main_agent_sanity_check_required: true
+  fresh_evidence_required: true
+  claim_scope_limited_to_evidence: true
+  reuse_envelope_evidence: true
+  duplicate_full_closeout: false
+  specialist_output: findings-or-route-delta
+prohibited_behaviors:
+  - Forward delegated success reports without main-agent inspection.
+  - Emit one closeout per delegated or specialist result.

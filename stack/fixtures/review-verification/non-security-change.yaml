@@ -1,0 +1,16 @@
+schema_version: 1.0.0
+identifier: non-security-change
+title: A local presentation change skips security review
+request: Review a wording-only change with no executable or sensitive surface.
+expected:
+  security_review_activated: false
+  trust_boundary_changed: false
+  security_skip_report_required: false
+  fresh_evidence_required: true
+  claim_scope_limited_to_evidence: true
+  reuse_envelope_evidence: true
+  duplicate_full_closeout: false
+  specialist_output: findings-or-route-delta
+prohibited_behaviors:
+  - Load the security checklist for a non-security change.
+  - Add a ceremonial security skip report to the final response.

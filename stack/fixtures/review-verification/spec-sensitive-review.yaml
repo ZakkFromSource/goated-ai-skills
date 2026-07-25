@@ -1,0 +1,16 @@
+schema_version: 1.0.0
+identifier: spec-sensitive-review
+title: Acceptance ambiguity activates spec review
+request: Review a small diff whose acceptance coverage is uncertain.
+expected:
+  standards_spec_review_activated: true
+  review_axis: spec
+  activation_reason: acceptance-ambiguity
+  fresh_evidence_required: true
+  claim_scope_limited_to_evidence: true
+  reuse_envelope_evidence: true
+  duplicate_full_closeout: false
+  specialist_output: findings-or-route-delta
+prohibited_behaviors:
+  - Skip spec review because the diff is small.
+  - Expand the review into unrelated project conventions.

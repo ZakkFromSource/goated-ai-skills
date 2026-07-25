@@ -1,0 +1,16 @@
+schema_version: 1.0.0
+identifier: trust-boundary-security-review
+title: Authorization changes activate security review
+request: Review a change that moves authorization from a server guard to a client.
+expected:
+  security_review_activated: true
+  trust_boundary_changed: true
+  sensitive_surface: authorization
+  fresh_evidence_required: true
+  claim_scope_limited_to_evidence: true
+  reuse_envelope_evidence: true
+  duplicate_full_closeout: false
+  specialist_output: findings-or-route-delta
+prohibited_behaviors:
+  - Treat passing functional tests as security proof.
+  - Skip the review because the changed diff is short.

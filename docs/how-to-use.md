@@ -113,15 +113,22 @@ flowchart LR
   G --> H["writing-plans"]
   H --> I["subagent-driven-development optional"]
   I --> J["tdd"]
-  J --> L["standards-and-spec-review"]
   J -. "request or debt" .-> K["code-refinement"]
-  K --> L
-  L --> M["code-security-review"]
-  M --> N["documentation-writer optional"]
-  N --> O["documentation-cleanup optional"]
-  O --> P["doc-sync"]
-  P --> Q["verification-before-completion"]
-  Q --> R["commit-message"]
+  J --> V["fresh claim-scoped proof"]
+  K --> V
+  V -. "acceptance, scope, or convention uncertainty" .-> L["standards-and-spec-review"]
+  V -. "trust boundary or sensitive surface" .-> M["code-security-review"]
+  V -. "durable drift" .-> P["doc-sync"]
+  V -. "complex, risky, delegated, multi-surface, or audit" .-> Q["verification-before-completion"]
+  V -. "planned docs" .-> N["documentation-writer optional"]
+  V -. "docs hygiene" .-> O["documentation-cleanup optional"]
+  V --> R["commit-message"]
+  L --> R
+  M --> R
+  P --> R
+  Q --> R
+  N --> R
+  O --> R
   R --> S["handoff optional"]
 ```
 
@@ -138,7 +145,13 @@ Typical flow:
 9. Use `code-refinement` after implementation proof only when cleanup was explicitly requested or concrete refinement debt is observed.
 10. Use `documentation-writer` when planned durable docs are part of the work. Use `documentation-cleanup` when the docs tree, root routing docs, progress/status docs, or agent-facing docs need broader hygiene.
 11. Use `doc-sync` when changed behavior or docs may have made other docs stale.
-12. Use `standards-and-spec-review`, `code-security-review`, `doc-sync`, and `verification-before-completion` before making strong completion claims.
+12. Match every completion claim to fresh evidence. Load
+    `standards-and-spec-review` for acceptance, scope, or convention
+    uncertainty; `code-security-review` for changed trust boundaries or
+    sensitive surfaces; `doc-sync` for plausible durable drift; and
+    `verification-before-completion` for complex, high-risk, delegated,
+    multi-surface, or explicitly audited closeout. Narrow work verifies
+    directly without ceremonial skip reports.
 13. Use `commit-message` and optional `handoff` for closeout.
 
 ## Pipeline 3: Multi-Session Uncertainty
@@ -331,25 +344,25 @@ contract.
 #### `receiving-code-review`
 
 - **Purpose**: Handles reviewer feedback without blindly accepting or rejecting comments.
-- **Use when**: A PR, patch, or local change receives review feedback, requested changes, suggestions, or critique.
+- **Use when**: Review feedback must be classified as accepted, rejected, unclear, or requiring a user decision.
 - **Typical input**: Review comments, diff, source context, tests, standards, and user intent.
-- **Typical output**: Feedback inventory, classification, accepted fixes, rejected rationale, and verification notes.
+- **Typical output**: Compact classifications, evidence, accepted work, technical pushback, user decisions, and route deltas.
 - **Pipeline role**: Specialized branch before review gates or follow-up implementation.
 
 #### `standards-and-spec-review`
 
 - **Purpose**: Reviews changes against project standards and the originating spec or issue.
-- **Use when**: You need to know whether a change fits the requested scope, acceptance criteria, and documented standards.
+- **Use when**: Diff size, risk, acceptance ambiguity, scope fit, or uncertain conventions make direct review insufficient.
 - **Typical input**: Fixed point, changed files, originating spec/issue/PRD, standards docs, and evidence commands.
-- **Typical output**: Standards findings separated from spec findings, with source evidence.
-- **Pipeline role**: Review gate after implementation and before closeout.
+- **Typical output**: Findings for the activated standards and/or spec axis, with source evidence and route deltas.
+- **Pipeline role**: Conditional review gate after implementation.
 
 #### `code-security-review`
 
 - **Purpose**: Performs focused static security review of risky changes.
-- **Use when**: Work touches auth, permissions, user data, persistence, trust boundaries, execution, dependencies, or unsafe configuration.
+- **Use when**: A trust boundary changes or work touches auth, permissions, secrets, private data, persistence policy, unsafe execution, dependency security, or another sensitive surface.
 - **Typical input**: Diff or source area, trust boundary, sensitive assets, entry points, sinks, and security-relevant docs.
-- **Typical output**: Security findings, trust-boundary map, reviewed files, skipped areas, and residual risk.
+- **Typical output**: Security findings or a scoped no-finding result, trust path, residual risk, and route deltas.
 - **Pipeline role**: Security gate for relevant delivery work.
 
 #### `documentation-writer`
@@ -379,10 +392,10 @@ contract.
 #### `verification-before-completion`
 
 - **Purpose**: Gates completion, correctness, readiness, and success claims on fresh evidence.
-- **Use when**: The agent is about to say work is done, correct, passing, synced, reviewed, fixed, or ready.
+- **Use when**: A completion claim is complex, high-risk, delegated, multi-surface, or explicitly audited. Narrow work uses direct fresh proof.
 - **Typical input**: The exact claim, changed scope, command output, diff, artifacts, skipped checks, and known failures.
-- **Typical output**: Verified facts, assumptions, skipped checks, known failures, residual risk, and allowed completion claim.
-- **Pipeline role**: Final evidence gate before strong closeout language.
+- **Typical output**: A verification delta covering fresh/reused/invalidated evidence, proof gaps, residual risk, and the allowed claim.
+- **Pipeline role**: Conditional full controller; evidence-backed claim scope remains universal.
 
 #### `commit-message`
 
@@ -526,7 +539,10 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If behavior changes, route implementation through `tdd`.
 - Use `code-refinement` after implementation proof when cleanup is explicitly requested or concrete refinement debt is observed. Ordinary refactor-after-green remains inside `tdd`.
 - If planned durable documentation is the work, or part of the work, use `documentation-writer`; if docs structure or agent docs are messy, use `documentation-cleanup`; use `doc-sync` for drift checks after behavior or docs change.
-- If a claim sounds like "done", "correct", "passing", "synced", or "ready", use `verification-before-completion` first.
+- Match "done", "correct", "passing", "synced", and "ready" claims to fresh
+  evidence. Use `verification-before-completion` for complex, high-risk,
+  delegated, multi-surface, or explicitly audited closeout; verify narrow work
+  directly.
 
 ## Source References
 

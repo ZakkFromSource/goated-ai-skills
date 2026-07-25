@@ -1,0 +1,15 @@
+schema_version: 1.0.0
+identifier: tiny-diff-verification
+title: A tiny change verifies directly
+request: Verify a one-line local documentation correction.
+expected:
+  verification_route: direct-proof
+  full_verification_activated: false
+  fresh_evidence_required: true
+  claim_scope_limited_to_evidence: true
+  reuse_envelope_evidence: true
+  duplicate_full_closeout: false
+  specialist_output: findings-or-route-delta
+prohibited_behaviors:
+  - Load the full verification controller for narrow low-risk work.
+  - Reuse pre-change evidence for the completion claim.

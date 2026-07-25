@@ -1,6 +1,6 @@
 ---
 name: standards-and-spec-review
-description: Use when reviewing changes since a fixed point along separate standards and spec/issue-fit axes, including issue acceptance, missed requirements, or unrequested scope.
+description: Use when diff size, risk, acceptance ambiguity, scope fit, or uncertain project conventions justify a standards and/or spec review.
 metadata:
   goated-category: engineering
 ---
@@ -15,6 +15,21 @@ Review a completed or in-progress change against two independent contracts:
 - **Spec**: whether the change satisfies the originating issue, PRD, ticket, or explicit request without missing requirements or adding unrequested scope.
 
 This is a review gate, not an implementation workflow and not a security audit. It should produce high-signal findings backed by files, commands, docs, diffs, test evidence, or explicit assumptions.
+
+## Activation
+
+Load this skill when at least one axis remains meaningfully uncertain:
+
+- **Spec**: acceptance coverage, intended behavior, allowed scope, exclusions,
+  lifecycle movement, or public-contract fit.
+- **Standards**: a larger or riskier diff makes direct inspection insufficient,
+  a changed area spans conventions, or documented/inferred conventions conflict
+  or remain uncertain.
+
+Scale depth with diff size, risk, acceptance ambiguity, and convention
+uncertainty. A small, familiar, low-risk change with clear acceptance can check
+fit directly from the shared policy without loading this skill. Review only the
+uncertain axis when practical; do not require ceremonial coverage of both.
 
 ## Inputs
 
@@ -37,13 +52,17 @@ Soft:
 - code-refinement when findings call for scoped behavior-preserving cleanup or simplification
 - code-security-review when trust boundaries, user data, auth, persistence, execution, or unsafe config may be affected
 - doc-sync after this review when behavior, standards, specs, public interfaces, or docs may have drifted
-- verification-before-completion before complete/clean/closeout-ready review claims
+- verification-before-completion for complex, high-risk, delegated,
+  multi-surface, or explicitly audited review closeout; otherwise verify narrow
+  findings or no-findings wording directly
 
 Fallback: If companion skills, git history, standards, or source spec are unavailable, inspect minimal local evidence, state lower confidence, and separate assumptions from findings.
 
 ## Workflow
 
 1. Confirm the review scope:
+   - Reuse fresh diff, source, spec, standards, and proof entries from the work
+     envelope. Refresh only stale, invalidated, or claim-insufficient evidence.
    - Identify the target-project root and whether the review covers committed changes, staged changes, unstaged changes, or a supplied patch.
    - Identify the originating issue, PRD, ticket, spec, or user request. If none exists, review against the explicit user request and state lower spec confidence.
    - List changed files before reviewing. In git projects, use an equivalent of `git status --short`, `git diff --name-status <fixed-point>...HEAD`, and working-tree diff commands as appropriate for the requested scope.
@@ -85,49 +104,28 @@ Fallback: If companion skills, git history, standards, or source spec are unavai
    - Recommend `code-security-review` when the change may touch security-relevant behavior.
    - Recommend `doc-sync` when docs or durable artifacts may need updates.
    - Recommend commit-message or handoff only after review findings and required follow-up are addressed or intentionally accepted.
-   - Use `verification-before-completion` before claiming no findings, review completion, review readiness, or next-step readiness; for draft reviews or best-effort scans, verify only the claim being made and state residual risk.
+   - Verify findings and no-findings wording against fresh scoped evidence.
+     Load `verification-before-completion` only when complexity, risk,
+     delegation, multiple surfaces, or an explicit audit warrants the full
+     controller.
+   - Emit findings, confidence changes, proof gaps, and route deltas into the
+     envelope rather than producing a competing closeout.
 
 ## Output Contract
 
-Return a compact review shaped like this:
+Return findings for the activated axis or axes. Include fixed point, changed
+scope, evidence inspected, confidence, and residual risk once, then report:
 
 ```markdown
-## Review Scope
-
-- Fixed point: <ref/commit/source and confidence>
-- Changed files: <paths or summary>
-- Spec source: <issue/PRD/ticket/request or "not found">
-- Standards source: <docs/agents/project-standards.md, discovered evidence, or "not found">
-- Evidence inspected: <files, commands, docs, diffs, assumptions>
-
-## Standards Findings
-
-- <No findings, or one finding per bullet>
-  - Affected path: <path>
-  - Evidence: <standard, convention, command, doc, or assumption>
-  - Impact: <why it matters for maintainability, consistency, verification, or workflow>
-  - Confidence: <high, medium, or low, with a short reason>
-  - Recommended fix: <specific change>
-
-## Spec Findings
-
-- <No findings, or one finding per bullet>
-  - Affected path: <path>
-  - Evidence: <requirement, acceptance criterion, issue note, diff, command, or assumption>
-  - Impact: <missed behavior, unrequested scope, acceptance risk, or verification gap>
-  - Confidence: <high, medium, or low, with a short reason>
-  - Recommended fix: <specific change>
-
-## Assumptions And Confidence
-
-- <assumptions, lower-confidence areas, skipped checks, or residual risk>
-
-## Next Step
-
-- <implementation fixes, code-refinement, code-security-review, doc-sync, commit-message, handoff, or none>
+- `<axis> finding`: affected path, requirement or convention, evidence, impact,
+  confidence, and recommended fix.
+- `<axis> no findings`: exact reviewed scope and material residual risk.
+- `Route delta`: newly required implementation, security, docs, proof, or user
+  decision; omit when unchanged.
 ```
 
-If there are no findings on either axis, still include the review scope, explicit no-findings statements, assumptions or residual risk, and the next recommended workflow.
+Do not repeat the full envelope, another specialist's report, or the controller's
+final closeout.
 
 ## Delegation
 

@@ -18,6 +18,7 @@ from scripts.validate_skills import (
     validate_onboarding_fixtures,
     validate_planning_fixtures,
     validate_registry,
+    validate_review_verification_fixtures,
     validate_route_fixtures,
     validate_wayfinding_fixtures,
 )
@@ -112,6 +113,19 @@ def copy_knowledge_retrieval_fixtures(destination: Path) -> Path:
     )
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "knowledge-retrieval",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_review_verification_fixtures(destination: Path) -> Path:
+    """Copy review and verification fixtures and return their directory."""
+
+    fixture_destination = (
+        destination / "stack" / "fixtures" / "review-verification"
+    )
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "review-verification",
         fixture_destination,
     )
     return fixture_destination
@@ -1388,6 +1402,80 @@ class RouteFixtureValidationTests(unittest.TestCase):
 
         self.assertIn(
             "routing fixture references undefined risk flag: not-defined",
+            messages,
+        )
+
+
+class ReviewVerificationFixtureValidationTests(unittest.TestCase):
+    def test_current_review_verification_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_review_verification_fixtures(REPO_ROOT))
+
+    def test_fresh_evidence_discipline_cannot_be_weakened(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_review_verification_fixtures(fixture_root)
+            fixture_path = fixture_directory / "tiny-diff-verification.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["fresh_evidence_required"] = False
+            fixture["expected"]["claim_scope_limited_to_evidence"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_review_verification_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "tiny-diff-verification behavior requires "
+            "fresh_evidence_required=True",
+            messages,
+        )
+        self.assertIn(
+            "tiny-diff-verification behavior requires "
+            "claim_scope_limited_to_evidence=True",
+            messages,
+        )
+
+    def test_security_review_cannot_activate_without_a_sensitive_change(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_review_verification_fixtures(fixture_root)
+            fixture_path = fixture_directory / "non-security-change.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["security_review_activated"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_review_verification_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "non-security-change behavior requires "
+            "security_review_activated=False",
+            messages,
+        )
+
+    def test_required_review_verification_scenario_cannot_be_removed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_review_verification_fixtures(fixture_root)
+            (fixture_directory / "review-feedback-classification.yaml").unlink()
+
+            messages = [
+                finding.message
+                for finding in validate_review_verification_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "missing required review-verification fixture: "
+            "review-feedback-classification",
             messages,
         )
 

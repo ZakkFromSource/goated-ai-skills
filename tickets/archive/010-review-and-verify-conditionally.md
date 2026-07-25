@@ -32,18 +32,18 @@ preserving universal evidence-backed completion discipline.
 
 ## Acceptance Criteria
 
-- [ ] Narrow work can verify directly from the shared policy.
-- [ ] Full verification loads only for complex, high-risk, delegated,
+- [x] Narrow work can verify directly from the shared policy.
+- [x] Full verification loads only for complex, high-risk, delegated,
       multi-surface, or explicitly audited work.
-- [ ] Standards/spec review scales with diff size, risk, acceptance ambiguity,
+- [x] Standards/spec review scales with diff size, risk, acceptance ambiguity,
       and convention uncertainty.
-- [ ] Security review has explicit trust-boundary and sensitive-surface
+- [x] Security review has explicit trust-boundary and sensitive-surface
       activation conditions.
-- [ ] Receiving review preserves accepted, rejected, unclear, and
+- [x] Receiving review preserves accepted, rejected, unclear, and
       user-decision classifications without repetitive response templates.
-- [ ] Review skills reuse envelope evidence and emit findings or route deltas
+- [x] Review skills reuse envelope evidence and emit findings or route deltas
       rather than duplicate closeouts.
-- [ ] Evidence freshness and claim scope remain non-negotiable.
+- [x] Evidence freshness and claim scope remain non-negotiable.
 
 ## Expected Proof
 
@@ -74,3 +74,24 @@ preserving universal evidence-backed completion discipline.
 - Do not make security, standards, or full verification universal prompt
   payloads.
 - Do not weaken proof freshness or permit unsupported completion claims.
+
+## Implementation Proof
+
+- Shared policy, routing metadata, review skills, and public usage guidance now
+  keep fresh claim-scoped evidence universal while activating full
+  verification, standards/spec review, and security review only for matching
+  complexity, risk, uncertainty, delegation, audit, trust-boundary, or
+  sensitive-surface conditions.
+- Seven portable fixtures under `stack/fixtures/review-verification/` cover
+  tiny direct verification, spec and standards sensitivity, security and
+  non-security changes, delegated multi-surface verification, and review
+  feedback classification.
+- `uv run python -m unittest discover -s tests -v` passed all 72 tests.
+- `uv run python scripts/validate_skills.py` passed 34 implemented skills, 34
+  registry entries, and every fixture family, including 7 review-and-
+  verification scenarios. The shared policy is 1,155 words, within its
+  800-1,200 target and 42 words smaller than the pre-change baseline.
+- `git diff --check` passed. Standards/spec review found and corrected durable
+  docs drift in the project standards and context matrix. Security review was
+  not applicable because no trust boundary, credential, persistence path,
+  dependency, permission, or sensitive configuration changed.

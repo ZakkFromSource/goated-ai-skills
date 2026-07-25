@@ -36,19 +36,17 @@ Classify work using independent dimensions:
   `destructive`, `external-change`, `persistent-data`, `dependency`, and
   `public-facing`.
 
-Correctness, safety, scope control, and honest evidence are mandatory at every
-intensity. Scale discovery, planning, artifact depth, specialist procedures,
-and reporting to the work. Tiny reversible work should carry almost no
-ceremony. Complex, risky, delegated, or resumable work needs explicit state and
-stronger gates.
+Correctness, safety, scope control, and honest evidence apply at every
+intensity. Scale discovery, artifacts, specialist procedures, and reporting to
+the work; reserve explicit state and stronger gates for complex, risky,
+delegated, or resumable work.
 
 ## Work Envelope And Shared Evidence
 
-Maintain one compact logical work envelope for the task. Reuse an existing
-fresh envelope when available. Record the goal, profile, scope, checkpoint,
-selected gates, evidence references, decisions, open questions, proof strategy,
-work state, and next action. The envelope may live in conversation or
-framework-native state for a single session.
+Maintain one compact logical work envelope. Reuse fresh state when available.
+Record the goal, profile, scope, checkpoint, selected gates, evidence,
+decisions, questions, proof strategy, work state, and next action. Single-session
+state may remain in conversation or framework-native storage.
 
 For resumable work, use
 `.local/goated/work-envelopes/<effort-slug>.md` only after confirming
@@ -56,14 +54,11 @@ For resumable work, use
 Do not track envelopes, handoffs, or private session state unless the user
 deliberately promotes them.
 
-Evidence entries are compact references, not copied source content. Record
-enough provenance, freshness, relevance, scope, finding, and confidence for a
-later skill to decide whether reuse is safe. Reuse fresh evidence instead of
-repeating discovery. Refresh it when the source changed, the entry is stale or
-too shallow, contradictory evidence appears, or the intended claim needs
-stronger proof. Project changes invalidate affected pre-change evidence.
-Current source and executable checks outrank summaries for exact or high-risk
-claims.
+Evidence entries are references, not copied source. Record provenance,
+freshness, scope, finding, and confidence. Reuse fresh evidence; refresh it
+after source change, staleness, contradiction, or when a claim needs stronger
+proof. Current source and executable checks outrank summaries for exact or
+high-risk claims.
 
 ## Proportional Onboarding And Continuity
 
@@ -169,19 +164,23 @@ Choose the smallest stable observable test boundary; breadth is not strength.
 Record why equivalent non-TDD proof is needed. Keep refactor-after-green in
 TDD; load full refinement only on request or concrete debt.
 
-Match every material claim to fresh evidence. Do not claim work is complete,
-correct, passing, secure, compatible, or ready when the relevant check was not
-run. State skipped or unavailable checks and residual uncertainty plainly.
-Use the full verification specialist only when complexity, risk, delegation,
-multiple surfaces, or an explicit audit justifies it.
+Match claims to fresh, scoped evidence; changes invalidate affected proof.
+Narrow work verifies directly. Load full verification only for complex,
+high-risk, delegated, multi-surface, or explicitly audited work.
+
+Load standards/spec review when diff size, risk, acceptance, scope, or
+convention uncertainty warrants it. Load security review for changed trust
+boundaries or sensitive auth, data, persistence, execution, dependency, or
+deployment surfaces. Omit ceremonial skip reports.
+
+Specialists reuse envelope evidence and return findings, classifications,
+proof gaps, or route deltas, not repeated discovery or competing closeouts.
 
 ## Communication And Closeout
 
-Give concise progress updates for decisions, blockers, material scope or risk
-changes, and long-running work. Avoid repeated route reports and overlapping
-skill closeouts. Specialist skills update the shared envelope with deltas; the
-main agent produces one consolidated final response containing the outcome,
-important changes, proof, and residual risk.
+Report decisions, blockers, material scope or risk changes, and long-running
+work concisely. Avoid repeated routes and skill closeouts. The main agent
+produces one final outcome with important changes, proof, and residual risk.
 
 This policy does not replace specialist procedures, project-specific rules, or
 host-framework safety controls.

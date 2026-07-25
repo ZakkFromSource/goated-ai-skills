@@ -1,6 +1,6 @@
 ---
 name: verification-before-completion
-description: Use before claiming work is complete, correct, fixed, passing, review-ready, documentation-synced, or successfully verified.
+description: Use the full verification controller for complex, high-risk, delegated, multi-surface, or explicitly audited completion claims; narrow work verifies directly from shared policy.
 metadata:
   goated-category: engineering
 ---
@@ -11,11 +11,25 @@ metadata:
 
 Gate completion, correctness, readiness, and success claims on fresh evidence.
 
-Use this skill at closeout, before commit or PR summaries, before moving to another task, or whenever wording would imply that work is complete, correct, passing, reviewed, fixed, synced, or safe. The goal is not ceremony. The goal is that the final claim matches what was actually checked.
+Fresh, claim-scoped evidence is universal. This skill is the full controller,
+not a mandatory closeout payload for every task.
 
 Treat issue lifecycle actions as completion claims. Closing, archiving, moving, renaming, or marking an issue, ticket, or handoff complete is allowed only when the completion claim is freshly verified and any required user, maintainer, PR, or project-defined review is complete.
 
 This skill does not replace implementation, TDD, standards/spec review, security review, doc sync, or handoff. It verifies the claim being made and routes missing proof to the right workflow.
+
+## Activation
+
+Load the full controller when work is complex, high-risk, delegated,
+multi-surface, or explicitly audited. Those conditions justify reconciling
+multiple claims, evidence sources, specialist deltas, skipped checks, and
+residual risks.
+
+For narrow, low-risk, single-surface work, verify directly from shared policy:
+name the claim, gather fresh matching evidence, report failures or skips, and
+limit wording to what the evidence proves. In standalone use without shared
+policy, apply that compact discipline here without reconstructing the full
+workflow or requiring a formal skip report.
 
 ## Inputs
 
@@ -42,6 +56,8 @@ Fallback: If companion skills, commands, tools, artifacts, or runtime access are
 ## Workflow
 
 1. Name the claim before proving it:
+   - Reuse the work envelope's current claims, selected gates, evidence entries,
+     specialist findings, and known gaps instead of rebuilding task history.
    - Write the claim as a concrete sentence, such as "the focused tests pass", "issue acceptance is covered", "docs are synced", or "the implementation is ready for review".
    - If the next action would close, archive, move, rename, or mark an issue complete, name that lifecycle action as the claim.
    - If the user asked only for a draft, analysis, or best-effort scan, verify only the claims you actually intend to make.
@@ -93,27 +109,26 @@ Fallback: If companion skills, commands, tools, artifacts, or runtime access are
    - Put evidence and limitations next to the claim.
    - If evidence supports only a narrower statement, use the narrower statement.
    - If checks failed or were skipped, say so plainly and name the next useful step.
+   - Update the envelope with verified facts, stale or rejected evidence,
+     remaining gaps, and route deltas. The controlling agent owns one
+     consolidated final response.
 
 ## Output Contract
 
-Return a compact summary shaped like this:
+Return a verification delta shaped like this:
 
 ```markdown
-## Verification Summary
-
 - Claim checked: <completion, correctness, passing, review-ready, docs-synced, or other claim>
 - Status: <verified | partially verified | not verified | failed>
-- Verified facts: <fresh evidence-backed facts>
-- Evidence and commands: <command names and results, source reads, diffs, artifacts, screenshots, CI, manual checks, or "none">
-- Assumptions: <assumptions still present, or "None">
-- Skipped checks: <checks or artifacts skipped with reasons, or "None">
-- Known failures: <failures, warnings that block the claim, rejected evidence, or "None">
-- Residual risk: <remaining uncertainty, or "Low">
+- Evidence delta: <fresh, reused, invalidated, stale, or rejected entries>
+- Gaps: <assumptions, skipped checks, failures, and residual risk>
 - Completion claim: <allowed claim, downgraded claim, or "do not claim completion">
-- Next step: <finish, rerun check, fix failure, route to another skill, or handoff>
+- Route delta: <new proof, review, docs, fix, decision, or handoff gate; omit when unchanged>
 ```
 
-For a very small direct command, a one-line summary is acceptable only when it still names the command or artifact and does not overclaim.
+Do not repeat source content, specialist reports, or the full work envelope. For
+standalone use, include enough scope and evidence detail to keep the result
+auditable without another artifact.
 
 ## Delegation
 

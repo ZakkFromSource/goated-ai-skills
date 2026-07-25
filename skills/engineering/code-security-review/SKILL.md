@@ -1,6 +1,6 @@
 ---
 name: code-security-review
-description: Use when reviewing a diff, PR, patch, source area, auth flow, trust boundary, or data path for security issues and exploitable behavior.
+description: Use when a change crosses or alters a trust boundary or touches auth, permissions, secrets, private data, persistence policy, unsafe execution, dependency security, or another sensitive surface.
 metadata:
   goated-category: engineering
 ---
@@ -12,6 +12,19 @@ metadata:
 Perform a focused static security review of a change or source area before closeout. The goal is to catch high-evidence exploitable risks: broken access control, unsafe trust-boundary crossings, data leaks, auth mistakes, injection paths, unsafe execution, unsafe configuration, secret exposure, and security-relevant reliability bugs.
 
 This is a review gate, not a full security audit, penetration test, dependency audit, compliance review, standards review, or spec review. Absence of findings means no high-evidence issue was found in the reviewed scope; it does not prove the system is secure.
+
+## Activation
+
+Load this skill when a reachable trust boundary changes or the reviewed work
+touches a security-sensitive surface: authentication, authorization,
+permissions, tenant/user isolation, secrets, private or restricted data,
+database/storage policy, untrusted parsing, shell or code execution, network
+egress, dependency/install behavior, deployment security, or privileged
+configuration.
+
+Do not load it for presentation-only, wording-only, or local logic changes with
+no credible trust path or sensitive surface. Record a skip only when its reason
+is material to the route; do not add ceremonial security reports.
 
 ## Inputs
 
@@ -32,13 +45,17 @@ Soft:
 - tdd when security-relevant behavior changed and needs regression proof
 - project-standards-calibration when security, dependency, logging, privacy, or config standards affect review
 - doc-sync when security assumptions, public behavior, config, or threat-model docs may drift
-- verification-before-completion before complete/clean/closeout-ready security claims
+- verification-before-completion for complex, high-risk, delegated,
+  multi-surface, or explicitly audited security closeout
 
 Fallback: If companion skills, git history, security docs, dependency metadata, or checks are unavailable, inspect minimal local evidence, state lower confidence, and report residual risk instead of speculative findings.
 
 ## Workflow
 
 1. Confirm the review scope:
+   - Reuse fresh envelope evidence for the diff, fixed point, intended behavior,
+     guards, and relevant tests. Refresh evidence changed by implementation or
+     too shallow for the security claim.
    - Identify the target-project root and whether the review covers committed changes, staged changes, unstaged changes, a supplied patch, or a named source area.
    - Identify the fixed point. Prefer an explicit user-provided base, PR metadata, branch upstream, merge-base with the likely trunk branch, or the issue-start commit.
    - List changed files before reviewing. In git projects, use an equivalent of `git status --short`, `git diff --name-status <fixed-point>...HEAD`, and working-tree diff commands as appropriate for the requested scope.
@@ -80,50 +97,29 @@ Fallback: If companion skills, git history, security docs, dependency metadata, 
    - Recommend concrete remediation that matches the project architecture and framework defaults.
    - State assumptions, skipped checks, unavailable evidence, and residual risk.
    - Recommend implementation fixes for findings, `doc-sync` for changed security assumptions or public docs, and a fuller audit only when the reviewed scope leaves material unexamined risk.
-   - Use `verification-before-completion` before claiming no high-evidence findings, review completion, security-review readiness, or closeout readiness; for draft reviews or best-effort scans, verify only the claim being made and state residual risk.
+   - Verify findings and no-findings wording against fresh scoped evidence.
+     Load `verification-before-completion` only when complexity, risk,
+     delegation, multiple surfaces, or an explicit audit warrants it.
+   - Emit findings, residual-risk changes, and route deltas into the envelope;
+     do not duplicate the controller's closeout.
 
 ## Output Contract
 
-Return a compact review shaped like this:
+Return one compact security delta:
 
 ```markdown
-## Review Scope
-
-- Fixed point: <ref/commit/source and confidence>
-- Changed files: <paths or summary>
-- Review surface: <auth, data, config, dependencies, execution, storage, UI, or other areas>
-- Evidence inspected: <files, commands, docs, diffs, assumptions>
-- Coverage note: Static review gate only; not full audit coverage.
-
-## Trust-Boundary Map
-
-- Entry points: <paths, routes, commands, jobs, policies, or "none found in scope">
-- Sensitive assets: <data, secrets, permissions, privileged operations, or "none found in scope">
-- Dangerous sinks: <DB, shell, HTML, network, storage, logs, analytics, config, or "none found in scope">
-- Existing guards: <middleware, validation, policies, framework defaults, tests, or "not verified">
-
-## Security Findings
-
-- <No high-evidence security findings detected in the reviewed scope, or one finding per bullet>
-  - Severity: <CRITICAL, HIGH, MEDIUM, or LOW>
-  - Affected path: <path and lines when available>
-  - Category: <CWE/OWASP label when known, or concise vulnerability class>
-  - Evidence: <specific source evidence proving the path>
-  - Impact: <what an attacker or failure mode can do>
-  - Recommended fix: <specific remediation>
-  - Confidence: <high or medium, with a short reason>
-  - False-positive control: <why existing context does not neutralize it, or exact context needed>
-
-## Assumptions And Residual Risk
-
-- <skipped files, unavailable fixed point, missing runtime config, unverified policies, dependency audit gaps, or lower-confidence concerns not reported as findings>
-
-## Next Step
-
-- <fix findings, doc-sync, fuller audit, commit-message, handoff, or none>
+- Scope and coverage: fixed point, changed paths, activated sensitive surface,
+  evidence inspected, and “static review gate; not a full audit.”
+- Trust path: entry point, boundary, asset or sink, and existing guard.
+- Finding: severity, affected path, category, evidence, impact, fix,
+  confidence, and false-positive control; or a scoped no-high-evidence-finding
+  statement.
+- Residual risk and route delta: only changed assumptions, skipped validation,
+  required fixes, documentation impact, fuller-audit need, or other next gate.
 ```
 
-When no findings exist, still include the review scope, trust-boundary map, explicit no-findings statement, assumptions or residual risk, and the coverage note.
+Do not repeat the full work envelope, standards/spec findings, or a separate
+completion summary.
 
 ## Delegation
 
