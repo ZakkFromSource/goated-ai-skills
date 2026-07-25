@@ -1,10 +1,15 @@
 # Skills
 
-This folder contains public skill categories for GOATED AI Skills V1.
+This folder contains the public skill catalog. The current folders preserve the
+completed V1 standalone experience while V2 migration proceeds through scoped
+tickets.
 
 Skill folders and `SKILL.md` files are added only when a specific approved implementation issue calls for them.
 
-Implemented skill folders are intended to be copied, installed, or adapted into a user's chosen agent framework. A skill folder should remain useful after installation without depending on this repo's root files.
+Implemented skill folders may be installed individually or as part of the
+integrated stack described in [`../docs/install.md`](../docs/install.md). A
+skill folder remains useful after individual installation without depending on
+the shared registry or this repo's root files.
 
 ## Categories
 
@@ -39,13 +44,16 @@ Use standard optional frontmatter only when the skill has a real need. `compatib
 
 Dependencies should name hard dependencies, soft dependencies, and graceful fallbacks explicitly in a body `## Dependencies` section. Adapter or compatibility notes should appear only when a specific skill has a real framework caveat; do not recreate generic "usable everywhere" maps.
 
-Before committing skill schema changes, run the local validator from the repo root:
+Before committing skill or integrated-registry changes, run the local validator
+from the repo root:
 
 ```bash
 uv run python scripts/validate_skills.py
 ```
 
-The validator enforces mechanical schema, required-section, forbidden-file, relative-link, and narrow public-boundary checks for implemented skills. It reports docs/example schema drift separately without failing the command when implemented skills pass.
+The validator enforces current skill checks plus the integrated registry's JSON
+Schema and source cross-references. It reports docs/example schema drift
+separately without failing the command when implemented skills pass.
 
 ## Body Sections
 
@@ -63,7 +71,10 @@ Prefer:
 
 Omit sections that add no value. Keep `SKILL.md` under a soft 300-line cap.
 
-Installed skills must be self-contained. They can reference files inside their own skill folder, but they must not require this source repo's `AGENT.md`, `README.md`, or `CONTEXT.md` at runtime.
+Installed skills must retain the task-critical guidance needed when invoked
+alone. They can reference files inside their own skill folder, but they must
+not require the integrated registry or this source repo's `AGENT.md`,
+`README.md`, or `CONTEXT.md` at runtime.
 
 ## Progressive Disclosure Contract
 

@@ -8,7 +8,10 @@ GOATED AI Skills is a public source library for installable, self-contained AI s
 2. skill folders installed into an agent framework;
 3. target projects where installed skills are used.
 
-Current state: this repo contains the completed V1 public-core skill set, PRDs, archived implementation issue handoffs, and implemented skill folders with normalized, standards-first frontmatter. The V1 additions, Superpowers absorption issue set, and final V1 acceptance pass are complete. New skill folders and `SKILL.md` files should be added only when a specific approved implementation issue calls for them.
+Current state: this repo preserves the completed V1 public-core skill set and
+is implementing the approved V2 integrated-stack migration. V1 is preserved by
+the `v1-baseline` Git tag. New skill folders and `SKILL.md` files should be
+added only when a specific approved implementation ticket calls for them.
 
 ## Core Posture
 
@@ -27,8 +30,10 @@ Before changing files in this repo:
 Layer 0: Skill Pack Distribution
 
 - Users clone, download, copy, or adapt skill folders from this repo into Codex, Claude Code, Hermes, OpenCode, or another agent framework.
-- V1 installation is docs-first, not automated.
-- Installed skill folders must be self-contained.
+- V2 recommends a docs-first integrated install using `stack/AGENTS.md` and
+  `stack/goated-stack.yaml`; runtime automation remains out of scope.
+- Individually installed skill folders must retain a compact standalone
+  fallback and must not depend on source-repo root files.
 
 Layer 1: Target Project Onboarding
 
@@ -77,13 +82,19 @@ If subagents are unavailable, run the same workflow sequentially with a narrower
 
 ## Target Project Onboarding Workflow
 
-When the relevant V1 skills are installed into an agent framework, start with the installed `using-goated-ai-skills` router. It will choose the onboarding path, skip unnecessary ceremony for tiny one-off tasks, and point to the next relevant installed skill.
+When the relevant skills are installed into an agent framework, start with the
+installed `using-goated-ai-skills` router. During V2 migration, apply the shared
+integrated policy when installed and preserve standalone fallback behavior.
 
 Durable target-project artifacts should be tracked, including root `CONTEXT.md` and agent artifacts under `docs/agents/`. Handoffs default to OS temp under `goated-handoffs/<project-name>/`; other session/private workspace artifacts should use ignored `.local/`.
 
 ## Target Project Delivery Workflow
 
-When the relevant V1 skills are installed into an agent framework, start with the installed `using-goated-ai-skills` router for delivery work. It will classify the request, apply user and project instruction precedence, and point to the next relevant installed skill instead of requiring agents to memorize the full stack.
+When the relevant skills are installed into an agent framework, start with the
+installed `using-goated-ai-skills` router for delivery work. It will classify
+the request, apply user and project instruction precedence, and point to the
+next relevant installed skill instead of requiring agents to memorize the
+full stack.
 
 ## Public Boundary
 
@@ -96,6 +107,7 @@ Public docs may mention private forks or private deployments generically, but th
 - Keep this repo's docs public-safe.
 - Keep future `SKILL.md` files under a soft 300-line cap.
 - Move detailed examples, checklists, templates, and stack-specific notes into directly linked `references/`.
-- Make installed skills self-contained; they must not need this repo's root `AGENT.md`, `README.md`, or `CONTEXT.md` at runtime.
+- Keep individual skill fallbacks usable; installed skills must not need this
+  repo's root `AGENT.md`, `README.md`, or `CONTEXT.md` at runtime.
 - Make dependency behavior explicit: hard dependency, soft dependency, or graceful fallback.
 - Keep repo adapter files thin and scoped to contribution in this repo.

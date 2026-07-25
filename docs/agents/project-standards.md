@@ -14,10 +14,10 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Keep public main public-safe. | review-enforced | `AGENT.md`, `CONTEXT.md`, `README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | No private names, handles, credentials, client data, sensitive personal domains, or private workflow assumptions. |
 | Use OS temp `goated-handoffs/<project-name>/` for default handoffs and `.local/` for private planning or session-local workspace notes; do not make public behavior depend on either. | review-enforced | `.gitignore`, `AGENT.md`, `README.md`, `docs/install.md`, `skills/agent-workflows/handoff/SKILL.md` | Git ignores `.local/`; OS temp is outside the project workspace and may be cleaned by the OS. Public-safety still requires review judgment. |
 | Add new skill folders and `SKILL.md` files only for a specific approved implementation issue. | review-enforced | `AGENT.md`, `README.md`, `skills/README.md` | Category indexes alone are not approval to create a skill. |
-| Keep V1 installation docs-first; installer automation is out of scope for V1. | review-enforced | `docs/install.md`, `issues/prd-goated-ai-skills-v1-public-core.md`, `docs/adr/0001-v1-runtime-bootstrap-and-adapter-automation.md` | Completed skill folders are copied, installed, or adapted manually. V1 allows narrow compatibility notes only for real per-skill caveats, not runtime bootstrap or automatic activation. |
-| Keep installed skill folders self-contained after installation. | review-enforced | `AGENT.md`, `README.md`, `skills/README.md`, `docs/install.md` | A copied skill can reference its own folder, not this repo's root files. |
+| Recommend the docs-first V2 integrated stack while preserving individual installation; runtime automation remains out of scope. | review-enforced | `docs/install.md`, `stack/AGENTS.md`, `docs/adr/0002-v2-integrated-stack-foundation.md` | Integrated installs preserve a common distribution root for `stack/` and `skills/`. ADR 0001 remains historical and still excludes runtime bootstrap, hooks, installers, and automatic activation. |
+| Keep individually installed skills usable through compact standalone fallbacks. | review-enforced | `AGENT.md`, `CONTEXT.md`, `README.md`, `skills/README.md`, `docs/install.md` | A copied skill can reference its own folder, not the shared registry or this repo's root files. |
 | Use the lean skill schema for implemented `SKILL.md` files. | tooling-enforced | `skills/README.md`, `scripts/validate_skills.py`, `issues/prd-goated-ai-skills-v1-public-core.md`, implemented skill inventory | Required frontmatter includes top-level `name`, top-level `description`, and `metadata.goated-category`. The local validator checks mechanical schema, required sections, forbidden files, relative links, and narrow public-boundary leaks; description quality remains review-enforced. |
-| Use only public V1 categories unless a future public-safe category is intentionally added. | review-enforced | `CONTEXT.md`, `skills/README.md`, `README.md` | Current public categories are `agent-workflows`, `engineering`, and `productivity`. |
+| Use only current public catalog categories unless a future public-safe category is intentionally added. | review-enforced | `CONTEXT.md`, `skills/README.md`, `README.md` | Current public categories are `agent-workflows`, `engineering`, and `productivity`. |
 | Keep `SKILL.md` lean and move detailed examples, prompt templates, anti-pattern catalogs, rationalization tables, stack-specific notes, scripts, and reusable assets into directly linked support files. | review-enforced | `AGENT.md`, `CONTEXT.md`, `skills/README.md`, `issues/prd-goated-ai-skills-v1-public-core.md` | The 300-line threshold is a soft review threshold, not an automated check. `references/`, `scripts/`, and `assets/` are first-class support files when they improve skill capability or keep the main workflow lean. |
 | Make dependency behavior explicit. | review-enforced | `AGENT.md`, `skills/README.md` | Name hard dependencies, soft dependencies, and graceful fallbacks when relevant. |
 | Keep root adapter files thin and routed to `AGENT.md`. | review-enforced | `AGENT.md`, `AGENTS.md`, `CLAUDE.md`, `docs/install.md` | Do not paste full workflows into adapter files. |
@@ -37,9 +37,9 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Existing implemented skills use body `## Dependencies` sections with hard, soft, and fallback entries where relevant. | review-enforced | Implemented `SKILL.md` bodies across all three categories | High |
 | Generic adapter maps are intentionally absent from implemented skill frontmatter. | review-enforced | Implemented `SKILL.md` frontmatter across all three categories; issue `059` schema decision | High |
 | Skill bodies commonly include Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References. | review-enforced | Implemented `SKILL.md` headings across all three categories | High |
-| Issue handoffs use numbered filenames and standard sections such as Parent PRD, Type, What to build, Recommended first reads, Acceptance criteria, Expected proof, Blocked by, and User stories addressed. | review-enforced | `issues/*.md`, `issues/archive/*.md` heading scan | High |
+| V2 ticket handoffs use numbered filenames and stable scope, acceptance, proof, blocker, route, and exclusion sections. | review-enforced | `tickets/*.md`, `tickets/goated-ai-skills-v2-order.md` | High |
 | Completed implementation issues move under `issues/archive/` only after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete. | review-enforced | `CONTEXT.md`; archived issues `001` through `060`; no active numbered implementation handoffs currently | High |
-| Docs-only changes still rely on manual markdown review outside validator-covered skill checks. | review-enforced | Root `pyproject.toml`, `uv.lock`, and `scripts/validate_skills.py` provide local skill validation; no CI, formatter, linter, or test config is present. | High |
+| Docs-only changes still rely on manual markdown review outside validator-covered skill and registry checks. | review-enforced | Root `pyproject.toml`, `uv.lock`, `scripts/validate_skills.py`, and `tests/test_validate_skills.py`; no CI, formatter, or linter config is present. | High |
 
 ## User-Confirmed Preferences
 
@@ -53,8 +53,8 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | --- | --- | --- | --- |
 | Should the repo add markdown linting or formatting tools later? | Tooling would change which docs standards can be called tooling-enforced. | Manual markdown review, plus `scripts/validate_skills.py` for skill schema checks. | Adding automated docs checks, CI, or formatter expectations. |
 | Should category README files list planned skills before implementation? | Planned-skill catalog entries can make incomplete work look installable. | List implemented skills only; avoid making planned issues look complete. | Expanding category indexes or generated catalog docs. |
-| Should future generated indexes be public docs, local-only artifacts, or both? | Generated indexes could affect install docs and repo maintenance. | No generated indexes in V1. | Designing any generated index workflow. |
-| Should installer automation live in this repo or framework-specific adapters later? | It affects V1 out-of-scope boundaries and future ownership. | No installer tooling in V1. | Starting installer automation work. |
+| Should future generated indexes be public docs, local-only artifacts, or both? | Generated indexes could affect install docs and repo maintenance. | The hand-maintained V2 registry is the current catalog; no generated indexes. | Designing any generated index workflow. |
+| Should installer automation live in this repo or framework-specific adapters later? | It affects the current out-of-scope boundary and future ownership. | No installer tooling in the V2 foundation. | Starting installer automation work. |
 
 ## Commands And Checks
 
@@ -64,8 +64,9 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | `git status --short` | Check worktree state before and after edits. | review-enforced | Used during context and standards creation. |
 | `rg --files` | Discover source files without bulk-reading. | review-enforced | Used by `docs/agents/context-matrix.md` and this pass. |
 | `rg -n` targeted scans | Find headings, schema references, and documented standards. | review-enforced | Used for issue and standards discovery. |
-| Manifest/config discovery with `rg --files -g ...` | Check whether build, test, lint, format, or CI entrypoints exist. | review-enforced | Root `pyproject.toml` and `uv.lock` now exist for local validator tooling; no CI, formatter, linter, or test config is present. |
-| `uv run python scripts/validate_skills.py` | Validate implemented skill frontmatter, required sections, forbidden files, relative links, narrow public-boundary leaks, and report-only docs/schema drift. | tooling-enforced | Added by issue `060`; uses `pyyaml` through `uv`. |
+| Manifest/config discovery with `rg --files -g ...` | Check whether build, test, lint, format, or CI entrypoints exist. | review-enforced | Root `pyproject.toml`, `uv.lock`, and `tests/` support local validation; no CI, formatter, or linter config is present. |
+| `uv run python -m unittest discover -s tests -v` | Exercise registry schema and cross-reference behavior. | tooling-enforced | Added by Ticket 001. |
+| `uv run python scripts/validate_skills.py` | Validate implemented skills plus the integrated registry schema, source cross-references, public-boundary checks, and report-only drift. | tooling-enforced | Extended by Ticket 001; uses `pyyaml` and `jsonschema` through `uv`. |
 | Manual markdown review | Validate docs-only changes while no automated docs tooling exists. | review-enforced | Current practical default. |
 
 ## Enforcement Levels
@@ -76,6 +77,8 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 ## Last Updated
 
-- Date: 2026-06-11
+- Date: 2026-07-25
 - Updated by: Codex
-- Evidence used: prior 2026-05-23 standards evidence; archived post-V1 issues `053`, `054`, `055`, `056`, `057`, `058`, `059`, and `060`; local validator tooling in `pyproject.toml`, `uv.lock`, and `scripts/validate_skills.py`; documentation-cleanup implementation; targeted catalog and issue-state scans with `rg -n`; `git status --short`; issue-file heading review.
+- Evidence used: prior standards evidence; V2 spec and Ticket 001; ADR 0002;
+  `stack/`; local validator tooling and tests; targeted catalog, docs-drift,
+  and issue-state scans; fresh validator and unit-test output.

@@ -6,7 +6,9 @@
 
 A compact operating system for serious AI agent work.
 
-GOATED AI Skills is a open source library of installable, framework-agnostic AI skill folders. Copy the skills into Codex, Claude Code, Hermes, OpenCode, or another tool-calling agent workflow, then use them inside your own projects to onboard context, plan work, implement with discipline, review changes, sync docs, provide clean handoff points and more.
+GOATED AI Skills is an open source library of installable, framework-agnostic
+AI skill folders. V2 adds a shared integrated-stack policy and validated
+catalog while preserving the ability to copy one skill.
 
 This is not a prompt dump. It is a reusable skill stack for people who want their agents to work with context, standards, proof, and a bias towards quality over quickly producing slop, whilst still taking advantage of the power of AI assisted engineering.
 
@@ -21,16 +23,19 @@ GOATED AI Skills packages those workflows as self-contained skill folders that c
 ## Quick Start
 
 1. Clone or download this repo.
-2. Choose the skill folders you want from [`skills/`](skills/), or copy the full stack for the complete workflow.
-3. Copy each selected folder intact into your agent framework's skill, command, prompt, or workflow location.
-4. If you prefer, ask your AI agent to follow [`docs/install.md`](docs/install.md) and copy or install the skills for your framework.
-5. Keep each skill's `SKILL.md` together with any local `references/`, `scripts/`, or `assets/`.
-6. Add a short routing note to your agent instructions, such as `AGENTS.md`, `CLAUDE.md`, or another framework-specific adapter. Point it at the installed `using-goated-ai-skills` file, or at [`skills/agent-workflows/using-goated-ai-skills/SKILL.md`](skills/agent-workflows/using-goated-ai-skills/SKILL.md) if the agent will read from this cloned repo directly.
-7. When the stack is installed, start with `using-goated-ai-skills` so your agent can route the request.
+2. For the recommended integrated mode, choose skill folders from
+   [`skills/`](skills/) and copy the shared files under [`stack/`](stack/).
+3. Merge `stack/AGENTS.md` into the instruction artifact your framework
+   applies, and keep the registry, schema, and templates together.
+4. For individual mode, copy one complete skill folder without the shared
+   stack files.
+5. Follow [`docs/install.md`](docs/install.md) for both walkthroughs.
 
 For install details, read [`docs/install.md`](docs/install.md). For the operator manual after installation, read [`docs/how-to-use.md`](docs/how-to-use.md).
 
-V1 is docs-first. There is no installer script, automatic framework detection, runtime bootstrap, hook setup, or generated skill index in the current public core.
+The V2 foundation remains docs-first. There is no installer script, automatic
+framework detection, runtime bootstrap, hook setup, or executable
+orchestration.
 
 ## What You Get
 
@@ -41,7 +46,8 @@ GOATED AI Skills helps agents move from "I can edit files and hope it's what you
 - **Delivery workflows**: clarify intent, draft PRDs, break work into issues, plan architecture, prototype ideas, and write implementation plans.
 - **Implementation discipline**: use test-driven development, focused diagnosis, subagent-aware execution, scoped code refinement, standards review, security review, documentation cleanup, doc sync, and verification before completion claims.
 - **Clean continuity**: write commit messages and handoffs that help the next session resume with clarity.
-- **Portable skill design**: keep installed skills self-contained so they do not depend on this repo's root files at runtime.
+- **Two portable install modes**: share universal behavior in integrated mode
+  while keeping compact standalone fallbacks for individual skills.
 
 ## The Three-Layer Model
 
@@ -63,7 +69,9 @@ Tiny one-off tasks can still stay tiny. The stack is there when the work is cros
 
 ## Skill Catalog
 
-The V1 public core is complete, and all current public-core skills are portable, implemented, self-contained, and normalized for standards-first Agent Skills frontmatter.
+The V1 public core is preserved at the `v1-baseline` Git tag. The active V2
+migration begins with the shared policy, registry, schema, and templates under
+`stack/`.
 
 ### Agent Workflows
 
@@ -163,7 +171,10 @@ using-goated-ai-skills when the route is unclear
 
 This repo is the source library and maintainer workspace for GOATED AI Skills. It is not a project template that users are expected to clone into every codebase.
 
-Once copied into an agent framework, each installed skill folder must carry the guidance it needs inside its own folder. Installed skills should not require this repo's root [`AGENT.md`](AGENT.md), [`README.md`](README.md), or [`CONTEXT.md`](CONTEXT.md) at runtime.
+An individually copied skill must retain enough task-critical guidance to work
+without the integrated registry or this repo's root [`AGENT.md`](AGENT.md),
+[`README.md`](README.md), or [`CONTEXT.md`](CONTEXT.md). Integrated installs
+share universal behavior through `stack/AGENTS.md`.
 
 Target projects are the user's downstream projects where installed skills do the work: onboarding, planning, architecture, implementation, review, docs, and handoff.
 
@@ -179,6 +190,7 @@ uv.lock                Locked Python tooling dependencies.
 scripts/               Source-repo maintenance scripts, including skill validation.
 docs/install.md        Docs-first installation and adaptation guidance.
 docs/how-to-use.md     Human operator manual for the installed skill stack.
+stack/                 V2 shared policy, registry, schema, and state templates.
 docs/adr/              Architectural decision records.
 docs/assets/           Public README and documentation assets.
 skills/                Public skill categories and implemented skill folders.

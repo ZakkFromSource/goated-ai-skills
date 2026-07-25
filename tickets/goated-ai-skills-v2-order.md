@@ -11,8 +11,9 @@ plan.
 
 ## Generated Tickets
 
-- `tickets/001-establish-v2-integrated-stack-foundation.md` — Establish The V2
-  Integrated-Stack Foundation (AFK; Work state: Not started; Blocked by: None)
+- `tickets/archive/001-establish-v2-integrated-stack-foundation.md` — Establish
+  The V2 Integrated-Stack Foundation (AFK; Work state: Completed; Blocked by:
+  None)
 - `tickets/002-route-work-through-adaptive-gates.md` — Route Work Through
   Adaptive Gates (AFK; Work state: Not started; Blocked by: Ticket 001)
 - `tickets/003-onboard-and-resume-projects-proportionally.md` — Onboard And
@@ -45,7 +46,7 @@ plan.
 
 ## Recommended Order
 
-1. `tickets/001-establish-v2-integrated-stack-foundation.md`
+1. `tickets/archive/001-establish-v2-integrated-stack-foundation.md`
    - Why now: establishes the shared policy, registry, validation, and V1
      baseline used by every V2 slice.
 2. `tickets/002-route-work-through-adaptive-gates.md`

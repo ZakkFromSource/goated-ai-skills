@@ -1,0 +1,340 @@
+schema_version: 1.0.0
+stack_version: 2.0.0
+
+contracts:
+  shared_policy: 1.0.0
+  work_envelope: 1.0.0
+  evidence_entry: 1.0.0
+
+route_signals:
+  - name: scope-changed
+    description: The agreed work scope or action reach changed materially.
+  - name: evidence-stale
+    description: Previously collected evidence no longer supports the next claim.
+  - name: security-impact
+    description: Work discovered or changed a trust boundary or security-sensitive surface.
+  - name: documentation-impact
+    description: Durable behavior, interfaces, configuration, or operator expectations changed.
+  - name: refinement-debt
+    description: Concrete readability or structure debt remains after behavior is proven.
+
+skills:
+  - name: agent-instructions-integrator
+    path: skills/agent-workflows/agent-instructions-integrator/SKILL.md
+    category: agent-workflows
+    aliases: []
+    workflow_role: integration
+    domains: [software, documentation, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed]
+    emits_signals: [documentation-impact]
+
+  - name: context-matrix-map
+    path: skills/agent-workflows/context-matrix-map/SKILL.md
+    category: agent-workflows
+    aliases: []
+    workflow_role: onboarding
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [evidence-stale]
+    emits_signals: [documentation-impact]
+
+  - name: framework-agnostic-skill-creator
+    path: skills/agent-workflows/framework-agnostic-skill-creator/SKILL.md
+    category: agent-workflows
+    aliases: []
+    workflow_role: skill-authoring
+    domains: [software, documentation, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [documentation-impact, refinement-debt]
+
+  - name: handoff
+    path: skills/agent-workflows/handoff/SKILL.md
+    category: agent-workflows
+    aliases: []
+    workflow_role: continuity
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: []
+
+  - name: project-context-calibration
+    path: skills/agent-workflows/project-context-calibration/SKILL.md
+    category: agent-workflows
+    aliases: []
+    workflow_role: onboarding
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [evidence-stale]
+    emits_signals: [documentation-impact]
+
+  - name: project-standards-calibration
+    path: skills/agent-workflows/project-standards-calibration/SKILL.md
+    category: agent-workflows
+    aliases: []
+    workflow_role: onboarding
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [evidence-stale]
+    emits_signals: [documentation-impact]
+
+  - name: session-start-progressive-disclosure
+    path: skills/agent-workflows/session-start-progressive-disclosure/SKILL.md
+    category: agent-workflows
+    aliases: []
+    workflow_role: orientation
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [scope-changed, evidence-stale]
+
+  - name: using-goated-ai-skills
+    path: skills/agent-workflows/using-goated-ai-skills/SKILL.md
+    category: agent-workflows
+    aliases: []
+    workflow_role: router
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact, documentation-impact, refinement-debt]
+    emits_signals: []
+
+  - name: architecture-design-map
+    path: skills/engineering/architecture-design-map/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: architecture-mapping
+    domains: [software, documentation]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [documentation-impact]
+
+  - name: code-refinement
+    path: skills/engineering/code-refinement/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: refinement
+    domains: [software]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [refinement-debt]
+    emits_signals: [documentation-impact]
+
+  - name: code-security-review
+    path: skills/engineering/code-security-review/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: security-review
+    domains: [software]
+    profile_eligibility: [standard, full]
+    accepts_signals: [security-impact, scope-changed, evidence-stale]
+    emits_signals: [security-impact, scope-changed]
+
+  - name: commit-message
+    path: skills/engineering/commit-message/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: closeout
+    domains: [software, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed]
+    emits_signals: []
+
+  - name: diagnose
+    path: skills/engineering/diagnose/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: diagnosis
+    domains: [software, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact]
+    emits_signals: [scope-changed, evidence-stale, security-impact]
+
+  - name: doc-sync
+    path: skills/engineering/doc-sync/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: documentation-sync
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [documentation-impact, scope-changed, evidence-stale]
+    emits_signals: [scope-changed]
+
+  - name: documentation-cleanup
+    path: skills/engineering/documentation-cleanup/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: documentation-maintenance
+    domains: [documentation]
+    profile_eligibility: [standard, full]
+    accepts_signals: [documentation-impact, scope-changed, evidence-stale]
+    emits_signals: [documentation-impact, refinement-debt]
+
+  - name: documentation-writer
+    path: skills/engineering/documentation-writer/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: documentation-authoring
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [documentation-impact, scope-changed, evidence-stale]
+    emits_signals: [documentation-impact]
+
+  - name: grill-with-docs
+    path: skills/engineering/grill-with-docs/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: clarification
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [scope-changed, evidence-stale]
+
+  - name: improve-codebase-architecture
+    path: skills/engineering/improve-codebase-architecture/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: architecture-review
+    domains: [software]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale, refinement-debt]
+    emits_signals: [scope-changed, documentation-impact, refinement-debt]
+
+  - name: plan-codebase-architecture
+    path: skills/engineering/plan-codebase-architecture/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: architecture-design
+    domains: [software]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact]
+    emits_signals: [scope-changed, security-impact, documentation-impact]
+
+  - name: prd-to-issues
+    path: skills/engineering/prd-to-issues/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: ticketing
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [scope-changed, documentation-impact]
+
+  - name: prototype
+    path: skills/engineering/prototype/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: prototyping
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact]
+    emits_signals: [scope-changed, evidence-stale, security-impact]
+
+  - name: receiving-code-review
+    path: skills/engineering/receiving-code-review/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: review-response
+    domains: [software]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact, refinement-debt]
+    emits_signals: [scope-changed, security-impact, refinement-debt]
+
+  - name: standards-and-spec-review
+    path: skills/engineering/standards-and-spec-review/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: conformance-review
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [scope-changed, documentation-impact, refinement-debt]
+
+  - name: subagent-driven-development
+    path: skills/engineering/subagent-driven-development/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: delegated-implementation
+    domains: [software, documentation, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact, documentation-impact, refinement-debt]
+    emits_signals: [scope-changed, evidence-stale, security-impact, documentation-impact, refinement-debt]
+
+  - name: tdd
+    path: skills/engineering/tdd/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: behavior-proof
+    domains: [software]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact]
+    emits_signals: [scope-changed, security-impact, documentation-impact, refinement-debt]
+
+  - name: verification-before-completion
+    path: skills/engineering/verification-before-completion/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: verification
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact, documentation-impact, refinement-debt]
+    emits_signals: [evidence-stale, scope-changed]
+
+  - name: write-a-prd
+    path: skills/engineering/write-a-prd/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: specification
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [scope-changed, documentation-impact]
+
+  - name: writing-plans
+    path: skills/engineering/writing-plans/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: implementation-planning
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact]
+    emits_signals: [scope-changed, security-impact, documentation-impact]
+
+  - name: caveman
+    path: skills/productivity/caveman/SKILL.md
+    category: productivity
+    aliases: []
+    workflow_role: response-style
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: []
+    emits_signals: []
+
+  - name: goated-prompt
+    path: skills/productivity/goated-prompt/SKILL.md
+    category: productivity
+    aliases: []
+    workflow_role: prompt-crafting
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [scope-changed]
+
+  - name: grill-me
+    path: skills/productivity/grill-me/SKILL.md
+    category: productivity
+    aliases: []
+    workflow_role: clarification
+    domains: [research, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed]
+    emits_signals: [scope-changed]
+
+  - name: learning-capture
+    path: skills/productivity/learning-capture/SKILL.md
+    category: productivity
+    aliases: []
+    workflow_role: knowledge-capture
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [standard, full]
+    accepts_signals: [scope-changed, evidence-stale]
+    emits_signals: [documentation-impact]

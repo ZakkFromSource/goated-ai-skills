@@ -33,20 +33,20 @@ current individual-skill experience.
 
 ## Acceptance Criteria
 
-- [ ] A lightweight V1 baseline or release reference is recorded before
+- [x] A lightweight V1 baseline or release reference is recorded before
       breaking V2 migration changes.
-- [ ] A V2 ADR explicitly supersedes the conflicting installation and
+- [x] A V2 ADR explicitly supersedes the conflicting installation and
       self-containment decisions in ADR 0001.
-- [ ] `stack/AGENTS.md` defines shared V2 behaviour without copying specialist
+- [x] `stack/AGENTS.md` defines shared V2 behaviour without copying specialist
       procedures.
-- [ ] `stack/goated-stack.yaml` represents the current integrated catalog using
+- [x] `stack/goated-stack.yaml` represents the current integrated catalog using
       a versioned portable contract.
-- [ ] `stack/schemas/stack-registry.schema.json` validates the registry.
-- [ ] Human-readable work-envelope and evidence-entry templates exist without
+- [x] `stack/schemas/stack-registry.schema.json` validates the registry.
+- [x] Human-readable work-envelope and evidence-entry templates exist without
       introducing separate JSON Schemas.
-- [ ] Validation covers registry structure and cross-references while all
+- [x] Validation covers registry structure and cross-references while all
       current skill checks continue to pass.
-- [ ] Individual skill installation remains documented and usable.
+- [x] Individual skill installation remains documented and usable.
 
 ## Expected Proof
 

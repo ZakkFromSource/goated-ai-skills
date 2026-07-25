@@ -23,6 +23,8 @@ from pathlib import Path
 from urllib.parse import unquote
 
 import yaml
+from jsonschema import Draft202012Validator
+from jsonschema.exceptions import SchemaError
 
 
 # Public V1 skill folders live under exactly these category names.
@@ -444,6 +446,232 @@ def scan_docs_schema_drift(repo: Path, skill_files: set[Path]) -> list[Finding]:
     return drift
 
 
+def load_mapping(path: Path, label: str) -> tuple[dict[str, object] | None, list[Finding]]:
+    """Load a YAML or JSON mapping and return readable parse findings."""
+
+    if not path.exists():
+        return None, [Finding(label, "missing required file")]
+
+    try:
+        loaded = yaml.safe_load(read_text(path))
+    except yaml.YAMLError as exc:
+        return None, [Finding(label, f"YAML or JSON parse error: {exc}")]
+
+    if not isinstance(loaded, dict):
+        return None, [Finding(label, "document must be a mapping")]
+    return loaded, []
+
+
+def format_schema_path(path_parts: object) -> str:
+    """Format a JSON Schema error path for a human-readable finding."""
+
+    parts = list(path_parts)
+    if not parts:
+        return "<root>"
+    return ".".join(str(part) for part in parts)
+
+
+def validate_registry(repo: Path) -> list[Finding]:
+    """Validate the integrated-stack registry schema and source cross-references."""
+
+    registry_path = repo / "stack" / "goated-stack.yaml"
+    schema_path = repo / "stack" / "schemas" / "stack-registry.schema.json"
+    registry_label = "stack/goated-stack.yaml"
+    schema_label = "stack/schemas/stack-registry.schema.json"
+
+    registry, registry_errors = load_mapping(registry_path, registry_label)
+    schema, schema_errors = load_mapping(schema_path, schema_label)
+    errors = registry_errors + schema_errors
+    if registry is None or schema is None:
+        return errors
+
+    try:
+        Draft202012Validator.check_schema(schema)
+    except SchemaError as exc:
+        errors.append(Finding(schema_label, f"invalid JSON Schema: {exc.message}"))
+        return errors
+
+    validator = Draft202012Validator(schema)
+    schema_findings = sorted(
+        validator.iter_errors(registry),
+        key=lambda finding: [str(part) for part in finding.absolute_path],
+    )
+    for finding in schema_findings:
+        location = format_schema_path(finding.absolute_path)
+        errors.append(
+            Finding(
+                registry_label,
+                f"registry schema violation at {location}: {finding.message}",
+            )
+        )
+
+    # Cross-reference checks need the schema-guaranteed collection shapes.
+    # Avoid secondary exceptions and noisy findings when structure is invalid.
+    if schema_findings:
+        return errors
+
+    signal_entries = registry["route_signals"]
+    skill_entries = registry["skills"]
+    assert isinstance(signal_entries, list)
+    assert isinstance(skill_entries, list)
+
+    defined_signals: set[str] = set()
+    for signal in signal_entries:
+        assert isinstance(signal, dict)
+        signal_name = signal["name"]
+        assert isinstance(signal_name, str)
+        if signal_name in defined_signals:
+            errors.append(Finding(registry_label, f"duplicate route signal: {signal_name}"))
+        defined_signals.add(signal_name)
+
+    canonical_names: set[str] = set()
+    alias_owners: dict[str, str] = {}
+    registered_paths: set[str] = set()
+    for skill in skill_entries:
+        assert isinstance(skill, dict)
+        name = skill["name"]
+        path_value = skill["path"]
+        category = skill["category"]
+        aliases = skill["aliases"]
+        accepts_signals = skill["accepts_signals"]
+        emits_signals = skill["emits_signals"]
+        assert isinstance(name, str)
+        assert isinstance(path_value, str)
+        assert isinstance(category, str)
+        assert isinstance(aliases, list)
+        assert isinstance(accepts_signals, list)
+        assert isinstance(emits_signals, list)
+
+        if name in canonical_names:
+            errors.append(Finding(registry_label, f"duplicate canonical skill name: {name}"))
+        canonical_names.add(name)
+
+        if path_value in registered_paths:
+            errors.append(Finding(registry_label, f"duplicate registered skill path: {path_value}"))
+        registered_paths.add(path_value)
+
+        for alias in aliases:
+            assert isinstance(alias, str)
+            existing_owner = alias_owners.get(alias)
+            if existing_owner is not None:
+                errors.append(
+                    Finding(
+                        registry_label,
+                        f"alias {alias!r} resolves to both {existing_owner!r} and {name!r}",
+                    )
+                )
+            alias_owners[alias] = name
+
+        for signal in accepts_signals:
+            assert isinstance(signal, str)
+            if signal not in defined_signals:
+                errors.append(
+                    Finding(
+                        registry_label,
+                        f"skill accepts undefined route signal: {signal}",
+                    )
+                )
+        for signal in emits_signals:
+            assert isinstance(signal, str)
+            if signal not in defined_signals:
+                errors.append(
+                    Finding(
+                        registry_label,
+                        f"skill emits undefined route signal: {signal}",
+                    )
+                )
+
+        skill_path = repo / Path(path_value)
+        if not skill_path.exists():
+            errors.append(Finding(registry_label, f"referenced skill does not exist: {path_value}"))
+            continue
+
+        path_parts = Path(path_value).parts
+        path_category = path_parts[1]
+        if category != path_category:
+            errors.append(
+                Finding(
+                    registry_label,
+                    f"registry category {category!r} does not match skill path category "
+                    f"{path_category!r}",
+                )
+            )
+
+        frontmatter, _, frontmatter_errors = split_frontmatter(
+            read_text(skill_path),
+            path_value,
+        )
+        errors.extend(frontmatter_errors)
+        if frontmatter is None:
+            continue
+
+        frontmatter_name = frontmatter.get("name")
+        if frontmatter_name != name:
+            errors.append(
+                Finding(
+                    registry_label,
+                    f"registry name {name!r} does not match skill frontmatter name "
+                    f"{frontmatter_name!r}",
+                )
+            )
+        metadata = frontmatter.get("metadata")
+        frontmatter_category = (
+            metadata.get("goated-category") if isinstance(metadata, dict) else None
+        )
+        if frontmatter_category != category:
+            errors.append(
+                Finding(
+                    registry_label,
+                    f"registry category {category!r} does not match skill frontmatter "
+                    f"category {frontmatter_category!r}",
+                )
+            )
+
+    for alias, owner in sorted(alias_owners.items()):
+        if alias in canonical_names:
+            errors.append(
+                Finding(
+                    registry_label,
+                    f"alias {alias!r} for {owner!r} collides with a canonical skill name",
+                )
+            )
+
+    implemented_skills, _ = find_skill_files(repo)
+    implemented_paths = {relative(path, repo) for path in implemented_skills}
+    for missing_path in sorted(implemented_paths - registered_paths):
+        errors.append(
+            Finding(
+                registry_label,
+                f"implemented skill is missing from registry: {missing_path}",
+            )
+        )
+
+    return errors
+
+
+def registry_summary(repo: Path) -> tuple[int, int, list[str]]:
+    """Return catalog size, shared-policy words, and skills over 1,500 words."""
+
+    registry, errors = load_mapping(
+        repo / "stack" / "goated-stack.yaml",
+        "stack/goated-stack.yaml",
+    )
+    if registry is None or errors:
+        return 0, 0, []
+
+    skills = registry.get("skills", [])
+    assert isinstance(skills, list)
+    policy_path = repo / "stack" / "AGENTS.md"
+    policy_words = len(read_text(policy_path).split()) if policy_path.exists() else 0
+    over_budget_paths: list[str] = []
+    for skill in skills:
+        assert isinstance(skill, dict)
+        skill_path = repo / str(skill["path"])
+        if skill_path.exists() and len(read_text(skill_path).split()) > 1500:
+            over_budget_paths.append(str(skill["path"]))
+    return len(skills), policy_words, over_budget_paths
+
+
 def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Finding], int]:
     """Run all validation phases and return grouped findings."""
 
@@ -468,6 +696,10 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
 
     # Public-boundary checks scan the whole public text surface, not just skills.
     errors.extend(scan_public_path_leaks(repo))
+
+    # The integrated registry is validated without changing the individual-skill
+    # checks above, so both V2 installation modes use one command.
+    errors.extend(validate_registry(repo))
 
     # Docs drift is informational in issue 060, so it is returned separately.
     drift = scan_docs_schema_drift(repo, set(skill_files))
@@ -494,6 +726,13 @@ def main() -> int:
         raise SystemExit(f"Repo path does not exist or is not a directory: {repo}")
 
     errors, review_notes, drift, skill_count = validate_skills(repo)
+    registry_count, policy_words, skills_over_budget = registry_summary(repo)
+    if 800 <= policy_words <= 1200:
+        policy_budget_status = "within 800-1,200 target"
+    elif policy_words < 800:
+        policy_budget_status = "below 800-1,200 target"
+    else:
+        policy_budget_status = "above 800-1,200 target"
 
     # Only blocking errors affect the exit code. Human-review notes and docs
     # drift are visible, but they do not fail the command by design.
@@ -502,6 +741,31 @@ def main() -> int:
         print_findings("Blocking errors", errors)
     else:
         print(f"GOATED skill validation passed for {skill_count} implemented skills.")
+
+    if errors:
+        print(
+            f"Integrated registry checked with {registry_count} catalog entries; "
+            f"shared policy is {policy_words} words ({policy_budget_status})."
+        )
+    else:
+        print(
+            f"Integrated registry validation passed for {registry_count} catalog entries."
+        )
+        print(
+            f"Word-budget report: shared policy {policy_words} words "
+            f"({policy_budget_status})."
+        )
+        if skills_over_budget:
+            print(
+                "Skills above the 1,500-word decomposition threshold: "
+                + ", ".join(skills_over_budget)
+            )
+        else:
+            print("Skills above the 1,500-word decomposition threshold: 0")
+        print(
+            "Per-type soft targets remain review-only until registry roles are "
+            "assigned budget classes."
+        )
 
     if review_notes:
         print_findings("Human-review notes", review_notes)

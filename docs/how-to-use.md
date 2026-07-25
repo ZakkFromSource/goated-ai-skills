@@ -1,6 +1,8 @@
 # How To Use GOATED AI Skills
 
-This is the user guide for running GOATED AI Skills after you have copied, installed, or adapted the skill folders into an agent framework.
+This is the user guide for running GOATED AI Skills after installation. The V2
+foundation supports a recommended integrated mode and a preserved individual
+skill mode.
 
 For installation mechanics, start with [install.md](install.md). This guide picks up after that: how to route work, how the two main pipelines fit together, and what each skill contributes.
 
@@ -12,13 +14,19 @@ GOATED AI Skills has three distinct contexts:
 - **Installed skills**: copied skill folders inside an agent framework such as Codex, Claude Code, Hermes, OpenCode, or another tool-calling environment.
 - **Target project**: the user's actual project where installed skills help with onboarding, planning, implementation, review, documentation, and handoff.
 
-Do not treat the GOATED AI Skills repository as a project template. The normal V1 path is docs-first: copy or adapt completed skill folders into your agent framework, keep each skill folder intact, and let the installed skills operate inside your target project.
+Do not treat the GOATED AI Skills repository as a project template. In
+integrated mode, install selected skill folders with the shared policy,
+registry, schema, and templates under `stack/`. In individual mode, copy one
+complete skill folder and use its standalone guidance.
 
-Current V1 notes:
+Current migration notes:
 
 - Implemented skills use standards-first Agent Skills frontmatter with GOATED category metadata.
-- Installed skills should remain self-contained after copying.
-- Runtime bootstrap, automatic activation, generated plugin manifests, hook setup, installer scripts, and framework detection automation are out of scope for V1.
+- Individually installed skills retain compact standalone behavior.
+- Integrated installs share universal behavior through `stack/AGENTS.md`.
+- Runtime bootstrap, automatic activation, generated plugin manifests, hook
+  setup, installer scripts, and framework detection automation remain out of
+  scope.
 - Tiny one-off tasks can skip the full workflow when the request is small, obvious, and low risk.
 
 ## The Full Stack
@@ -453,7 +461,8 @@ These references are for humans maintaining, installing, or adapting the library
 - [README.md](../README.md) - public distribution model, three-layer use model, and pipeline summaries.
 - [CONTEXT.md](../CONTEXT.md) - domain language for source repo, installed skills, target projects, artifacts, and operating principles.
 - [install.md](install.md) - docs-first installation and adaptation guidance.
-- [ADR 0001](adr/0001-v1-runtime-bootstrap-and-adapter-automation.md) - accepted V1 decision against runtime bootstrap and adapter automation.
+- [ADR 0001](adr/0001-v1-runtime-bootstrap-and-adapter-automation.md) - historical V1 decision against runtime bootstrap and adapter automation.
+- [ADR 0002](adr/0002-v2-integrated-stack-foundation.md) - V2 integrated-stack installation and standalone fallback boundary.
 - [skills/README.md](../skills/README.md) - skill schema, categories, progressive disclosure, and delegation conventions.
 - [Agent Workflows README](../skills/agent-workflows/README.md) - implemented agent-workflow skills.
 - [Engineering README](../skills/engineering/README.md) - implemented engineering skills and closeout gate guidance.

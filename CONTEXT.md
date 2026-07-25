@@ -4,7 +4,10 @@ GOATED AI Skills is a public source library for reusable, installable AI skill f
 
 ## Domain Language
 
-These definitions are normative for this source repo. If another public doc uses these terms differently, treat that as documentation drift to resolve. These definitions clarify the current V1 model; they do not introduce new product scope.
+These definitions are normative for this source repo. If another public doc
+uses these terms differently, treat that as documentation drift to resolve.
+V1 terms describe the preserved historical release; V2 terms describe the
+active integrated-stack migration.
 
 ### Project Boundaries
 
@@ -26,6 +29,25 @@ These definitions are normative for this source repo. If another public doc uses
 - **Target Project Delivery** - moving one target-project change from clarified intent through planning, architecture blueprinting when useful, implementation, verification, documentation, and handoff.
 - **Public core workflow** - the portable V1 workflow set intended for public main, spanning onboarding and delivery without private project assumptions.
 - **Tiny one-off task** - a small, obvious, low-risk request that does not need full onboarding or planning ceremony, such as a typo fix, one-line rename, or direct command the user already specified.
+
+### V2 Integrated Stack Model
+
+- **Integrated stack** - the recommended V2 installation mode: selected skill
+  folders plus a shared policy, portable registry, registry schema, and
+  human-readable state templates under `stack/`.
+- **Shared policy** - universal installed-stack behavior distributed from
+  `stack/AGENTS.md` and merged into the instruction artifact the target
+  framework actually applies.
+- **Stack registry** - the versioned machine-readable catalog at
+  `stack/goated-stack.yaml`; it owns cross-skill metadata but not specialist
+  procedures.
+- **Standalone fallback** - the compact activation, specialist procedure,
+  evidence, safety, and result guidance that keeps an individually copied skill
+  useful without the integrated policy or registry.
+- **Work envelope** - compact logical task state shared across selected skills;
+  it is not a mandatory tracked artifact.
+- **Evidence entry** - a fresh, scoped reference to source or executable
+  evidence that downstream skills can reuse without copying source content.
 
 ### Skill Anatomy
 
@@ -71,7 +93,9 @@ These definitions are normative for this source repo. If another public doc uses
 
 - **Progressive disclosure** - loading the smallest useful context first, then deeper references only when the task requires them.
 - **Support-file bias** - future agents should not default against `references/`, `scripts/`, or `assets/`. Keep `SKILL.md` lean, but create support files whenever they genuinely improve skill capability, reuse, verification, or installability.
-- **Self-contained skill** - an installed skill folder that carries the workflow guidance and local references it needs after copying, without requiring this repo's root files at runtime.
+- **Self-contained skill** - in V1, a folder carrying its complete workflow
+  guidance; in V2 individual mode, a folder retaining a compact standalone
+  fallback without requiring the shared registry or this repo's root files.
 - **Public-safe** - suitable for public main because it contains no private project names, handles, credentials, client data, sensitive personal domains, or private workflow assumptions.
 - **Public core** - portable skills and docs safe for public use across compatible agents and target projects.
 - **Private adaptation** - a private, domain-specific, or organization-specific extension that follows GOATED conventions outside public main.
@@ -109,9 +133,10 @@ These definitions guide architecture-related skills and target-project setup. GO
 - **Replace-don't-layer testing** - after deepening, prefer tests at the new module interface and delete obsolete tests that only describe the old shallow internals.
 - **Alternative interface design** - when a deepening candidate matters, compare meaningfully different interface designs before choosing: for example a minimal interface, a flexible interface, a caller-optimized interface, or a ports-and-adapters design.
 
-## Public V1 Scope
+## Public Catalog Scope
 
-V1 includes only active public categories:
+The preserved V1 catalog and initial V2 registry include only these public
+categories:
 
 - `agent-workflows`
 - `engineering`

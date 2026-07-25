@@ -1,8 +1,52 @@
 # Install And Adapt GOATED AI Skills
 
-GOATED AI Skills is distributed as a public source library of skill folders. V1 installation is docs-first: copy, install, or adapt the skill folders into the agent framework you already use.
+GOATED AI Skills supports an integrated V2 installation and individual skill
+installation. Both remain docs-first in this foundation release: copy or adapt
+the files into the agent framework you already use.
 
-Only completed skill folders are installable. V1 skill implementation issues are complete or explicitly deferred; future skill additions require a new approved issue or PRD. This document defines the intended installation model for V1.
+The integrated stack is the recommended V2 mode. Individual installation
+remains supported when you need one specialist workflow or cannot apply shared
+instructions.
+
+## Integrated Stack Installation
+
+Registry `path` values are portable package paths resolved from one GOATED
+distribution root. That root contains sibling `skills/` and `stack/`
+directories.
+
+1. Create or choose a distribution root such as `<goated-root>/`.
+2. Copy `stack/` and the selected complete folders under `skills/` into that
+   root without changing their package-relative paths. For example,
+   `<goated-root>/skills/engineering/tdd/SKILL.md` matches the registry path
+   `skills/engineering/tdd/SKILL.md`.
+3. Configure your framework to discover skills from `<goated-root>/skills`, or
+   add a thin framework adapter that maps the registry's package paths to the
+   framework's installed skill locations.
+4. Use `<goated-root>/stack/AGENTS.md` as the shared GOATED
+   policy. Merge it into the instruction artifact your framework actually
+   applies; do not assume every framework reads `AGENTS.md`.
+5. Keep stronger user, organization, and target-project instructions when
+   merging the shared policy.
+6. Run `uv run python scripts/validate_skills.py` in this source checkout before
+   distributing a changed catalog.
+
+The integrated policy owns shared behavior, the registry owns cross-skill
+metadata, and each installed `SKILL.md` owns its specialist procedure. The
+registry is data for routing and validation; it is not an installer or runtime.
+Its paths describe the portable distribution layout, not a universal
+framework-native filesystem location.
+
+## Individual Skill Installation
+
+1. Choose one folder under `skills/<category>/<skill-name>/`.
+2. Copy the whole folder, including `SKILL.md` and any `references/`,
+   `scripts/`, or `assets/`.
+3. Put it where your framework discovers reusable skills or instructions.
+4. Invoke it directly or route to it from a thin framework instruction.
+
+An individual skill remains usable without `stack/AGENTS.md`,
+`stack/goated-stack.yaml`, or this repository's root files. During the staged
+V2 migration, current skill folders retain their standalone V1 behavior.
 
 ## Three Layers
 
@@ -23,15 +67,19 @@ Layer 2: Target Project Delivery
 
 - Use the installed delivery skills inside the target project for PRDs, architecture plans, issues, prototypes, just-in-time implementation plans, TDD, review, security checks, docs, commit messages, and handoffs.
 
-## Generic Install Pattern
+## Generic Adaptation Pattern
 
-1. Choose the skill folders you want from `skills/`.
-2. Copy those folders into your agent framework's skill or workflow location.
-3. Keep each skill folder intact, including its `SKILL.md` and any `references/`, `scripts/`, or `assets/`.
-4. If your agent framework needs a routing file, add a short instruction that tells it when to use the installed skills.
-5. Do not require the copied skills to load this repo's root `AGENT.md`, `README.md`, or `CONTEXT.md`.
+1. Keep each copied skill folder intact.
+2. If your framework needs a routing file, add a short instruction that points
+   to the installed skills.
+3. For integrated installs, merge the shared policy into that framework
+   instruction instead of copying specialist procedures into it.
+4. Do not require copied skills to load this repo's root `AGENT.md`,
+   `README.md`, or `CONTEXT.md`.
 
-Installed skills should be self-contained. They may reference files inside their own skill folder, but should not depend on this source repo at runtime.
+Installed skills should retain a compact standalone fallback. They may
+reference files inside their own skill folder, but should not depend on this
+source repo at runtime.
 
 Use `using-goated-ai-skills` as the portable router when an installed stack needs to choose the right GOATED workflow. It is docs-first guidance for skill selection, not runtime bootstrap, hook installation, automatic loading, or adapter manifest generation.
 
@@ -79,10 +127,11 @@ docs/architecture/                 tracked feature-specific architecture bluepri
 
 Durable project facts should be tracked. Temporary handoffs should live outside the workspace in OS temp unless the user explicitly requests a tracked handoff. Session-private workspace artifacts should be ignored.
 
-## Out Of Scope For V1
+## Out Of Scope For The V2 Foundation
 
 - Installer scripts.
 - Automatic framework detection.
 - Generated skill indexes.
 - Compatibility testing across every agent framework.
 - Adapter repair automation.
+- Runtime hooks, automatic loading, or Factory orchestration.

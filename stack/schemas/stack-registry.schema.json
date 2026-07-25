@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://goated-ai-skills.dev/schemas/stack-registry.schema.json",
+  "title": "GOATED Integrated Stack Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "stack_version",
+    "contracts",
+    "route_signals",
+    "skills"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "stack_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "shared_policy",
+        "work_envelope",
+        "evidence_entry"
+      ],
+      "properties": {
+        "shared_policy": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "work_envelope": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "evidence_entry": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        }
+      }
+    },
+    "route_signals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "description"
+        ],
+        "properties": {
+          "name": {
+            "$ref": "#/$defs/portableName"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/skill"
+      }
+    }
+  },
+  "$defs": {
+    "portableName": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "path",
+        "category",
+        "aliases",
+        "workflow_role",
+        "domains",
+        "profile_eligibility",
+        "accepts_signals",
+        "emits_signals"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/portableName"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^skills/(agent-workflows|engineering|productivity)/[a-z0-9]+(?:-[a-z0-9]+)*/SKILL\\.md$"
+        },
+        "category": {
+          "enum": [
+            "agent-workflows",
+            "engineering",
+            "productivity"
+          ]
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/portableName"
+          }
+        },
+        "workflow_role": {
+          "$ref": "#/$defs/portableName"
+        },
+        "domains": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "software",
+              "research",
+              "documentation",
+              "content",
+              "other"
+            ]
+          }
+        },
+        "profile_eligibility": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "lightweight",
+              "standard",
+              "full"
+            ]
+          }
+        },
+        "accepts_signals": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/portableName"
+          }
+        },
+        "emits_signals": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/portableName"
+          }
+        }
+      }
+    }
+  }
+}
