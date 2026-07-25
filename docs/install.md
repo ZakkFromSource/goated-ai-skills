@@ -124,7 +124,7 @@ CONTEXT.md                         optional tracked project context and language
 docs/agents/context-matrix.md      optional tracked context map
 docs/agents/project-standards.md   optional tracked standards profile
 docs/agents/external-docs/         optional dated, attributed external-doc lookup notes
-docs/prds/                         tracked PRDs only when product scope, roadmap intent, or acceptance criteria need durable capture
+docs/specs/                        tracked specs only when product scope, roadmap intent, or acceptance criteria need durable capture
 docs/agents/architecture-plan.md   tracked project-wide architecture blueprint when useful
 docs/architecture/                 tracked feature-specific architecture blueprints when useful
 .local/goated/work-envelopes/      ignored resumable work state after ignore verification

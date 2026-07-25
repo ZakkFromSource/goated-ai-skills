@@ -78,11 +78,13 @@ active integrated-stack migration.
 
 ### Artifacts
 
-- **PRD** - a product requirements document that scopes a product or delivery outcome clearly enough to feed issue breakdown.
-- **Issue handoff** - a local Markdown issue file under `issues/` that describes a planned implementation slice, acceptance criteria, blockers, and user stories for future agent work.
-- **Fresh-agent-ready issue** - a local issue handoff containing enough linked context, first reads, acceptance criteria, proof expectations, blockers, and exclusions for a future agent to start without hidden chat history, ignored notes, or unlinked upstream context.
-- **AFK issue** - an issue slice that can proceed without a required human decision, design review, credential, external access, or approval gate.
-- **HITL issue** - an issue slice that requires human-in-the-loop input before or during implementation, such as a product decision, design review, credential, external access, or approval.
+- **Spec** - a scoped product or delivery contract. A PRD is one possible spec form.
+- **Delivery ticket** - a portable dependency-aware work unit, normally stored under `tickets/`; a remote issue is one possible tracker representation.
+- **Fresh-agent-ready ticket** - a local delivery ticket containing enough linked context, first reads, acceptance criteria, proof expectations, blockers, and exclusions for a future agent to start without hidden chat history, ignored notes, or unlinked upstream context.
+- **PRD** - the V1 term for a product requirements document; historical V1 PRDs remain unchanged.
+- **Issue handoff** - the V1 term for a local implementation slice under `issues/`; historical V1 issue handoffs remain unchanged.
+- **AFK ticket** - a delivery ticket that can proceed without a required human decision, design review, credential, external access, or approval gate.
+- **HITL ticket** - a delivery ticket that requires human-in-the-loop input before or during implementation, such as a product decision, design review, credential, external access, or approval.
 - **Archived issue** - a completed implementation issue moved under `issues/archive/` after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete.
 - **ADR** - an architectural decision record stored under `docs/adr/` when a durable architecture decision needs to be recorded.
 - **Context matrix** - a durable target-project artifact, normally `docs/agents/context-matrix.md`, that tells future agents what to read first, second, and only if needed.

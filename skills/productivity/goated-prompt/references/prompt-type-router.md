@@ -22,7 +22,7 @@ When writing a GOATED Prompt, include a route note only when it helps the receiv
 | Unfamiliar project or source area | Start with `session-start-progressive-disclosure`. |
 | Scope, success criteria, project docs, standards, or source facts matter | Use `grill-with-docs` before implementation. |
 | User needs lightweight ideation without project docs | Use `grill-me`. |
-| Fuzzy feature or product idea needs durable requirements | Use `write-a-prd`. |
+| Fuzzy feature or product idea needs durable requirements | Use `write-a-spec`. |
 | Approved issue or scoped task needs exact executable steps | Use `writing-plans`. |
 | Behavior change needs proof through tests | Route implementation through `tdd`. |
 | Prompt should become an installable GOATED skill | Use `framework-agnostic-skill-creator`. |
@@ -40,7 +40,6 @@ Ask one question before writing only when the answer changes one of these:
 - the prompt type;
 - security, privacy, or destructive-action risk;
 - acceptance criteria or success state;
-- whether the result should be a prompt, PRD, issue, implementation plan, or skill.
+- whether the result should be a prompt, spec, ticket, implementation plan, or skill.
 
 If the answer would only polish wording, make a reasonable assumption and write the prompt.
-

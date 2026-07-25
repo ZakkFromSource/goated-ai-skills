@@ -1,0 +1,28 @@
+schema_version: 1.0.0
+identifier: full-spec
+title: Cross-surface migration needs a full contract
+request: Define a staged workflow migration with several affected stakeholders.
+expected:
+  artifact_kind: spec
+  mode: full
+  path: docs/specs/2026-07-25-workflow-migration.md
+  sections:
+    - problem
+    - goals
+    - non-goals
+    - requirements
+    - acceptance-criteria
+    - constraints
+    - open-questions
+    - stakeholders
+    - architecture
+    - rollout
+    - migration
+    - analytics
+    - risks
+  promotion_from_compact:
+    reuse_existing_evidence: true
+    restart_discovery: false
+prohibited_behaviors:
+  - Include empty sections merely because the full mode permits them.
+  - Replace unresolved stakeholder decisions with agent assumptions.

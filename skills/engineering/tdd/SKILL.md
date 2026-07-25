@@ -19,7 +19,7 @@ Bad tests are coupled to implementation. They mock internal collaborators, test 
 
 ## Inputs
 
-- User request, bug report, issue handoff, PRD slice, prototype verdict, or scoped behavior change.
+- User request, bug report, delivery ticket, spec slice, prototype verdict, or scoped behavior change.
 - Target-project root path.
 - Existing source files, tests, fixtures, commands, public interfaces, schemas, routes, adapters, or UI flows related to the behavior.
 - Existing project docs, including root `CONTEXT.md` when present, glossary/context files, ADRs, standards, and test conventions when they affect naming, interface shape, or expected proof.
@@ -32,7 +32,7 @@ Hard: None.
 Soft:
 - session-start-progressive-disclosure for unfamiliar target projects
 - grill-with-docs when behavior, public interface, scope, language, or testing priority is unclear
-- prd-to-issues when implementing a planned vertical issue slice
+- spec-to-tickets when implementing a planned vertical delivery ticket
 - prototype when risky behavior or interfaces need disposable evidence before production tests
 - project-standards-calibration when test, fixture, naming, or quality standards affect implementation
 - code-refinement after green as a run-or-explicit-skip gate for non-trivial code-producing work before review gates
@@ -50,7 +50,7 @@ Fallback: If companion skills or docs are unavailable, inspect minimal evidence,
    - Identify the public interface that should prove it, such as a module API, CLI command, HTTP endpoint, UI flow, repository method, service boundary, or user-facing workflow.
    - Identify the first focused failing test that can prove one behavior.
    - Use the project's root `CONTEXT.md`, domain language, glossary, existing test names, and ADRs when available.
-   - Proceed automatically when the issue or PRD already makes behavior and interface clear. Ask only when behavior, public interface, or test priorities are materially ambiguous.
+   - Proceed automatically when the ticket or spec already makes behavior and interface clear. Ask only when behavior, public interface, or test priorities are materially ambiguous.
 
 2. Plan tests as behaviors, not implementation steps:
    - List behavior candidates in priority order.

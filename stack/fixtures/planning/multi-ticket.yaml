@@ -1,0 +1,43 @@
+schema_version: 1.0.0
+identifier: multi-ticket
+title: Dependency-aware vertical slices reuse an approved batch
+request: Slice an approved migration spec into two independently verifiable delivery tickets.
+expected:
+  artifact_kind: tickets
+  source_spec: docs/specs/2026-07-25-workflow-migration.md
+  order_file: tickets/workflow-migration-order.md
+  order_sample: samples/multi-ticket-order.md
+  tickets:
+    - id: ticket-001
+      path: tickets/001-establish-compatible-contract.md
+      sample: samples/multi-ticket-001.md
+      blocked_by: []
+      fields:
+        - parent-spec
+        - what-to-build
+        - recommended-first-reads
+        - acceptance-criteria
+        - expected-proof
+        - blocked-by
+        - scope-exclusions
+    - id: ticket-002
+      path: tickets/002-migrate-consumers.md
+      sample: samples/multi-ticket-002.md
+      blocked_by:
+        - ticket-001
+      fields:
+        - parent-spec
+        - what-to-build
+        - recommended-first-reads
+        - acceptance-criteria
+        - expected-proof
+        - blocked-by
+        - scope-exclusions
+  approval:
+    existing_batch_approved: true
+    scope_or_reach_changed: false
+    reused: true
+    ask_again: false
+prohibited_behaviors:
+  - Ask again for the already approved ticket batch when scope and action reach are unchanged.
+  - Embed exact implementation steps that belong in writing-plans.

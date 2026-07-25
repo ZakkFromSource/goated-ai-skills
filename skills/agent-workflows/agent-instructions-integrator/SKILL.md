@@ -69,7 +69,7 @@ Fallback: If companion skills or target-project artifacts are unavailable, creat
 5. Route to installed skills:
    - Point agents to the installed skill location or framework registry when known.
    - Make installed `using-goated-ai-skills` the default first GOATED skill for serious project work; it can route onward to `session-start-progressive-disclosure` when context discovery is needed.
-   - For serious implementation or architecture work, keep the adapter as a router: send agents through installed `using-goated-ai-skills` so it can choose PRD, issue slicing, planning, TDD, or architecture skills for vertical slices, deep modules, and work that depends on public interfaces.
+   - For serious implementation or architecture work, keep the adapter as a router: send agents through installed `using-goated-ai-skills` so it can choose spec writing, ticket slicing, planning, TDD, or architecture skills for vertical slices, deep modules, and work that depends on public interfaces.
    - For prompt-crafting requests, name installed `goated-prompt` as the owner of prompt improvement, reusable prompts, spec/task/planning/refinement prompts, and GOATED-aware request translation.
    - Name the relevant installed GOATED skills instead of pasting their full contents.
    - Include the onboarding route in brief: context matrix, standards profile, instruction routing, optional handoff.

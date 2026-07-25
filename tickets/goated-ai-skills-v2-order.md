@@ -19,11 +19,11 @@ plan.
 - `tickets/archive/003-onboard-and-resume-projects-proportionally.md` — Onboard
   And Resume Projects Proportionally (AFK; Work state: Completed; Blocked by:
   Ticket 002)
-- `tickets/004-clarify-decisions-proportionally.md` — Clarify Decisions
-  Proportionally (AFK; Work state: Not started; Blocked by: Ticket 002)
-- `tickets/005-turn-specs-into-delivery-tickets.md` — Turn Specs Into Durable
-  Delivery Tickets (AFK; Work state: Not started; Blocked by: Tickets 002 and
-  004)
+- `tickets/archive/004-clarify-decisions-proportionally.md` — Clarify Decisions
+  Proportionally (AFK; Work state: Completed; Blocked by: Ticket 002)
+- `tickets/archive/005-turn-specs-into-delivery-tickets.md` — Turn Specs Into
+  Durable Delivery Tickets (AFK; Work state: Completed; Blocked by: Tickets 002
+  and 004)
 - `tickets/006-design-architecture-and-plans-proportionally.md` — Design
   Architecture And Plans Proportionally (AFK; Work state: Not started; Blocked
   by: Ticket 002)
@@ -54,9 +54,9 @@ plan.
      workflow migrations.
 3. `tickets/archive/003-onboard-and-resume-projects-proportionally.md`
    - Why now: completes the first end-to-end consumer of the shared route.
-4. `tickets/004-clarify-decisions-proportionally.md`
+4. `tickets/archive/004-clarify-decisions-proportionally.md`
    - Why now: provides the decision workflow needed before specs and Wayfinder.
-5. `tickets/005-turn-specs-into-delivery-tickets.md`
+5. `tickets/archive/005-turn-specs-into-delivery-tickets.md`
    - Why now: establishes the canonical durable planning vocabulary and path.
 6. `tickets/006-design-architecture-and-plans-proportionally.md`
    - Why now: completes the architecture and executable-planning route needed

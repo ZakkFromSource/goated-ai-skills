@@ -66,7 +66,7 @@ Useful sections:
 - edge cases, constraints, and known gaps;
 - verification notes or examples.
 
-Do not use product docs to replace unsettled PRDs. If behavior or intent is not decided, route to `write-a-prd` or record the question.
+Do not use product docs to replace unsettled specs. If behavior or intent is not decided, route to `write-a-spec` or record the question.
 
 ### AI-Facing Guide
 

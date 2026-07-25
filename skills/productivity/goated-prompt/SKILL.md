@@ -34,7 +34,7 @@ Soft:
 - using-goated-ai-skills when the request should route through the installed GOATED stack
 - grill-me for lightweight intent, audience, tradeoff, or success-criteria clarification
 - grill-with-docs when docs, standards, ADRs, source behavior, tests, schemas, or public facts matter
-- write-a-prd when the prompt should ask for a scoped PRD before implementation
+- write-a-spec when the prompt should ask for a scoped spec before implementation
 - writing-plans when an approved issue or task needs exact implementation steps
 - framework-agnostic-skill-creator when the user wants the prompt turned into an installable GOATED skill
 
@@ -75,7 +75,7 @@ Fallback: If companion skills or project evidence are unavailable, use conversat
    - Be directive, concrete, and information dense.
    - Name the target, action, context, constraints, output format, and success criteria.
    - Prefer generic model classes such as fast capable model, reasoning model, code-specialized model, or general model instead of current model-name claims.
-   - For GOATED Prompt mode, name the likely route, such as `using-goated-ai-skills`, `grill-with-docs`, `write-a-prd`, `writing-plans`, `tdd`, `doc-sync`, or `framework-agnostic-skill-creator`, without pretending routing is automatic.
+   - For GOATED Prompt mode, name the likely route, such as `using-goated-ai-skills`, `grill-with-docs`, `write-a-spec`, `writing-plans`, `tdd`, `doc-sync`, or `framework-agnostic-skill-creator`, without pretending routing is automatic.
    - Put the final prompt in a clearly labeled code block.
 
 6. Review before delivering:
@@ -125,7 +125,7 @@ Require inspected inputs, prompt type recommendation, assumptions, privacy conce
 - Do not hide uncertainty; put assumptions or required source checks into the prompt.
 - Do not turn every request into a full spec. Match prompt weight to task size and risk.
 - Do not turn serious multi-file, architectural, public-facing, or standards-sensitive work into a tiny prompt just because the raw request is short.
-- Do not replace `using-goated-ai-skills`, `grill-with-docs`, `write-a-prd`, `writing-plans`, `framework-agnostic-skill-creator`, or implementation workflows. Route to them when they are the better owner.
+- Do not replace `using-goated-ai-skills`, `grill-with-docs`, `write-a-spec`, `writing-plans`, `framework-agnostic-skill-creator`, or implementation workflows. Route to them when they are the better owner.
 - Do not recommend specific current model names unless the user provides them or current official docs were checked.
 - Do not include private paths, credentials, client data, proprietary excerpts, raw private notes, source clone URLs, ignored scratch content, or sensitive personal context in reusable prompts.
 - Do not present one framework's command syntax, file mention syntax, plugin behavior, or automation as universal.

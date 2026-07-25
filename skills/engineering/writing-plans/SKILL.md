@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-description: Use when an approved issue, scoped task, PRD slice, or implementation request needs a just-in-time executable plan before code, docs, or configuration changes.
+description: Use when an approved ticket, scoped task, spec slice, or implementation request needs a just-in-time executable plan before code, docs, or configuration changes.
 metadata:
   goated-category: engineering
 ---
@@ -17,9 +17,9 @@ This skill keeps durable issues concise. Issues, PRDs, tickets, and roadmap note
 
 ## Inputs
 
-- Approved issue, PRD slice, ticket, scoped user request, accepted architecture plan, prototype verdict, or review finding.
+- Approved ticket, spec slice, scoped user request, accepted architecture plan, prototype verdict, or review finding.
 - Target-project root path and current working-tree state when available.
-- Relevant project docs, local issue handoffs, standards, context artifacts, ADRs, source files, tests, schemas, commands, and previous verification evidence.
+- Relevant project docs, local delivery tickets, standards, context artifacts, ADRs, source files, tests, schemas, commands, and previous verification evidence.
 - User constraints about plan location, tracked versus local artifacts, implementation route, risk tolerance, subagent use, or required closeout.
 - Known unavailable tools, skipped evidence, blockers, or decisions that must not be guessed.
 
@@ -30,7 +30,7 @@ Hard: None.
 Soft:
 - session-start-progressive-disclosure for unfamiliar target projects
 - grill-with-docs when scope, artifact policy, success criteria, or tradeoffs are unclear
-- prd-to-issues when a scoped PRD still needs issue handoffs before planning
+- spec-to-tickets when a scoped spec still needs delivery tickets before planning
 - prototype when risky implementation choices need disposable evidence before exact steps
 - plan-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
 - tdd when implementation changes behavior, public interfaces, regressions, or testable workflows
@@ -46,9 +46,9 @@ Fallback: If companion skills, docs, commands, subagents, or source evidence are
 ## Workflow
 
 1. Confirm the planning target:
-   - Identify the exact issue, PRD slice, ticket, request, or approved artifact being converted into a plan.
-   - Confirm it is ready for implementation planning. If the work is not scoped, route to `grill-with-docs`, `write-a-prd`, `prd-to-issues`, `prototype`, or `plan-codebase-architecture` instead of writing an assumption-heavy plan.
-   - Check that the target is small enough to implement as one focused vertical slice. If it is broad, narrow the plan to the first user-verifiable tracer bullet and defer the rest, or route back to `prd-to-issues`.
+   - Identify the exact ticket, spec slice, request, or approved artifact being converted into a plan.
+   - Confirm it is ready for implementation planning. If the work is not scoped, route to `grill-with-docs`, `write-a-spec`, `spec-to-tickets`, `prototype`, or `plan-codebase-architecture` instead of writing an assumption-heavy plan.
+   - Check that the target is small enough to implement as one focused vertical slice. If it is broad, narrow the plan to the first user-verifiable tracer bullet and defer the rest, or route back to `spec-to-tickets`.
    - Separate durable requirements from volatile execution details.
 
 2. Choose the plan artifact:
@@ -99,7 +99,7 @@ For most work, return a compact plan shaped like this:
 ```markdown
 ## Implementation Plan
 
-- Plan target: <issue, PRD slice, ticket, or request>
+- Plan target: <ticket, spec slice, or request>
 - Plan location: <inline | .local/plans/... | tracked path requested by user>
 - Source inspected: <paths, commands, docs, tests, schemas, and skipped evidence if any>
 - Execution route: <direct execution | tdd | subagent-driven-development | sequential fallback>
@@ -141,7 +141,7 @@ If subagents are unavailable, run the same checks sequentially with a narrower c
 - Do not turn durable issues into stale implementation transcripts. Keep stable intent in issues and volatile execution detail in just-in-time plans.
 - Do not create tracked plan files unless the user explicitly asks or the target project convention requires them.
 - Do not rely on ignored `.local/` plans as the only place a future agent can recover important context.
-- Do not turn a broad issue or PRD slice into a broad implementation plan. Narrow to the first user-verifiable vertical slice or route back to issue breakdown.
+- Do not turn a broad ticket or spec slice into a broad implementation plan. Narrow to the first user-verifiable vertical slice or route back to ticket slicing.
 - Do not plan horizontal layer batches, broad setup, speculative scaffolding, or multi-behavior milestones unless a narrow foundation is required, named, and verifiable.
 - Do not create shallow pass-through abstractions when a deeper module, smaller public interface, or clearer test surface would keep behavior local.
 - Do not use placeholders such as `TODO`, "handle edge cases", "write tests", "etc.", "similar to above", or "finish implementation" as executable steps.

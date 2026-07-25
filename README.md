@@ -62,7 +62,7 @@ This repository is the public distribution home for reusable skill folders. User
 
 ### 2. Target Project Onboarding
 
-Installed skills prepare a user's actual project for durable agent work. Onboarding can map sources, define project language, capture standards, preserve concise external-doc lookup notes when external documentation materially informs work, integrate agent instructions, capture project-level product scope, roadmap intent, or acceptance criteria in `docs/prds/` when needed, and create architecture context when useful.
+Installed skills prepare a user's actual project for durable agent work. Onboarding can map sources, define project language, capture standards, preserve concise external-doc lookup notes when external documentation materially informs work, integrate agent instructions, capture project-level product scope, roadmap intent, or acceptance criteria in `docs/specs/` when needed, and create architecture context when useful.
 
 ### 3. Target Project Delivery
 
@@ -91,8 +91,12 @@ migration begins with the shared policy, registry, schema, and templates under
 
 - [`grill-with-docs`](skills/engineering/grill-with-docs/SKILL.md): clarify, brainstorm options, and pressure-test important work against project docs, standards, and source facts before implementation.
 - [`diagnose`](skills/engineering/diagnose/SKILL.md): investigate bugs, failing tests, build failures, regressions, and unexpected behavior before fixing them.
-- [`write-a-prd`](skills/engineering/write-a-prd/SKILL.md): turn fuzzy intent into a scoped product requirements document.
-- [`prd-to-issues`](skills/engineering/prd-to-issues/SKILL.md): break a PRD or approved plan into implementation-ready issue handoffs and a local recommended order file for multi-issue sets.
+- [`write-a-spec`](skills/engineering/write-a-spec/SKILL.md): turn fuzzy intent into a proportionate compact or full spec.
+- [`spec-to-tickets`](skills/engineering/spec-to-tickets/SKILL.md): break an approved spec into dependency-aware delivery tickets and a local order file for multi-ticket sets.
+
+The integrated registry resolves the V1 names `write-a-prd` and
+`prd-to-issues` as aliases for these canonical skills. Individual installs copy
+only the canonical folders.
 - [`writing-plans`](skills/engineering/writing-plans/SKILL.md): produce just-in-time implementation plans with evidence, gates, and stop conditions.
 - [`plan-codebase-architecture`](skills/engineering/plan-codebase-architecture/SKILL.md): design source-grounded modules, interfaces, seams, test surfaces, and slice order.
 - [`architecture-design-map`](skills/engineering/architecture-design-map/SKILL.md): create source-grounded architecture maps, flow maps, and quick zoom-outs.
@@ -140,9 +144,9 @@ using-goated-ai-skills
 session-start-progressive-disclosure
 -> grill-with-docs when gated mandatory
 -> prototype optional
--> write-a-prd
+-> write-a-spec
 -> plan-codebase-architecture optional
--> prd-to-issues
+-> spec-to-tickets
 -> prototype optional per focused issue
 -> writing-plans
 -> subagent-driven-development optional
@@ -194,7 +198,9 @@ stack/                 V2 shared policy, registry, schema, and state templates.
 docs/adr/              Architectural decision records.
 docs/assets/           Public README and documentation assets.
 skills/                Public skill categories and implemented skill folders.
-issues/                PRDs and archived implementation issue handoffs.
+docs/specs/            Active product and delivery specs.
+tickets/               Active dependency-aware delivery tickets.
+issues/                Historical V1 PRDs and archived issue handoffs.
 ```
 
 ## Public Boundary

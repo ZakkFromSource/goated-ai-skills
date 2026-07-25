@@ -34,7 +34,7 @@ Current migration notes:
 The stack has three layers:
 
 1. **Skill Pack Distribution**: clone, download, copy, install, or adapt the skill folders into your chosen agent framework.
-2. **Target Project Onboarding**: prepare a target project for durable, repeated, cross-file, PRD-level, architectural, or public-facing work, including optional PRD capture when onboarding uncovers project-level product scope.
+2. **Target Project Onboarding**: prepare a target project for durable, repeated, cross-file, spec-level, architectural, or public-facing work, including optional spec capture when onboarding uncovers project-level product scope.
 3. **Target Project Delivery**: move one target-project change from intent through planning, implementation, review, documentation, verification, and handoff.
 
 Use `using-goated-ai-skills` as the router when you or your agent are unsure which path applies.
@@ -90,7 +90,7 @@ Possible durable target-project artifacts include:
 - `docs/agents/context-matrix.md`
 - `docs/agents/project-standards.md`
 - `docs/agents/external-docs/` optional dated, attributed lookup notes when external docs materially inform work
-- `docs/prds/` only when onboarding needs durable product scope, roadmap intent, or acceptance criteria
+- `docs/specs/` only when onboarding needs durable product scope, roadmap intent, or acceptance criteria
 - `docs/agents/architecture-plan.md` when a project-wide architecture blueprint is useful
 - ignored `.local/goated/` envelopes and handoffs for resumable work after
   ignore verification
@@ -104,9 +104,9 @@ Run delivery when you want to make a real change in a target project. For seriou
 flowchart LR
   A["session-start-progressive-disclosure"] --> B["grill-with-docs when gated mandatory"]
   B --> C["prototype optional"]
-  C --> D["write-a-prd"]
+  C --> D["write-a-spec"]
   D --> E["plan-codebase-architecture optional"]
-  E --> F["prd-to-issues"]
+  E --> F["spec-to-tickets"]
   F --> G["prototype optional per focused issue"]
   G --> H["writing-plans"]
   H --> I["subagent-driven-development optional"]
@@ -125,9 +125,9 @@ flowchart LR
 Typical flow:
 
 1. Use `session-start-progressive-disclosure` to gather just enough context.
-2. Use `grill-with-docs` when the work is unclear, architectural, public-facing, cross-file, standards-sensitive, or PRD-level.
+2. Use `grill-with-docs` when the work is unclear, architectural, public-facing, cross-file, standards-sensitive, or spec-level.
 3. Use `prototype` before committing to a risky product, UI, logic, or technical choice.
-4. Use `write-a-prd` for fuzzy ideas, then `prd-to-issues` to break the PRD into implementation-ready local issue handoffs and a local recommended order file for multi-issue sets.
+4. Use `write-a-spec` for fuzzy ideas, then `spec-to-tickets` to break the approved spec into fresh-agent-ready local delivery tickets and an order file for multi-ticket sets.
 5. Use `plan-codebase-architecture` when the module shape, interfaces, dependencies, or implementation slices need source-grounded architecture design before code.
 6. Use `writing-plans` immediately before implementation to produce exact steps, evidence, stop conditions, and review gates.
 7. Use `subagent-driven-development` for larger or riskier work when bounded implementer and reviewer agents are available.
@@ -216,32 +216,32 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 #### `grill-with-docs`
 
 - **Purpose**: Pressure-tests important work against available docs and project facts before implementation.
-- **Use when**: Work is unclear, PRD-level, architectural, cross-file, public-facing, standards-sensitive, or requires scope and success criteria alignment.
+- **Use when**: Work is unclear, spec-level, architectural, cross-file, public-facing, standards-sensitive, or requires scope and success criteria alignment.
 - **Typical input**: User request, project docs, standards, context docs, ADRs, source facts, and known constraints.
 - **Typical output**: Clarified goal, success criteria, scope, non-goals, decisions, assumptions, and candidate durable updates.
 - **Pipeline role**: Mandatory gate for onboarding and many serious delivery requests.
 
-#### `write-a-prd`
+#### `write-a-spec`
 
-- **Purpose**: Turns fuzzy intent into a scoped target-project PRD.
-- **Use when**: A feature idea, roadmap item, client brief, or product change needs durable scope before issue breakdown.
+- **Purpose**: Turns fuzzy intent into a proportionate compact or full target-project spec.
+- **Use when**: A feature idea, roadmap item, client brief, or delivery change needs durable scope before ticket slicing.
 - **Typical input**: Clarified intent, audience, goals, non-goals, requirements, constraints, and source evidence.
-- **Typical output**: Tracked target-project PRD under `docs/prds/` by default.
-- **Pipeline role**: Delivery planning step before issue breakdown, or optional onboarding decision point when project-level product scope needs durable capture.
+- **Typical output**: Tracked target-project spec under `docs/specs/` by default.
+- **Pipeline role**: Proportional planning before ticket slicing, or an optional onboarding decision point when project-level intent needs durable capture.
 
-#### `prd-to-issues`
+#### `spec-to-tickets`
 
-- **Purpose**: Breaks a scoped PRD into dependency-ordered local issue handoffs.
-- **Use when**: A PRD, product spec, roadmap item, or approved plan is ready to become implementation slices.
-- **Typical input**: Approved PRD, user stories, acceptance criteria, blockers, dependencies, and source references.
-- **Typical output**: Local Markdown issue handoffs under `issues/` by default, plus a refreshed local recommended order file for multi-issue breakdowns.
+- **Purpose**: Breaks an approved spec into dependency-ordered local delivery tickets.
+- **Use when**: A product or delivery spec is ready to become portable implementation slices.
+- **Typical input**: Approved spec, user stories, acceptance criteria, blockers, dependencies, and source references.
+- **Typical output**: Fresh-agent-ready Markdown tickets under `tickets/` by default, plus a refreshed local order file for multi-ticket sets.
 - **Pipeline role**: Converts product intent into implementation-ready slices.
 
 #### `writing-plans`
 
-- **Purpose**: Turns an approved issue, scoped task, or PRD slice into a just-in-time implementation plan.
+- **Purpose**: Turns an approved ticket, scoped task, or spec slice into a just-in-time implementation plan.
 - **Use when**: Work is scoped enough to implement, but the agent needs exact steps, evidence, commands, stop conditions, and review gates.
-- **Typical input**: Issue, PRD slice, current source evidence, relevant docs, likely tests, and user constraints.
+- **Typical input**: Ticket, spec slice, current source evidence, relevant docs, likely tests, and user constraints.
 - **Typical output**: Inline implementation plan by default, or ignored local plan for long/resumable work.
 - **Pipeline role**: Final planning step before implementation.
 
@@ -381,7 +381,7 @@ Each skill is listed with its current V1 role. Read the installed skill's own `S
 - **Use when**: You want to improve, rewrite, optimize, or classify a prompt; make a request work with the GOATED workflow; or create a reusable prompt for a coding assistant or reasoning model.
 - **Typical input**: Raw request, rough prompt, existing output, intended recipient, constraints, success criteria, and any context the prompt should preserve.
 - **Typical output**: Detected mode and prompt type, optimized prompt in a code block, recommended GOATED route or model class, assumptions, and short rationale.
-- **Pipeline role**: Productivity aid for prompt quality and GOATED-aware request translation. It routes to `grill-with-docs`, `write-a-prd`, `writing-plans`, or `framework-agnostic-skill-creator` when those skills should own the next step.
+- **Pipeline role**: Productivity aid for prompt quality and GOATED-aware request translation. It routes to `grill-with-docs`, `write-a-spec`, `writing-plans`, or `framework-agnostic-skill-creator` when those skills should own the next step.
 
 #### `learning-capture`
 
@@ -424,7 +424,7 @@ need.
 ### Start a delivery change
 
 ```text
-Use GOATED AI Skills for this feature idea. Clarify the intent against project docs, decide whether we need a PRD or prototype, then route through the delivery pipeline until there is an implementation-ready plan.
+Use GOATED AI Skills for this feature idea. Clarify the intent against project docs, decide whether we need a spec or prototype, then route through the delivery pipeline until there is an implementation-ready plan.
 ```
 
 ### Craft or refine a prompt
@@ -457,8 +457,8 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If the request is to improve, rewrite, optimize, or create a reusable prompt, use `goated-prompt`; let it route onward only when another skill should own the next step.
 - If the request is unfamiliar or cross-file, start with `session-start-progressive-disclosure`.
 - If the request needs product or scope clarity, use `grill-with-docs`.
-- If the request is fuzzy and user-facing, use `write-a-prd` before implementation planning.
-- If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria, use `write-a-prd` before architecture planning; otherwise skip PRD creation.
+- If the request is fuzzy and user-facing, use `write-a-spec` before implementation planning.
+- If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria, use `write-a-spec` before architecture planning; otherwise skip spec creation.
 - If architecture shape matters, use `plan-codebase-architecture`; if you only need a descriptive map, use `architecture-design-map`.
 - If behavior changes, route implementation through `tdd`.
 - For non-trivial code-producing work, use `code-refinement` after implementation proof and before review gates, or explicitly record why it was skipped. Use it directly when recently changed code should be simplified or cleaned up without behavior changes.

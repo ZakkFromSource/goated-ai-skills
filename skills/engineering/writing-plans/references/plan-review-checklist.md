@@ -4,7 +4,7 @@ Use this checklist before executing a non-trivial, risky, delegated, resumable, 
 
 ## Source Grounding
 
-- The plan names the approved issue, PRD slice, ticket, user request, or accepted artifact it implements.
+- The plan names the approved ticket, spec slice, user request, or accepted artifact it implements.
 - Current source, tests, docs, schemas, config, commands, or relevant artifacts were inspected before exact paths, commands, snippets, expected failures, or expected outputs were written.
 - Exact paths and commands are based on the current target project, not hidden chat history or another repository's layout.
 - Any uninspected but important source area is listed as skipped evidence with residual risk.

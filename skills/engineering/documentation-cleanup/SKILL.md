@@ -20,7 +20,7 @@ Default to audit-first. Do not move, delete, archive, or change source-of-truth 
 - User request, target-project root, requested mode, and cleanup goal.
 - Existing project instructions, such as `AGENT.md`, `AGENTS.md`, `CLAUDE.md`, framework config, or routing notes.
 - Root docs such as `README.md`, `CONTEXT.md`, progress/status files, roadmap files, project skill maps, or operator guides.
-- Documentation folders such as `docs/`, `docs/agents/`, `docs/adr/`, `docs/decisions/`, `docs/prds/`, feature docs, layer docs, external-doc lookup notes, architecture docs, and issue workbench docs when in scope.
+- Documentation folders such as `docs/`, `docs/agents/`, `docs/adr/`, `docs/decisions/`, `docs/specs/`, existing legacy `docs/prds/`, feature docs, layer docs, external-doc lookup notes, architecture docs, and ticket workbench docs when in scope.
 - Project conventions for archives, immutable decisions, generated docs, private scratch areas, and source-of-truth precedence.
 - Optional inventory output from `scripts/inventory_docs.py`.
 

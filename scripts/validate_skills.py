@@ -177,6 +177,47 @@ REQUIRED_CLARIFICATION_FIXTURE_IDENTIFIERS = {
     "prototype-needed",
     "prototype-not-needed",
 }
+REQUIRED_PLANNING_FIXTURE_IDENTIFIERS = {
+    "compact-spec",
+    "full-spec",
+    "single-ticket",
+    "multi-ticket",
+}
+COMPACT_SPEC_SECTIONS = {
+    "problem",
+    "goals",
+    "non-goals",
+    "requirements",
+    "acceptance-criteria",
+    "constraints",
+    "open-questions",
+}
+FULL_SPEC_DEPTH_SECTIONS = {
+    "stakeholders",
+    "architecture",
+    "rollout",
+    "migration",
+    "analytics",
+    "risks",
+}
+FRESH_AGENT_TICKET_FIELDS = {
+    "parent-spec",
+    "what-to-build",
+    "recommended-first-reads",
+    "acceptance-criteria",
+    "expected-proof",
+    "blocked-by",
+    "scope-exclusions",
+}
+FRESH_AGENT_TICKET_HEADINGS = {
+    "## Parent Spec",
+    "## What To Build",
+    "## Recommended First Reads",
+    "## Acceptance Criteria",
+    "## Expected Proof",
+    "## Blocked By",
+    "## Scope Exclusions",
+}
 ONBOARDING_PROFILES = {"lightweight", "standard", "full"}
 ONBOARDING_ARTIFACT_ACTIONS = {"create", "refresh", "preserve"}
 ONBOARDING_CONTINUITY_STORAGE = {
@@ -1759,6 +1800,233 @@ def validate_onboarding_fixtures(repo: Path) -> list[Finding]:
     return errors
 
 
+def validate_planning_spec_expected(
+    expected: dict[str, object],
+    fixture_label: str,
+) -> list[Finding]:
+    """Validate the observable contract for one spec fixture."""
+
+    errors: list[Finding] = []
+    mode = expected.get("mode")
+    sections = expected.get("sections")
+    if mode not in {"compact", "full"}:
+        errors.append(Finding(fixture_label, "planning spec mode is unsupported"))
+    if not is_string_list(sections, allow_empty=False):
+        errors.append(
+            Finding(
+                fixture_label,
+                "planning spec sections must be a non-empty string list",
+            )
+        )
+        sections = []
+
+    required_sections = set(COMPACT_SPEC_SECTIONS)
+    if mode == "full":
+        required_sections.update(FULL_SPEC_DEPTH_SECTIONS)
+    for section in sorted(required_sections - set(sections)):
+        errors.append(
+            Finding(
+                fixture_label,
+                f"{mode} spec fixture is missing required section: {section}",
+            )
+        )
+
+    path = expected.get("path")
+    if not isinstance(path, str) or not path.startswith("docs/specs/"):
+        errors.append(
+            Finding(
+                fixture_label,
+                "planning spec fixture must use the docs/specs/ default path",
+            )
+        )
+    return errors
+
+
+def validate_planning_ticket_expected(
+    expected: dict[str, object],
+    fixture_label: str,
+    repo: Path,
+) -> list[Finding]:
+    """Validate ticket portability, ordering, paths, and approval reuse."""
+
+    errors: list[Finding] = []
+    tickets = expected.get("tickets")
+    if not isinstance(tickets, list) or not tickets:
+        errors.append(
+            Finding(
+                fixture_label,
+                "planning ticket fixture must define a non-empty ticket list",
+            )
+        )
+        tickets = []
+
+    seen_ticket_ids: set[str] = set()
+    for ticket in tickets:
+        if not isinstance(ticket, dict):
+            errors.append(Finding(fixture_label, "planning ticket must be a mapping"))
+            continue
+        ticket_id = ticket.get("id")
+        if not isinstance(ticket_id, str):
+            errors.append(Finding(fixture_label, "planning ticket id must be a string"))
+            continue
+        path = ticket.get("path")
+        if not isinstance(path, str) or not re.fullmatch(
+            r"tickets/\d{3}-[^/]+\.md", path
+        ):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"ticket {ticket_id} must use the tickets/NNN-title.md default path",
+                )
+            )
+        blocked_by = ticket.get("blocked_by")
+        if not is_string_list(blocked_by):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"ticket {ticket_id} blocked_by must be a string list",
+                )
+            )
+            blocked_by = []
+        for blocker in blocked_by:
+            if blocker not in seen_ticket_ids:
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        f"ticket {ticket_id} depends on {blocker} before it appears in order",
+                    )
+                )
+        fields = ticket.get("fields")
+        if not is_string_list(fields, allow_empty=False):
+            fields = []
+        for field in sorted(FRESH_AGENT_TICKET_FIELDS - set(fields)):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"ticket {ticket_id} is missing fresh-agent field: {field}",
+                )
+            )
+        sample = ticket.get("sample")
+        if not isinstance(sample, str):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"ticket {ticket_id} must link a fresh-agent sample",
+                )
+            )
+        else:
+            sample_path = repo / "stack" / "fixtures" / "planning" / sample
+            if not sample_path.is_file():
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        f"ticket {ticket_id} sample does not exist: {sample}",
+                    )
+                )
+            else:
+                sample_text = read_text(sample_path)
+                for heading in sorted(
+                    FRESH_AGENT_TICKET_HEADINGS
+                    - set(re.findall(r"^## .+$", sample_text, re.MULTILINE))
+                ):
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"ticket {ticket_id} sample is missing heading: {heading}",
+                        )
+                    )
+        seen_ticket_ids.add(ticket_id)
+
+    order_file = expected.get("order_file")
+    if len(tickets) > 1 and (
+        not isinstance(order_file, str)
+        or not re.fullmatch(r"tickets/[^/]+-order\.md", order_file)
+    ):
+        errors.append(
+            Finding(
+                fixture_label,
+                "multi-ticket fixture must define a tickets/<spec-slug>-order.md file",
+            )
+        )
+
+    approval = expected.get("approval")
+    if not isinstance(approval, dict):
+        errors.append(Finding(fixture_label, "planning ticket approval must be a mapping"))
+    elif (
+        approval.get("existing_batch_approved") is True
+        and approval.get("scope_or_reach_changed") is False
+        and (
+            approval.get("reused") is not True
+            or approval.get("ask_again") is not False
+        )
+    ):
+        errors.append(
+            Finding(
+                fixture_label,
+                "planning fixture must reuse approval while scope and action reach remain unchanged",
+            )
+        )
+    return errors
+
+
+def validate_planning_fixtures(repo: Path) -> list[Finding]:
+    """Validate proportional spec and dependency-aware ticket fixtures."""
+
+    fixture_root = repo / "stack" / "fixtures" / "planning"
+    fixture_paths = sorted(fixture_root.glob("*.yaml"))
+    if not fixture_paths:
+        return [Finding("stack/fixtures/planning", "no planning fixtures found")]
+
+    errors: list[Finding] = []
+    identifiers: set[str] = set()
+    for fixture_path in fixture_paths:
+        fixture_label = relative(fixture_path, repo)
+        fixture, fixture_errors = load_mapping(fixture_path, fixture_label)
+        errors.extend(fixture_errors)
+        if fixture is None:
+            continue
+
+        identifier = fixture.get("identifier")
+        if not isinstance(identifier, str):
+            errors.append(
+                Finding(fixture_label, "planning fixture identifier must be a string")
+            )
+            continue
+        identifiers.add(identifier)
+
+        expected = fixture.get("expected")
+        if not isinstance(expected, dict):
+            errors.append(
+                Finding(fixture_label, "planning fixture expected must be a mapping")
+            )
+            continue
+
+        artifact_kind = expected.get("artifact_kind")
+        if artifact_kind == "spec":
+            errors.extend(
+                validate_planning_spec_expected(expected, fixture_label)
+            )
+        elif artifact_kind == "tickets":
+            errors.extend(
+                validate_planning_ticket_expected(expected, fixture_label, repo)
+            )
+        else:
+            errors.append(
+                Finding(fixture_label, "planning fixture artifact_kind is unsupported")
+            )
+
+    errors.extend(
+        Finding(
+            "stack/fixtures/planning",
+            f"missing required planning fixture: {identifier}",
+        )
+        for identifier in sorted(
+            REQUIRED_PLANNING_FIXTURE_IDENTIFIERS - identifiers
+        )
+    )
+    return errors
+
+
 def registry_summary(repo: Path) -> tuple[int, int, list[str]]:
     """Return catalog size, shared-policy words, and skills over 1,500 words."""
 
@@ -1813,6 +2081,7 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
     errors.extend(validate_route_fixtures(repo))
     errors.extend(validate_clarification_fixtures(repo))
     errors.extend(validate_onboarding_fixtures(repo))
+    errors.extend(validate_planning_fixtures(repo))
 
     # Docs drift is informational in issue 060, so it is returned separately.
     drift = scan_docs_schema_drift(repo, set(skill_files))
@@ -1849,6 +2118,9 @@ def main() -> int:
     clarification_fixture_count = len(
         list((repo / "stack" / "fixtures" / "clarification").glob("*.yaml"))
     )
+    planning_fixture_count = len(
+        list((repo / "stack" / "fixtures" / "planning").glob("*.yaml"))
+    )
     if 800 <= policy_words <= 1200:
         policy_budget_status = "within 800-1,200 target"
     elif policy_words < 800:
@@ -1884,6 +2156,10 @@ def main() -> int:
         print(
             "Clarification fixture validation passed for "
             f"{clarification_fixture_count} scenarios."
+        )
+        print(
+            "Planning fixture validation passed for "
+            f"{planning_fixture_count} scenarios."
         )
         print(
             f"Word-budget report: shared policy {policy_words} words "

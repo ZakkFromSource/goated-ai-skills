@@ -124,7 +124,7 @@ Useful tags:
 - Dependency: `in-process`, `local-substitutable`, `remote-owned`, `true-external`, `unknown`.
 - Seam: `real seam`, `internal seam`, `external seam`, `one-adapter risk`, `no seam needed`.
 - Test surface: `module API`, `route`, `command`, `UI flow`, `repository`, `adapter`, `integration`.
-- Next step: `prd-to-issues`, `tdd`, `write-a-prd`, `architecture-design-map`, `improve-codebase-architecture`, `ADR`, `RFC`.
+- Next step: `spec-to-tickets`, `tdd`, `write-a-spec`, `architecture-design-map`, `improve-codebase-architecture`, `ADR`, `RFC`.
 
 RFC or ADR triggers:
 

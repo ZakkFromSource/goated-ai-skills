@@ -1,0 +1,23 @@
+schema_version: 1.0.0
+identifier: compact-spec
+title: Focused delivery change needs a compact contract
+request: Define a small user-visible workflow change before implementation.
+expected:
+  artifact_kind: spec
+  mode: compact
+  path: docs/specs/2026-07-25-focused-workflow.md
+  sections:
+    - problem
+    - goals
+    - non-goals
+    - requirements
+    - acceptance-criteria
+    - constraints
+    - open-questions
+  omitted_empty_sections:
+    - rollout
+    - migration
+    - analytics
+prohibited_behaviors:
+  - Expand the artifact into a full spec without evidence that the extra depth is useful.
+  - Embed an exact implementation plan.

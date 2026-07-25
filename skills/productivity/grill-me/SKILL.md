@@ -28,7 +28,7 @@ Hard: None.
 
 Soft:
 - grill-with-docs when project context, docs, standards, ADRs, code, tests, schemas, or source evidence matter
-- write-a-prd when the clarified topic should become a scoped PRD
+- write-a-spec when the clarified topic should become a scoped spec
 - prototype when a specific unknown needs a disposable experiment
 - writing-plans when the clarified topic is ready for implementation planning
 
@@ -86,7 +86,7 @@ Fallback: If companion skills are unavailable, continue the lightweight intervie
 
 8. Stop at shared understanding:
    - Stop when the topic is resolved enough for the next action, or when a remaining blocker needs another stakeholder, more reflection, or project evidence.
-   - Recommend the next direct action or companion skill, such as continuing the brainstorm, making a choice, `write-a-prd`, `prototype`, `prd-to-issues`, `writing-plans`, implementing directly when tiny and clear, or switching to `grill-with-docs`.
+   - Recommend the next direct action or companion skill, such as continuing the brainstorm, making a choice, `write-a-spec`, `prototype`, `spec-to-tickets`, `writing-plans`, implementing directly when tiny and clear, or switching to `grill-with-docs`.
    - If the user chooses to proceed with known ambiguity, name the residual risk clearly.
 
 ## Output Contract
@@ -152,7 +152,7 @@ Require inputs inspected, assumptions, tradeoffs/risks, and candidate questions 
 - Prefer `grill-with-docs` when project artifacts, engineering constraints, source evidence, standards, ADRs, code behavior, tests, schemas, or target-project terminology matter.
 - Do not pretend to know undiscovered project facts.
 - Do not ask broad bundles of questions unless the user explicitly asks for a questionnaire.
-- Do not turn lightweight alignment into a full PRD, issue breakdown, prototype, or implementation session unless the user asks for that next step.
+- Do not turn lightweight alignment into a full spec, ticket breakdown, prototype, or implementation session unless the user asks for that next step.
 - Do not treat agent recommendations as user decisions; confirm or label them as recommendations.
 - Do not include private notes, credentials, client data, sensitive personal context, or ignored scratch content in any output.
 - Prefer concrete scenarios, observable success criteria, and named tradeoffs over abstract brainstorming.

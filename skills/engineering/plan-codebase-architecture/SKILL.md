@@ -28,13 +28,13 @@ Hard: None.
 Soft:
 - session-start-progressive-disclosure for unfamiliar architecture planning
 - grill-with-docs before durable blueprints when brief, scope, constraints, or language is unclear
-- write-a-prd when product scope or acceptance criteria are not architecture-ready
+- write-a-spec when product scope or acceptance criteria are not architecture-ready
 - context-matrix-map when docs/agents/context-matrix.md exists or discovery is broad
 - project-context-calibration when root CONTEXT.md or language affects architecture terms
 - project-standards-calibration when standards affect module layout, testing, persistence, or artifact locations
 - architecture-design-map when current architecture must be described before planning additions or changes
 - improve-codebase-architecture when existing-code repair or refactor ranking is the real task
-- prd-to-issues when the accepted blueprint should become implementation issue slices
+- spec-to-tickets when the accepted blueprint should become delivery tickets
 - tdd when a blueprint slice moves into implementation and behavior proof
 - verification-before-completion before complete/evidence-backed/issue-breakdown-ready blueprint claims
 
@@ -54,7 +54,7 @@ Use project terms for concrete names. Keep these hot-path terms inline because t
 1. Confirm the planning mode and intent gate:
    - Classify the blueprint as project-wide setup, feature-specific planning, or small inline architecture advice.
    - Require a clarified brief, PRD, issue, or `grill-with-docs` result before writing a durable blueprint.
-   - If intent is fuzzy, route to `grill-with-docs` or `write-a-prd` before continuing.
+   - If intent is fuzzy, route to `grill-with-docs` or `write-a-spec` before continuing.
    - Keep installed-skill instructions separate from target-project artifacts.
 
 2. Choose output location:
@@ -87,7 +87,7 @@ Use project terms for concrete names. Keep these hot-path terms inline because t
 6. Plan implementation slices without owning implementation:
    - Order the first slices by behavior and risk: smallest useful vertical path first, then dependent modules, integrations, and migration steps.
    - Name test surfaces and first TDD slices, but leave test writing and implementation to `tdd`.
-   - Route issue breakdown to `prd-to-issues` after the blueprint is accepted.
+   - Route ticket slicing to `spec-to-tickets` after the blueprint is accepted.
    - Route current-state diagrams to `architecture-design-map` and existing-code repair opportunities to `improve-codebase-architecture`.
    - Route PRD, RFC, or ADR capture to companion workflows when the decision exceeds the blueprint.
 
@@ -139,7 +139,7 @@ For durable project-wide or feature-specific blueprints, write Markdown shaped l
 
 ## Recommended Next Step
 
-- <prd-to-issues, tdd, write-a-prd, architecture-design-map, improve-codebase-architecture, ADR/RFC capture, or none>
+- <spec-to-tickets, tdd, write-a-spec, architecture-design-map, improve-codebase-architecture, ADR/RFC capture, or none>
 ```
 
 For inline output, include the same core pieces without forcing a durable file path.
@@ -162,7 +162,7 @@ If subagents are unavailable, run the same passes sequentially with a narrower c
 - Do not implement production code, write tests, generate migrations, run formatters, break issues down, or mutate architecture as part of this skill.
 - Do not turn the blueprint into a speculative file tree. Mention paths only when grounded by project evidence or accepted conventions.
 - Do not create interfaces, ports, adapters, or dependency injection just in case. Require a real seam, dependency category, test strategy, or caller-leverage reason.
-- Do not duplicate `write-a-prd`, `prd-to-issues`, `tdd`, `architecture-design-map`, or `improve-codebase-architecture`; route to them when their job starts.
+- Do not duplicate `write-a-spec`, `spec-to-tickets`, `tdd`, `architecture-design-map`, or `improve-codebase-architecture`; route to them when their job starts.
 - Do not hide uncertainty. Mark inferred, stale, missing, weak, or conflicting evidence clearly.
 - Do not include private notes, ignored local scratch files, credentials, client data, sensitive personal context, secrets, or real user data in tracked blueprints.
 - Do not require this source repo's root docs after installation. The skill may rely only on its own installed files and target-project evidence.

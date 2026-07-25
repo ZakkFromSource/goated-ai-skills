@@ -11,11 +11,11 @@ metadata:
 
 Build a disposable target-project-local experiment that answers one focused question quickly.
 
-Use this skill before PRD creation, during issue exploration, or before committing to a production design when a short prototype can reveal whether a UI direction, state model, data shape, integration path, or workflow idea is worth pursuing. The prototype is not a first draft of production code; it is a learning instrument that should be deleted, absorbed deliberately, or handed off with an explicit cleanup note.
+Use this skill before spec creation, during ticket exploration, or before committing to a production design when a short prototype can reveal whether a UI direction, state model, data shape, integration path, or workflow idea is worth pursuing. The prototype is not a first draft of production code; it is a learning instrument that should be deleted, absorbed deliberately, or handed off with an explicit cleanup note.
 
 ## Inputs
 
-- User request, PRD draft, issue, product question, design uncertainty, or technical risk.
+- User request, spec draft, ticket, product question, design uncertainty, or technical risk.
 - Target-project root path.
 - One focused prototype question, stated before building.
 - Relevant nearby route, component, module, command, schema, API, workflow, or test surface.
@@ -29,8 +29,8 @@ Hard: None.
 Soft:
 - session-start-progressive-disclosure for unfamiliar target projects
 - grill-with-docs when the question is unclear, expensive, public-facing, cross-file, or docs/standards-sensitive
-- write-a-prd when the prototype verdict should feed a broader product requirements document
-- prd-to-issues when the prototype is exploring one focused implementation issue
+- write-a-spec when the prototype verdict should feed a broader product or delivery spec
+- spec-to-tickets when the prototype is exploring one focused delivery ticket
 - tdd when validated behavior is absorbed into production code after the prototype
 - verification-before-completion before prototype verdict, cleanup, or absorption-complete claims
 
@@ -112,7 +112,7 @@ During or after the prototype, report:
 - Artifacts touched: prototype files, nearby host files, commands, URLs, stories, fixtures, or scratch data.
 - Verdict: answer, observations, confidence, and what remains unknown.
 - Cleanup state: `deleted`, `absorbed`, or `handed off`, with paths and rationale.
-- Next action: direct implementation, PRD update, issue split, TDD work, more discovery, or no further action.
+- Next action: direct implementation, spec update, ticket split, TDD work, more discovery, or no further action.
 
 In integrated use, return the verdict, evidence reference, cleanup state,
 affected decisions, remaining uncertainty, route signals, and next action as a

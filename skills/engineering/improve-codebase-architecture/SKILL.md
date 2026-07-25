@@ -33,8 +33,8 @@ Soft:
 - grill-with-docs when architecture goal, user intent, or constraints are unclear
 - code-refinement when a candidate is only scoped behavior-preserving cleanup rather than an architecture opportunity
 - tdd when a selected improvement moves into implementation and test design
-- write-a-prd when a chosen direction needs product-level scope or stakeholder decisions
-- prd-to-issues when a chosen direction should become implementation slices
+- write-a-spec when a chosen direction needs product-level scope or stakeholder decisions
+- spec-to-tickets when a chosen direction should become delivery slices
 - verification-before-completion before complete/evidence-backed/downstream-ready opportunity claims
 
 Fallback: If companion skills or durable docs are unavailable, inspect minimal project evidence, keep confidence lower, and separate facts from assumptions.
@@ -86,7 +86,7 @@ Use target-project names for concrete modules and flows. Keep these review terms
    - Return the ranked review inline unless the user requested a durable artifact.
    - Recommend `architecture-design-map` when a current-state diagram is missing and would reduce uncertainty.
    - Recommend `code-refinement` when a plausible architecture concern turns out to be scoped behavior-preserving cleanup.
-   - Recommend `write-a-prd`, `prd-to-issues`, or an RFC when the chosen direction needs planning before implementation.
+   - Recommend `write-a-spec`, `spec-to-tickets`, or an RFC when the chosen direction needs planning before implementation.
    - Recommend `tdd` when the next step is a focused implementation slice with behavior proof through the new or existing interface.
    - Use `verification-before-completion` before claiming the ranking is complete, evidence-backed, or ready for downstream work; for lightweight scans, verify only the recommendation claim being made and state skipped areas.
 

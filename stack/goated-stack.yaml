@@ -210,10 +210,10 @@ skills:
     accepts_signals: [scope-changed, evidence-stale, security-impact]
     emits_signals: [scope-changed, security-impact, documentation-impact]
 
-  - name: prd-to-issues
-    path: skills/engineering/prd-to-issues/SKILL.md
+  - name: spec-to-tickets
+    path: skills/engineering/spec-to-tickets/SKILL.md
     category: engineering
-    aliases: []
+    aliases: [prd-to-issues]
     workflow_role: ticketing
     domains: [software, research, documentation, content, other]
     profile_eligibility: [standard, full]
@@ -280,10 +280,10 @@ skills:
     accepts_signals: [scope-changed, evidence-stale, security-impact, documentation-impact, refinement-debt]
     emits_signals: [evidence-stale, scope-changed]
 
-  - name: write-a-prd
-    path: skills/engineering/write-a-prd/SKILL.md
+  - name: write-a-spec
+    path: skills/engineering/write-a-spec/SKILL.md
     category: engineering
-    aliases: []
+    aliases: [write-a-prd]
     workflow_role: specification
     domains: [software, research, documentation, content, other]
     profile_eligibility: [standard, full]

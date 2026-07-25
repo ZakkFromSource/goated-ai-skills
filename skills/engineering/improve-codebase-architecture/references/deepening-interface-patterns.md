@@ -98,7 +98,7 @@ Useful tags:
 - Dependency: `in-process`, `local-substitutable`, `remote-owned`, `true-external`, `unknown`.
 - Seam: `real seam`, `false seam`, `internal seam`, `external seam`, `one-adapter risk`.
 - Test surface: `interface-level`, `implementation-detail`, `setup-heavy`, `mock-heavy`, `missing proof`.
-- Next step: `TDD slice`, `architecture map`, `PRD`, `issue breakdown`, `RFC`, `evidence pass`.
+- Next step: `TDD slice`, `architecture map`, `spec`, `ticket slicing`, `RFC`, `evidence pass`.
 
 Optional diagrams:
 

@@ -12,6 +12,7 @@ import yaml
 from scripts.validate_skills import (
     validate_clarification_fixtures,
     validate_onboarding_fixtures,
+    validate_planning_fixtures,
     validate_registry,
     validate_route_fixtures,
 )
@@ -45,6 +46,17 @@ def copy_clarification_fixtures(destination: Path) -> Path:
     fixture_destination = destination / "stack" / "fixtures" / "clarification"
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "clarification",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_planning_fixtures(destination: Path) -> Path:
+    """Copy planning fixtures and return their destination directory."""
+
+    fixture_destination = destination / "stack" / "fixtures" / "planning"
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "planning",
         fixture_destination,
     )
     return fixture_destination
@@ -158,6 +170,115 @@ class RegistryValidationTests(unittest.TestCase):
         self.assertIn(
             f"alias {canonical_name!r} for {alias_owner['name']!r} collides "
             "with a canonical skill name",
+            messages,
+        )
+
+    def test_v1_planning_names_resolve_to_one_v2_canonical_skill_each(self) -> None:
+        registry = yaml.safe_load(
+            (REPO_ROOT / "stack" / "goated-stack.yaml").read_text(
+                encoding="utf-8"
+            )
+        )
+        entries = {entry["name"]: entry for entry in registry["skills"]}
+
+        self.assertEqual(["write-a-prd"], entries["write-a-spec"]["aliases"])
+        self.assertEqual(
+            ["prd-to-issues"],
+            entries["spec-to-tickets"]["aliases"],
+        )
+        self.assertNotIn("write-a-prd", entries)
+        self.assertNotIn("prd-to-issues", entries)
+
+
+class PlanningFixtureValidationTests(unittest.TestCase):
+    def test_current_planning_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_planning_fixtures(REPO_ROOT))
+
+    def test_compact_spec_requires_every_compact_contract_section(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_planning_fixtures(fixture_root)
+            fixture_path = fixture_directory / "compact-spec.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["sections"].remove("acceptance-criteria")
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_planning_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "compact spec fixture is missing required section: acceptance-criteria",
+            messages,
+        )
+
+    def test_multi_ticket_dependencies_must_reference_earlier_tickets(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_planning_fixtures(fixture_root)
+            fixture_path = fixture_directory / "multi-ticket.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["tickets"][0]["blocked_by"] = ["ticket-002"]
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_planning_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "ticket ticket-001 depends on ticket-002 before it appears in order",
+            messages,
+        )
+
+    def test_approved_ticket_batch_is_reused_when_reach_is_unchanged(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_planning_fixtures(fixture_root)
+            fixture_path = fixture_directory / "multi-ticket.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["approval"]["ask_again"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_planning_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "planning fixture must reuse approval while scope and action reach "
+            "remain unchanged",
+            messages,
+        )
+
+    def test_ticket_sample_must_be_fresh_agent_ready(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_planning_fixtures(fixture_root)
+            sample_path = fixture_directory / "samples" / "single-ticket.md"
+            sample = sample_path.read_text(encoding="utf-8").replace(
+                "## Expected Proof",
+                "## Evidence",
+            )
+            sample_path.write_text(sample, encoding="utf-8")
+
+            messages = [
+                finding.message
+                for finding in validate_planning_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "ticket ticket-001 sample is missing heading: ## Expected Proof",
             messages,
         )
 

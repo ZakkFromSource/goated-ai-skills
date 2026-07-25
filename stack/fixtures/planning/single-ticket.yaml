@@ -1,0 +1,29 @@
+schema_version: 1.0.0
+identifier: single-ticket
+title: One vertical slice remains one portable ticket
+request: Slice an approved compact spec that can be delivered as one coherent change.
+expected:
+  artifact_kind: tickets
+  source_spec: docs/specs/2026-07-25-focused-workflow.md
+  order_file: skipped-single-ticket
+  tickets:
+    - id: ticket-001
+      path: tickets/001-deliver-focused-workflow.md
+      sample: samples/single-ticket.md
+      blocked_by: []
+      fields:
+        - parent-spec
+        - what-to-build
+        - recommended-first-reads
+        - acceptance-criteria
+        - expected-proof
+        - blocked-by
+        - scope-exclusions
+  approval:
+    existing_batch_approved: false
+    scope_or_reach_changed: false
+    reused: false
+    ask_again: true
+prohibited_behaviors:
+  - Split a coherent vertical slice into layer-by-layer tickets.
+  - Create a multi-ticket order file for a single ticket.

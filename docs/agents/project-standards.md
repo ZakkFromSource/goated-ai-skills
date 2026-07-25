@@ -66,8 +66,8 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | `rg --files` | Discover source files without bulk-reading. | review-enforced | Used by `docs/agents/context-matrix.md` and this pass. |
 | `rg -n` targeted scans | Find headings, schema references, and documented standards. | review-enforced | Used for issue and standards discovery. |
 | Manifest/config discovery with `rg --files -g ...` | Check whether build, test, lint, format, or CI entrypoints exist. | review-enforced | Root `pyproject.toml`, `uv.lock`, and `tests/` support local validation; no CI, formatter, or linter config is present. |
-| `uv run python -m unittest discover -s tests -v` | Exercise registry, adaptive-routing, onboarding, and clarification fixture validation behavior. | tooling-enforced | Added by Ticket 001 and extended by Tickets 002-004. |
-| `uv run python scripts/validate_skills.py` | Validate implemented skills, the integrated registry, routing, onboarding, and clarification fixture contracts, public-boundary checks, and report-only drift. | tooling-enforced | Extended by Tickets 001-004; uses `pyyaml` and `jsonschema` through `uv`. |
+| `uv run python -m unittest discover -s tests -v` | Exercise registry, adaptive-routing, onboarding, clarification, and planning fixture validation behavior. | tooling-enforced | Added by Ticket 001 and extended by Tickets 002-005. |
+| `uv run python scripts/validate_skills.py` | Validate implemented skills, the integrated registry, routing, onboarding, clarification, and planning fixture contracts, public-boundary checks, and report-only drift. | tooling-enforced | Extended by Tickets 001-005; uses `pyyaml` and `jsonschema` through `uv`. |
 | Manual markdown review | Validate docs-only changes while no automated docs tooling exists. | review-enforced | Current practical default. |
 
 ## Enforcement Levels
@@ -80,7 +80,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 - Date: 2026-07-25
 - Updated by: Codex
-- Evidence used: prior standards evidence; V2 spec and Tickets 001-004; ADR
-  0002; `stack/`, including routing, onboarding, and clarification fixtures; local validator
+- Evidence used: prior standards evidence; V2 spec and Tickets 001-005; ADR
+  0002; `stack/`, including routing, onboarding, clarification, and planning fixtures; local validator
   tooling and tests; targeted catalog, docs-drift, and ticket-state scans;
   fresh validator and unit-test output.

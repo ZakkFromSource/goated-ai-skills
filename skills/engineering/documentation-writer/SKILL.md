@@ -31,7 +31,7 @@ Hard: None.
 Soft:
 - session-start-progressive-disclosure for unfamiliar target projects
 - grill-with-docs when audience, purpose, scope, terminology, product behavior, or documentation ownership is unclear
-- write-a-prd when requirements, acceptance criteria, or feature intent are not settled
+- write-a-spec when requirements, acceptance criteria, or feature intent are not settled
 - doc-sync when documentation changes may leave catalogs, standards, guidance, or other docs stale
 - verification-before-completion before ready/source-grounded/checked/synced/complete docs claims
 - handoff when remaining gaps, skipped evidence, or documentation ownership need continuity
@@ -42,7 +42,7 @@ Fallback: If companion skills, docs, source access, or review tools are unavaila
 
 1. Confirm the documentation contract:
    - Identify whether the task is a new doc, substantial revision, AI-facing guide, or drift-only check.
-   - Route drift-only work to `doc-sync`; route unsettled product intent to `write-a-prd`; route unclear audience or scope to `grill-with-docs`.
+   - Route drift-only work to `doc-sync`; route unsettled product intent to `write-a-spec`; route unclear audience or scope to `grill-with-docs`.
    - State the intended doc type, audience, scope, owner if known, and readiness claim being pursued.
    - Ask only for product intent or preference that cannot be discovered from local evidence.
 
@@ -102,7 +102,7 @@ Return a compact report shaped like this:
 - Remaining gaps: <owner, source, verification, or product gaps, or "None">
 ```
 
-When no doc should be written, say so and explain the route, such as `doc-sync`, `write-a-prd`, `grill-with-docs`, or a user decision.
+When no doc should be written, say so and explain the route, such as `doc-sync`, `write-a-spec`, `grill-with-docs`, or a user decision.
 
 ## Delegation
 

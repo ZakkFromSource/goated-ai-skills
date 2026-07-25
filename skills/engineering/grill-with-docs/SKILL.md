@@ -101,7 +101,7 @@ Fallback: If docs or companion skills are unavailable, inspect minimal evidence 
 
 9. Stop at shared understanding:
    - Stop when implementation can begin safely, the next skill should take over, or a blocker needs user or stakeholder input.
-   - Recommend the next direct action or skill, such as `context-matrix-map`, `project-context-calibration`, `project-standards-calibration`, `prototype`, `write-a-prd`, `prd-to-issues`, `writing-plans`, `plan-codebase-architecture`, `architecture-design-map`, `tdd`, or `doc-sync`.
+   - Recommend the next direct action or skill, such as `context-matrix-map`, `project-context-calibration`, `project-standards-calibration`, `prototype`, `write-a-spec`, `spec-to-tickets`, `writing-plans`, `plan-codebase-architecture`, `architecture-design-map`, `tdd`, or `doc-sync`.
    - Use `verification-before-completion` before claiming the brief is complete, checked, or ready for implementation.
    - If the user decides to proceed with known ambiguity, name the risk clearly.
 
