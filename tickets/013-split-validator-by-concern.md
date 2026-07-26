@@ -10,8 +10,8 @@ AFK
 
 ## Work State
 
-Ready after the accepted high-confidence adoption batch. Baseline refreshed on
-2026-07-26 before implementation.
+Implementation complete locally on `ticket_013`. GitHub Actions and maintainer
+review remain before archival.
 
 ## What To Build
 
@@ -73,24 +73,24 @@ behavior, not incidental output to simplify during extraction.
 
 ## Acceptance Criteria
 
-- [ ] The CLI entrypoint contains orchestration and presentation only.
-- [ ] Validation concerns live in named modules with explicit dependencies.
-- [ ] Existing imports from `scripts.validate_skills` remain compatible or are
+- [x] The CLI entrypoint contains orchestration and presentation only.
+- [x] Validation concerns live in named modules with explicit dependencies.
+- [x] Existing imports from `scripts.validate_skills` remain compatible or are
       migrated in one reviewed change.
-- [ ] No validation rule, fixture requirement, output status, or exit-code
+- [x] No validation rule, fixture requirement, output status, or exit-code
       behavior is lost.
-- [ ] The accepted merge-conflict and source-grounded-research validators,
+- [x] The accepted merge-conflict and source-grounded-research validators,
       fixture counts, public-boundary checks, and focused tests retain explicit
       module ownership and equivalent behavior.
-- [ ] Validator output preserves concern ordering, fixture counts,
+- [x] Validator output preserves concern ordering, fixture counts,
       word-budget reporting, zero human-review notes, and the three existing
       report-only drift notes unless a separately approved behavior ticket
       changes them.
-- [ ] Focused module tests can run without loading unrelated validation
+- [x] Focused module tests can run without loading unrelated validation
       concerns.
 - [ ] The validator, full unit suite, and V1/V2 comparison pass locally and in
       CI.
-- [ ] The final diff contains no generated duplication or shallow
+- [x] The final diff contains no generated duplication or shallow
       pass-through modules.
 
 ## Expected Proof

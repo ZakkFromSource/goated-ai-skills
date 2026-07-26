@@ -7,6 +7,9 @@ of `scripts/validate_skills.py`. The command and the 16 validator functions
 imported by tests remain compatible while cohesive concern modules take
 ownership of validation rules, constants, and focused test surfaces.
 
+Implementation now matches this blueprint on `ticket_013`; local acceptance
+proof is complete, with GitHub Actions and maintainer review still pending.
+
 ## Source Evidence
 
 - Brief and spec:
@@ -95,5 +98,5 @@ module remains `scripts/validate_skills.py`.
 
 ## Recommended Next Step
 
-- Use `writing-plans` to sequence the characterization and extraction batches,
-  then begin with the characterization slice.
+- Run GitHub Actions and maintainer review against the completed module split,
+  then archive Ticket 013 if no findings remain.

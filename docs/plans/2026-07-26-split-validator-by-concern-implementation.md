@@ -12,6 +12,13 @@
   Overlapping moves remain sequential because all concerns currently share one
   source file.
 
+## Implementation Status
+
+- Implemented on `ticket_013` with focused concern modules, compatibility
+  re-exports, direct-module tests, and a thin CLI.
+- Local acceptance proof is complete. GitHub Actions and maintainer review
+  remain before Ticket 013 can be archived.
+
 ## Source Inspected
 
 - `AGENT.md`, `CONTEXT.md`, `docs/agents/project-standards.md`, and the ticket.
@@ -124,5 +131,5 @@ orchestration order.
 
 ## Recommended Next Step
 
-- Add and run the characterization compatibility tests before extracting
-  shared primitives.
+- Push `ticket_013`, obtain a green GitHub Actions run, complete maintainer
+  review, and then archive Ticket 013 if no findings remain.
