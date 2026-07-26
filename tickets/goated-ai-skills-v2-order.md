@@ -1,6 +1,6 @@
 # GOATED AI Skills V2 Ticket Order
 
-Last updated: 2026-07-25
+Last updated: 2026-07-26
 
 Parent spec: `docs/specs/2026-07-25-goated-ai-skills-v2.md`
 
@@ -43,7 +43,7 @@ plan.
 - `tickets/archive/012-complete-and-accept-v2-migration.md` — Complete And Accept
   The V2 Migration (HITL; Work state: Completed; Blocked by: None)
 - `tickets/archive/013-split-validator-by-concern.md` — Split The Validator By
-  Concern (AFK; Work state: Completed; Blocked by: Ticket 012)
+  Concern (AFK; Work state: Completed; Blocked by: Tickets 012 and 020)
 
 ## Recommended Order
 

@@ -15,8 +15,7 @@
 ## Implementation Status
 
 - Implemented and merged into `update/v2` with focused concern modules,
-  compatibility
-  re-exports, direct-module tests, and a thin CLI.
+  compatibility re-exports, direct-module tests, and a thin CLI.
 - Local acceptance proof, GitHub Actions, maintainer review, and archival are
   complete.
 
@@ -28,16 +27,18 @@
 - `scripts/validate_skills.py`, `tests/test_validate_skills.py`,
   `tests/test_v2_refinement_contracts.py`, `stack/fixtures/`,
   `.github/workflows/validate.yml`, and `pyproject.toml`.
-- An AST trace of all 56 validator functions, their line ranges, direct
-  intra-file calls, imports, and module constants.
+- An AST trace of all 56 pre-refactor validator functions, their line ranges,
+  direct intra-file calls, imports, and module constants.
 - Fresh baseline output from the validator, all 121 unit tests, and the V1/V2
   comparison.
 
 ## Slice Shape And Interface Focus
 
-The first slice is a narrow characterization foundation. It adds observable
-compatibility proof without changing production behavior. Later slices move
-one cohesive concern at a time behind its public module interface while
+The planned first slice was a narrow characterization foundation that added
+observable compatibility proof without changing production behavior. In the
+committed history, `926725e` combines those tests with the shared,
+skill-package, and registry extraction. Later commits move one cohesive
+concern at a time behind its public module interface while
 `scripts.validate_skills` keeps the established compatibility exports and
 orchestration order.
 
@@ -130,6 +131,17 @@ orchestration order.
   both entry paths.
 - GitHub Actions passed after the branch was pushed, satisfying the final
   external verification criterion.
+- The repository does not retain a standalone pre-extraction characterization
+  run: `926725e` adds the compatibility tests and the first production
+  extraction together. A post-acceptance QC pass reconstructed functional
+  parity by comparing the `131876a` validator with the completed validator on
+  valid and invalid repositories and by exercising every slice commit. This is
+  post-hoc equivalence evidence, not proof of the original RED/GREEN chronology.
+- The same QC follow-up added mutation-proven coverage for exact success and
+  failure output plus cross-concern invocation order. Fresh follow-up proof
+  passed 26 compatibility tests, the 35-test focused acceptance suite, the
+  148-test full suite, repository validation, V1/V2 comparison, `compileall`,
+  and `git diff --check`.
 
 ## Completion
 

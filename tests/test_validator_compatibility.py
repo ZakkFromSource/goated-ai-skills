@@ -6,9 +6,11 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from contextlib import redirect_stdout
+from collections.abc import Callable
+from contextlib import ExitStack, redirect_stdout
 from io import StringIO
 from pathlib import Path
+from unittest.mock import patch
 
 import scripts.validate_skills as validator
 from scripts.validation import shared
@@ -50,7 +52,10 @@ from scripts.validation.routing import (
     validate_end_to_end_fixtures as validate_end_to_end_fixture_concern,
     validate_route_fixtures as validate_route_fixture_concern,
 )
-from scripts.validation.skill_packages import validate_skill_packages
+from scripts.validation.skill_packages import (
+    SkillPackageValidation,
+    validate_skill_packages,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -75,32 +80,153 @@ COMPATIBILITY_EXPORTS = (
     "validate_wayfinding_fixtures",
 )
 
-EXPECTED_SUCCESS_LINES = (
-    "GOATED skill validation passed for 37 implemented skills.",
-    "Integrated registry validation passed for 37 catalog entries.",
-    "Adaptive routing fixture validation passed for 9 scenarios.",
-    "End-to-end fixture validation passed for 4 scenarios.",
-    "Onboarding fixture validation passed for 4 scenarios.",
-    "Clarification fixture validation passed for 6 scenarios.",
-    "Planning fixture validation passed for 5 scenarios.",
+ORCHESTRATED_VALIDATORS = (
+    "validate_skill_packages",
+    "validate_registry",
+    "validate_route_fixtures",
+    "validate_end_to_end_fixtures",
+    "validate_clarification_fixtures",
+    "validate_onboarding_fixtures",
+    "validate_planning_fixtures",
+    "validate_architecture_planning_fixtures",
+    "validate_behavior_proof_fixtures",
+    "validate_merge_conflict_fixtures",
+    "validate_review_verification_fixtures",
+    "validate_output_communication_fixtures",
+    "validate_knowledge_retrieval_fixtures",
+    "validate_source_grounded_research_fixtures",
+    "validate_setup_scribe_fixtures",
+    "validate_wayfinding_fixtures",
+)
+
+EXPECTED_SUCCESS_OUTPUT = "\n".join(
     (
-        "Architecture and implementation-planning fixture validation "
-        "passed for 5 scenarios."
-    ),
-    "Behavior-proof fixture validation passed for 14 scenarios.",
-    "Merge-conflict fixture validation passed for 5 scenarios.",
-    "Review-and-verification fixture validation passed for 7 scenarios.",
-    "Output-and-communication fixture validation passed for 9 scenarios.",
-    "Knowledge-retrieval fixture validation passed for 6 scenarios.",
-    "Source-grounded-research fixture validation passed for 6 scenarios.",
-    "Setup Scribe fixture validation passed for 8 scenarios.",
-    "Wayfinding fixture validation passed for 10 scenarios.",
+        "GOATED skill validation passed for 37 implemented skills.",
+        "Integrated registry validation passed for 37 catalog entries.",
+        "Adaptive routing fixture validation passed for 9 scenarios.",
+        "End-to-end fixture validation passed for 4 scenarios.",
+        "Onboarding fixture validation passed for 4 scenarios.",
+        "Clarification fixture validation passed for 6 scenarios.",
+        "Planning fixture validation passed for 5 scenarios.",
+        (
+            "Architecture and implementation-planning fixture validation "
+            "passed for 5 scenarios."
+        ),
+        "Behavior-proof fixture validation passed for 14 scenarios.",
+        "Merge-conflict fixture validation passed for 5 scenarios.",
+        "Review-and-verification fixture validation passed for 7 scenarios.",
+        "Output-and-communication fixture validation passed for 9 scenarios.",
+        "Knowledge-retrieval fixture validation passed for 6 scenarios.",
+        "Source-grounded-research fixture validation passed for 6 scenarios.",
+        "Setup Scribe fixture validation passed for 8 scenarios.",
+        "Wayfinding fixture validation passed for 10 scenarios.",
+        (
+            "Word-budget report: shared policy 1193 words "
+            "(within 800-1,200 target)."
+        ),
+        (
+            "Skills above the 1,500-word decomposition threshold: "
+            "skills/agent-workflows/project-standards-calibration/SKILL.md, "
+            "skills/engineering/architecture-design-map/SKILL.md, "
+            "skills/engineering/code-refinement/SKILL.md, "
+            "skills/engineering/code-security-review/SKILL.md, "
+            "skills/engineering/diagnose/SKILL.md, "
+            "skills/engineering/grill-with-docs/SKILL.md, "
+            "skills/engineering/review-codebase-architecture/SKILL.md, "
+            "skills/engineering/design-codebase-architecture/SKILL.md, "
+            "skills/engineering/prototype/SKILL.md, "
+            "skills/engineering/receiving-code-review/SKILL.md, "
+            "skills/engineering/tdd/SKILL.md, "
+            "skills/engineering/verification-before-completion/SKILL.md, "
+            "skills/engineering/writing-plans/SKILL.md"
+        ),
+        (
+            "Per-type soft targets remain review-only until registry roles "
+            "are assigned budget classes."
+        ),
+        "",
+        "Human-review notes: 0",
+        "",
+        "Report-only docs/example schema drift: 3",
+        (
+            "- issues/062-add-learning-capture-skill.md:161: possible legacy "
+            "frontmatter example or drift: status:"
+        ),
+        (
+            "- skills/productivity/learning-capture/references/examples.md:89: "
+            "possible legacy frontmatter example or drift: status:"
+        ),
+        (
+            "- skills/productivity/learning-capture/references/"
+            "lesson-note-template.md:69: possible legacy frontmatter example "
+            "or drift: status:"
+        ),
+        "",
+    )
+)
+
+EXPECTED_EMPTY_REPOSITORY_OUTPUT = "\n".join(
     (
-        "Word-budget report: shared policy 1193 words "
-        "(within 800-1,200 target)."
-    ),
-    "Human-review notes: 0",
-    "Report-only docs/example schema drift: 3",
+        "GOATED skill validation failed for 0 implemented skills.",
+        "",
+        "Blocking errors: 17",
+        "- skills: missing skills directory",
+        "- stack/goated-stack.yaml: missing required file",
+        (
+            "- stack/schemas/stack-registry.schema.json: "
+            "missing required file"
+        ),
+        "- stack/goated-stack.yaml: missing required file",
+        (
+            "- stack/fixtures/end-to-end: "
+            "no end-to-end fixtures found"
+        ),
+        (
+            "- stack/fixtures/clarification: "
+            "no clarification fixtures found"
+        ),
+        "- stack/fixtures/onboarding: no onboarding fixtures found",
+        "- stack/fixtures/planning: no planning fixtures found",
+        (
+            "- stack/fixtures/architecture-planning: "
+            "no architecture-planning fixtures found"
+        ),
+        (
+            "- stack/fixtures/behavior-proof: "
+            "no behavior-proof fixtures found"
+        ),
+        (
+            "- stack/fixtures/merge-conflicts: "
+            "no merge-conflict fixtures found"
+        ),
+        (
+            "- stack/fixtures/review-verification: "
+            "no review-verification fixtures found"
+        ),
+        (
+            "- stack/fixtures/output-communication: "
+            "no output-communication fixtures found"
+        ),
+        (
+            "- stack/fixtures/knowledge-retrieval: "
+            "no knowledge-retrieval fixtures found"
+        ),
+        (
+            "- stack/fixtures/source-grounded-research: "
+            "no source-grounded-research fixtures found"
+        ),
+        "- stack/fixtures/setup-scribe: no setup-scribe fixtures found",
+        "- stack/fixtures/wayfinding: no wayfinding fixtures found",
+        (
+            "Integrated registry checked with 0 catalog entries; "
+            "shared policy is 0 words (below 800-1,200 target)."
+        ),
+        "",
+        "Human-review notes: 0",
+        "",
+        "Report-only docs/example schema drift: 0",
+        "",
+    )
 )
 
 
@@ -152,24 +278,109 @@ class ValidatorCompatibilityTests(unittest.TestCase):
             ],
         )
 
-    def test_successful_cli_preserves_output_order_and_zero_exit_status(self) -> None:
+    def test_aggregate_runs_each_concern_once_in_baseline_order(self) -> None:
+        invocation_log: list[tuple[str, Path]] = []
+        package_error = validator.Finding(
+            "00-validate_skill_packages",
+            "orchestration marker",
+        )
+        package_review_note = validator.Finding(
+            "package-review-note",
+            "review marker",
+        )
+        package_drift = validator.Finding(
+            "package-drift",
+            "drift marker",
+        )
+        package_result = SkillPackageValidation(
+            errors=[package_error],
+            review_notes=[package_review_note],
+            drift=[package_drift],
+            skill_files=(REPO_ROOT / "skills/example/SKILL.md",),
+        )
+        expected_errors = [package_error]
+        phase_results: dict[
+            str,
+            SkillPackageValidation | list[validator.Finding],
+        ] = {
+            "validate_skill_packages": package_result,
+        }
+
+        for position, function_name in enumerate(
+            ORCHESTRATED_VALIDATORS[1:],
+            start=1,
+        ):
+            marker = validator.Finding(
+                f"{position:02d}-{function_name}",
+                "orchestration marker",
+            )
+            expected_errors.append(marker)
+            phase_results[function_name] = [marker]
+
+        def record_phase(
+            function_name: str,
+            result: SkillPackageValidation | list[validator.Finding],
+        ) -> Callable[
+            [Path],
+            SkillPackageValidation | list[validator.Finding],
+        ]:
+            """Return a phase stand-in that records observable execution."""
+
+            def validation_phase(
+                repo: Path,
+            ) -> SkillPackageValidation | list[validator.Finding]:
+                invocation_log.append((function_name, repo))
+                return result
+
+            return validation_phase
+
+        # Phase execution order is an explicit compatibility requirement.
+        # Controlled stand-ins isolate orchestration from each concern's own
+        # validation rules while marker results prove aggregate result order.
+        with ExitStack() as patches:
+            for function_name in ORCHESTRATED_VALIDATORS:
+                patches.enter_context(
+                    patch.object(
+                        validator,
+                        function_name,
+                        side_effect=record_phase(
+                            function_name,
+                            phase_results[function_name],
+                        ),
+                    )
+                )
+
+            errors, review_notes, drift, skill_count = (
+                validator.validate_skills(REPO_ROOT)
+            )
+
+        self.assertEqual(
+            [function_name for function_name, _ in invocation_log],
+            list(ORCHESTRATED_VALIDATORS),
+        )
+        self.assertTrue(
+            all(repo == REPO_ROOT for _, repo in invocation_log),
+            invocation_log,
+        )
+        self.assertEqual(errors, expected_errors)
+        self.assertEqual(review_notes, [package_review_note])
+        self.assertEqual(drift, [package_drift])
+        self.assertEqual(skill_count, 1)
+
+    def test_successful_cli_preserves_exact_output_and_zero_exit_status(self) -> None:
         result = run_validator()
 
         self.assertEqual(result.returncode, 0, result.stderr)
-        previous_position = -1
-        for expected_line in EXPECTED_SUCCESS_LINES:
-            with self.subTest(expected_line=expected_line):
-                position = result.stdout.find(expected_line)
-                self.assertGreater(position, previous_position, result.stdout)
-                previous_position = position
+        self.assertEqual(result.stdout, EXPECTED_SUCCESS_OUTPUT)
+        self.assertEqual(result.stderr, "")
 
-    def test_invalid_repository_returns_nonzero_exit_status(self) -> None:
+    def test_empty_repository_preserves_exact_failure_output(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             result = run_validator("--repo", temporary_directory)
 
         self.assertEqual(result.returncode, 1, result.stderr)
-        self.assertIn("GOATED skill validation failed", result.stdout)
-        self.assertIn("Blocking errors", result.stdout)
+        self.assertEqual(result.stdout, EXPECTED_EMPTY_REPOSITORY_OUTPUT)
+        self.assertEqual(result.stderr, "")
 
 
 class SharedValidationPrimitiveTests(unittest.TestCase):

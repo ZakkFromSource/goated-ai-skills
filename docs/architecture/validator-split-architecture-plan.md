@@ -18,13 +18,17 @@ GitHub Actions, and maintainer review are complete.
 - Project guidance: `AGENT.md`, `CONTEXT.md`,
   `docs/agents/project-standards.md`, and
   `docs/high-confidence-adoption-acceptance-report.md`.
-- Current implementation: `scripts/validate_skills.py`,
-  `tests/test_validate_skills.py`, `tests/test_v2_refinement_contracts.py`,
-  `stack/fixtures/`, and `.github/workflows/validate.yml`.
-- Source trace: the current file contains 56 top-level functions. Concern
-  validators depend primarily on `Finding`, repo-relative path/text helpers,
+- Current implementation: the compatibility CLI at
+  `scripts/validate_skills.py`, focused modules under `scripts/validation/`,
+  `tests/test_validator_compatibility.py`,
+  `tests/test_validator_module_isolation.py`,
+  `tests/test_validate_skills.py`, `stack/fixtures/`, and
+  `.github/workflows/validate.yml`.
+- Pre-refactor source trace at fixed point `131876a`: the monolithic
+  `scripts/validate_skills.py` contained 56 top-level functions. Concern
+  validators depended primarily on `Finding`, repo-relative path/text helpers,
   YAML loading, `is_string_list`, and two small fixture-contract helpers.
-  `validate_skills`, reporting, and `main` are concentrated at the end of the
+  `validate_skills`, reporting, and `main` were concentrated at the end of that
   file.
 - Baseline commands run on 2026-07-26:
   `uv run python scripts/validate_skills.py`,

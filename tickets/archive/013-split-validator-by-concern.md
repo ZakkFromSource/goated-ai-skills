@@ -112,6 +112,17 @@ behavior, not incidental output to simplify during extraction.
   suite, 35-test high-confidence suite, V1/V2 comparison, and `compileall`.
 - The implementation and its compatibility history remain on `update/v2` at
   commit `db501a5`.
+- A post-acceptance QC review found that the standalone pre-extraction
+  characterization output was not retained: `926725e` adds the compatibility
+  tests and first production extraction together. Reconstructed valid/invalid
+  CLI equivalence and per-commit test evidence support functional parity, but
+  cannot prove the original test-first chronology; that historical proof gap
+  remains accepted residual risk.
+- The QC follow-up added mutation-proven cross-concern order and exact
+  success/failure output coverage. Fresh follow-up proof passed 26
+  compatibility tests, the 35-test focused suite, the 148-test full suite,
+  repository validation, V1/V2 comparison, `compileall`, and
+  `git diff --check`.
 
 ## Blocked By
 
