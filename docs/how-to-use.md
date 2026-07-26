@@ -463,6 +463,14 @@ contract.
   active approval mode covers writes, and only non-empty audit categories.
 - **Pipeline role**: Optional learning closeout and knowledge-note workflow. It writes and nurtures notes, but does not replace broad knowledge-base retrieval, synthesis, or Q&A.
 
+#### `setup-scribe`
+
+- **Purpose**: Maintains one ordered, current, evidence-labelled recipe for recreating a project's working environment.
+- **Use when**: Project-dependent installation, environment or settings changes, manual setup, undocumented setup backfill, recipe drift, or replay automation would otherwise be lost or stale.
+- **Typical input**: Current project sources, setup observations, supported environments, user recollection, existing setup docs, action reach, consent, and available verification.
+- **Typical output**: A project-first setup recipe, classified drift audit, or safe Bash-first automation proposal with `verified`, `source-backed`, and `unverified` steps.
+- **Pipeline role**: Conditional reproducibility gate selected on `reproducibility-impact`. It points to declarative sources, excludes unrelated personal settings, and never treats generated automation as executed or verified. Targeted changed-fact checks remain with `doc-sync`, substantial guides with `documentation-writer`, reusable lessons with `learning-capture`, and continuity notes with `handoff`.
+
 #### `caveman`
 
 - **Purpose**: Keeps replies compact when the user explicitly asks for brief, terse, or caveman-style communication.
@@ -515,6 +523,16 @@ report stale or conflicting knowledge, and add provenance-aware shared
 evidence without nurturing or rewriting any note.
 ```
 
+### Preserve or reconstruct project setup
+
+```text
+Use setup-scribe to capture, backfill, audit, or automate this project's setup.
+Keep one ordered current recipe, reference existing manifests and configuration,
+label every material step as verified, source-backed, or unverified, prefer
+portable Bash, and do not execute generated automation without separate
+approval.
+```
+
 ### Implement a scoped ticket or remote issue
 
 ```text
@@ -542,6 +560,9 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If a question should be answered from durable project artifacts and source
   authority or freshness matters, use `knowledge-retrieval`; use
   `learning-capture` separately for approved note writes or nurturing.
+- If project-dependent setup knowledge is missing, changed, stale, or ready for
+  replay automation, use `setup-scribe`; skip it when no reproducibility impact
+  exists.
 - If the request is fuzzy and user-facing, use `write-a-spec` before implementation planning.
 - If onboarding uncovers project-level product scope, roadmap intent, or acceptance criteria, use `write-a-spec` before architecture planning; otherwise skip spec creation.
 - If architecture shape must be prescribed, use `design-codebase-architecture`; for review-only findings use `review-codebase-architecture`; if you only need a descriptive map, use `architecture-design-map`.

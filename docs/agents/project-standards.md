@@ -32,6 +32,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Keep fresh claim-scoped evidence universal while loading full verification, standards/spec review, and security review only for matching complexity, risk, uncertainty, delegation, audit, trust-boundary, or sensitive-surface conditions. | tooling-and-review-enforced | `docs/specs/2026-07-25-goated-ai-skills-v2.md`, `stack/AGENTS.md`, review/verification skill bodies, `stack/fixtures/review-verification/`, `scripts/validate_skills.py` | Narrow work verifies directly. Specialists reuse envelope evidence and return findings, classifications, proof gaps, or route deltas to one consolidated closeout. |
 | Use Wayfinder only for branching uncertainty that exceeds one focused session. Approve the destination, location, visible frontier, action reach, and initial write scope before chart creation; keep production execution outside the map. | review-enforced | `docs/specs/2026-07-25-goated-ai-skills-v2.md`, `skills/agent-workflows/wayfinder/SKILL.md`, `stack/fixtures/wayfinding/` | Session-sized discussion and already-specified large implementation route elsewhere. Local maps use `docs/wayfinding/<effort-slug>/` when no configured tracker is used; decision type and `AFK`/`HITL` mode are independent. |
 | Retrieve durable project knowledge progressively and read-only; rank it for the exact claim and report stale or conflicting sources instead of mutating or silently merging them. | tooling-and-review-enforced | `skills/productivity/knowledge-retrieval/SKILL.md`, `stack/fixtures/knowledge-retrieval/`, `scripts/validate_skills.py` | Ordinary files are the portable fallback. Note nurturing belongs to a separate `learning-capture` run; external web research is out of scope. |
+| Preserve project setup through one ordered current recipe with per-step evidence states; reference declarative sources, select the gate only on reproducibility impact, and separate automation creation from execution. | tooling-and-review-enforced | `skills/productivity/setup-scribe/SKILL.md`, `stack/fixtures/setup-scribe/`, `stack/goated-stack.yaml`, `scripts/validate_skills.py` | Scribe is project-first and Bash-first. Machine-wide, external, sensitive, or unsafe actions retain approval and security gates. |
 
 ## Inferred Conventions
 
@@ -73,7 +74,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | `rg -n` targeted scans | Find headings, schema references, and documented standards. | review-enforced | Used for issue and standards discovery. |
 | Manifest/config discovery with `rg --files -g ...` | Check whether build, test, lint, format, or CI entrypoints exist. | review-enforced | Root `pyproject.toml`, `uv.lock`, `.github/workflows/validate.yml`, and `tests/` support local and CI validation; no formatter or linter config is present. |
 | `uv run python -m unittest discover -s tests -v` | Exercise registry, canonical-reference, focused-fixture, end-to-end fixture, and V1/V2 context-comparison behavior. | tooling-enforced | Added by Ticket 001 and extended through Ticket 012. |
-| `uv run python scripts/validate_skills.py` | Validate implemented skills, links, canonical references, registry and aliases, signals, focused and end-to-end fixture contracts, public-boundary checks, word budgets, and report-only drift. | tooling-enforced | Extended through Ticket 012; uses `pyyaml` and `jsonschema` through `uv`. |
+| `uv run python scripts/validate_skills.py` | Validate implemented skills, links, canonical references, registry and aliases, signals, focused and end-to-end fixture contracts, public-boundary checks, word budgets, and report-only drift. | tooling-enforced | Extended by Tickets 001-012 and 014; uses `pyyaml` and `jsonschema` through `uv`. |
 | `uv run python scripts/compare_v1_v2_context.py` | Compare four representative V2 route-specific instruction sets with the preserved `v1-baseline` tag and report shared-policy cost separately. | tooling-enforced | Ticket 012 release-conformance proof. |
 | Manual markdown review | Validate docs-only changes while no automated docs tooling exists. | review-enforced | Current practical default. |
 
@@ -85,11 +86,12 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 
 ## Last Updated
 
-- Date: 2026-07-25
+- Date: 2026-07-26
 - Updated by: Codex
-- Evidence used: prior standards evidence; V2 spec and Tickets 001-012; ADR
+- Evidence used: prior standards evidence; V2 spec and Tickets 001-012 and 014;
+  ADR
   0002; `stack/`, including routing, onboarding, clarification,
   specification/ticket, architecture, implementation-planning, behavior-proof,
-  review/verification, Wayfinding, knowledge-retrieval, and end-to-end
+  review/verification, Wayfinding, knowledge-retrieval, Setup Scribe, and end-to-end
   fixtures; context-comparison tooling; local validator and tests; migration
   and acceptance docs; targeted catalog, docs-drift, and ticket-state scans.

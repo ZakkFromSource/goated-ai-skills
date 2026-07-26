@@ -75,6 +75,8 @@ maintainer-accepted integrated stack.
 - **Status** - a historical source-repo maturity label. Implemented skills no longer use `status` as top-level frontmatter; record maturity or deprecation decisions in docs or scoped issues when needed.
 - **Discipline-heavy skill** - a skill that asks agents to resist shortcuts, verify claims, follow a strict process, or stop under pressure. These skills may need stop rules, proof gates, rationalization counters, red flags, or anti-pattern references.
 - **Delegated status enum** - explicit status values used by delegated workflows, such as `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, or `BLOCKED`, with controller behavior defined for each value. Use them when a subagent result can change the controller's next action; simple evidence scans can keep lighter evidence, assumption, uncertainty, and inspected-path requirements.
+- **Project reproducibility gate** - a conditional route, currently owned by `setup-scribe`, selected when durable project setup knowledge is missing, changed, stale, or ready for replay automation; it is not a mandatory closeout step.
+- **Setup evidence state** - a material setup step classification of `verified`, `source-backed`, or `unverified`; it describes the evidence for that step rather than the recipe as a whole.
 
 ### Artifacts
 
@@ -106,6 +108,7 @@ maintainer-accepted integrated stack.
 - **Architecture plan** - a durable target-project artifact, normally `docs/agents/architecture-plan.md` for project-wide setup or `docs/architecture/<slug>-architecture-plan.md` for feature-specific work, that turns clarified intent into planned modules, interfaces, dependency seams, test surfaces, and implementation slice order.
 - **Architecture review** - a review-only assessment of current architecture quality and improvement opportunities. It may route an accepted finding to architecture design, but does not itself produce the replacement blueprint.
 - **Implementation plan** - an ordered, source-grounded execution route produced just in time. Inline mode stays in the work envelope for focused single-session work; durable mode is tracked for resumable, delegated, architectural, or multi-surface work. Promotion reuses fresh discovery, evidence, and settled decisions.
+- **Setup recipe** - one ordered, tracked, current project-first guide for recreating a working environment. It owns prerequisites, sequencing, manual actions, verification, gaps, and links while manifests and configuration retain ownership of their detailed facts.
 - **Agent instruction artifact** - a file or configuration entry that tells a specific agent framework how to use installed skills and target-project artifacts.
 - **Durable artifact** - tracked project knowledge that should survive across sessions, such as specs, Wayfinder maps and decision records, ADRs, project context files, context matrices, standards profiles, architecture plans, and public docs.
 - **Knowledge retrieval** - progressive read-only search of scoped durable

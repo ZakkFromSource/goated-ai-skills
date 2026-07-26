@@ -1,9 +1,8 @@
 # GOATED Integrated Stack Policy
 
-This policy defines behavior shared by an integrated GOATED AI Skills
-installation. It is a portable source template: merge it into the instruction
-artifact used by the target agent framework rather than assuming every
-framework reads `AGENTS.md`.
+This policy defines shared integrated-stack behavior. Merge this portable
+template into the target framework's applied instructions; do not assume it
+reads `AGENTS.md`.
 
 Specialist skill files remain authoritative for their procedures. This policy
 owns only behavior that should be consistent across the whole installed stack.
@@ -126,9 +125,10 @@ Re-evaluate the route at controlled checkpoints:
 - after implementation;
 - before final completion.
 
-Treat scope, risk, action-reach, evidence, security, documentation, and
-refinement signals as checkpoint inputs that may change gates with a recorded
-reason. No individual skill may silently reconstruct a long pipeline.
+Treat scope, risk, action-reach, evidence, security, documentation, reproducibility,
+and refinement signals as checkpoint inputs. Select `setup-scribe` only when
+project setup knowledge is missing, changed, stale, or automation-ready. Record
+material gate changes; no skill may silently reconstruct a pipeline.
 
 ## Proportional Clarification
 

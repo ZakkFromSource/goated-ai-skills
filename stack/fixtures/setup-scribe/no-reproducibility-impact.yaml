@@ -1,0 +1,13 @@
+schema_version: 1.0.0
+identifier: no-reproducibility-impact
+title: Ordinary work does not activate Scribe
+request: Rename one local variable without changing setup or configuration.
+expected:
+  gate_selected: false
+  reproducibility_impact: false
+  recipe_action: none
+  closeout: compact
+  skip_report_required: false
+prohibited_behaviors:
+  - Run setup capture for every project change.
+  - Produce a ceremonial no-impact report.

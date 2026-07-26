@@ -1,0 +1,17 @@
+schema_version: 1.0.0
+identifier: live-capture
+title: Project setup changes are reconciled at closeout
+request: Install the project CLI, add its required config path, and document the setup.
+expected:
+  mode: capture
+  gate_selected: true
+  reproducibility_impact: true
+  observation_collection: quiet
+  recipe_action: update
+  evidence_states:
+    - verified
+    - source-backed
+  closeout: compact
+prohibited_behaviors:
+  - Interrupt for every routine project setup fact.
+  - Record unrelated machine customization.

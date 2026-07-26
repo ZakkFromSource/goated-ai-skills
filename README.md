@@ -121,6 +121,7 @@ only the canonical folders.
 - [`grill-me`](skills/productivity/grill-me/SKILL.md): challenge and clarify ideas, plans, choices, and decisions when project docs are not needed.
 - [`knowledge-retrieval`](skills/productivity/knowledge-retrieval/SKILL.md): retrieve durable project knowledge progressively, rank it by claim-scoped authority and freshness, and report conflicts without mutating source notes.
 - [`learning-capture`](skills/productivity/learning-capture/SKILL.md): capture durable lessons, extract reusable knowledge from provided material, and nurture atomic knowledge notes.
+- [`setup-scribe`](skills/productivity/setup-scribe/SKILL.md): preserve an ordered, evidence-labelled project setup recipe and safely backfill, audit, or automate it.
 - [`caveman`](skills/productivity/caveman/SKILL.md): keep replies compact without losing important warnings, uncertainty, or exactness.
 
 ## Typical Routes
@@ -194,6 +195,21 @@ using-goated-ai-skills when the route is unclear
 Retrieval is progressive and read-only. It ranks current project evidence,
 reports stale or conflicting knowledge, and does not substitute external web
 research for local durable sources.
+
+### Preserve Reproducible Project Setup
+
+```text
+using-goated-ai-skills when the route is unclear
+-> setup-scribe when reproducibility-impact is present
+-> capture, backfill, audit, or automate
+-> security or verification review when the setup reach requires it
+```
+
+Scribe maintains one current project-first recipe, points to declarative
+sources rather than duplicating them, labels evidence honestly, and separates
+automation creation from execution. It does not replace targeted drift checks
+from `doc-sync`, substantial guides from `documentation-writer`, reusable
+lessons from `learning-capture`, or continuity notes from `handoff`.
 
 ### Craft or Refine a Prompt
 

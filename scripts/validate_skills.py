@@ -412,6 +412,80 @@ REQUIRED_KNOWLEDGE_RETRIEVAL_FIXTURE_IDENTIFIERS = {
     "ordinary-files-only",
     "stale-note",
 }
+REQUIRED_SETUP_SCRIBE_FIXTURE_CONTRACTS = {
+    "live-capture": {
+        "mode": "capture",
+        "gate_selected": True,
+        "reproducibility_impact": True,
+        "observation_collection": "quiet",
+        "recipe_action": "update",
+        "evidence_states": ["verified", "source-backed"],
+        "closeout": "compact",
+    },
+    "mixed-evidence-backfill": {
+        "mode": "backfill",
+        "exact_history_claimed": False,
+        "evidence_states": ["verified", "source-backed", "unverified"],
+        "recipe_path": "docs/setup/project-setup.md",
+        "chronological_history": False,
+    },
+    "drift-audit": {
+        "mode": "audit",
+        "fresh_project_evidence": True,
+        "finding_states": [
+            "current",
+            "stale",
+            "missing",
+            "moved",
+            "unverifiable",
+            "obsolete",
+        ],
+        "recipe_action": "repair",
+    },
+    "bash-native-helper-automation": {
+        "mode": "automate",
+        "preferred_automation": "bash",
+        "windows_bash_prerequisite": "git-bash",
+        "native_helper": "powershell",
+        "native_helper_scope": "registry",
+        "generated": True,
+        "executed": False,
+        "verified": False,
+        "separate_execution_approval": True,
+    },
+    "secret-rejection": {
+        "mode": "capture",
+        "secret_value_recorded": False,
+        "placeholder_used": True,
+        "security_impact": True,
+        "tracked_recipe_safe": True,
+    },
+    "source-of-truth-reuse": {
+        "manifest_referenced": True,
+        "dependency_versions_duplicated": False,
+        "recipe_owns": [
+            "prerequisites",
+            "ordering",
+            "manual-actions",
+            "verification",
+            "gaps",
+        ],
+    },
+    "personal-setting-exclusion": {
+        "scope": "project-first",
+        "project_setting_required": True,
+        "project_setting_captured": True,
+        "personal_setting_project_dependency": False,
+        "personal_setting_recorded": False,
+    },
+    "no-reproducibility-impact": {
+        "gate_selected": False,
+        "reproducibility_impact": False,
+        "recipe_action": "none",
+        "closeout": "compact",
+        "skip_report_required": False,
+    },
+}
 REQUIRED_WAYFINDING_FIXTURE_IDENTIFIERS = {
     "branching-selection-and-approval",
     "decision-mode-classification",
@@ -3472,6 +3546,105 @@ def validate_knowledge_retrieval_fixtures(repo: Path) -> list[Finding]:
     return errors
 
 
+def validate_setup_scribe_fixtures(repo: Path) -> list[Finding]:
+    """Validate project-first setup reproducibility behavior."""
+
+    fixture_root = repo / "stack" / "fixtures" / "setup-scribe"
+    fixture_paths = sorted(fixture_root.glob("*.yaml"))
+    if not fixture_paths:
+        return [
+            Finding(
+                "stack/fixtures/setup-scribe",
+                "no setup-scribe fixtures found",
+            )
+        ]
+
+    errors: list[Finding] = []
+    identifiers: set[str] = set()
+    for fixture_path in fixture_paths:
+        fixture_label = relative(fixture_path, repo)
+        fixture, fixture_errors = load_mapping(fixture_path, fixture_label)
+        errors.extend(fixture_errors)
+        if fixture is None:
+            continue
+
+        if fixture.get("schema_version") != "1.0.0":
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "unsupported setup-scribe fixture schema_version",
+                )
+            )
+
+        identifier = fixture.get("identifier")
+        if not isinstance(identifier, str):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "setup-scribe fixture identifier must be a string",
+                )
+            )
+            continue
+        if identifier in identifiers:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"duplicate setup-scribe fixture identifier: {identifier}",
+                )
+            )
+        identifiers.add(identifier)
+
+        expected = fixture.get("expected")
+        if not isinstance(expected, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "setup-scribe fixture expected must be a mapping",
+                )
+            )
+            continue
+        if not is_string_list(
+            fixture.get("prohibited_behaviors"),
+            allow_empty=False,
+        ):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "setup-scribe prohibited_behaviors must be a "
+                    "non-empty string list",
+                )
+            )
+
+        contract = REQUIRED_SETUP_SCRIBE_FIXTURE_CONTRACTS.get(identifier)
+        if contract is None:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"unsupported setup-scribe fixture: {identifier}",
+                )
+            )
+            continue
+        errors.extend(
+            validate_fixture_contract_values(
+                expected,
+                contract,
+                fixture_label,
+                f"{identifier} behavior",
+            )
+        )
+
+    errors.extend(
+        Finding(
+            "stack/fixtures/setup-scribe",
+            f"missing required setup-scribe fixture: {identifier}",
+        )
+        for identifier in sorted(
+            set(REQUIRED_SETUP_SCRIBE_FIXTURE_CONTRACTS) - identifiers
+        )
+    )
+    return errors
+
+
 def validate_wayfinding_fixtures(repo: Path) -> list[Finding]:
     """Validate Wayfinder selection and chart-approval behavior."""
 
@@ -4231,6 +4404,7 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
     errors.extend(validate_review_verification_fixtures(repo))
     errors.extend(validate_output_communication_fixtures(repo))
     errors.extend(validate_knowledge_retrieval_fixtures(repo))
+    errors.extend(validate_setup_scribe_fixtures(repo))
     errors.extend(validate_wayfinding_fixtures(repo))
 
     # Docs drift is informational in issue 060, so it is returned separately.
@@ -4305,6 +4479,9 @@ def main() -> int:
             )
         )
     )
+    setup_scribe_fixture_count = len(
+        list((repo / "stack" / "fixtures" / "setup-scribe").glob("*.yaml"))
+    )
     wayfinding_fixture_count = len(
         list((repo / "stack" / "fixtures" / "wayfinding").glob("*.yaml"))
     )
@@ -4371,6 +4548,10 @@ def main() -> int:
         print(
             "Knowledge-retrieval fixture validation passed for "
             f"{knowledge_retrieval_fixture_count} scenarios."
+        )
+        print(
+            "Setup Scribe fixture validation passed for "
+            f"{setup_scribe_fixture_count} scenarios."
         )
         print(
             "Wayfinding fixture validation passed for "

@@ -11,3 +11,4 @@ Private or domain-specific workflows should stay in private forks or private dep
 - `grill-me` - challenges and clarifies an idea, decision, or lightweight plan through proportionate question modes when project docs are not required.
 - `knowledge-retrieval` - searches durable project knowledge progressively and read-only, ranks claim-scoped evidence, and reports stale or conflicting sources.
 - `learning-capture` - captures durable lessons, extracts reusable knowledge from provided material, and nurtures atomic knowledge notes with evidence-bounded metadata.
+- `setup-scribe` - keeps project setup reproducible through evidence-labelled capture, backfill, drift audit, and safe Bash-first automation.

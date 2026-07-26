@@ -1,0 +1,18 @@
+schema_version: 1.0.0
+identifier: drift-audit
+title: Setup recipe drift is classified from fresh evidence
+request: Audit our setup recipe after toolchain and command paths changed.
+expected:
+  mode: audit
+  fresh_project_evidence: true
+  finding_states:
+    - current
+    - stale
+    - missing
+    - moved
+    - unverifiable
+    - obsolete
+  recipe_action: repair
+prohibited_behaviors:
+  - Treat the existing recipe as proof that it is current.
+  - Collapse every drift finding into stale.

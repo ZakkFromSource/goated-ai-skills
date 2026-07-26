@@ -19,6 +19,8 @@ route_signals:
     description: Durable behavior, interfaces, configuration, or operator expectations changed.
   - name: refinement-debt
     description: Concrete readability or structure debt remains after behavior is proven.
+  - name: reproducibility-impact
+    description: Durable project setup knowledge is missing, changed, stale, or ready for automation.
 
 skills:
   - name: agent-instructions-integrator
@@ -98,7 +100,7 @@ skills:
     workflow_role: router
     domains: [software, research, documentation, content, other]
     profile_eligibility: [lightweight, standard, full]
-    accepts_signals: [scope-changed, evidence-stale, security-impact, documentation-impact, refinement-debt]
+    accepts_signals: [scope-changed, evidence-stale, security-impact, documentation-impact, refinement-debt, reproducibility-impact]
     emits_signals: []
 
   - name: wayfinder
@@ -360,3 +362,13 @@ skills:
     profile_eligibility: [standard, full]
     accepts_signals: [scope-changed, evidence-stale]
     emits_signals: [documentation-impact]
+
+  - name: setup-scribe
+    path: skills/productivity/setup-scribe/SKILL.md
+    category: productivity
+    aliases: []
+    workflow_role: project-reproducibility
+    domains: [software, documentation, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [reproducibility-impact, scope-changed, evidence-stale, security-impact]
+    emits_signals: [documentation-impact, evidence-stale, security-impact]

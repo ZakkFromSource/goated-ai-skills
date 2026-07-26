@@ -1,0 +1,16 @@
+schema_version: 1.0.0
+identifier: source-of-truth-reuse
+title: Recipe points to the dependency manifest
+request: Document dependency installation for a project with a current lockfile.
+expected:
+  manifest_referenced: true
+  dependency_versions_duplicated: false
+  recipe_owns:
+    - prerequisites
+    - ordering
+    - manual-actions
+    - verification
+    - gaps
+prohibited_behaviors:
+  - Copy dependency versions from the manifest into prose.
+  - Replace the lockfile with setup documentation.

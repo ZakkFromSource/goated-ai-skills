@@ -22,6 +22,7 @@ from scripts.validate_skills import (
     validate_registry,
     validate_review_verification_fixtures,
     validate_route_fixtures,
+    validate_setup_scribe_fixtures,
     validate_wayfinding_fixtures,
 )
 
@@ -128,6 +129,17 @@ def copy_knowledge_retrieval_fixtures(destination: Path) -> Path:
     )
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "knowledge-retrieval",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_setup_scribe_fixtures(destination: Path) -> Path:
+    """Copy Setup Scribe fixtures and return their destination directory."""
+
+    fixture_destination = destination / "stack" / "fixtures" / "setup-scribe"
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "setup-scribe",
         fixture_destination,
     )
     return fixture_destination
@@ -974,6 +986,167 @@ class KnowledgeRetrievalFixtureValidationTests(unittest.TestCase):
 
         self.assertIn(
             "knowledge retrieval must not mutate files, notes, indexes, or caches",
+            messages,
+        )
+
+
+class SetupScribeFixtureValidationTests(unittest.TestCase):
+    def test_current_setup_scribe_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_setup_scribe_fixtures(REPO_ROOT))
+
+    def test_backfill_preserves_all_three_evidence_states(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_setup_scribe_fixtures(fixture_root)
+            fixture_path = fixture_directory / "mixed-evidence-backfill.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["evidence_states"].remove("unverified")
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_setup_scribe_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "mixed-evidence-backfill behavior requires "
+            "evidence_states=['verified', 'source-backed', 'unverified']",
+            messages,
+        )
+
+    def test_generated_automation_is_not_executed_or_called_verified(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_setup_scribe_fixtures(fixture_root)
+            fixture_path = (
+                fixture_directory / "bash-native-helper-automation.yaml"
+            )
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["executed"] = True
+            fixture["expected"]["verified"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_setup_scribe_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "bash-native-helper-automation behavior requires executed=False",
+            messages,
+        )
+        self.assertIn(
+            "bash-native-helper-automation behavior requires verified=False",
+            messages,
+        )
+
+    def test_secret_values_cannot_enter_the_tracked_recipe(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_setup_scribe_fixtures(fixture_root)
+            fixture_path = fixture_directory / "secret-rejection.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["secret_value_recorded"] = True
+            fixture["expected"]["placeholder_used"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_setup_scribe_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "secret-rejection behavior requires secret_value_recorded=False",
+            messages,
+        )
+        self.assertIn(
+            "secret-rejection behavior requires placeholder_used=True",
+            messages,
+        )
+
+    def test_recipe_references_declarative_sources_without_duplication(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_setup_scribe_fixtures(fixture_root)
+            fixture_path = fixture_directory / "source-of-truth-reuse.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["manifest_referenced"] = False
+            fixture["expected"]["dependency_versions_duplicated"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_setup_scribe_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "source-of-truth-reuse behavior requires manifest_referenced=True",
+            messages,
+        )
+        self.assertIn(
+            "source-of-truth-reuse behavior requires "
+            "dependency_versions_duplicated=False",
+            messages,
+        )
+
+    def test_project_settings_are_captured_while_personal_settings_are_excluded(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_setup_scribe_fixtures(fixture_root)
+            fixture_path = fixture_directory / "personal-setting-exclusion.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["project_setting_captured"] = False
+            fixture["expected"]["personal_setting_recorded"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_setup_scribe_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "personal-setting-exclusion behavior requires "
+            "project_setting_captured=True",
+            messages,
+        )
+        self.assertIn(
+            "personal-setting-exclusion behavior requires "
+            "personal_setting_recorded=False",
+            messages,
+        )
+
+    def test_every_required_setup_scribe_scenario_must_exist(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_setup_scribe_fixtures(fixture_root)
+            (fixture_directory / "no-reproducibility-impact.yaml").unlink()
+
+            messages = [
+                finding.message
+                for finding in validate_setup_scribe_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "missing required setup-scribe fixture: no-reproducibility-impact",
             messages,
         )
 

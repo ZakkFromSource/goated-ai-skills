@@ -1,0 +1,16 @@
+schema_version: 1.0.0
+identifier: mixed-evidence-backfill
+title: Existing setup is reconstructed without invented history
+request: Reconstruct setup instructions from the current project and my incomplete recollection.
+expected:
+  mode: backfill
+  exact_history_claimed: false
+  evidence_states:
+    - verified
+    - source-backed
+    - unverified
+  recipe_path: docs/setup/project-setup.md
+  chronological_history: false
+prohibited_behaviors:
+  - Present inferred commands as commands that were run.
+  - Create a chronological log by default.

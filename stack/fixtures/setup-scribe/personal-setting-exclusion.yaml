@@ -1,0 +1,13 @@
+schema_version: 1.0.0
+identifier: personal-setting-exclusion
+title: Unrelated personal preferences are excluded
+request: Capture setup after I changed the project formatter and my desktop wallpaper.
+expected:
+  scope: project-first
+  project_setting_required: true
+  project_setting_captured: true
+  personal_setting_project_dependency: false
+  personal_setting_recorded: false
+prohibited_behaviors:
+  - Turn the recipe into a general personal computer journal.
+  - Treat every coincident machine change as project setup.
