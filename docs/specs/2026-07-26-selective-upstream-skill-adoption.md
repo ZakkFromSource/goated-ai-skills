@@ -172,9 +172,9 @@ Every new or changed skill must:
 
 - `AGENT.md` permits new skill folders only for an approved implementation
   ticket. The tickets derived from this approved spec provide that contract.
-- Ticket 013 remains the active behavior-preserving validator refactor.
-  Adoption tickets may depend on validator behavior but must not silently
-  implement its module split.
+- Ticket 013 was completed separately as the behavior-preserving validator
+  refactor. Adoption tickets could depend on validator behavior but did not
+  silently implement its module split.
 - The current V2 distribution remains docs-first. Runtime bootstrap,
   marketplace packaging, generated adapters, and installer automation require
   a separate approved scope.
@@ -236,9 +236,9 @@ a separate maintainer go decision after the overlap evidence is reviewed.
 - New specialist descriptions could increase catalog context and trigger
   ambiguity. Mitigation: apply the new authoring load checks and include
   routing scenarios.
-- Multiple tickets may touch validator surfaces while Ticket 013 is active.
-  Mitigation: coordinate overlapping writes and rebase plans on the validator's
-  current public compatibility surface.
+- Multiple tickets could touch validator surfaces while Ticket 013 was active.
+  This risk was managed by sequencing overlapping writes and rebasing plans on
+  the validator's public compatibility surface.
 - Research guidance can produce copyright, freshness, or source-authority
   errors. Mitigation: prefer links and summaries, record provenance and dates,
   and preserve uncertainty.

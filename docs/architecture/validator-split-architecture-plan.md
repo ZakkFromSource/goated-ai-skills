@@ -7,13 +7,13 @@ of `scripts/validate_skills.py`. The command and the 16 validator functions
 imported by tests remain compatible while cohesive concern modules take
 ownership of validation rules, constants, and focused test surfaces.
 
-Implementation now matches this blueprint on `ticket_013`; local acceptance
-proof is complete, with GitHub Actions and maintainer review still pending.
+Implementation matches this blueprint on `update/v2`. Local acceptance,
+GitHub Actions, and maintainer review are complete.
 
 ## Source Evidence
 
 - Brief and spec:
-  `tickets/013-split-validator-by-concern.md` and
+  `tickets/archive/013-split-validator-by-concern.md` and
   `docs/specs/2026-07-25-goated-ai-skills-v2.md`.
 - Project guidance: `AGENT.md`, `CONTEXT.md`,
   `docs/agents/project-standards.md`, and
@@ -96,7 +96,7 @@ module remains `scripts/validate_skills.py`.
   Revisit this only if implementation requires changing the public import
   surface.
 
-## Recommended Next Step
+## Completion
 
-- Run GitHub Actions and maintainer review against the completed module split,
-  then archive Ticket 013 if no findings remain.
+- Ticket 013 was accepted and archived after local verification, green GitHub
+  Actions, maintainer review, and its fast-forward merge into `update/v2`.

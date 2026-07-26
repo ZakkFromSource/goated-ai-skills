@@ -37,8 +37,9 @@ implementation tickets before their maintainer gates are satisfied.
 
 Tickets 016 and 017 could run alongside Ticket 015 when their write scopes did
 not overlap. Phase A is accepted with residual risk. The maintainer selected
-`tickets/013-split-validator-by-concern.md` as the next slice and requested its
-baseline be refreshed for the accepted validator growth before implementation.
+`tickets/archive/013-split-validator-by-concern.md` as the next slice and
+requested its baseline be refreshed for the accepted validator growth before
+implementation. That slice is now completed and archived.
 
 ## Phase B: Invocation Topology
 
@@ -68,10 +69,8 @@ The current ready frontier is:
 - Ticket 021
 - Ticket 023
 
-Tickets 015 through 020 are complete. Conditional Tickets 022 and 024 never
-join the frontier without their recorded maintainer go decisions. Ticket 013
-is outside this spec's dependency graph but is the maintainer-selected next
-slice.
+Tickets 013 and 015 through 020 are complete. Conditional Tickets 022 and 024
+never join the frontier without their recorded maintainer go decisions.
 
 ## Acceptance-Criteria Coverage
 

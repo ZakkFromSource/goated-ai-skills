@@ -10,8 +10,7 @@ AFK
 
 ## Work State
 
-Implementation complete locally on `ticket_013`. GitHub Actions and maintainer
-review remain before archival.
+Completed, accepted, and archived on 2026-07-26.
 
 ## What To Build
 
@@ -88,7 +87,7 @@ behavior, not incidental output to simplify during extraction.
       changes them.
 - [x] Focused module tests can run without loading unrelated validation
       concerns.
-- [ ] The validator, full unit suite, and V1/V2 comparison pass locally and in
+- [x] The validator, full unit suite, and V1/V2 comparison pass locally and in
       CI.
 - [x] The final diff contains no generated duplication or shallow
       pass-through modules.
@@ -103,6 +102,16 @@ behavior, not incidental output to simplify during extraction.
 - `python -m compileall -q scripts tests` and `git diff --check`.
 - Diff review showing a thin CLI and explicit module ownership.
 - Green GitHub Actions run on the branch.
+
+## Acceptance Result
+
+- The maintainer confirmed that all GitHub Actions checks passed for
+  `ticket_013`, approved its fast-forward merge into `update/v2`, and requested
+  archival.
+- Fresh local closeout proof passed after the merge: validator, 147-test full
+  suite, 35-test high-confidence suite, V1/V2 comparison, and `compileall`.
+- The implementation and its compatibility history remain on `update/v2` at
+  commit `db501a5`.
 
 ## Blocked By
 

@@ -156,7 +156,7 @@ resulting refinement:
 - added SHA-pinned GitHub Actions validation with full history for the
   `v1-baseline` comparison; and
 - captured the larger validator module split as
-  `tickets/013-split-validator-by-concern.md`.
+  `tickets/archive/013-split-validator-by-concern.md`.
 
 The post-refinement suite contains 87 passing tests. The validator still
 accepts all 34 skills and 78 fixtures, the shared policy remains within its

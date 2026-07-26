@@ -2,7 +2,7 @@
 
 ## Plan Target
 
-- Ticket: `tickets/013-split-validator-by-concern.md`.
+- Ticket: `tickets/archive/013-split-validator-by-concern.md`.
 - Architecture:
   `docs/architecture/validator-split-architecture-plan.md`.
 - Mode: durable tracked plan because the refactor is architectural,
@@ -14,10 +14,11 @@
 
 ## Implementation Status
 
-- Implemented on `ticket_013` with focused concern modules, compatibility
+- Implemented and merged into `update/v2` with focused concern modules,
+  compatibility
   re-exports, direct-module tests, and a thin CLI.
-- Local acceptance proof is complete. GitHub Actions and maintainer review
-  remain before Ticket 013 can be archived.
+- Local acceptance proof, GitHub Actions, maintainer review, and archival are
+  complete.
 
 ## Source Inspected
 
@@ -119,17 +120,18 @@ orchestration order.
 - Steps 8-9 cover spec fit, documentation drift, all local acceptance commands,
   compile and whitespace checks, final review, and CI.
 
-## Residual Risk
+## Resolved Risks
 
 - The validator contains large literal contract matrices. Moving them is
-  mechanically risky even when behavior is unchanged, so each concern move
-  must remain small and independently green.
+  mechanically risky even when behavior is unchanged; each concern move was
+  kept small and independently verified.
 - The direct-script/imported-module dual use needs explicit compatibility
-  coverage throughout the extraction.
-- GitHub Actions evidence is unavailable until the branch is pushed and CI
-  runs; local proof cannot replace that final criterion.
+  coverage; compatibility and fresh-interpreter isolation tests now protect
+  both entry paths.
+- GitHub Actions passed after the branch was pushed, satisfying the final
+  external verification criterion.
 
-## Recommended Next Step
+## Completion
 
-- Push `ticket_013`, obtain a green GitHub Actions run, complete maintainer
-  review, and then archive Ticket 013 if no findings remain.
+- Ticket 013 was accepted and archived after the completed implementation was
+  verified and merged into `update/v2`.

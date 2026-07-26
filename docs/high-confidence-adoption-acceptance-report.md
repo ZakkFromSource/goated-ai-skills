@@ -134,8 +134,9 @@ client data, or ignored local note was found.
 - The repository has no configured Markdown linter or external-URL
   reachability checker; local links, Markdown structure, and public boundaries
   were reviewed manually and through repository validation.
-- Ticket 013's validator split remains pending. This batch extends the current
-  compatibility surface without taking ownership of that refactor.
+- At the time of this batch, Ticket 013's validator split remained pending.
+  This batch extended the compatibility surface without taking ownership of
+  that refactor.
 
 ## Maintainer Decision
 
@@ -143,6 +144,6 @@ The maintainer accepted the high-confidence adoption batch with the residual
 risks recorded above on 2026-07-26.
 
 The maintainer also selected
-[Ticket 013](../tickets/013-split-validator-by-concern.md) as the next slice and
+[Ticket 013](../tickets/archive/013-split-validator-by-concern.md) as the next slice and
 requested that its baseline and extraction contract be refreshed for the
 accepted validator growth before implementation begins.

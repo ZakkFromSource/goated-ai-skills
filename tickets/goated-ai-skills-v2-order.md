@@ -42,8 +42,8 @@ plan.
   Tickets 002, 005, and 010)
 - `tickets/archive/012-complete-and-accept-v2-migration.md` — Complete And Accept
   The V2 Migration (HITL; Work state: Completed; Blocked by: None)
-- `tickets/013-split-validator-by-concern.md` — Split The Validator By Concern
-  (AFK; Work state: Ready; Blocked by: Ticket 012)
+- `tickets/archive/013-split-validator-by-concern.md` — Split The Validator By
+  Concern (AFK; Work state: Completed; Blocked by: Ticket 012)
 
 ## Recommended Order
 
@@ -78,7 +78,7 @@ plan.
 12. `tickets/archive/012-complete-and-accept-v2-migration.md`
     - Why now: performs full migration, conformance, documentation, and human
       acceptance only after all observable slices exist.
-13. `tickets/013-split-validator-by-concern.md`
+13. `tickets/archive/013-split-validator-by-concern.md`
     - Why now: follows acceptance with a behavior-preserving maintainability
       refactor protected by the new CI workflow.
 

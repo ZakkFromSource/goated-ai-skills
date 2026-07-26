@@ -59,7 +59,7 @@ machine journal, a duplicate configuration system, or an automation executor.
   `skills/agent-workflows/handoff/SKILL.md` — neighboring ownership boundaries.
 - `scripts/validate_skills.py` and `tests/test_validate_skills.py` — current
   structural, registry, fixture, link, and public-boundary validation.
-- `tickets/013-split-validator-by-concern.md` — active validator refactor scope;
+- `tickets/archive/013-split-validator-by-concern.md` — validator refactor scope;
   avoid overlapping validator writes if that ticket is in progress.
 
 ## Relevant Source Links

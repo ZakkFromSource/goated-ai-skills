@@ -100,6 +100,6 @@ The maintainer accepted the high-confidence adoption batch with the residual
 risks recorded in the acceptance report on 2026-07-26.
 
 Before the next implementation slice, the maintainer requested that
-[`tickets/013-split-validator-by-concern.md`](../013-split-validator-by-concern.md)
+[`tickets/archive/013-split-validator-by-concern.md`](013-split-validator-by-concern.md)
 be refreshed for the validator growth and accepted compatibility surface
 introduced by Tickets 015 through 019.
