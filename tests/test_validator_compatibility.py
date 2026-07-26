@@ -16,6 +16,9 @@ from scripts.validation.registry import (
 from scripts.validation.registry import (
     validate_registry as validate_registry_concern,
 )
+from scripts.validation.routing import (
+    validate_route_fixtures as validate_route_fixture_concern,
+)
 from scripts.validation.skill_packages import validate_skill_packages
 
 
@@ -264,6 +267,13 @@ class RegistryConcernValidationTests(unittest.TestCase):
             "skills/engineering/tdd/SKILL.md",
             over_budget_paths,
         )
+
+
+class RoutingConcernValidationTests(unittest.TestCase):
+    """Prove adaptive routing fixtures through the focused concern module."""
+
+    def test_current_adaptive_routing_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_route_fixture_concern(REPO_ROOT), [])
 
 
 if __name__ == "__main__":

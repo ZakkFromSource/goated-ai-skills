@@ -20,6 +20,7 @@ import re
 from pathlib import Path
 
 if __package__:
+    from .validation import routing as routing_validation
     from .validation.registry import registry_summary, validate_registry
     from .validation.skill_packages import (
         validate_canonical_architecture_references,
@@ -35,6 +36,7 @@ if __package__:
         validate_fixture_contract_values,
     )
 else:
+    from validation import routing as routing_validation
     from validation.registry import registry_summary, validate_registry
     from validation.skill_packages import (
         validate_canonical_architecture_references,
@@ -1104,6 +1106,11 @@ def validate_route_fixtures(repo: Path) -> list[Finding]:
         for identifier in sorted(REQUIRED_ROUTE_FIXTURE_IDENTIFIERS - identifiers)
     )
     return errors
+
+
+# Temporary compatibility bridge while the end-to-end routing helpers move.
+# The focused module owns adaptive-routing behavior from this point onward.
+validate_route_fixtures = routing_validation.validate_route_fixtures
 
 
 def validate_end_to_end_fixtures(repo: Path) -> list[Finding]:
