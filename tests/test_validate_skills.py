@@ -1880,6 +1880,41 @@ class EndToEndFixtureValidationTests(unittest.TestCase):
     def test_current_end_to_end_fixtures_are_valid(self) -> None:
         self.assertEqual([], validate_end_to_end_fixtures(REPO_ROOT))
 
+    def test_diagnosis_minimizes_reproduction_before_ranking_hypotheses(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_end_to_end_fixtures(fixture_root)
+            fixture_path = (
+                fixture_directory / "bug-report-to-root-cause-fix.yaml"
+            )
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            ordered_steps = fixture["expected"]["diagnosis"]["ordered_steps"]
+            ordered_steps.remove("rank-falsifiable-hypotheses")
+            minimization_index = ordered_steps.index(
+                "minimize-confirmed-reproduction"
+            )
+            ordered_steps.insert(
+                minimization_index,
+                "rank-falsifiable-hypotheses",
+            )
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_end_to_end_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "diagnosis must minimize a confirmed reducible reproduction "
+            "before ranking hypotheses",
+            messages,
+        )
+
     def test_required_end_to_end_scenario_cannot_be_removed(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             fixture_root = Path(temporary_directory)

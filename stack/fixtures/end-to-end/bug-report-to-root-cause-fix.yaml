@@ -33,6 +33,20 @@ expected:
   evidence:
     reuse: [reproduction evidence, root-cause probe, failing regression]
     refresh_after: [production fix, test changes]
+  diagnosis:
+    reproduction_scale: large-reducible
+    ordered_steps:
+      - establish-fast-feedback-loop
+      - confirm-exact-symptom
+      - minimize-confirmed-reproduction
+      - rank-falsifiable-hypotheses
+    retained_elements_accounted_for: true
+    symptom_fidelity_preserved: true
+    safe_lower_confidence_fallbacks:
+      - intermittent
+      - production-only
+      - destructive
+      - human-in-the-loop
   closeout:
     single_task_closeout: true
     specialists_return_deltas: true
@@ -40,6 +54,7 @@ prohibited_behaviors:
   - Do not pause for redundant authorization between diagnosis and the requested fix.
   - Do not prefer a broader integration surface when a stable focused proof exists.
   - Do not load refinement without concrete debt.
+  - Do not rank broad hypotheses before minimizing a confirmed, reducible reproduction.
 comparison:
   v1_skills:
     - session-start-progressive-disclosure

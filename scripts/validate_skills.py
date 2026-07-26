@@ -1701,6 +1701,13 @@ def validate_end_to_end_fixtures(repo: Path) -> list[Finding]:
             continue
 
         errors.extend(validate_route_fixture_profile(expected, fixture_label))
+        if identifier == "bug-report-to-root-cause-fix":
+            errors.extend(
+                validate_diagnosis_minimization_fixture(
+                    expected,
+                    fixture_label,
+                )
+            )
         for field in ("selected_skills", "conditional_skills", "skipped_skills"):
             skills = expected[field]
             if not is_string_list(skills):
@@ -1787,6 +1794,91 @@ def validate_end_to_end_fixtures(repo: Path) -> list[Finding]:
                 f"missing required end-to-end fixture: {identifier}",
             )
         )
+    return errors
+
+
+def validate_diagnosis_minimization_fixture(
+    expected: dict[str, object],
+    fixture_label: str,
+) -> list[Finding]:
+    """Validate reproduction minimization before broad diagnostic theories."""
+
+    diagnosis = expected.get("diagnosis")
+    if not isinstance(diagnosis, dict):
+        return [
+            Finding(
+                fixture_label,
+                "bug diagnosis requires a reproduction-minimization contract",
+            )
+        ]
+
+    errors: list[Finding] = []
+    if diagnosis.get("reproduction_scale") != "large-reducible":
+        errors.append(
+            Finding(
+                fixture_label,
+                "diagnosis minimization fixture must use a large reducible reproduction",
+            )
+        )
+
+    ordered_steps = diagnosis.get("ordered_steps")
+    required_steps = (
+        "establish-fast-feedback-loop",
+        "confirm-exact-symptom",
+        "minimize-confirmed-reproduction",
+        "rank-falsifiable-hypotheses",
+    )
+    has_required_order = (
+        is_string_list(ordered_steps, allow_empty=False)
+        and all(step in ordered_steps for step in required_steps)
+        and all(
+            ordered_steps.index(earlier) < ordered_steps.index(later)
+            for earlier, later in zip(required_steps, required_steps[1:])
+        )
+    )
+    if not has_required_order:
+        errors.append(
+            Finding(
+                fixture_label,
+                "diagnosis must minimize a confirmed reducible reproduction "
+                "before ranking hypotheses",
+            )
+        )
+
+    if diagnosis.get("retained_elements_accounted_for") is not True:
+        errors.append(
+            Finding(
+                fixture_label,
+                "diagnosis minimization must account for every retained element",
+            )
+        )
+    if diagnosis.get("symptom_fidelity_preserved") is not True:
+        errors.append(
+            Finding(
+                fixture_label,
+                "diagnosis minimization must preserve symptom fidelity",
+            )
+        )
+
+    safe_fallbacks = diagnosis.get("safe_lower_confidence_fallbacks")
+    required_fallbacks = {
+        "intermittent",
+        "production-only",
+        "destructive",
+        "human-in-the-loop",
+    }
+    if not is_string_list(safe_fallbacks) or not required_fallbacks.issubset(
+        safe_fallbacks
+    ):
+        errors.append(
+            Finding(
+                fixture_label,
+                "diagnosis minimization must retain safe lower-confidence "
+                "fallbacks for intermittent, production-only, destructive, "
+                "and human-in-the-loop cases",
+            )
+        )
+
     return errors
 
 

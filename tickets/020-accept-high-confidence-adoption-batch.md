@@ -61,7 +61,7 @@ experiments.
 ## Blocked By
 
 - `tickets/archive/015-sharpen-skill-authoring-discipline.md`
-- `tickets/016-minimize-diagnostic-reproductions.md`
+- `tickets/archive/016-minimize-diagnostic-reproductions.md`
 - `tickets/017-slice-wide-refactors-safely.md`
 - `tickets/018-add-resolving-merge-conflicts.md`
 - `tickets/019-add-source-grounded-research.md`

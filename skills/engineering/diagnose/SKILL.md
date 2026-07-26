@@ -61,25 +61,31 @@ Fallback: If companion skills, docs, commands, profilers, production access, or 
    - If the local symptom differs from the report, diagnose the mismatch first instead of drifting into a different bug.
    - Record expected behavior separately from actual behavior. Treat ambiguous expected behavior as a product or user decision, not a debugging fact.
 
-4. Observe before fixing:
+4. Minimize the confirmed reproduction:
+   - Keep the fast, red-capable feedback loop from step 2, then minimize its concrete reproduction before broad hypothesis ranking. Do not assume the first loop that confirms the symptom is already irreducible.
+   - Remove or simplify one element at a time and re-confirm the exact symptom. Retain only load-bearing inputs, dependencies, steps, timing conditions, and environmental facts.
+   - For every retained element, record why removing it loses symptom fidelity. If its necessity is still uncertain, keep it and record that residual uncertainty instead of presenting it as proven.
+   - Do not minimize through a safety boundary or trade away the symptom's error, timing, environment, or frequency. For intermittent, production-only, destructive, or human-in-the-loop cases, use the smallest safe bounded proxy or retain the confirmed loop, label the result lower-confidence, and record what could not be minimized.
+
+5. Observe before fixing:
    - Read errors, stack traces, logs, recent changes, callers, tests, configs, schemas, dependency wiring, and working examples before proposing a fix.
    - Compare expectations to reality at each relevant interface: inputs, state, side effects, timing, outputs, errors, and invariants.
    - Read [Root-Cause Tracing](references/root-cause-tracing.md) when the bad value, event, state, or timing appears downstream from its origin.
    - Do not edit production behavior, weaken tests, broaden retries, or add speculative guards during observation.
 
-5. Rank falsifiable hypotheses:
+6. Rank falsifiable hypotheses:
    - List 3-5 plausible causes, ordered by evidence, impact, and cheapest falsifying probe.
    - For each hypothesis, state the prediction that would be true if it were the cause and the smallest probe that can confirm or falsify it.
    - Keep "obvious fix" ideas as hypotheses until evidence proves them.
    - If pressure, fatigue, authority, or sunk cost is pushing a shortcut, read [Pressure Scenarios](references/pressure-scenarios.md).
 
-6. Probe one hypothesis at a time:
+7. Probe one hypothesis at a time:
    - Add the narrowest instrumentation, command, log, assertion, trace, breakpoint, metric, profile, query plan, or comparison needed for one prediction.
    - Change one variable at a time. After each probe, record the result, update the ranking, and remove or tag temporary instrumentation for cleanup.
    - For flaky or async symptoms, read [Condition-Based Waiting](references/condition-based-waiting.md) before changing waits, retries, sleeps, polling, or timeouts.
    - For performance symptoms, measure the baseline first, then use profiling, query plans, benchmarks, bisection, allocation or I/O measurement, or differential traces before proposing optimization.
 
-7. Prove root cause and route the next action:
+8. Prove root cause and route the next action:
    - Root cause is proven only when evidence explains the exact symptom and the symptom changes predictably when the cause or triggering condition changes.
    - Build a compact evidence packet: repro loop, key observations, hypotheses rejected, confirming probe, cause, affected interface, and residual uncertainty.
    - If a correct public-interface seam exists, route to `tdd` with the desired regression behavior and suggested first failing test.
@@ -87,7 +93,7 @@ Fallback: If companion skills, docs, commands, profilers, production access, or 
    - If no correct seam exists, tests would need private internals, setup is pathological, or repeated fixes failed, route to `review-codebase-architecture` before implementation.
    - If the diagnosis changes docs or runbooks, route to `doc-sync`. If it touches trust boundaries or sensitive data, route to `code-security-review`.
 
-8. Cleanup and verify closeout:
+9. Cleanup and verify closeout:
    - Remove debug logs, temporary scripts, local harnesses, probes, flags, breakpoints, test-only hooks, scratch files, and instrumentation that should not remain.
    - If any diagnostic artifact must remain, document why, who owns it, how it is controlled, and when to remove it.
    - Use `verification-before-completion` before claiming the cause is proven, diagnosis is complete, the fix is ready, or the work is safe to hand to implementation.
@@ -110,6 +116,12 @@ Return a diagnosis packet shaped like this:
 - Actual: <actual behavior>
 - Frequency and environment: <deterministic/intermittent, versions, inputs, timing>
 - Evidence: <logs, command output, profile, trace, screenshot, metrics, or source reads>
+
+## Minimized Reproduction
+
+- Retained elements: <load-bearing inputs, dependencies, steps, timing, and environment with reasons>
+- Residual uncertainty: <elements retained without proven necessity, or none>
+- Fidelity and safety: <exact symptom preserved, bounded proxy, or lower-confidence fallback>
 
 ## Hypotheses And Probes
 
@@ -142,6 +154,7 @@ the same probes sequentially.
 ## Guardrails
 
 - Do not fix before proving the cause. A likely fix is still a hypothesis.
+- Do not rank broad hypotheses before minimizing a confirmed reducible reproduction, unless safety or symptom fidelity requires a recorded lower-confidence fallback.
 - Do not bundle probes with fixes; evidence becomes muddy when the variable changes with the treatment.
 - Do not weaken, delete, or rewrite failing tests just to make the symptom disappear.
 - Do not log secrets, tokens, credentials, private user data, raw production payloads, or sensitive identifiers. Redact before sharing or persisting evidence.

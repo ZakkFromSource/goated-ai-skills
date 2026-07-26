@@ -13,7 +13,8 @@ implementation tickets before their maintainer gates are satisfied.
    - Status: Completed and archived.
    - Blocked by: None
    - Enables: new skills to use the refined authoring and evaluation contract.
-2. `tickets/016-minimize-diagnostic-reproductions.md`
+2. `tickets/archive/016-minimize-diagnostic-reproductions.md`
+   - Status: Completed and archived.
    - Blocked by: None
    - Enables: independent diagnosis refinement.
 3. `tickets/017-slice-wide-refactors-safely.md`
@@ -59,15 +60,14 @@ hard blocker because the parent spec contains a standalone research contract.
 
 The current ready frontier is:
 
-- Ticket 016
 - Ticket 017
 - Ticket 018
 - Ticket 019
 - Ticket 021
 - Ticket 023
 
-Ticket 015 is complete. Conditional Tickets 022 and 024 never join the frontier
-without their recorded maintainer go decisions.
+Tickets 015 and 016 are complete. Conditional Tickets 022 and 024 never join
+the frontier without their recorded maintainer go decisions.
 
 ## Acceptance-Criteria Coverage
 

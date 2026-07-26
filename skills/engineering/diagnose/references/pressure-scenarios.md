@@ -9,6 +9,7 @@ Pressure does not make evidence optional. It makes evidence more valuable becaus
 | Pressure | Tempting rationalization | Better response |
 | --- | --- | --- |
 | Production is broken | "We do not have time to reproduce it." | Build the safest available feedback loop: log artifact, read-only query, trace, feature flag check, rollback comparison, or approved minimal repro. State confidence honestly. |
+| The reproduction already works | "The full setup is good enough; start theorizing." | Preserve the confirmed loop, remove one element at a time, and rank broad hypotheses only after each retained element is load-bearing or explicitly uncertain. |
 | A senior person named the cause | "They probably know, so I can skip proof." | Treat it as hypothesis rank 1. Confirm with the smallest probe before changing behavior. |
 | The fix looks obvious | "This one-line guard will solve it." | State the prediction, prove the current failure path hits it, then route implementation through `tdd` if a seam exists. |
 | A previous fix failed | "Try the next likely fix." | Stop. Rebuild the hypothesis list, identify what the failed fix falsified, and trace backward from the still-confirmed symptom. |
@@ -52,6 +53,9 @@ Before routing to implementation, confirm:
 
 - The feedback loop shows the exact symptom or a clearly bounded proxy.
 - Expected and actual behavior are both stated.
+- A reducible confirmed reproduction was minimized before broad hypothesis ranking.
+- Every retained input, dependency, step, timing condition, and environmental fact is load-bearing or explicitly uncertain.
+- Unsafe, intermittent, production-only, or human-in-the-loop limits use a recorded lower-confidence fallback rather than weakened safety or fidelity.
 - At least three plausible hypotheses were considered unless evidence made the cause singular.
 - The winning hypothesis made a prediction before the confirming probe.
 - Important rejected hypotheses are recorded.
@@ -68,5 +72,6 @@ Use these scenarios to pressure-test whether an agent is following the skill:
 2. A browser test fails one in ten runs. The agent should measure failure rate, find the readiness condition or polluter, and reject arbitrary sleep as proof.
 3. A page became slow after a deploy. The agent should gather a baseline, compare before and after, inspect profiles or query plans, and avoid cosmetic optimization.
 4. A bug is reproducible only through awkward internal setup. The agent should record no correct public seam and route architecture follow-up instead of writing a brittle regression test.
+5. A deterministic bug reproduces through a full application stack, seeded database, three services, and a long browser path. The agent should confirm the symptom, minimize that setup while preserving fidelity, account for every retained element, and only then rank broad hypotheses.
 
 These scenarios are for review and training. They are not runtime dependencies.
