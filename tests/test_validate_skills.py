@@ -384,6 +384,152 @@ class PlanningFixtureValidationTests(unittest.TestCase):
             messages,
         )
 
+    def test_wide_refactor_migrations_must_be_blocked_by_expand(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_planning_fixtures(fixture_root)
+            fixture_path = fixture_directory / "wide-refactor.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["tickets"][1]["blocked_by"] = []
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_planning_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "wide-refactor migrate ticket ticket-002 must be blocked by "
+            "expand ticket ticket-001",
+            messages,
+        )
+
+    def test_wide_refactor_migrations_require_blast_radius_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_planning_fixtures(fixture_root)
+            fixture_path = fixture_directory / "wide-refactor.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["tickets"][1]["blast_radius_basis"] = ""
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_planning_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "wide-refactor migrate ticket ticket-002 must name its "
+            "blast_radius_basis",
+            messages,
+        )
+
+    def test_wide_refactor_contract_must_wait_for_every_migration(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_planning_fixtures(fixture_root)
+            fixture_path = fixture_directory / "wide-refactor.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["tickets"][3]["blocked_by"] = ["ticket-002"]
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_planning_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "wide-refactor contract ticket ticket-004 must be blocked by every "
+            "migrate ticket: ticket-002, ticket-003",
+            messages,
+        )
+
+    def test_integration_branch_exception_requires_a_nonempty_reason(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_planning_fixtures(fixture_root)
+            fixture_path = fixture_directory / "wide-refactor.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["integration_branch"] = {
+                "used": True,
+                "independently_green_batches": False,
+                "reason": "",
+            }
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_planning_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "wide-refactor integration branch is allowed only when migration "
+            "batches cannot remain green independently and the reason is recorded",
+            messages,
+        )
+
+    def test_ticket_ready_frontier_must_match_completed_blockers(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_planning_fixtures(fixture_root)
+            fixture_path = fixture_directory / "wide-refactor.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["ready_frontier"] = ["ticket-002"]
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_planning_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "planning ticket ready_frontier must contain exactly the uncompleted "
+            "tickets whose blockers are complete: ticket-001",
+            messages,
+        )
+
+    def test_order_sample_must_report_each_ready_ticket_in_frontier_section(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_planning_fixtures(fixture_root)
+            sample_path = (
+                fixture_directory / "samples" / "wide-refactor-order.md"
+            )
+            sample = sample_path.read_text(encoding="utf-8").replace(
+                "## Ready Frontier\n\n"
+                "- `tickets/001-expand-shared-symbol-contract.md`",
+                "## Ready Frontier\n\n- None",
+            )
+            sample_path.write_text(sample, encoding="utf-8")
+
+            messages = [
+                finding.message
+                for finding in validate_planning_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "planning order sample Ready Frontier is missing "
+            "tickets/001-expand-shared-symbol-contract.md",
+            messages,
+        )
+
     def test_approved_ticket_batch_is_reused_when_reach_is_unchanged(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             fixture_root = Path(temporary_directory)

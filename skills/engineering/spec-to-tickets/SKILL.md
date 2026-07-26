@@ -56,13 +56,17 @@ back to clarification or `write-a-spec`. Do not create assumption-heavy tickets.
    - For multiple tickets, use `tickets/<spec-slug>-order.md`. Do not create an
      order file for one ticket.
 
-3. **Slice vertically.**
+3. **Slice vertically unless a wide refactor qualifies.**
    - Prefer user-, operator-, or maintainer-verifiable outcomes that include
      the implementation and proof needed for that outcome.
    - Avoid layer-only, test-only, docs-only, or broad setup tickets unless they
      are a necessary narrow foundation with a named dependent slice.
    - Keep tightly coupled changes together when splitting them would create
      unusable intermediate states or duplicate coordination.
+   - Use `wide-refactor` only when one mechanical change's blast radius
+     prevents any green vertical slice; file count alone does not qualify.
+     Apply [Ticket Slicing Templates](references/ticket-slicing-templates.md)
+     for expand, migrate, contract, and exception rules.
    - Order tickets so every blocker appears before its dependents.
 
 4. **Make every ticket fresh-agent-ready.**
@@ -88,6 +92,9 @@ back to clarification or `write-a-spec`. Do not create assumption-heavy tickets.
 6. **Write and review as one set.**
    - Write tickets in dependency order and generate the order file from the
      complete approved set.
+   - In every multi-ticket order output, report the ready frontier: exactly the
+     uncompleted tickets whose blockers are complete. Recalculate it whenever
+     completion or blockers change.
    - Check coverage from every spec acceptance criterion to at least one
      ticket, blocker consistency, portable links, duplicate scope, and
      fresh-agent readiness.
@@ -100,9 +107,10 @@ Use [Ticket Slicing Templates](references/ticket-slicing-templates.md), then
 return:
 
 - source spec and slicing-readiness result;
-- single-ticket or multi-ticket decision with rationale;
+- slicing strategy and single- or multi-ticket rationale;
 - ordered ticket paths and dependency graph;
 - order-file path or explicit single-ticket skip;
+- ready frontier for multi-ticket sets;
 - acceptance-criteria coverage;
 - approval reused, requested, or invalidated;
 - fresh-agent-ready review result;

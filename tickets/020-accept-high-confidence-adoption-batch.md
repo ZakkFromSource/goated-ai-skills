@@ -62,7 +62,7 @@ experiments.
 
 - `tickets/archive/015-sharpen-skill-authoring-discipline.md`
 - `tickets/archive/016-minimize-diagnostic-reproductions.md`
-- `tickets/017-slice-wide-refactors-safely.md`
+- `tickets/archive/017-slice-wide-refactors-safely.md`
 - `tickets/018-add-resolving-merge-conflicts.md`
 - `tickets/019-add-source-grounded-research.md`
 

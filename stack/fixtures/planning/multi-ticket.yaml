@@ -4,6 +4,7 @@ title: Dependency-aware vertical slices reuse an approved batch
 request: Slice an approved migration spec into two independently verifiable delivery tickets.
 expected:
   artifact_kind: tickets
+  slice_strategy: vertical
   source_spec: docs/specs/2026-07-25-workflow-migration.md
   order_file: tickets/workflow-migration-order.md
   order_sample: samples/multi-ticket-order.md

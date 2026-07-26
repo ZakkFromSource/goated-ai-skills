@@ -93,7 +93,7 @@ release uses the shared policy, registry, schema, templates, and fixtures under
 - [`grill-with-docs`](skills/engineering/grill-with-docs/SKILL.md): clarify, brainstorm options, and pressure-test important work against project docs, standards, and source facts before implementation.
 - [`diagnose`](skills/engineering/diagnose/SKILL.md): investigate bugs, failing tests, build failures, regressions, and unexpected behavior before fixing them.
 - [`write-a-spec`](skills/engineering/write-a-spec/SKILL.md): turn fuzzy intent into a proportionate compact or full spec.
-- [`spec-to-tickets`](skills/engineering/spec-to-tickets/SKILL.md): break an approved spec into dependency-aware delivery tickets and a local order file for multi-ticket sets.
+- [`spec-to-tickets`](skills/engineering/spec-to-tickets/SKILL.md): break an approved spec into dependency-aware vertical tickets, or expand-migrate-contract batches for qualifying wide refactors, with a local order file and ready frontier for multi-ticket sets.
 
 The integrated registry resolves the V1 names `write-a-prd` and
 `prd-to-issues` as aliases for these canonical skills. Individual installs copy

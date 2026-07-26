@@ -1,0 +1,84 @@
+schema_version: 1.0.0
+identifier: wide-refactor
+title: Wide mechanical migrations use expand, bounded migrate batches, and contract
+request: Slice an approved shared-symbol migration whose blast radius prevents an ordinary independently green vertical slice.
+expected:
+  artifact_kind: tickets
+  slice_strategy: wide-refactor
+  source_spec: docs/specs/2026-07-25-shared-symbol-migration.md
+  order_file: tickets/shared-symbol-migration-order.md
+  order_sample: samples/wide-refactor-order.md
+  completed_ticket_ids: []
+  ready_frontier:
+    - ticket-001
+  integration_branch:
+    used: false
+  tickets:
+    - id: ticket-001
+      phase: expand
+      path: tickets/001-expand-shared-symbol-contract.md
+      sample: samples/wide-refactor-001.md
+      blocked_by: []
+      fields:
+        - parent-spec
+        - what-to-build
+        - recommended-first-reads
+        - acceptance-criteria
+        - expected-proof
+        - blocked-by
+        - scope-exclusions
+    - id: ticket-002
+      phase: migrate
+      blast_radius_basis: package ownership and focused package test boundaries
+      path: tickets/002-migrate-core-consumers.md
+      sample: samples/wide-refactor-002.md
+      blocked_by:
+        - ticket-001
+      fields:
+        - parent-spec
+        - what-to-build
+        - recommended-first-reads
+        - acceptance-criteria
+        - expected-proof
+        - blocked-by
+        - scope-exclusions
+    - id: ticket-003
+      phase: migrate
+      blast_radius_basis: adapter directory ownership and adapter contract suites
+      path: tickets/003-migrate-adapter-consumers.md
+      sample: samples/wide-refactor-003.md
+      blocked_by:
+        - ticket-001
+      fields:
+        - parent-spec
+        - what-to-build
+        - recommended-first-reads
+        - acceptance-criteria
+        - expected-proof
+        - blocked-by
+        - scope-exclusions
+    - id: ticket-004
+      phase: contract
+      proves_no_old_callers: true
+      path: tickets/004-contract-legacy-shared-symbol.md
+      sample: samples/wide-refactor-004.md
+      blocked_by:
+        - ticket-002
+        - ticket-003
+      fields:
+        - parent-spec
+        - what-to-build
+        - recommended-first-reads
+        - acceptance-criteria
+        - expected-proof
+        - blocked-by
+        - scope-exclusions
+  approval:
+    existing_batch_approved: true
+    scope_or_reach_changed: false
+    reused: true
+    ask_again: false
+prohibited_behaviors:
+  - Force a wide mechanical migration into independently green vertical slices.
+  - Remove the legacy form before every migration batch is complete.
+  - Use an integration branch when migration batches can remain green independently.

@@ -191,6 +191,7 @@ REQUIRED_PLANNING_FIXTURE_IDENTIFIERS = {
     "full-spec",
     "single-ticket",
     "multi-ticket",
+    "wide-refactor",
 }
 REQUIRED_ARCHITECTURE_PLANNING_FIXTURE_IDENTIFIERS = {
     "current-state-map-vs-architecture-design",
@@ -2504,6 +2505,264 @@ def validate_planning_spec_expected(
     return errors
 
 
+def validate_wide_refactor_ticket_expected(
+    expected: dict[str, object],
+    tickets: list[object],
+    fixture_label: str,
+) -> list[Finding]:
+    """Validate expand, migrate, contract, and integration-branch invariants."""
+
+    errors: list[Finding] = []
+    phase_tickets = {
+        phase: [
+            ticket
+            for ticket in tickets
+            if isinstance(ticket, dict) and ticket.get("phase") == phase
+        ]
+        for phase in ("expand", "migrate", "contract")
+    }
+    expand_tickets = phase_tickets["expand"]
+    migrate_tickets = phase_tickets["migrate"]
+    contract_tickets = phase_tickets["contract"]
+
+    if len(expand_tickets) != 1:
+        errors.append(
+            Finding(
+                fixture_label,
+                "wide-refactor fixture must define exactly one expand ticket",
+            )
+        )
+    if not migrate_tickets:
+        errors.append(
+            Finding(
+                fixture_label,
+                "wide-refactor fixture must define at least one migrate ticket",
+            )
+        )
+    if len(contract_tickets) != 1:
+        errors.append(
+            Finding(
+                fixture_label,
+                "wide-refactor fixture must define exactly one contract ticket",
+            )
+        )
+
+    if len(expand_tickets) == 1:
+        expand_ticket_id = expand_tickets[0].get("id")
+        for migrate_ticket in migrate_tickets:
+            migrate_ticket_id = migrate_ticket.get("id")
+            if expand_ticket_id not in migrate_ticket.get("blocked_by", []):
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "wide-refactor migrate ticket "
+                        f"{migrate_ticket_id} must be blocked by expand "
+                        f"ticket {expand_ticket_id}",
+                    )
+                )
+            blast_radius_basis = migrate_ticket.get("blast_radius_basis")
+            if (
+                not isinstance(blast_radius_basis, str)
+                or not blast_radius_basis.strip()
+            ):
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "wide-refactor migrate ticket "
+                        f"{migrate_ticket_id} must name its blast_radius_basis",
+                    )
+                )
+
+    migrate_ticket_ids = [
+        migrate_ticket.get("id") for migrate_ticket in migrate_tickets
+    ]
+    if len(contract_tickets) == 1:
+        contract_ticket = contract_tickets[0]
+        if set(contract_ticket.get("blocked_by", [])) != set(migrate_ticket_ids):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "wide-refactor contract ticket "
+                    f"{contract_ticket.get('id')} must be blocked by every "
+                    "migrate ticket: "
+                    f"{', '.join(str(ticket_id) for ticket_id in migrate_ticket_ids)}",
+                )
+            )
+        if contract_ticket.get("proves_no_old_callers") is not True:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "wide-refactor contract ticket must prove no old callers remain",
+                )
+            )
+
+    integration_branch = expected.get("integration_branch")
+    if not isinstance(integration_branch, dict):
+        errors.append(
+            Finding(
+                fixture_label,
+                "wide-refactor integration_branch must be a mapping",
+            )
+        )
+    elif integration_branch.get("used") is True:
+        integration_reason = integration_branch.get("reason")
+        if (
+            integration_branch.get("independently_green_batches") is not False
+            or not isinstance(integration_reason, str)
+            or not integration_reason.strip()
+        ):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "wide-refactor integration branch is allowed only when "
+                    "migration batches cannot remain green independently "
+                    "and the reason is recorded",
+                )
+            )
+    elif integration_branch.get("used") is not False:
+        errors.append(
+            Finding(
+                fixture_label,
+                "wide-refactor integration_branch used must be boolean",
+            )
+        )
+    return errors
+
+
+def validate_ticket_ready_frontier(
+    expected: dict[str, object],
+    tickets: list[object],
+    fixture_label: str,
+) -> list[Finding]:
+    """Validate that the reported frontier follows current completion state."""
+
+    completed_ticket_ids = expected.get("completed_ticket_ids")
+    ready_frontier = expected.get("ready_frontier")
+    if completed_ticket_ids is None and ready_frontier is None:
+        return []
+
+    errors: list[Finding] = []
+    if not is_string_list(completed_ticket_ids):
+        errors.append(
+            Finding(
+                fixture_label,
+                "planning ticket completed_ticket_ids must be a string list",
+            )
+        )
+        completed_ticket_ids = []
+    if not is_string_list(ready_frontier):
+        errors.append(
+            Finding(
+                fixture_label,
+                "planning ticket ready_frontier must be a string list",
+            )
+        )
+        ready_frontier = []
+
+    completed_ticket_id_set = set(completed_ticket_ids)
+    calculated_frontier = [
+        ticket.get("id")
+        for ticket in tickets
+        if isinstance(ticket, dict)
+        and ticket.get("id") not in completed_ticket_id_set
+        and set(ticket.get("blocked_by", [])).issubset(completed_ticket_id_set)
+    ]
+    if ready_frontier != calculated_frontier:
+        errors.append(
+            Finding(
+                fixture_label,
+                "planning ticket ready_frontier must contain exactly the "
+                "uncompleted tickets whose blockers are complete: "
+                f"{', '.join(str(ticket_id) for ticket_id in calculated_frontier)}",
+            )
+        )
+    return errors
+
+
+def validate_planning_order_expected(
+    expected: dict[str, object],
+    tickets: list[object],
+    fixture_label: str,
+    repo: Path,
+) -> list[Finding]:
+    """Validate the multi-ticket order path, sample, and reported frontier."""
+
+    if len(tickets) <= 1:
+        return []
+
+    errors: list[Finding] = []
+    order_file = expected.get("order_file")
+    if not isinstance(order_file, str) or not re.fullmatch(
+        r"tickets/[^/]+-order\.md", order_file
+    ):
+        errors.append(
+            Finding(
+                fixture_label,
+                "multi-ticket fixture must define a tickets/<spec-slug>-order.md file",
+            )
+        )
+
+    order_sample = expected.get("order_sample")
+    if not isinstance(order_sample, str):
+        errors.append(
+            Finding(
+                fixture_label,
+                "multi-ticket fixture must link an order sample",
+            )
+        )
+        return errors
+
+    order_sample_path = repo / "stack" / "fixtures" / "planning" / order_sample
+    if not order_sample_path.is_file():
+        errors.append(
+            Finding(
+                fixture_label,
+                f"planning order sample does not exist: {order_sample}",
+            )
+        )
+        return errors
+
+    ready_frontier = expected.get("ready_frontier")
+    if not is_string_list(ready_frontier):
+        return errors
+
+    order_sample_text = read_text(order_sample_path)
+    frontier_section_match = re.search(
+        r"^## Ready Frontier\s*$\n(?P<body>.*?)(?=^## |\Z)",
+        order_sample_text,
+        re.MULTILINE | re.DOTALL,
+    )
+    if frontier_section_match is None:
+        errors.append(
+            Finding(
+                fixture_label,
+                "planning order sample must report a Ready Frontier",
+            )
+        )
+        return errors
+    frontier_section = frontier_section_match.group("body")
+
+    ticket_paths_by_id = {
+        ticket.get("id"): ticket.get("path")
+        for ticket in tickets
+        if isinstance(ticket, dict)
+    }
+    for ready_ticket_id in ready_frontier:
+        ready_ticket_path = ticket_paths_by_id.get(ready_ticket_id)
+        if (
+            isinstance(ready_ticket_path, str)
+            and f"`{ready_ticket_path}`" not in frontier_section
+        ):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "planning order sample Ready Frontier is missing "
+                    f"{ready_ticket_path}",
+                )
+            )
+    return errors
+
+
 def validate_planning_ticket_expected(
     expected: dict[str, object],
     fixture_label: str,
@@ -2512,6 +2771,15 @@ def validate_planning_ticket_expected(
     """Validate ticket portability, ordering, paths, and approval reuse."""
 
     errors: list[Finding] = []
+    slice_strategy = expected.get("slice_strategy", "vertical")
+    if slice_strategy not in {"vertical", "wide-refactor"}:
+        errors.append(
+            Finding(
+                fixture_label,
+                "planning ticket slice_strategy must be vertical or wide-refactor",
+            )
+        )
+
     tickets = expected.get("tickets")
     if not isinstance(tickets, list) or not tickets:
         errors.append(
@@ -2599,17 +2867,23 @@ def validate_planning_ticket_expected(
                     )
         seen_ticket_ids.add(ticket_id)
 
-    order_file = expected.get("order_file")
-    if len(tickets) > 1 and (
-        not isinstance(order_file, str)
-        or not re.fullmatch(r"tickets/[^/]+-order\.md", order_file)
-    ):
-        errors.append(
-            Finding(
+    if slice_strategy == "wide-refactor":
+        errors.extend(
+            validate_wide_refactor_ticket_expected(
+                expected,
+                tickets,
                 fixture_label,
-                "multi-ticket fixture must define a tickets/<spec-slug>-order.md file",
             )
         )
+    errors.extend(validate_ticket_ready_frontier(expected, tickets, fixture_label))
+    errors.extend(
+        validate_planning_order_expected(
+            expected,
+            tickets,
+            fixture_label,
+            repo,
+        )
+    )
 
     approval = expected.get("approval")
     if not isinstance(approval, dict):

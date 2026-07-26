@@ -289,10 +289,10 @@ contract.
 
 #### `spec-to-tickets`
 
-- **Purpose**: Breaks an approved spec into dependency-ordered local delivery tickets.
+- **Purpose**: Breaks an approved spec into dependency-ordered local delivery tickets, using vertical slices by default and expand-migrate-contract only for qualifying wide mechanical refactors.
 - **Use when**: A product or delivery spec is ready to become portable implementation slices.
 - **Typical input**: Approved spec, user stories, acceptance criteria, blockers, dependencies, and source references.
-- **Typical output**: Fresh-agent-ready Markdown tickets under `tickets/` by default, plus a refreshed local order file for multi-ticket sets.
+- **Typical output**: Fresh-agent-ready Markdown tickets under `tickets/` by default, plus a refreshed local order file and ready frontier for multi-ticket sets.
 - **Pipeline role**: Converts product intent into implementation-ready slices.
 
 #### `writing-plans`

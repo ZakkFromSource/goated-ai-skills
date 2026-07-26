@@ -4,6 +4,7 @@ title: One vertical slice remains one portable ticket
 request: Slice an approved compact spec that can be delivered as one coherent change.
 expected:
   artifact_kind: tickets
+  slice_strategy: vertical
   source_spec: docs/specs/2026-07-25-focused-workflow.md
   order_file: skipped-single-ticket
   tickets:
