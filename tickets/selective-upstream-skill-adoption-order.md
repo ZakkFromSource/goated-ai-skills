@@ -21,7 +21,8 @@ implementation tickets before their maintainer gates are satisfied.
    - Status: Completed and archived.
    - Blocked by: None
    - Enables: independent wide-refactor planning.
-4. `tickets/018-add-resolving-merge-conflicts.md`
+4. `tickets/archive/018-add-resolving-merge-conflicts.md`
+   - Status: Completed and archived.
    - Blocked by: Ticket 015
    - Enables: intent-preserving Git conflict resolution.
 5. `tickets/019-add-source-grounded-research.md`
@@ -32,9 +33,9 @@ implementation tickets before their maintainer gates are satisfied.
    - Blocked by: Tickets 015 through 019
    - Enables: maintainer acceptance of the independent adoption release.
 
-Tickets 016 and 017 may run alongside Ticket 015 when their write scopes do not
-overlap. Tickets 018 and 019 are logically parallel after Ticket 015, but any
-validator edits must be sequenced with each other and with active Ticket 013.
+Tickets 016 and 017 could run alongside Ticket 015 when their write scopes did
+not overlap. Ticket 019 is ready after Ticket 015, but its validator edits must
+still be sequenced with active Ticket 013.
 
 ## Phase B: Invocation Topology
 
@@ -61,12 +62,11 @@ hard blocker because the parent spec contains a standalone research contract.
 
 The current ready frontier is:
 
-- Ticket 018
 - Ticket 019
 - Ticket 021
 - Ticket 023
 
-Tickets 015 through 017 are complete. Conditional Tickets 022 and 024 never
+Tickets 015 through 018 are complete. Conditional Tickets 022 and 024 never
 join the frontier without their recorded maintainer go decisions.
 
 ## Acceptance-Criteria Coverage
