@@ -21,6 +21,7 @@ from pathlib import Path
 
 if __package__:
     from .validation import behavior_proof as behavior_proof_validation
+    from .validation import merge_conflicts as merge_conflict_validation
     from .validation import onboarding as onboarding_validation
     from .validation import planning as planning_validation
     from .validation import routing as routing_validation
@@ -40,6 +41,7 @@ if __package__:
     )
 else:
     from validation import behavior_proof as behavior_proof_validation
+    from validation import merge_conflicts as merge_conflict_validation
     from validation import onboarding as onboarding_validation
     from validation import planning as planning_validation
     from validation import routing as routing_validation
@@ -465,6 +467,11 @@ def validate_merge_conflict_fixtures(repo: Path) -> list[Finding]:
         )
     )
     return errors
+
+
+validate_merge_conflict_fixtures = (
+    merge_conflict_validation.validate_merge_conflict_fixtures
+)
 
 
 # Compatibility re-exports keep existing callers stable while the focused

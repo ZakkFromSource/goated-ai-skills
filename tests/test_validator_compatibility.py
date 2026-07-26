@@ -15,6 +15,9 @@ from scripts.validation.behavior_proof import (
     validate_output_communication_fixtures as validate_output_communication_concern,
     validate_review_verification_fixtures as validate_review_verification_concern,
 )
+from scripts.validation.merge_conflicts import (
+    validate_merge_conflict_fixtures as validate_merge_conflict_concern,
+)
 from scripts.validation.onboarding import (
     validate_clarification_fixtures as validate_clarification_fixture_concern,
     validate_onboarding_fixtures as validate_onboarding_fixture_concern,
@@ -324,6 +327,13 @@ class BehaviorProofConcernValidationTests(unittest.TestCase):
 
     def test_current_output_communication_fixtures_are_valid(self) -> None:
         self.assertEqual(validate_output_communication_concern(REPO_ROOT), [])
+
+
+class MergeConflictConcernValidationTests(unittest.TestCase):
+    """Prove merge-conflict fixtures through their focused concern module."""
+
+    def test_current_merge_conflict_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_merge_conflict_concern(REPO_ROOT), [])
 
 
 if __name__ == "__main__":
