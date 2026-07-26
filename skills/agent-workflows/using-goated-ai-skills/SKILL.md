@@ -69,14 +69,15 @@ GOATED source repository or hidden session files.
      high-risk claims.
 
 4. **Select the route once.**
-   - Put justified gates in `required_gates` or `conditional_gates`. Record a
-     skipped gate only when the omission explains a meaningful decision.
-   - Choose the smallest path that preserves correctness and safety:
+   - Classify only justified gates as required or conditional; record skips
+     only when decision-relevant.
+   - Choose the smallest correct, safe path:
 
 | Gate | Select when |
 | --- | --- |
 | Proportional orientation | Always; near-zero ceremony for fresh tiny work |
 | Clarification or diagnosis | Intent or root cause materially blocks action |
+| External research | Current external claims need cited, freshness-aware evidence |
 | Knowledge retrieval | Durable project knowledge must answer a question, especially when authority, freshness, conflict, or provenance matters |
 | Wayfinder | Uncertainty branches across focused sessions and later decisions depend on earlier evidence |
 | Spec, architecture, or tickets | Durable intent, module strategy, or multiple resumable slices must be settled |
@@ -88,17 +89,16 @@ GOATED source repository or hidden session files.
 | Full verification | Work is complex, high-risk, delegated, multi-surface, or explicitly audited |
 | Handoff | Work is resumable, interrupted, cross-session delegated, or unfinished |
 
-   - Full orientation loads only for unfamiliar, cross-area, stale, or
-     boundary-uncertain work. Code refinement loads only for observed
-     refinement debt or an explicit cleanup request.
+   - Load full orientation only for unfamiliar, cross-area, stale, or
+     boundary-uncertain work; load code refinement only for observed debt or
+     explicit cleanup.
    - Wayfinder is not a synonym for large work. Reject it for session-sized
      discussion and for implementation whose decisions are already settled.
      Its chart requires approval covering destination, location, visible
      frontier, action reach, and initial write scope before any map write;
      existing envelope consent may satisfy that requirement when it already
      covers all five dimensions.
-   - Tiny work uses direct action plus narrow proof. Do not silently turn it
-     into clarification, planning, review, and handoff.
+   - Tiny work uses direct action and narrow proof without extra gates.
 
 5. **Apply approval once for the current reach.**
    - With no selected mode, use the risk-adaptive default: safe reads and

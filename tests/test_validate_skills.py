@@ -24,6 +24,7 @@ from scripts.validate_skills import (
     validate_review_verification_fixtures,
     validate_route_fixtures,
     validate_setup_scribe_fixtures,
+    validate_source_grounded_research_fixtures,
     validate_wayfinding_fixtures,
 )
 
@@ -152,6 +153,19 @@ def copy_setup_scribe_fixtures(destination: Path) -> Path:
     fixture_destination = destination / "stack" / "fixtures" / "setup-scribe"
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "setup-scribe",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_source_grounded_research_fixtures(destination: Path) -> Path:
+    """Copy source-grounded-research fixtures and return their directory."""
+
+    fixture_destination = (
+        destination / "stack" / "fixtures" / "source-grounded-research"
+    )
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "source-grounded-research",
         fixture_destination,
     )
     return fixture_destination
@@ -1332,6 +1346,274 @@ class KnowledgeRetrievalFixtureValidationTests(unittest.TestCase):
             "knowledge retrieval must not mutate files, notes, indexes, or caches",
             messages,
         )
+
+
+class SourceGroundedResearchFixtureValidationTests(unittest.TestCase):
+    """Validate current external-research fixture behavior."""
+
+    def test_current_source_grounded_research_fixtures_are_valid(self) -> None:
+        self.assertEqual(
+            [],
+            validate_source_grounded_research_fixtures(REPO_ROOT),
+        )
+
+    def _fixture_messages(
+        self,
+        fixture_name: str,
+        mutate_fixture,
+    ) -> list[str]:
+        """Return validation messages after one temporary fixture mutation."""
+
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_source_grounded_research_fixtures(
+                fixture_root
+            )
+            fixture_path = fixture_directory / fixture_name
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            mutate_fixture(fixture)
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+            return [
+                finding.message
+                for finding in validate_source_grounded_research_fixtures(
+                    fixture_root
+                )
+            ]
+
+    def test_research_requires_question_currency_hierarchy_and_safety(
+        self,
+    ) -> None:
+        def remove_shared_contract(fixture) -> None:
+            fixture["expected"]["question_framed"] = False
+            fixture["expected"]["currency_requirement_framed"] = False
+            fixture["expected"]["primary_sources_preferred"] = False
+            fixture["expected"]["restricted_sources_respected"] = False
+
+        messages = self._fixture_messages(
+            "stale-source.yaml",
+            remove_shared_contract,
+        )
+
+        self.assertIn(
+            "stale-source behavior requires question_framed=True",
+            messages,
+        )
+        self.assertIn(
+            "stale-source behavior requires currency_requirement_framed=True",
+            messages,
+        )
+        self.assertIn(
+            "stale-source behavior requires primary_sources_preferred=True",
+            messages,
+        )
+        self.assertIn(
+            "stale-source behavior requires restricted_sources_respected=True",
+            messages,
+        )
+
+    def test_evidence_requires_claim_scope_and_traceable_freshness(self) -> None:
+        def weaken_evidence(fixture) -> None:
+            fixture["expected"]["evidence_delta"][0].pop("applicable_scope")
+            fixture["expected"]["evidence_delta"][0]["freshness"] = "current"
+
+        messages = self._fixture_messages(
+            "read-only-output.yaml",
+            weaken_evidence,
+        )
+
+        self.assertIn(
+            "research evidence entries require identifier, relevance, "
+            "applicable_scope, finding, provenance, freshness, confidence, "
+            "and uncertainty",
+            messages,
+        )
+        self.assertIn(
+            "research evidence freshness requires a publication, version, "
+            "retrieval date, or equivalent traceable marker",
+            messages,
+        )
+
+    def test_stale_sources_must_remain_visible_and_qualified(self) -> None:
+        def hide_staleness(fixture) -> None:
+            fixture["expected"]["stale_source_retained"] = False
+            fixture["expected"]["current_claim_allowed"] = True
+
+        messages = self._fixture_messages("stale-source.yaml", hide_staleness)
+
+        self.assertIn(
+            "stale-source behavior requires stale_source_retained=True",
+            messages,
+        )
+        self.assertIn(
+            "stale-source behavior requires current_claim_allowed=False",
+            messages,
+        )
+
+    def test_conflicting_sources_cannot_be_merged_into_consensus(self) -> None:
+        def merge_conflict(fixture) -> None:
+            fixture["expected"]["false_consensus_created"] = True
+            fixture["expected"]["unresolved_uncertainty_explicit"] = False
+
+        messages = self._fixture_messages(
+            "conflicting-sources.yaml",
+            merge_conflict,
+        )
+
+        self.assertIn(
+            "conflicting-sources behavior requires "
+            "false_consensus_created=False",
+            messages,
+        )
+        self.assertIn(
+            "conflicting-sources behavior requires "
+            "unresolved_uncertainty_explicit=True",
+            messages,
+        )
+
+    def test_missing_primary_source_requires_qualified_fallback(self) -> None:
+        def invent_primary_source(fixture) -> None:
+            fixture["expected"]["primary_source_available"] = True
+            fixture["expected"]["secondary_source_labelled"] = False
+            fixture["expected"]["missing_evidence_explicit"] = False
+
+        messages = self._fixture_messages(
+            "no-primary-source.yaml",
+            invent_primary_source,
+        )
+
+        self.assertIn(
+            "no-primary-source behavior requires primary_source_available=False",
+            messages,
+        )
+        self.assertIn(
+            "no-primary-source behavior requires secondary_source_labelled=True",
+            messages,
+        )
+        self.assertIn(
+            "no-primary-source behavior requires missing_evidence_explicit=True",
+            messages,
+        )
+
+    def test_inline_output_must_not_create_or_mutate_artifacts(self) -> None:
+        def mutate_local_knowledge(fixture) -> None:
+            fixture["expected"]["durable_artifact_created"] = True
+            fixture["expected"]["local_knowledge_mutated"] = True
+
+        messages = self._fixture_messages(
+            "read-only-output.yaml",
+            mutate_local_knowledge,
+        )
+
+        self.assertIn(
+            "read-only-output behavior requires durable_artifact_created=False",
+            messages,
+        )
+        self.assertIn(
+            "read-only-output behavior requires local_knowledge_mutated=False",
+            messages,
+        )
+
+    def test_durable_capture_reuses_convention_without_duplicate_truth(
+        self,
+    ) -> None:
+        def duplicate_documentation(fixture) -> None:
+            fixture["expected"]["capture_convention"] = "new-research-folder"
+            fixture["expected"]["duplicate_truth_created"] = True
+            fixture["expected"]["documentation_mirror_created"] = True
+            fixture["expected"]["automatic_capture"] = True
+
+        messages = self._fixture_messages(
+            "durable-capture.yaml",
+            duplicate_documentation,
+        )
+
+        self.assertIn(
+            "durable-capture behavior requires "
+            "capture_convention='project-owned-or-external-docs'",
+            messages,
+        )
+        self.assertIn(
+            "durable-capture behavior requires duplicate_truth_created=False",
+            messages,
+        )
+        self.assertIn(
+            "durable-capture behavior requires automatic_capture=False",
+            messages,
+        )
+
+    def test_no_delegation_preserves_the_research_standard(self) -> None:
+        def require_background_agents(fixture) -> None:
+            fixture["expected"]["background_agents_required"] = True
+            fixture["expected"]["single_agent_completed"] = False
+            fixture["expected"]["evidence_standard_preserved"] = False
+
+        messages = self._fixture_messages(
+            "no-delegation-fallback.yaml",
+            require_background_agents,
+        )
+
+        self.assertIn(
+            "no-delegation-fallback behavior requires "
+            "background_agents_required=False",
+            messages,
+        )
+        self.assertIn(
+            "no-delegation-fallback behavior requires "
+            "single_agent_completed=True",
+            messages,
+        )
+        self.assertIn(
+            "no-delegation-fallback behavior requires "
+            "evidence_standard_preserved=True",
+            messages,
+        )
+
+    def test_every_required_research_scenario_must_exist(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_source_grounded_research_fixtures(
+                fixture_root
+            )
+            (fixture_directory / "stale-source.yaml").unlink()
+            messages = [
+                finding.message
+                for finding in validate_source_grounded_research_fixtures(
+                    fixture_root
+                )
+            ]
+
+        self.assertIn(
+            "missing required source-grounded-research fixture: stale-source",
+            messages,
+        )
+
+    def test_fixture_validation_does_not_mutate_research_sources(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_source_grounded_research_fixtures(
+                fixture_root
+            )
+            before = {
+                path.relative_to(fixture_directory): path.read_bytes()
+                for path in fixture_directory.rglob("*")
+                if path.is_file()
+            }
+
+            self.assertEqual(
+                [],
+                validate_source_grounded_research_fixtures(fixture_root),
+            )
+
+            after = {
+                path.relative_to(fixture_directory): path.read_bytes()
+                for path in fixture_directory.rglob("*")
+                if path.is_file()
+            }
+
+        self.assertEqual(before, after)
 
 
 class SetupScribeFixtureValidationTests(unittest.TestCase):

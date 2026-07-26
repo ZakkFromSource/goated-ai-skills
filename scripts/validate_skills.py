@@ -491,6 +491,68 @@ REQUIRED_KNOWLEDGE_RETRIEVAL_FIXTURE_IDENTIFIERS = {
     "ordinary-files-only",
     "stale-note",
 }
+SOURCE_GROUNDED_RESEARCH_SHARED_CONTRACT = {
+    "question_framed": True,
+    "decision_use_framed": True,
+    "currency_requirement_framed": True,
+    "question_specific_source_hierarchy": True,
+    "primary_sources_preferred": True,
+    "claim_scoped_evidence": True,
+    "findings_separate_from_inference": True,
+    "read_only_research": True,
+    "copyright_boundary_preserved": True,
+    "private_data_excluded": True,
+    "credentials_excluded": True,
+    "restricted_sources_respected": True,
+    "standalone_supported": True,
+}
+REQUIRED_SOURCE_GROUNDED_RESEARCH_FIXTURE_CONTRACTS = {
+    "stale-source": {
+        **SOURCE_GROUNDED_RESEARCH_SHARED_CONTRACT,
+        "stale_source_retained": True,
+        "stale_source_qualified": True,
+        "current_claim_allowed": False,
+    },
+    "conflicting-sources": {
+        **SOURCE_GROUNDED_RESEARCH_SHARED_CONTRACT,
+        "both_sources_retained": True,
+        "disagreement_explicit": True,
+        "false_consensus_created": False,
+        "unresolved_uncertainty_explicit": True,
+    },
+    "no-primary-source": {
+        **SOURCE_GROUNDED_RESEARCH_SHARED_CONTRACT,
+        "primary_source_available": False,
+        "bounded_primary_search_attempted": True,
+        "secondary_source_labelled": True,
+        "confidence_reduced": True,
+        "missing_evidence_explicit": True,
+    },
+    "read-only-output": {
+        **SOURCE_GROUNDED_RESEARCH_SHARED_CONTRACT,
+        "output_mode": "inline",
+        "durable_artifact_created": False,
+        "local_knowledge_mutated": False,
+        "evidence_delta_returned": True,
+    },
+    "durable-capture": {
+        **SOURCE_GROUNDED_RESEARCH_SHARED_CONTRACT,
+        "durable_capture_requested": True,
+        "durable_capture_authorized": True,
+        "capture_convention": "project-owned-or-external-docs",
+        "concise_attributed_summary": True,
+        "duplicate_truth_created": False,
+        "documentation_mirror_created": False,
+        "automatic_capture": False,
+    },
+    "no-delegation-fallback": {
+        **SOURCE_GROUNDED_RESEARCH_SHARED_CONTRACT,
+        "delegation_available": False,
+        "background_agents_required": False,
+        "single_agent_completed": True,
+        "evidence_standard_preserved": True,
+    },
+}
 REQUIRED_SETUP_SCRIBE_FIXTURE_CONTRACTS = {
     "live-capture": {
         "mode": "capture",
@@ -4086,6 +4148,152 @@ def validate_knowledge_retrieval_fixtures(repo: Path) -> list[Finding]:
     return errors
 
 
+def validate_source_grounded_research_fixtures(repo: Path) -> list[Finding]:
+    """Validate the portable external-research behavior fixtures."""
+
+    fixture_root = repo / "stack" / "fixtures" / "source-grounded-research"
+    fixture_paths = sorted(fixture_root.glob("*.yaml"))
+    if not fixture_paths:
+        return [
+            Finding(
+                "stack/fixtures/source-grounded-research",
+                "no source-grounded-research fixtures found",
+            )
+        ]
+
+    errors: list[Finding] = []
+    identifiers: set[str] = set()
+    required_evidence_fields = {
+        "identifier",
+        "relevance",
+        "applicable_scope",
+        "finding",
+        "provenance",
+        "freshness",
+        "confidence",
+        "uncertainty",
+    }
+
+    for fixture_path in fixture_paths:
+        fixture_label = relative(fixture_path, repo)
+        fixture, fixture_errors = load_mapping(fixture_path, fixture_label)
+        errors.extend(fixture_errors)
+        if fixture is None:
+            continue
+
+        if fixture.get("schema_version") != "1.0.0":
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "unsupported source-grounded-research fixture schema_version",
+                )
+            )
+
+        identifier = fixture.get("identifier")
+        if not isinstance(identifier, str):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "source-grounded-research fixture identifier must be a string",
+                )
+            )
+            continue
+        if identifier in identifiers:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"duplicate source-grounded-research fixture identifier: "
+                    f"{identifier}",
+                )
+            )
+        identifiers.add(identifier)
+
+        expected = fixture.get("expected")
+        if not isinstance(expected, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "source-grounded-research fixture expected must be a mapping",
+                )
+            )
+            continue
+        if not is_string_list(fixture.get("prohibited_behaviors"), allow_empty=False):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "source-grounded-research prohibited_behaviors must be a "
+                    "non-empty string list",
+                )
+            )
+
+        contract = REQUIRED_SOURCE_GROUNDED_RESEARCH_FIXTURE_CONTRACTS.get(
+            identifier
+        )
+        if contract is None:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"unsupported source-grounded-research fixture: {identifier}",
+                )
+            )
+            continue
+        errors.extend(
+            validate_fixture_contract_values(
+                expected,
+                contract,
+                fixture_label,
+                f"{identifier} behavior",
+            )
+        )
+
+        evidence_delta = expected.get("evidence_delta")
+        if (
+            not isinstance(evidence_delta, list)
+            or not evidence_delta
+            or any(
+                not isinstance(entry, dict)
+                or not required_evidence_fields.issubset(entry)
+                for entry in evidence_delta
+            )
+        ):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "research evidence entries require identifier, relevance, "
+                    "applicable_scope, finding, provenance, freshness, "
+                    "confidence, and uncertainty",
+                )
+            )
+        if isinstance(evidence_delta, list) and any(
+            isinstance(entry, dict)
+            and (
+                not isinstance(entry.get("freshness"), str)
+                or entry["freshness"].strip().casefold()
+                in {"current", "stale", "unknown"}
+            )
+            for entry in evidence_delta
+        ):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "research evidence freshness requires a publication, "
+                    "version, retrieval date, or equivalent traceable marker",
+                )
+            )
+
+    errors.extend(
+        Finding(
+            "stack/fixtures/source-grounded-research",
+            f"missing required source-grounded-research fixture: {identifier}",
+        )
+        for identifier in sorted(
+            set(REQUIRED_SOURCE_GROUNDED_RESEARCH_FIXTURE_CONTRACTS)
+            - identifiers
+        )
+    )
+    return errors
+
+
 def validate_setup_scribe_fixtures(repo: Path) -> list[Finding]:
     """Validate project-first setup reproducibility behavior."""
 
@@ -4945,6 +5153,7 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
     errors.extend(validate_review_verification_fixtures(repo))
     errors.extend(validate_output_communication_fixtures(repo))
     errors.extend(validate_knowledge_retrieval_fixtures(repo))
+    errors.extend(validate_source_grounded_research_fixtures(repo))
     errors.extend(validate_setup_scribe_fixtures(repo))
     errors.extend(validate_wayfinding_fixtures(repo))
 
@@ -5023,6 +5232,13 @@ def main() -> int:
             )
         )
     )
+    source_grounded_research_fixture_count = len(
+        list(
+            (repo / "stack" / "fixtures" / "source-grounded-research").glob(
+                "*.yaml"
+            )
+        )
+    )
     setup_scribe_fixture_count = len(
         list((repo / "stack" / "fixtures" / "setup-scribe").glob("*.yaml"))
     )
@@ -5096,6 +5312,10 @@ def main() -> int:
         print(
             "Knowledge-retrieval fixture validation passed for "
             f"{knowledge_retrieval_fixture_count} scenarios."
+        )
+        print(
+            "Source-grounded-research fixture validation passed for "
+            f"{source_grounded_research_fixture_count} scenarios."
         )
         print(
             "Setup Scribe fixture validation passed for "

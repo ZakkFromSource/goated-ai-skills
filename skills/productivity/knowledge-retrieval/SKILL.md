@@ -180,8 +180,9 @@ same stages sequentially.
   consensus.
 - Do not require Obsidian, semantic search, a database, a connector, or this
   source repo's root files.
-- Do not perform external web research. Route a separate research request to an
-  appropriate workflow.
+- Do not perform external web research. Route a current external question to
+  `source-grounded-research` when available; otherwise report that external
+  investigation is outside this skill.
 - Do not expose secrets or sensitive content in findings; reference the source
   and summarize only what the active data-sensitivity rules permit.
 

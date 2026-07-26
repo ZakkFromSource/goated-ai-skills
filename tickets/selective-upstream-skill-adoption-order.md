@@ -25,7 +25,8 @@ implementation tickets before their maintainer gates are satisfied.
    - Status: Completed and archived.
    - Blocked by: Ticket 015
    - Enables: intent-preserving Git conflict resolution.
-5. `tickets/019-add-source-grounded-research.md`
+5. `tickets/archive/019-add-source-grounded-research.md`
+   - Status: Completed and archived.
    - Blocked by: Ticket 015
    - Enables: reusable external-research evidence and optional support for
      Ticket 021.
@@ -34,8 +35,8 @@ implementation tickets before their maintainer gates are satisfied.
    - Enables: maintainer acceptance of the independent adoption release.
 
 Tickets 016 and 017 could run alongside Ticket 015 when their write scopes did
-not overlap. Ticket 019 is ready after Ticket 015, but its validator edits must
-still be sequenced with active Ticket 013.
+not overlap. Ticket 019 is complete. Ticket 020 is now ready for maintainer
+acceptance of the Phase A batch.
 
 ## Phase B: Invocation Topology
 
@@ -62,11 +63,11 @@ hard blocker because the parent spec contains a standalone research contract.
 
 The current ready frontier is:
 
-- Ticket 019
+- Ticket 020
 - Ticket 021
 - Ticket 023
 
-Tickets 015 through 018 are complete. Conditional Tickets 022 and 024 never
+Tickets 015 through 019 are complete. Conditional Tickets 022 and 024 never
 join the frontier without their recorded maintainer go decisions.
 
 ## Acceptance-Criteria Coverage

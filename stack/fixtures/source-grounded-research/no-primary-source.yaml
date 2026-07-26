@@ -1,0 +1,35 @@
+schema_version: 1.0.0
+identifier: no-primary-source
+title: Best available secondary evidence is qualified
+request: Research a current ecosystem practice for which no governing specification or first-party statement exists.
+expected:
+  question_framed: true
+  decision_use_framed: true
+  currency_requirement_framed: true
+  question_specific_source_hierarchy: true
+  primary_sources_preferred: true
+  claim_scoped_evidence: true
+  findings_separate_from_inference: true
+  read_only_research: true
+  copyright_boundary_preserved: true
+  private_data_excluded: true
+  credentials_excluded: true
+  restricted_sources_respected: true
+  standalone_supported: true
+  primary_source_available: false
+  bounded_primary_search_attempted: true
+  secondary_source_labelled: true
+  confidence_reduced: true
+  missing_evidence_explicit: true
+  evidence_delta:
+    - identifier: https://example.org/survey/ecosystem-practice
+      relevance: observed current ecosystem practice
+      applicable_scope: surveyed public projects in 2026
+      finding: Most sampled projects use the same configuration pattern.
+      provenance: independent ecosystem survey
+      freshness: published 2026-06-10; retrieved 2026-07-26
+      confidence: medium
+      uncertainty: no governing specification or first-party statement was found
+prohibited_behaviors:
+  - Present the secondary survey as a governing source.
+  - Invent a primary source or hide the evidence gap.

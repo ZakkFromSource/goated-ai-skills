@@ -359,6 +359,14 @@ contract.
 - **Typical output**: Detected operation and exact conflict scope, two-sided intent evidence, compatible resolutions or explicit semantic decisions, scoped check results, and one authorized or recommended next state.
 - **Pipeline role**: Independent engineering branch for an operation already in progress. Loading it never grants permission to stage, commit, continue, skip, abort, push, or mutate a protected branch; standalone use applies the same boundary without requiring the integrated registry.
 
+#### `source-grounded-research`
+
+- **Purpose**: Investigates one current external question against a question-specific source hierarchy and returns cited, freshness-aware findings.
+- **Use when**: A current public or authorized external question needs primary-source preference, claim-scoped dates and provenance, or explicit handling of stale, conflicting, or missing evidence.
+- **Typical input**: Exact question, decision use, applicable scope, currency requirement, user-provided or known sources, source-access constraints, data sensitivity, and inline or optional durable output mode.
+- **Typical output**: Best-supported answer with claim-near citations, distinct findings and inference, disagreements or gaps, a compact evidence delta, and capability limits.
+- **Pipeline role**: External research specialist. Inline read-only output is complete; durable Markdown is optional and must reuse a project-owned research convention or the existing external-doc lookup-note convention. It does not replace local `knowledge-retrieval` or automatically invoke `learning-capture`.
+
 #### `standards-and-spec-review`
 
 - **Purpose**: Reviews changes against project standards and the originating spec, ticket, or remote issue.
@@ -531,6 +539,16 @@ report stale or conflicting knowledge, and add provenance-aware shared
 evidence without nurturing or rewriting any note.
 ```
 
+### Research current external evidence
+
+```text
+Use source-grounded-research to answer this current external question. Frame
+the exact decision and currency requirement, choose a question-specific source
+hierarchy, prefer primary sources, cite material claims, distinguish findings
+from inference and disagreement, and answer inline unless durable capture is
+explicitly requested and authorized.
+```
+
 ### Preserve or reconstruct project setup
 
 ```text
@@ -565,6 +583,8 @@ Use GOATED AI Skills to write a handoff for the next agent. Include the current 
 - If the request is to improve, rewrite, optimize, or create a reusable prompt, use `goated-prompt`; let it route onward only when another skill should own the next step.
 - If the request is unfamiliar or cross-file, start with `session-start-progressive-disclosure`.
 - If the request needs product or scope clarity, use `grill-with-docs`.
+- If a current external question needs cited public or authorized sources,
+  freshness checks, or conflict handling, use `source-grounded-research`.
 - If a question should be answered from durable project artifacts and source
   authority or freshness matters, use `knowledge-retrieval`; use
   `learning-capture` separately for approved note writes or nurturing.

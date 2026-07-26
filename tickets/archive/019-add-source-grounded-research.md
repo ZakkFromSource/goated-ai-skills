@@ -8,6 +8,10 @@
 
 AFK
 
+## Work State
+
+Completed and archived on 2026-07-26.
+
 ## What To Build
 
 Add `source-grounded-research` as a portable specialist for external
@@ -43,21 +47,21 @@ public documentation while preserving the boundaries with local
 
 ## Acceptance Criteria
 
-- [ ] The skill frames the exact question, decision use, and currency
+- [x] The skill frames the exact question, decision use, and currency
       requirement before broad collection.
-- [ ] It defines a question-specific source hierarchy and prefers primary
+- [x] It defines a question-specific source hierarchy and prefers primary
       sources where available.
-- [ ] Claims retain source, date or freshness, applicable scope, and
+- [x] Claims retain source, date or freshness, applicable scope, and
       confidence.
-- [ ] Findings, inference, disagreement, missing evidence, and unresolved
+- [x] Findings, inference, disagreement, missing evidence, and unresolved
       uncertainty remain distinct.
-- [ ] Read-only inline output is valid and durable Markdown is optional.
-- [ ] Durable capture reuses the existing external-doc convention or a
+- [x] Read-only inline output is valid and durable Markdown is optional.
+- [x] Durable capture reuses the existing external-doc convention or a
       project-owned research convention rather than creating duplicate truth.
-- [ ] Delegation is optional and the workflow remains single-agent-compatible.
-- [ ] Copyright, private-data, credential, and restricted-source boundaries are
+- [x] Delegation is optional and the workflow remains single-agent-compatible.
+- [x] Copyright, private-data, credential, and restricted-source boundaries are
       explicit.
-- [ ] Fixtures cover stale sources, conflicting sources, no primary source,
+- [x] Fixtures cover stale sources, conflicting sources, no primary source,
       read-only output, durable capture, and no-delegation fallback.
 
 ## Expected Proof
@@ -97,3 +101,32 @@ edits if its refactor is in progress.
 - Do not add a browsing tool, MCP dependency, cache, crawler, or refresh daemon.
 - Do not copy raw external documentation or long copyrighted excerpts.
 - Do not mutate local knowledge notes as part of read-only research.
+
+## Implementation Proof
+
+- `skills/engineering/source-grounded-research/` contains the self-contained
+  external-research workflow and pressure scenarios for stale, conflicting,
+  missing-primary, read-only, durable-capture, no-delegation, and
+  restricted-source behavior.
+- Six focused fixtures and eleven validator behavior tests cover the ticket's
+  portable outcomes, claim-scoped evidence shape, traceable freshness, and
+  non-mutation guarantees.
+- A question-only public forward evaluation used current Django and Python
+  first-party sources without leaking the desired answer. It returned a framed
+  research contract, claim-near citations, separate findings and inference,
+  unresolved project-specific uncertainty, and a compact evidence delta
+  without creating files.
+- Registry, router, local `knowledge-retrieval` boundary, public guidance,
+  source-repo context, and project standards are synchronized with the new
+  specialist.
+- `uv run python scripts/validate_skills.py` passed 37 implemented skills, 37
+  registry entries, all six source-grounded-research fixtures, and zero
+  human-review notes.
+- `uv run python -m unittest discover -s tests -v` passed all 121 tests.
+- `uv run python scripts/compare_v1_v2_context.py` confirmed every
+  representative route retains the required 10% reduction; the tightest route
+  is 10.1%.
+- Independent standards/spec re-review, manual source-authority and copyright
+  review, long-reference navigation, skill line budget, public-boundary checks,
+  and `git diff --check` passed. Three pre-existing Learning Capture schema
+  examples remain report-only drift.

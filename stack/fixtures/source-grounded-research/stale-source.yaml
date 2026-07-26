@@ -1,0 +1,33 @@
+schema_version: 1.0.0
+identifier: stale-source
+title: Stale evidence remains visible and qualified
+request: Determine whether a public API feature is currently supported when the first result is an old announcement.
+expected:
+  question_framed: true
+  decision_use_framed: true
+  currency_requirement_framed: true
+  question_specific_source_hierarchy: true
+  primary_sources_preferred: true
+  claim_scoped_evidence: true
+  findings_separate_from_inference: true
+  read_only_research: true
+  copyright_boundary_preserved: true
+  private_data_excluded: true
+  credentials_excluded: true
+  restricted_sources_respected: true
+  standalone_supported: true
+  stale_source_retained: true
+  stale_source_qualified: true
+  current_claim_allowed: false
+  evidence_delta:
+    - identifier: https://example.org/archive/feature-announcement
+      relevance: historical feature availability
+      applicable_scope: product availability at announcement date
+      finding: The feature was announced for a limited preview.
+      provenance: first-party archived announcement
+      freshness: published 2024-02-01; retrieved 2026-07-26
+      confidence: high for historical scope; low for current availability
+      uncertainty: current availability requires a fresher governing source
+prohibited_behaviors:
+  - Present the stale announcement as current availability.
+  - Silently discard the historical source.

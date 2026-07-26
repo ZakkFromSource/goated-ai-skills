@@ -108,6 +108,7 @@ only the canonical folders.
 - [`subagent-driven-development`](skills/engineering/subagent-driven-development/SKILL.md): coordinate bounded implementer and reviewer agents while one main agent owns integration.
 - [`receiving-code-review`](skills/engineering/receiving-code-review/SKILL.md): handle review feedback without blindly accepting or dismissing it.
 - [`resolving-merge-conflicts`](skills/engineering/resolving-merge-conflicts/SKILL.md): resolve active merges, rebases, cherry-picks, and reverts by tracing and preserving both sides' intent without assuming Git lifecycle authority.
+- [`source-grounded-research`](skills/engineering/source-grounded-research/SKILL.md): investigate current external questions against a question-specific source hierarchy and return cited, freshness-aware findings without requiring durable capture.
 - [`standards-and-spec-review`](skills/engineering/standards-and-spec-review/SKILL.md): review changes against project standards and the originating spec as separate axes.
 - [`code-security-review`](skills/engineering/code-security-review/SKILL.md): inspect risky diffs and trust boundaries for high-evidence security issues.
 - [`documentation-writer`](skills/engineering/documentation-writer/SKILL.md): create source-grounded durable manuals, guides, runbooks, product docs, and AI-facing guide docs.
@@ -185,6 +186,19 @@ Wayfinder may gather research, build disposable decision prototypes, or clear
 bounded prerequisites. It never performs production implementation, migration
 execution, publication, or deployment.
 
+### Research Current External Evidence
+
+```text
+using-goated-ai-skills when the route is unclear
+-> source-grounded-research
+-> optional durable capture through a project-owned convention
+```
+
+External research frames the exact question and currency requirement, prefers
+question-specific primary sources, preserves disagreement and missing evidence,
+and returns inline citations plus a reusable evidence delta. Durable Markdown
+is optional and never mutates local knowledge implicitly.
+
 ### Retrieve Durable Project Knowledge
 
 ```text
@@ -194,8 +208,9 @@ using-goated-ai-skills when the route is unclear
 ```
 
 Retrieval is progressive and read-only. It ranks current project evidence,
-reports stale or conflicting knowledge, and does not substitute external web
-research for local durable sources.
+reports stale or conflicting knowledge, and routes current external questions
+to `source-grounded-research` instead of substituting web research for local
+durable sources.
 
 ### Preserve Reproducible Project Setup
 

@@ -1,0 +1,38 @@
+schema_version: 1.0.0
+identifier: durable-capture
+title: Optional durable capture reuses project conventions
+request: Research the current vendor behavior and preserve the result using this project's existing external-doc convention.
+expected:
+  question_framed: true
+  decision_use_framed: true
+  currency_requirement_framed: true
+  question_specific_source_hierarchy: true
+  primary_sources_preferred: true
+  claim_scoped_evidence: true
+  findings_separate_from_inference: true
+  read_only_research: true
+  copyright_boundary_preserved: true
+  private_data_excluded: true
+  credentials_excluded: true
+  restricted_sources_respected: true
+  standalone_supported: true
+  durable_capture_requested: true
+  durable_capture_authorized: true
+  capture_convention: project-owned-or-external-docs
+  concise_attributed_summary: true
+  duplicate_truth_created: false
+  documentation_mirror_created: false
+  automatic_capture: false
+  evidence_delta:
+    - identifier: https://example.org/vendor/versioned-behavior
+      relevance: current vendor behavior
+      applicable_scope: version 4 public API
+      finding: Version 4 uses the documented replacement endpoint.
+      provenance: first-party versioned reference
+      freshness: version 4 docs retrieved 2026-07-26
+      confidence: high
+      uncertainty: re-check when the target project changes major version
+prohibited_behaviors:
+  - Create a second research truth when the project already owns a convention.
+  - Copy the vendor documentation into a tracked mirror.
+  - Treat read-only research as automatic permission to write.

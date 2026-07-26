@@ -115,6 +115,10 @@ maintainer-accepted integrated stack.
   project artifacts that ranks evidence for a claim by relevance, authority,
   freshness, confidence, and maturity; it reports stale or conflicting
   knowledge and never performs implicit note nurturing.
+- **Source-grounded research** - read-only investigation of a current external
+  question against a question-specific source hierarchy, with claim-scoped
+  provenance, freshness, confidence, and uncertainty; durable Markdown capture
+  is optional and reuses an existing project-owned convention.
 - **Local/session artifact** - ignored, private, or temporary context, such as
   `.local/goated/`, `.local/scratch/`, OS temp
   `goated-handoffs/<project-name>/`, `.scratch/`, `tmp/`, or `temp/`.

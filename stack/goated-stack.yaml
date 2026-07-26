@@ -263,6 +263,16 @@ skills:
     accepts_signals: [scope-changed, evidence-stale, security-impact]
     emits_signals: [scope-changed, evidence-stale, security-impact, refinement-debt]
 
+  - name: source-grounded-research
+    path: skills/engineering/source-grounded-research/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: external-research
+    domains: [software, research, documentation, content, other]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact]
+    emits_signals: [scope-changed, evidence-stale, security-impact, documentation-impact]
+
   - name: standards-and-spec-review
     path: skills/engineering/standards-and-spec-review/SKILL.md
     category: engineering

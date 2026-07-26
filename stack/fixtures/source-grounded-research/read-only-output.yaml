@@ -1,0 +1,34 @@
+schema_version: 1.0.0
+identifier: read-only-output
+title: Inline research is a complete read-only result
+request: Answer the current external research question here with citations and do not create files.
+expected:
+  question_framed: true
+  decision_use_framed: true
+  currency_requirement_framed: true
+  question_specific_source_hierarchy: true
+  primary_sources_preferred: true
+  claim_scoped_evidence: true
+  findings_separate_from_inference: true
+  read_only_research: true
+  copyright_boundary_preserved: true
+  private_data_excluded: true
+  credentials_excluded: true
+  restricted_sources_respected: true
+  standalone_supported: true
+  output_mode: inline
+  durable_artifact_created: false
+  local_knowledge_mutated: false
+  evidence_delta_returned: true
+  evidence_delta:
+    - identifier: https://example.org/official/current-status
+      relevance: current status of the researched feature
+      applicable_scope: public product status
+      finding: The feature is generally available.
+      provenance: first-party status documentation
+      freshness: updated 2026-07-25; retrieved 2026-07-26
+      confidence: high
+      uncertainty: none found for the stated scope
+prohibited_behaviors:
+  - Create a research file when inline output was requested.
+  - Mutate local knowledge notes as a side effect of research.

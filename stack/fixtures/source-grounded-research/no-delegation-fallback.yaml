@@ -1,0 +1,34 @@
+schema_version: 1.0.0
+identifier: no-delegation-fallback
+title: A single agent performs the same bounded workflow
+request: Complete the external investigation without subagents or background research.
+expected:
+  question_framed: true
+  decision_use_framed: true
+  currency_requirement_framed: true
+  question_specific_source_hierarchy: true
+  primary_sources_preferred: true
+  claim_scoped_evidence: true
+  findings_separate_from_inference: true
+  read_only_research: true
+  copyright_boundary_preserved: true
+  private_data_excluded: true
+  credentials_excluded: true
+  restricted_sources_respected: true
+  standalone_supported: true
+  delegation_available: false
+  background_agents_required: false
+  single_agent_completed: true
+  evidence_standard_preserved: true
+  evidence_delta:
+    - identifier: https://example.org/spec/current
+      relevance: governing behavior
+      applicable_scope: current public specification
+      finding: The specification defines the required behavior.
+      provenance: primary public specification
+      freshness: revision dated 2026-07-01; retrieved 2026-07-26
+      confidence: high
+      uncertainty: none found for the stated scope
+prohibited_behaviors:
+  - Block because delegation is unavailable.
+  - Lower the evidence standard for the sequential fallback.
