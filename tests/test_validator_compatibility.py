@@ -10,6 +10,11 @@ from pathlib import Path
 
 import scripts.validate_skills as validator
 from scripts.validation import shared
+from scripts.validation.behavior_proof import (
+    validate_behavior_proof_fixtures as validate_behavior_proof_concern,
+    validate_output_communication_fixtures as validate_output_communication_concern,
+    validate_review_verification_fixtures as validate_review_verification_concern,
+)
 from scripts.validation.onboarding import (
     validate_clarification_fixtures as validate_clarification_fixture_concern,
     validate_onboarding_fixtures as validate_onboarding_fixture_concern,
@@ -306,6 +311,19 @@ class PlanningConcernValidationTests(unittest.TestCase):
 
     def test_current_architecture_planning_fixtures_are_valid(self) -> None:
         self.assertEqual(validate_architecture_planning_concern(REPO_ROOT), [])
+
+
+class BehaviorProofConcernValidationTests(unittest.TestCase):
+    """Prove delivery-proof fixtures through their focused concern module."""
+
+    def test_current_behavior_proof_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_behavior_proof_concern(REPO_ROOT), [])
+
+    def test_current_review_verification_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_review_verification_concern(REPO_ROOT), [])
+
+    def test_current_output_communication_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_output_communication_concern(REPO_ROOT), [])
 
 
 if __name__ == "__main__":

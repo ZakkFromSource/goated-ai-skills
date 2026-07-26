@@ -20,6 +20,7 @@ import re
 from pathlib import Path
 
 if __package__:
+    from .validation import behavior_proof as behavior_proof_validation
     from .validation import onboarding as onboarding_validation
     from .validation import planning as planning_validation
     from .validation import routing as routing_validation
@@ -38,6 +39,7 @@ if __package__:
         validate_fixture_contract_values,
     )
 else:
+    from validation import behavior_proof as behavior_proof_validation
     from validation import onboarding as onboarding_validation
     from validation import planning as planning_validation
     from validation import routing as routing_validation
@@ -955,6 +957,19 @@ def validate_output_communication_fixtures(repo: Path) -> list[Finding]:
         )
     )
     return errors
+
+
+# Compatibility re-exports keep existing callers stable while the focused
+# module owns delivery proof, review, verification, and output communication.
+validate_behavior_proof_fixtures = (
+    behavior_proof_validation.validate_behavior_proof_fixtures
+)
+validate_review_verification_fixtures = (
+    behavior_proof_validation.validate_review_verification_fixtures
+)
+validate_output_communication_fixtures = (
+    behavior_proof_validation.validate_output_communication_fixtures
+)
 
 
 def validate_knowledge_retrieval_fixtures(repo: Path) -> list[Finding]:
