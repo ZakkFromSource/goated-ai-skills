@@ -15,12 +15,12 @@ Use this skill before costly or ambiguous work so the agent and user reach share
 
 ## Inputs
 
-- User request, plan, PRD draft, architecture idea, issue, or feature description.
+- User request, plan, spec or legacy PRD draft, architecture idea, ticket or remote issue, or feature description.
 - Target-project root path.
 - Existing root `CONTEXT.md`, nested context docs, or `CONTEXT-MAP.md`, if present.
 - Existing `docs/agents/context-matrix.md`, if present.
 - Existing `docs/agents/project-standards.md`, if present.
-- Relevant README files, contributor docs, feature docs, specs, PRDs, ADRs, issue threads, glossary or context docs, and agent instructions.
+- Relevant README files, contributor docs, feature docs, specs or legacy PRDs, ADRs, ticket or remote-issue threads, glossary or context docs, and agent instructions.
 - Relevant source files, tests, schemas, commands, or runtime behavior when they can answer factual questions.
 - User constraints, preferences, deadlines, risk tolerance, and intended audience when not discoverable from project files.
 
@@ -40,10 +40,10 @@ Fallback: If docs or companion skills are unavailable, inspect minimal evidence 
 
 ## Workflow
 
-1. Decide whether the grill is mandatory:
-   - Treat this skill as gated mandatory for target-project onboarding, PRDs, architecture changes, cross-file work, unclear requests, public-facing behavior, and work where project standards or domain language matter.
-   - Skip it for tiny mechanical edits with obvious scope, such as a typo fix, one-line rename, formatting-only change, or direct command the user already specified.
-   - If skipping, say briefly why the request is small enough to proceed without a grill.
+1. Decide whether clarification is needed:
+   - Use this gate when unresolved intent, scope, success criteria, tradeoffs, or project-language conflicts materially block safe progress.
+   - Do not activate it solely because work is cross-file, public-facing, part of onboarding, or described by a spec or legacy PRD.
+   - Skip it when current evidence and accepted intent already make the next action safe and clear. Routine skips stay internal unless explaining one helps the user.
 
 2. Gather project facts first:
    - Start from the user's request and target-project root.
@@ -88,7 +88,7 @@ Fallback: If docs or companion skills are unavailable, inspect minimal evidence 
    - Keep a running summary of clarified goal, success criteria, scope, non-goals, assumptions, and decisions separated into `settled`, `provisional`, `deferred`, and `conflicting`.
    - In deep-dive mode, summarize those four decision states after each coherent decision cluster, when the tree changes materially, or before context becomes hard to retain.
    - Note which project sources support or contradict each decision.
-   - List candidate durable updates for `CONTEXT.md`, ADRs, standards docs, PRDs, or doc-sync follow-up.
+   - List candidate durable updates for `CONTEXT.md`, ADRs, standards docs, specs or legacy PRDs, or doc-sync follow-up.
    - Route target-project `CONTEXT.md` curation to `project-context-calibration` when that skill is available.
    - Route standards or enforcement updates to `project-standards-calibration` when that skill is available.
    - Recommend ADR capture only after checking the target project's existing ADR convention; if none exists, suggest a default only when the user asks to create one.
@@ -133,7 +133,7 @@ During the grill, follow the selected mode and label provisional recommendations
 
 ## Candidate Durable Updates
 
-- Include only candidates such as `CONTEXT.md`, ADRs, standards docs, PRDs, or doc-sync follow-up; if none, say `None`.
+- Include only candidates such as `CONTEXT.md`, ADRs, standards docs, specs or legacy PRDs, or doc-sync follow-up; if none, say `None`.
 
 | Artifact or workflow | Candidate update | Evidence or rationale | Recommended owner or next skill |
 | --- | --- | --- | --- |

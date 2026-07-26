@@ -1,5 +1,14 @@
 # Test Design
 
+## Contents
+
+- [Choose The Smallest Stable Observable Boundary](#choose-the-smallest-stable-observable-boundary)
+- [Good Tests](#good-tests)
+- [Bad Tests](#bad-tests)
+- [Public Interface Verification](#public-interface-verification)
+- [Choosing What To Test](#choosing-what-to-test)
+- [Test Naming](#test-naming)
+
 Read this reference when choosing the shape of a behavior test, naming tests, or deciding whether a test is coupled to implementation.
 
 ## Choose The Smallest Stable Observable Boundary

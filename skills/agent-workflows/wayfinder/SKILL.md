@@ -61,7 +61,8 @@ evidence and human gates instead of inventing answers.
    - Propose the tracker or local location, currently visible frontier, action
      reach, and initial write scope.
    - Obtain approval covering all five dimensions before creating the map or
-     decision records.
+     decision records. Existing envelope consent satisfies this gate when it
+     already covers all five chart dimensions.
    - Reuse approval while its scope and reach still cover the work. Get fresh
      approval before an expanded location, scope, or action reach.
 

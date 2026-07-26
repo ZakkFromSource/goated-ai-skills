@@ -1,5 +1,15 @@
 # Skill Evaluation
 
+## Contents
+
+- [Evaluation Loop](#evaluation-loop)
+- [Pressure Scenarios](#pressure-scenarios)
+- [Rationalization Capture](#rationalization-capture)
+- [Scenario Types By Skill Kind](#scenario-types-by-skill-kind)
+- [Evidence To Record](#evidence-to-record)
+- [Final Review Checklist](#final-review-checklist)
+- [Reporting Template](#reporting-template)
+
 Use this reference before trusting a new, substantially changed, or discipline-heavy skill.
 
 The goal is to test whether the skill changes agent behavior, not whether the prose sounds convincing. Treat skill evaluation like TDD for process documentation: create a scenario that reveals the old behavior, revise the skill, then verify the new behavior.

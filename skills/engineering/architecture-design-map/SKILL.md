@@ -19,7 +19,7 @@ This skill maps architecture that exists in code or is explicitly documented. It
 
 - User request, target-project root, map scope, and preferred output location when provided.
 - Existing `docs/agents/context-matrix.md`, root `CONTEXT.md`, `docs/agents/project-standards.md`, and `docs/agents/architecture-map.md`, if present.
-- Architecture docs, ADRs, PRDs, specs, README files, runbooks, deployment docs, API docs, schema docs, and agent instructions.
+- Architecture docs, ADRs, specs or legacy PRDs, README files, runbooks, deployment docs, API docs, schema docs, and agent instructions.
 - Source files, manifests, route definitions, package/module indexes, service entrypoints, data-access code, tests, fixtures, config, CI, deployment, infrastructure, and integration definitions.
 - User-provided screenshots, sketches, or external docs only when they are explicitly part of the target-project evidence.
 

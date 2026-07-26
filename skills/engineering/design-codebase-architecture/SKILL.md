@@ -1,6 +1,6 @@
 ---
 name: design-codebase-architecture
-description: Use when a clarified brief, PRD, issue, or grill result needs a source-grounded architecture blueprint before implementation, especially for deep modules, clear interfaces, real seams, dependencies, test surfaces, slice order, risks, or ADR/RFC triggers.
+description: Use when a clarified brief, spec, ticket, or grill result needs a source-grounded architecture blueprint before implementation, especially for deep modules, clear interfaces, real seams, dependencies, test surfaces, slice order, risks, or ADR/RFC triggers.
 metadata:
   goated-category: engineering
 ---
@@ -11,13 +11,13 @@ metadata:
 
 Create a source-grounded architecture blueprint before implementation begins. Use this skill to turn clarified product or project intent into planned modules, interfaces, dependency seams, data ownership, test surfaces, and implementation slice order.
 
-This skill is design-only. It prevents avoidable architecture drift by planning for deep modules up front, but it does not implement code, write tests, break issues down, create PRDs, or own RFC/ADR capture. Route those follow-ups to companion skills.
+This skill is design-only. It prevents avoidable architecture drift by planning for deep modules up front, but it does not implement code, write tests, slice delivery tickets, create specs, or own RFC/ADR capture. Route those follow-ups to companion skills.
 
 ## Inputs
 
-- Clarified brief, PRD, issue, `grill-with-docs` result, or user-confirmed project/setup intent.
+- Clarified brief, spec or legacy PRD, ticket or remote issue, `grill-with-docs` result, or user-confirmed project/setup intent.
 - Target-project root path and whether the blueprint is project-wide, feature-specific, or a small inline design.
-- Existing root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, `docs/agents/architecture-map.md`, ADRs, PRDs, issue handoffs, specs, README files, and contributor docs when present.
+- Existing root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, `docs/agents/architecture-map.md`, ADRs, specs or legacy PRDs, ticket or remote-issue handoffs, README files, and contributor docs when present.
 - Current source evidence for affected areas, including manifests, package/module indexes, routes, schemas, service clients, dependency wiring, persistence code, tests, fixtures, and CI/test commands.
 - User constraints, such as compatibility, migration risk, team ownership, deployment topology, deadlines, security posture, or technology choices that cannot be inferred from local evidence.
 
@@ -36,7 +36,7 @@ Soft:
 - review-codebase-architecture when existing-code repair or refactor ranking is the real task
 - spec-to-tickets when the accepted blueprint should become delivery tickets
 - tdd when a blueprint slice moves into implementation and behavior proof
-- verification-before-completion before complete/evidence-backed/issue-breakdown-ready blueprint claims
+- verification-before-completion before complete, evidence-backed, or ticket-slicing-ready blueprint claims
 
 Fallback: If companion skills or durable docs are unavailable, inspect minimal evidence, require an explicit clarified brief, keep confidence lower, and separate blueprint facts from assumptions.
 ## Architecture Language
@@ -53,7 +53,7 @@ Use project terms for concrete names. Keep these hot-path terms inline because t
 
 1. Confirm the planning mode and intent gate:
    - Classify the blueprint as project-wide setup, feature-specific planning, or small inline architecture advice.
-   - Require a clarified brief, PRD, issue, or `grill-with-docs` result before writing a durable blueprint.
+   - Require a clarified brief, spec or legacy PRD, ticket or remote issue, or `grill-with-docs` result before writing a durable blueprint.
    - If intent is fuzzy, route to `grill-with-docs` or `write-a-spec` before continuing.
    - Keep installed-skill instructions separate from target-project artifacts.
 
@@ -65,7 +65,7 @@ Use project terms for concrete names. Keep these hot-path terms inline because t
 
 3. Gather source and constraint evidence:
    - Use `docs/agents/context-matrix.md` when present to choose relevant docs, source, tests, and commands.
-   - Read the clarified brief, relevant PRD/issue, context docs, standards, ADRs, architecture maps, manifests, representative code, tests, and dependency wiring.
+   - Read the clarified brief, relevant spec or legacy PRD, ticket or remote issue, context docs, standards, ADRs, architecture maps, manifests, representative code, tests, and dependency wiring.
    - Trace existing interfaces, callers, routes, data flow, persistence ownership, dependency construction, test surfaces, and deployment or runtime constraints as needed.
    - Record evidence inspected, commands run or skipped, assumptions, stale docs, contradictions, and missing sources.
 
@@ -90,7 +90,7 @@ Use project terms for concrete names. Keep these hot-path terms inline because t
    - Name test surfaces and first TDD slices, but leave test writing and implementation to `tdd`.
    - Route ticket slicing to `spec-to-tickets` after the blueprint is accepted.
    - Route current-state diagrams to `architecture-design-map` and existing-code repair opportunities to `review-codebase-architecture`.
-   - Route PRD, RFC, or ADR capture to companion workflows when the decision exceeds the blueprint.
+   - Route spec, RFC, or ADR capture to companion workflows when the decision exceeds the blueprint.
 
 7. Write or return the blueprint:
    - Include source evidence for important module, interface, dependency, data, and test-surface claims.
@@ -113,7 +113,7 @@ For durable project-wide or feature-specific blueprints, write Markdown shaped l
 
 ## Source Evidence
 
-- Brief or spec: <path, conversation note, PRD, issue, or grill-with-docs result>
+- Brief or spec: <path, conversation note, legacy PRD, ticket or remote issue, or grill-with-docs result>
 - Project evidence: <docs, source, tests, commands, ADRs, standards>
 - Commands run or skipped: <commands and reasons>
 
@@ -160,8 +160,8 @@ choosing; narrow or stop on `BLOCKED`. Without delegation, run sequentially.
 
 ## Guardrails
 
-- Do not write a durable blueprint from fuzzy intent. Require a clarified brief, PRD, issue, or `grill-with-docs` result.
-- Do not implement production code, write tests, generate migrations, run formatters, break issues down, or mutate architecture as part of this skill.
+- Do not write a durable blueprint from fuzzy intent. Require a clarified brief, spec or legacy PRD, ticket or remote issue, or `grill-with-docs` result.
+- Do not implement production code, write tests, generate migrations, run formatters, slice delivery tickets, or mutate architecture as part of this skill.
 - Do not turn the blueprint into a speculative file tree. Mention paths only when grounded by project evidence or accepted conventions.
 - Do not create interfaces, ports, adapters, or dependency injection just in case. Require a real seam, dependency category, test strategy, or caller-leverage reason.
 - Do not duplicate `write-a-spec`, `spec-to-tickets`, `writing-plans`, `tdd`, `architecture-design-map`, or `review-codebase-architecture`; emit one appropriate next-step signal when their job starts.

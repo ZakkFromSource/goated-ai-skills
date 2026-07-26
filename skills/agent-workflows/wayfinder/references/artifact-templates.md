@@ -1,5 +1,12 @@
 # Wayfinder Artifact Templates
 
+## Contents
+
+- [Location](#location)
+- [Map](#map)
+- [Decision Record](#decision-record)
+- [Update Rules](#update-rules)
+
 Use these templates when no configured tracker supplies an equivalent durable
 map and decision-record model.
 

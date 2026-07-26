@@ -1,5 +1,21 @@
 # Testing Anti-Patterns
 
+## Contents
+
+- [Quick Rule](#quick-rule)
+- [Skipping Feasible Tests](#anti-pattern-skipping-feasible-tests)
+- [Preferring Breadth](#anti-pattern-preferring-breadth)
+- [Tests After Implementation Called TDD](#anti-pattern-tests-after-implementation-called-tdd)
+- [Changing Tests To Match Broken Behavior](#anti-pattern-changing-tests-to-match-broken-behavior)
+- [Over-Mocking Owned Code](#anti-pattern-over-mocking-owned-code)
+- [Testing Mocks Instead Of Behavior](#anti-pattern-testing-mocks-instead-of-behavior)
+- [Test-Only Production APIs](#anti-pattern-test-only-production-apis)
+- [Incomplete Fakes Or Mocks](#anti-pattern-incomplete-fakes-or-mocks)
+- [Manual-Only Proof](#anti-pattern-manual-only-proof)
+- [Completion Claims Without Proof](#anti-pattern-completion-claims-without-proof)
+- [Rationalization Checks](#rationalization-checks)
+- [Stop And Recover](#stop-and-recover)
+
 Read this reference when a TDD cycle is under pressure, a test is being skipped, mocks are spreading, or completion would rely on proof weaker than the claim.
 
 The goal is not ritual for its own sake. The goal is trustworthy behavior proof through public interfaces, one vertical RED/GREEN cycle at a time. When tests are hard to write, treat that as design evidence: the module may be shallow, the public interface may leak internals, or a real dependency seam may be missing.

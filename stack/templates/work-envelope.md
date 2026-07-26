@@ -1,13 +1,15 @@
 # Work Envelope
 
 Use this compact logical state protocol when the integrated stack needs shared
-task state. It is not a mandatory tracked artifact. Omit irrelevant optional
-fields and omit skipped gates when recording them would add no useful context.
+task state. It is not a mandatory tracked artifact. The stable core is goal,
+scope, action reach, and next action. Populate other fields only when they
+change routing, approval, proof, or resumability; omit skipped gates when
+recording them would add no useful context.
 
 ```yaml
 schema_version: 1.0.0
 goal:
-profile:
+profile: # optional; include only routing-relevant dimensions
   task_size: # tiny | standard | large
   intent_maturity: # fuzzy | scoped | implementation-ready
   workflow_intensity: # lightweight | standard | full

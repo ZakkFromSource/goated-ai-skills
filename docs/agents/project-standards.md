@@ -46,7 +46,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | Skill bodies commonly include Purpose, Inputs, Workflow, Output Contract, Delegation, Guardrails, and References. | review-enforced | Implemented `SKILL.md` headings across all three categories | High |
 | V2 ticket handoffs use numbered filenames and stable scope, acceptance, proof, blocker, route, and exclusion sections. | review-enforced | `tickets/*.md`, `tickets/goated-ai-skills-v2-order.md` | High |
 | Completed implementation issues move under `issues/archive/` only after acceptance criteria are checked and any required user, maintainer, PR, or project-defined review is complete. | review-enforced | `CONTEXT.md`; archived issues `001` through `060`; no active numbered implementation handoffs currently | High |
-| Docs-only changes still rely on manual markdown review outside validator-covered skill, registry, and fixture-contract checks. | review-enforced | Root `pyproject.toml`, `uv.lock`, `scripts/validate_skills.py`, and `tests/test_validate_skills.py`; no CI, formatter, or linter config is present. | High |
+| Docs-only changes still require manual markdown review outside validator-covered skill, registry, and fixture-contract checks; GitHub Actions runs the repository acceptance commands but no formatter or linter is configured. | review-enforced | Root `pyproject.toml`, `uv.lock`, `.github/workflows/validate.yml`, `scripts/validate_skills.py`, and `tests/`. | High |
 
 ## User-Confirmed Preferences
 
@@ -71,7 +71,7 @@ Use this profile with `docs/agents/context-matrix.md` to apply GOATED AI Skills 
 | `git status --short` | Check worktree state before and after edits. | review-enforced | Used during context and standards creation. |
 | `rg --files` | Discover source files without bulk-reading. | review-enforced | Used by `docs/agents/context-matrix.md` and this pass. |
 | `rg -n` targeted scans | Find headings, schema references, and documented standards. | review-enforced | Used for issue and standards discovery. |
-| Manifest/config discovery with `rg --files -g ...` | Check whether build, test, lint, format, or CI entrypoints exist. | review-enforced | Root `pyproject.toml`, `uv.lock`, and `tests/` support local validation; no CI, formatter, or linter config is present. |
+| Manifest/config discovery with `rg --files -g ...` | Check whether build, test, lint, format, or CI entrypoints exist. | review-enforced | Root `pyproject.toml`, `uv.lock`, `.github/workflows/validate.yml`, and `tests/` support local and CI validation; no formatter or linter config is present. |
 | `uv run python -m unittest discover -s tests -v` | Exercise registry, canonical-reference, focused-fixture, end-to-end fixture, and V1/V2 context-comparison behavior. | tooling-enforced | Added by Ticket 001 and extended through Ticket 012. |
 | `uv run python scripts/validate_skills.py` | Validate implemented skills, links, canonical references, registry and aliases, signals, focused and end-to-end fixture contracts, public-boundary checks, word budgets, and report-only drift. | tooling-enforced | Extended through Ticket 012; uses `pyyaml` and `jsonschema` through `uv`. |
 | `uv run python scripts/compare_v1_v2_context.py` | Compare four representative V2 route-specific instruction sets with the preserved `v1-baseline` tag and report shared-policy cost separately. | tooling-enforced | Ticket 012 release-conformance proof. |

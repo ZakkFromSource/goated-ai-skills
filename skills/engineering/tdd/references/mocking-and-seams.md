@@ -1,5 +1,14 @@
 # Mocking And Seams
 
+## Contents
+
+- [What To Mock](#what-to-mock)
+- [Prefer Real Owned Code](#prefer-real-owned-code)
+- [Dependency Injection](#dependency-injection)
+- [Specific Adapter Interfaces](#specific-adapter-interfaces)
+- [Real Seam Rule](#real-seam-rule)
+- [Mocking Checklist](#mocking-checklist)
+
 Read this reference before mocking a dependency, introducing a fake, adding dependency injection, or designing a new seam for tests.
 
 ## What To Mock

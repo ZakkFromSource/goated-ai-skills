@@ -1,5 +1,12 @@
 # Refinement Patterns
 
+## Contents
+
+- [Rule](#rule)
+- [Good Refinement Moves](#good-refinement-moves)
+- [Anti-Patterns](#anti-patterns)
+- [Quick Check](#quick-check)
+
 Read this reference when applying `code-refinement` to a scoped diff, choosing safe cleanup moves, or checking whether a simplification is actually clearer.
 
 ## Rule

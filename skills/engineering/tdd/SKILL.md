@@ -77,7 +77,7 @@ Fallback: If companion skills or docs are unavailable, inspect minimal evidence,
 
 4. GREEN: implement only enough code to pass:
    - Change production code only for the current failing behavior.
-   - Keep implementation scoped to the current issue, current public interface, and current test.
+   - Keep implementation scoped to the current ticket or request, current public interface, and current test.
    - Do not anticipate future tests, add speculative features, or broaden the change because adjacent cleanup is tempting.
    - Do not change a failing test to match broken behavior; change the test only when RED evidence shows the test is invalid or the requirement changed.
    - Run the focused test until it passes, then run relevant nearby or existing checks that protect the touched area.
@@ -86,7 +86,7 @@ Fallback: If companion skills or docs are unavailable, inspect minimal evidence,
 5. Repeat vertically:
    - Add the next behavior only after the current test is green.
    - Let each new test respond to what the previous cycle taught you about behavior, interface shape, fixtures, and design friction.
-   - Continue until the issue acceptance criteria or agreed behavior set is covered.
+   - Continue until the ticket or request acceptance criteria, or the agreed behavior set, is covered.
 
 6. Refactor after green:
    - Read [Refactor After Green](references/refactor-after-green.md) before non-trivial cleanup.
@@ -103,6 +103,10 @@ Fallback: If companion skills or docs are unavailable, inspect minimal evidence,
    - Pass the TDD evidence packet to `verification-before-completion` before making completion, correctness, passing, or review-ready claims; for drafts, analysis-only work, or fallback proof, verify only the claim being made and report residual risk.
 
 ## Output Contract
+
+In integrated use, return only material evidence, change, risk, and route
+deltas. Do not repeat the full work envelope or produce a competing final
+closeout.
 
 During or after TDD work, report:
 
@@ -176,14 +180,14 @@ One test, one implementation, repeat. Each test responds to what you learned fro
 - Do not verify behavior through a storage query, external backdoor, log scrape, or internal state read when a caller-facing interface can prove it.
 - Do not mock owned code by default. Mock true external edges, time, randomness, filesystem, network calls, or dependencies that cannot safely run locally.
 - Do not introduce ports, adapters, or dependency injection unless there is a real seam where behavior varies across production and test.
-- Do not broaden scope beyond the current issue, current failing test, and public interface under change.
+- Do not broaden scope beyond the current ticket or request, current failing test, and public interface under change.
 - Do not refactor while red.
 - Do not treat tests written after implementation as TDD unless you also prove they would have failed against the missing or broken behavior.
 - Do not weaken, delete, or rewrite a behavior test just to make current implementation pass.
 - Do not add production methods, flags, or hooks that exist only for tests; use test utilities or a real public interface.
 - Do not pretend tests are stronger than they are. If infrastructure is weak, use the smallest honest proof and report residual risk.
 - Do not claim work is complete from focused GREEN alone; route the actual claim through `verification-before-completion`.
-- Do not create broad test infrastructure, fixture frameworks, package-manager changes, CI changes, or new dependencies unless the current issue explicitly calls for that foundation.
+- Do not create broad test infrastructure, fixture frameworks, package-manager changes, CI changes, or new dependencies unless the current ticket or request explicitly calls for that foundation.
 - Do not delete or rewrite existing tests just because they are awkward. Replace obsolete implementation-detail tests only when the new public-interface proof covers the behavior.
 - Do not include private notes, credentials, client data, sensitive personal context, ignored scratch content, or real user data in tests or fixtures.
 - Do not require this source repo's root files, issue files, `.local` notes, upstream sources, or hidden chat history after installation. The skill may rely only on its own files and target-project evidence.

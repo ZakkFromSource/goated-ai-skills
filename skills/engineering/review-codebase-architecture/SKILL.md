@@ -16,7 +16,7 @@ This skill is review-only. It ranks opportunities, explains tradeoffs, and emits
 ## Inputs
 
 - User request, target-project root, architecture concern, and requested scope.
-- Existing `docs/agents/context-matrix.md`, root `CONTEXT.md`, `docs/agents/project-standards.md`, `docs/agents/architecture-map.md`, ADRs, PRDs, issue handoffs, specs, and contributor docs when present.
+- Existing `docs/agents/context-matrix.md`, root `CONTEXT.md`, `docs/agents/project-standards.md`, `docs/agents/architecture-map.md`, ADRs, specs or legacy PRDs, ticket or remote-issue handoffs, and contributor docs when present.
 - Source files, manifests, package/module indexes, route definitions, entrypoints, dependency injection/configuration code, data-access code, service clients, adapters, tests, fixtures, and CI/test commands related to the review scope.
 - Existing architecture diagrams, prior refactor notes, implementation pain points, test failures, flaky areas, or user-provided examples of hard-to-change code.
 
@@ -60,7 +60,7 @@ Use target-project names for concrete modules and flows. Keep these review terms
 
 2. Gather evidence before judging:
    - Use `docs/agents/context-matrix.md` when present to choose first-read and second-read sources.
-   - Read relevant context docs, ADRs, architecture maps, standards, PRDs/issues, manifests, entrypoints, package indexes, imports/callers, representative source, tests, fixtures, and dependency construction code.
+   - Read relevant context docs, ADRs, architecture maps, standards, specs or legacy PRDs, tickets or remote issues, manifests, entrypoints, package indexes, imports/callers, representative source, tests, fixtures, and dependency construction code.
    - Trace actual calls, imports, data flow, configuration, routes, job wiring, or test setup instead of relying on folder names alone.
    - Record commands run, commands skipped, missing evidence, stale docs, inferred relationships, and contradictions.
 
@@ -113,7 +113,7 @@ Return a compact review shaped like this:
    - Deepening direction: <what behavior/interface should change at a high level>
    - Tradeoffs: <costs, migration risk, compatibility, test impact>
    - Confidence: <high, medium, or low with reason>
-   - Suggested next slice: <small review, prototype, TDD slice, PRD/issue, or RFC>
+   - Suggested next slice: <small review, prototype, TDD slice, spec/ticket, or RFC>
    - RFC trigger: <none or reason>
 
 ## Cross-Cutting Themes
@@ -157,7 +157,7 @@ defer, or stop on `BLOCKED`. Without delegation, explore sequentially.
 - Do not introduce ports, adapters, dependency injection, or seams unless behavior genuinely varies across the seam or dependency category justifies it.
 - Do not preserve old implementation-detail tests by default in a proposed direction; replace them only when equivalent interface-level behavior coverage exists.
 - Do not hide uncertainty. Mark inferred, stale, missing, weak, or conflicting evidence clearly.
-- Do not create durable target-project artifacts, ADRs, PRDs, or issue files unless the user separately asks for those outputs.
+- Do not create durable target-project artifacts, ADRs, specs or legacy PRDs, or ticket or remote-issue files unless the user separately asks for those outputs.
 - Do not include private notes, ignored local scratch files, credentials, client data, sensitive personal context, secrets, or real user data in reports.
 - Do not require the original skill-library repository or any maintainer-only root files after installation. The skill may rely only on its own installed files and target-project evidence.
 

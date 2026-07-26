@@ -17,7 +17,7 @@ Keep the GOATED quality bar visible during delegation: prefer vertical behavior 
 
 ## Inputs
 
-- User request, approved issue, implementation plan, PRD slice, ticket, prototype verdict, or scoped behavior change.
+- User request, approved ticket or remote issue, implementation plan, spec or legacy PRD slice, prototype verdict, or scoped behavior change.
 - Target-project root, applicable project instructions, current working-tree state, and known safety constraints.
 - Task list with dependencies, likely edit areas, public interfaces, test surfaces, commands, and documentation surfaces.
 - User or project rules about subagents, write ownership, commits, branches, worktrees, review gates, or final closeout.
@@ -28,7 +28,7 @@ Keep the GOATED quality bar visible during delegation: prefer vertical behavior 
 Hard: None.
 
 Soft:
-- writing-plans before delegation when an approved issue or task needs an executable plan
+- writing-plans before delegation when an approved ticket, remote issue, or task needs an executable plan
 - grill-with-docs when behavior, scope, intent, language, or review constraints are unclear
 - prototype when risky implementation choices need disposable evidence before delegation
 - design-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
@@ -85,11 +85,15 @@ Fallback: If subagents, companion skills, commands, or review tools are unavaila
    - Keep scope disciplined. If integration reveals a new product decision, architecture decision, or broader follow-up, stop or split it rather than quietly expanding the current task.
 
 8. Run final review and closeout:
-   - After all task-level reviews pass or residual risks are accepted, run a **final review** over the combined change for issue fit, standards, integration, docs, and security-sensitive paths when relevant.
+   - After all task-level reviews pass or residual risks are accepted, run a **final review** over the combined change for ticket or remote-issue fit, standards, integration, docs, and security-sensitive paths when relevant.
    - Use `code-refinement` only for an explicit cleanup request or concrete refinement debt, then route `standards-and-spec-review`, `code-security-review`, and `doc-sync` according to the change surface.
    - Use `verification-before-completion` before claiming delegated work is complete, correct, passing, review-ready, documentation-synced, or ready for lifecycle movement.
 
 ## Output Contract
+
+In integrated use, return only material evidence, change, risk, and route
+deltas. Do not repeat the full work envelope or produce a competing final
+closeout.
 
 During or after delegated development, report:
 
@@ -98,7 +102,7 @@ During or after delegated development, report:
 - Review evidence: spec review result, quality review result, final review result, findings fixed or accepted, and reviewer evidence inspected.
 - Integration notes: conflicts, main-agent decisions, cross-task checks, and scope changes avoided or split out.
 - GOATED quality notes: vertical slice preserved, public-interface proof used or skipped, deep-module impact, and shallow-abstraction risks.
-- Closeout: verification evidence, docs/security/review routing, skipped checks, residual risk, and the final claim allowed by evidence.
+- Completion delta: verification evidence, docs/security/review routing, skipped checks, residual risk, and the claim the controlling agent may make.
 
 ## Delegation
 

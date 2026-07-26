@@ -1,5 +1,13 @@
 # Manual Patterns And QA
 
+## Contents
+
+- [Documentation Type Patterns](#documentation-type-patterns)
+- [Location Defaults](#location-defaults)
+- [Evidence Checklist](#evidence-checklist)
+- [QA Checklist](#qa-checklist)
+- [Common Anti-Patterns](#common-anti-patterns)
+
 Read this reference when choosing a durable documentation shape, deciding whether a separate AI-facing guide is warranted, or checking a draft before closeout.
 
 These are patterns, not mandatory templates. Preserve the target project's existing documentation conventions when they are discoverable.

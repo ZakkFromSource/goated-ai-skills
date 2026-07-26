@@ -49,10 +49,11 @@ GOATED source repository or hidden session files.
      material user decision blocks safe progress.
 
 2. **Initialize or reuse one work envelope.**
-   - Record the goal and agreed scope.
-   - Record every profile dimension: task size, intent maturity, domain,
-     continuity, execution, data sensitivity, action reach, and applicable risk
-     flags.
+   - Always record goal, scope, action reach, and next action.
+   - Populate a profile dimension only when it changes routing, approval,
+     proof, or resumability. Add sensitivity, risks, gates, evidence,
+     decisions, questions, or continuity state only when they carry decision
+     value.
    - Derive workflow intensity: `lightweight` for local, clear, reversible work;
      `standard` for scoped cross-file or proof-bearing work; `full` for large,
      branching, resumable, delegated, restricted, architectural, security, or
@@ -92,8 +93,10 @@ GOATED source repository or hidden session files.
      refinement debt or an explicit cleanup request.
    - Wayfinder is not a synonym for large work. Reject it for session-sized
      discussion and for implementation whose decisions are already settled.
-     Its chart requires approval of destination, location, visible frontier,
-     action reach, and initial write scope before any map write.
+     Its chart requires approval covering destination, location, visible
+     frontier, action reach, and initial write scope before any map write;
+     existing envelope consent may satisfy that requirement when it already
+     covers all five dimensions.
    - Tiny work uses direct action plus narrow proof. Do not silently turn it
      into clarification, planning, review, and handoff.
 
@@ -134,14 +137,10 @@ GOATED source repository or hidden session files.
 
 ## Output Contract
 
-Update or initialize a compact work envelope containing:
-
-- agreed profile, sensitivity, action reach, risk flags, and scope;
-- current checkpoint and selected required, conditional, and meaningful
-  skipped gates;
-- approval mode and covered scope/reach;
-- reusable evidence and invalidated entries;
-- proof strategy, route signals, decisions, work state, and next action.
+Update or initialize a compact work envelope. Goal, scope, action reach, and
+next action are the stable core. Include profile dimensions, sensitivity,
+risks, checkpoints, gates, approval, evidence, proof strategy, route signals,
+decisions, questions, and continuity state only when they affect the work.
 
 Routine routing stays internal. When route visibility materially helps the
 user, report only the chosen intensity, gates that affect their decisions,

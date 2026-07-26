@@ -21,7 +21,7 @@ installed skill depend on source-repository maintainer files.
 
 ## Proportional Work Profile
 
-Classify work using independent dimensions:
+Classify only dimensions that affect routing, approval, proof, or resumability:
 
 - task size: `tiny`, `standard`, or `large`;
 - intent maturity: `fuzzy`, `scoped`, or `implementation-ready`;
@@ -43,10 +43,11 @@ delegated, or resumable work.
 
 ## Work Envelope And Shared Evidence
 
-Maintain one compact logical work envelope. Reuse fresh state when available.
-Record the goal, profile, scope, checkpoint, selected gates, evidence,
-decisions, questions, proof strategy, work state, and next action. Single-session
-state may remain in conversation or framework-native storage.
+Maintain one compact envelope and reuse state.
+Always record goal, scope, action reach, and next action. Add profile
+dimensions, sensitivity, risk, routing, approval, evidence, decisions, proof,
+and continuity only when they affect the work. Single-session state may remain
+in conversation or framework storage.
 
 For resumable work, use
 `.local/goated/work-envelopes/<effort-slug>.md` only after confirming

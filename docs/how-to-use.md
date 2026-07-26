@@ -106,12 +106,12 @@ Run delivery when you want to make a real change in a target project. For seriou
 
 ```mermaid
 flowchart LR
-  A["session-start-progressive-disclosure"] --> B["grill-with-docs when gated mandatory"]
+  A["session-start-progressive-disclosure"] --> B["grill-with-docs when clarification is required"]
   B --> C["prototype optional"]
   C --> D["write-a-spec"]
   D --> E["design-codebase-architecture optional"]
   E --> F["spec-to-tickets"]
-  F --> G["prototype optional per focused issue"]
+  F --> G["prototype optional per focused ticket or remote issue"]
   G --> H["writing-plans"]
   H --> I["subagent-driven-development optional"]
   I --> J["tdd"]
@@ -317,7 +317,7 @@ contract.
 - **Use when**: One focused question needs a quick spike, mockup, variant, throwaway implementation, or cheap proof.
 - **Typical input**: Prototype question, constraints, branch or artifact preference, success criteria, and what can be discarded.
 - **Typical output**: Prototype artifact, verdict, assumptions, and recommended next path.
-- **Pipeline role**: Optional before PRDs, architecture choices, or focused implementation issues.
+- **Pipeline role**: Optional before specs or legacy PRDs, architecture choices, or focused implementation tickets.
 
 #### `diagnose`
 
@@ -353,9 +353,9 @@ contract.
 
 #### `standards-and-spec-review`
 
-- **Purpose**: Reviews changes against project standards and the originating spec or issue.
+- **Purpose**: Reviews changes against project standards and the originating spec, ticket, or remote issue.
 - **Use when**: Diff size, risk, acceptance ambiguity, scope fit, or uncertain conventions make direct review insufficient.
-- **Typical input**: Fixed point, changed files, originating spec/issue/PRD, standards docs, and evidence commands.
+- **Typical input**: Fixed point, changed files, originating spec or legacy PRD, ticket or remote issue, standards docs, and evidence commands.
 - **Typical output**: Findings for the activated standards and/or spec axis, with source evidence and route deltas.
 - **Pipeline role**: Conditional review gate after implementation.
 
@@ -389,7 +389,7 @@ contract.
 
 - **Purpose**: Keeps durable docs aligned with changed behavior, interfaces, architecture, standards, configuration, tests, or workflows.
 - **Use when**: Implementation, review, architecture, standards, or public docs work may have created documentation drift.
-- **Typical input**: Changed facts, diffs, issue/PRD evidence, tests, commands, external-doc lookup evidence, and relevant docs.
+- **Typical input**: Changed facts, diffs, spec or legacy PRD evidence, ticket or remote-issue evidence, tests, commands, external-doc lookup evidence, and relevant docs.
 - **Typical output**: A compact documentation-impact delta. No-impact results
   omit empty update sections; required updates retain artifact-level detail.
 - **Pipeline role**: Closeout gate after implementation or documentation-affecting work.
@@ -417,12 +417,12 @@ contract.
 - **Use when**: You need a module map, dependency map, flow map, runtime topology, or quick zoom-out orientation.
 - **Typical input**: Focused source area, imports/callers, architecture docs, routes, schemas, tests, and context artifacts.
 - **Typical output**: the smallest useful representation, explanation, source references, and uncertainty notes.
-- **Pipeline role**: Optional current-state onboarding or delivery orientation step, not a PRD prerequisite or planning substitute.
+- **Pipeline role**: Optional current-state onboarding or delivery orientation step, not a spec prerequisite or planning substitute.
 
 #### `design-codebase-architecture`
 
 - **Purpose**: Prescribes source-grounded architecture before implementation.
-- **Use when**: A clarified brief, PRD, issue, or grill result needs module boundaries, interfaces, dependency seams, test surfaces, or slice order.
+- **Use when**: A clarified brief, spec or legacy PRD, ticket or remote issue, or grill result needs module boundaries, interfaces, dependency seams, test surfaces, or slice order.
 - **Typical input**: Clarified intent, source evidence, existing architecture docs, constraints, risks, and acceptance criteria.
 - **Typical output**: Project-wide, feature-specific, or inline architecture blueprint using the smallest useful representation.
 - **Pipeline role**: Optional architecture planning step in onboarding or delivery.
@@ -515,10 +515,10 @@ report stale or conflicting knowledge, and add provenance-aware shared
 evidence without nurturing or rewriting any note.
 ```
 
-### Implement a scoped issue
+### Implement a scoped ticket or remote issue
 
 ```text
-Use GOATED AI Skills on this approved issue. Write a just-in-time implementation plan, use TDD for behavior changes, run the relevant review and doc-sync gates, and verify before claiming the work is complete.
+Use GOATED AI Skills on this approved ticket or remote issue. Write a just-in-time implementation plan, use TDD for behavior changes, run the relevant review and doc-sync gates, and verify before claiming the work is complete.
 ```
 
 ### Review and close out work

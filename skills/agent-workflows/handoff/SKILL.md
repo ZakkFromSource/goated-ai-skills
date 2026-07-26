@@ -11,7 +11,7 @@ metadata:
 
 Create a compact continuity note that lets a future agent or session resume without rereading the whole conversation.
 
-Use this skill at the end of onboarding, delivery, review, planning, or interrupted work. The handoff should point to source artifacts and current evidence; it should not duplicate PRDs, issues, ADRs, diffs, commits, or long transcripts.
+Use this skill at the end of onboarding, delivery, review, planning, or interrupted work. The handoff should point to source artifacts and current evidence; it should not duplicate specs or legacy PRDs, tickets or remote issues, ADRs, diffs, commits, or long transcripts.
 
 ## Inputs
 
@@ -19,7 +19,7 @@ Use this skill at the end of onboarding, delivery, review, planning, or interrup
 - Optional next-session focus from the user.
 - Target-project root path.
 - Target project name when provided by the user.
-- Current task, issue, PRD, ADR, or spec paths.
+- Current task, spec or legacy PRD, ticket or remote issue, or ADR paths.
 - Relevant `docs/agents/` artifacts, if present.
 - Local git status, changed files, commits, or diff summary when relevant.
 - Verification commands run, skipped, failed, or still needed.
@@ -67,7 +67,7 @@ Fallback: If companion skills or durable artifacts are unavailable, write compac
    - Write a tracked handoff only when the user explicitly requests one, and keep tracked handoffs public-safe.
 
 3. Gather references instead of copying content:
-   - Link or list the relevant PRD, issue, ADR, context matrix, standards profile, code files, tests, docs, commits, or commands.
+   - Link or list the relevant spec or legacy PRD, ticket or remote issue, ADR, context matrix, standards profile, code files, tests, docs, commits, or commands.
    - Summarize only the current state needed to resume.
    - Reference diffs, commits, PRs, and commit messages by path, command, hash, or link instead of pasting them.
    - Do not include private scratch content unless it is necessary to resume and safe to store in a temporary handoff.
@@ -163,7 +163,7 @@ After writing the handoff, report:
 
 Main owns the handoff scope, final summary, privacy judgment, and user communication.
 
-Delegate only bounded evidence gathering: summarize changed files, collect verification commands/outcomes, find issue/PRD/ADR/docs paths, or resolve the project root, slug, or existing handoff path.
+Delegate only bounded evidence gathering: summarize changed files, collect verification commands/outcomes, find spec/ticket/ADR/docs paths, or resolve the project root, slug, or existing handoff path.
 
 Require paths inspected, commands run, evidence sources, assumptions/uncertainty, and concise reference findings rather than pasted handoff prose. If subagents are unavailable, gather the same evidence sequentially with a narrower context budget.
 
@@ -177,8 +177,8 @@ Require paths inspected, commands run, evidence sources, assumptions/uncertainty
   project-local or OS-temp state; temporary files may be cleaned automatically.
 - Do not treat temporary handoffs as durable records or secret storage.
 - Write tracked handoffs only when the user explicitly requests a tracked artifact.
-- Do not duplicate PRDs, issue files, ADRs, diffs, commit messages, long logs, or conversation transcripts.
-- Do not treat a handoff as a replacement for root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, a PRD, an issue, or an ADR.
+- Do not duplicate specs or legacy PRDs, ticket or remote-issue files, ADRs, diffs, commit messages, long logs, or conversation transcripts.
+- Do not treat a handoff as a replacement for root `CONTEXT.md`, `docs/agents/context-matrix.md`, `docs/agents/project-standards.md`, a spec or legacy PRD, a ticket or remote issue, or an ADR.
 - Do not include credentials, secrets, client data, sensitive personal context, or unsafe private scratch notes in any handoff.
 - Do not claim verification passed unless the check was actually run or already evidenced.
 - Keep the note short enough that a future agent can read it first.

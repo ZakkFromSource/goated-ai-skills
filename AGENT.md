@@ -38,8 +38,11 @@ Layer 0: Skill Pack Distribution
 Layer 1: Target Project Onboarding
 
 - Installed skills prepare a user's project for serious agent work.
-- This is gated mandatory for durable, cross-file, PRD-level, architectural, or repeated work.
-- It is skippable for tiny one-off tasks.
+- Use docs-grounded clarification when unresolved intent, scope, success
+  criteria, tradeoffs, or project-language conflicts materially block safe
+  progress.
+- Do not activate clarification solely because work is cross-file,
+  public-facing, part of onboarding, or described by a spec or legacy PRD.
 
 Layer 2: Target Project Delivery
 

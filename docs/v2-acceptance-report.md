@@ -135,3 +135,30 @@ The maintainer accepted these results and residual risks on 2026-07-25. Future
 Factory work may add runtime routing, harness behavior, agent orchestration,
 host-aware context management, and live evaluation without expanding the
 portable V2 core retroactively.
+
+## Post-Acceptance Comparative-Evaluation Refinement
+
+A follow-up V1/V2 comparative evaluation confirmed that V2 fixed the majority
+of the original audit findings and identified a small consistency pass. The
+resulting refinement:
+
+- made clarification activation need-based rather than category-mandatory;
+- made work-envelope population lazy beyond goal, scope, action reach, and
+  next action;
+- aligned TDD and delegated-development results with the integrated delta and
+  consolidated-closeout model;
+- allowed existing envelope consent to satisfy Wayfinder's five-part chart
+  approval when coverage is already sufficient;
+- normalized active architecture, handoff, TDD, and operator prose to specs or
+  legacy PRDs and tickets or remote issues;
+- added contents navigation to the 15 long references that lacked it (the
+  evaluation counted 16, but one already had a contents section);
+- added SHA-pinned GitHub Actions validation with full history for the
+  `v1-baseline` comparison; and
+- captured the larger validator module split as
+  `tickets/013-split-validator-by-concern.md`.
+
+The post-refinement suite contains 87 passing tests. The validator still
+accepts all 34 skills and 78 fixtures, the shared policy remains within its
+800-1,200-word target, and all representative V2 routes retain at least a 10%
+route-specific reduction from V1.

@@ -1,5 +1,15 @@
 # Deepening Interface Patterns
 
+## Contents
+
+- [Review Vocabulary](#review-vocabulary)
+- [Dependency Categories](#dependency-categories)
+- [Seam Discipline](#seam-discipline)
+- [Replace-Don't-Layer Testing](#replace-dont-layer-testing)
+- [Interface Alternatives](#interface-alternatives)
+- [Report Patterns](#report-patterns)
+- [RFC Triggers](#rfc-triggers)
+
 Read this reference when an architecture improvement candidate needs deeper dependency, seam, testing, interface-design, or report-shaping guidance. Keep `SKILL.md` as the operating procedure; use this file for reusable patterns that would bloat the main workflow.
 
 ## Review Vocabulary

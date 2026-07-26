@@ -16,7 +16,7 @@ This is not a prompt dump. It is a reusable skill stack for people who want thei
 
 The typical agent workflow helps you ship code fast, and gets messy even faster.
 
-One project has a good PRD prompt. Another has a review checklist. A third has a handoff habit, a context map, a test-driven development loop, or a way to keep docs from drifting. Most of that knowledge lives in scattered snippets, tool-specific setup, old chat history, or some private repo.
+One project has a good spec or legacy PRD prompt. Another has a review checklist. A third has a handoff habit, a context map, a test-driven development loop, or a way to keep docs from drifting. Most of that knowledge lives in scattered snippets, tool-specific setup, old chat history, or some private repo.
 
 GOATED AI Skills packages those workflows as self-contained skill folders that can travel between agent frameworks and target projects. The goal is simple: give your agents a reliable set of skills for doing real work without forcing every project to reinvent the wheel. This allows you to easily switch between projects, whilst maintaining a consistent agentic AI assisted workflow, without spending hours setting it up from scratch every single time.
 
@@ -46,7 +46,7 @@ GOATED AI Skills helps agents move from "I can edit files and hope it's what you
   artifact budget from one discovery pass, then create or incrementally refresh
   only the context, source-map, standards, architecture, and routing artifacts
   that solve a demonstrated need.
-- **Delivery workflows**: clarify intent, draft PRDs, break work into issues, plan architecture, prototype ideas, and write implementation plans.
+- **Delivery workflows**: clarify intent, draft specs or legacy PRDs, break work into tickets or remote issues, plan architecture, prototype ideas, and write implementation plans.
 - **Implementation discipline**: use test-driven development, focused diagnosis, subagent-aware execution, scoped code refinement, standards review, security review, documentation cleanup, doc sync, and verification before completion claims.
 - **Clean continuity**: write commit messages and handoffs that help the next session resume with clarity.
 - **Two portable install modes**: share universal behavior in integrated mode
@@ -144,12 +144,12 @@ using-goated-ai-skills
 
 ```text
 session-start-progressive-disclosure
--> grill-with-docs when gated mandatory
+-> grill-with-docs when unresolved intent or scope materially blocks progress
 -> prototype optional
 -> write-a-spec
 -> design-codebase-architecture optional
 -> spec-to-tickets
--> prototype optional per focused issue
+-> prototype optional per focused ticket or remote issue
 -> writing-plans
 -> subagent-driven-development optional
 -> tdd

@@ -4,12 +4,13 @@ Read this reference when a project-wide or feature-specific architecture plan ne
 
 ## Contents
 
-- Blueprint modes
-- Module and interface planning
-- Dependency and seam planning
-- Test-surface planning
-- Anti-overdesign checks
-- Artifact patterns
+- [Blueprint Vocabulary](#blueprint-vocabulary)
+- [Blueprint Modes](#blueprint-modes)
+- [Module And Interface Planning](#module-and-interface-planning)
+- [Dependency And Seam Planning](#dependency-and-seam-planning)
+- [Test-Surface Planning](#test-surface-planning)
+- [Anti-Overdesign Checks](#anti-overdesign-checks)
+- [Artifact Patterns](#artifact-patterns)
 
 ## Blueprint Vocabulary
 

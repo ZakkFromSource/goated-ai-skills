@@ -1,5 +1,14 @@
 # Prompt Templates
 
+## Contents
+
+- [Spec/Build Prompt](#specbuild-prompt)
+- [Focused Task Prompt](#focused-task-prompt)
+- [Planning/Design Prompt](#planningdesign-prompt)
+- [Iterative/Refinement Prompt](#iterativerefinement-prompt)
+- [General Prompt](#general-prompt)
+- [GOATED Prompt Wrapper](#goated-prompt-wrapper)
+
 Use these as starting shapes. Adapt them to the user request; do not paste placeholders that the receiving agent cannot resolve.
 
 ## Spec/Build Prompt
@@ -157,4 +166,3 @@ Success criteria:
 Report:
 - <Expected closeout shape, assumptions, skipped checks, and verification evidence>
 ```
-

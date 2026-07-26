@@ -67,7 +67,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | `rg --files` | Discover repo files without bulk-reading them. | At the start of mapping, source routing, or targeted scans. | Use targeted path and term scans when skill inventory, issue state, or docs surfaces change. |
 | Issue and PRD scans with `rg -n` | Sample issue and PRD headings, blockers, current names, and implementation summaries. | When deciding which issue to open first or checking documentation drift. | Ran on 2026-05-21 for issue discovery and interim doc sync. |
 | `git status --short` | Check local worktree state. | Before and after edits. | Ran on 2026-05-21 before interim doc-sync edits; output was empty. |
-| `rg --files -g 'package.json' -g 'pyproject.toml' -g 'pubspec.yaml' -g 'Cargo.toml' -g 'Makefile' -g '*.sln' -g '*.csproj' -g '*.fsproj' -g 'go.mod' -g 'requirements.txt'` | Look for build or package entrypoints. | Before claiming build, lint, format, or test commands exist. | Root `pyproject.toml` now exists for local validator tooling; no CI, formatter, linter, or test config is present. |
+| `rg --files -g 'package.json' -g 'pyproject.toml' -g 'pubspec.yaml' -g 'Cargo.toml' -g 'Makefile' -g '*.sln' -g '*.csproj' -g '*.fsproj' -g 'go.mod' -g 'requirements.txt' -g '.github/workflows/*'` | Look for build, package, and CI entrypoints. | Before claiming build, lint, format, test, or CI commands exist. | Root `pyproject.toml`, `.github/workflows/validate.yml`, and `tests/` support validation; no formatter, linter, or build config is present. |
 | `tests/test_validate_skills.py` | Registry, canonical-reference, adaptive-routing, onboarding, clarification, specification/ticket, architecture, implementation-planning, behavior-proof, review/verification, Wayfinding, and knowledge-retrieval fixture validation behavior tests. | Before changing the registry, canonical names, fixture contracts, or validator behavior. | Added by Ticket 001 and extended by Tickets 002-010. |
 | `uv run python -m unittest discover -s tests -v` | Run validator behavior tests. | Before claiming registry or routing-fixture validation behavior passes. | Uses the standard library `unittest` runner. |
 | `uv run python scripts/validate_skills.py` | Validate implemented skills, canonical architecture references, the integrated registry, routing, onboarding, clarification, specification/ticket, architecture, implementation-planning, behavior-proof, review/verification, Wayfinding, and knowledge-retrieval fixtures, public-boundary checks, and report-only drift. | Before claiming skill, registry, canonical-name, or fixture changes are valid. | Uses `pyyaml` and `jsonschema` through `uv`. |
@@ -93,7 +93,9 @@ Use this map to choose the smallest useful context before working in the GOATED 
 ## Gaps And Assumptions
 
 - This matrix maps the GOATED AI Skills source repo as the current target project; it does not describe a downstream project where skills have been installed.
-- Root `pyproject.toml`, `uv.lock`, and `tests/` support local validator tooling. No CI workflow, formatter, linter, or build script is present.
+- Root `pyproject.toml`, `uv.lock`, `.github/workflows/validate.yml`, and
+  `tests/` support local and CI validator tooling. No formatter, linter, or
+  build script is present.
 - `.local/` was intentionally not read because it is ignored private/local workspace context.
 - `.out-of-scope/` was sampled only for the future automation and validation deferral file; read it narrowly for scope or deferred-feature questions.
 - Archived issue `021` and issue `032` closeout evidence were sampled for doc-sync drift, but future work should still open the specific active issue and blocker chain for the requested change.

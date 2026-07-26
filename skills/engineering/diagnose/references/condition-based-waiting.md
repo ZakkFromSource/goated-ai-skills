@@ -1,5 +1,15 @@
 # Condition-Based Waiting
 
+## Contents
+
+- [First Diagnose The Flake](#first-diagnose-the-flake)
+- [Replace Time With Signals](#replace-time-with-signals)
+- [Bounded Polling Shape](#bounded-polling-shape)
+- [Polluter And Order Failures](#polluter-and-order-failures)
+- [Runtime Code Versus Test Code](#runtime-code-versus-test-code)
+- [Anti-Patterns](#anti-patterns)
+- [Evidence Packet](#evidence-packet)
+
 Read this when diagnosing flakes, async behavior, timing races, readiness, retries, polling, arbitrary sleeps, timeouts, eventual consistency, or intermittent failures.
 
 A fixed sleep is usually a guess. It may hide the failure on one machine while preserving the race everywhere else. Prefer waiting for the condition that proves the system is ready.

@@ -1,5 +1,11 @@
 # Source Type Taxonomy
 
+## Contents
+
+- [Compact Defaults](#compact-defaults)
+- [Extended Optional Values](#extended-optional-values)
+- [Selection Notes](#selection-notes)
+
 `source_type` is controlled but user-extensible.
 
 Use this order:

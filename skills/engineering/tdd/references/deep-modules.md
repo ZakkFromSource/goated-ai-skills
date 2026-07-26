@@ -1,5 +1,14 @@
 # Deep Modules
 
+## Contents
+
+- [Deep Versus Shallow](#deep-versus-shallow)
+- [Why TDD Cares](#why-tdd-cares)
+- [Interface As Test Surface](#interface-as-test-surface)
+- [Deletion Test](#deletion-test)
+- [Deepening During TDD](#deepening-during-tdd)
+- [Deep Module Checklist](#deep-module-checklist)
+
 Read this reference when a test is hard to write because the public interface is too wide, setup is noisy, behavior leaks across modules, or callers must know too much about the implementation.
 
 Deep-module thinking is part of the GOATED engineering philosophy: prefer modules with small, meaningful interfaces that hide substantial behavior. TDD makes this visible because awkward tests often reveal awkward interfaces.

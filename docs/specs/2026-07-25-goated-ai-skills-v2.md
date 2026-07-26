@@ -194,7 +194,8 @@ Target-project adapters remain thin and preserve stronger project instructions.
 
 ## Adaptive Work Profile
 
-The router records independent dimensions, then derives workflow intensity.
+The router derives workflow intensity from independent dimensions, but records
+only dimensions that affect routing, approval, proof, or resumability.
 
 ### Core dimensions
 
@@ -233,34 +234,20 @@ The work envelope is a logical state protocol, not a mandatory tracked file.
 ```yaml
 schema_version:
 goal:
-profile:
-  task_size:
-  intent_maturity:
-  workflow_intensity:
-  domain:
-  risk_flags: []
-  continuity:
-  execution:
-data_sensitivity:
 action_reach:
 scope:
   included: []
   excluded: []
-checkpoint:
-route:
-  required_gates: []
-  conditional_gates: []
-  skipped_gates: []
-evidence: []
-decisions: []
-open_questions: []
-proof_strategy:
-work_state:
 next:
 ```
 
 ### Optional extensions
 
+- profile dimensions;
+- data sensitivity and risk flags;
+- checkpoint and route gates;
+- evidence, decisions, and open questions;
+- proof strategy and work state;
 - fixed point;
 - approvals;
 - artifacts;
@@ -271,7 +258,8 @@ next:
 - resume information.
 
 Runtime cost, provider, model-ranking, and Factory metric fields are excluded.
-Irrelevant optional fields and meaningless skipped gates must be omitted.
+Populate optional fields lazily. Irrelevant fields and meaningless skipped
+gates must be omitted.
 
 ### Storage
 

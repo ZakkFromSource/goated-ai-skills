@@ -1,5 +1,14 @@
 # Diagram Patterns
 
+## Contents
+
+- [Map Vocabulary](#map-vocabulary)
+- [Map Types](#map-types)
+- [Legends And Markers](#legends-and-markers)
+- [Source Reference Table](#source-reference-table)
+- [Format Selection](#format-selection)
+- [Anti-Patterns](#anti-patterns)
+
 Use this reference when choosing how to represent a source-grounded architecture map. Start with the smallest useful representation. Source references and the evidence table remain authoritative regardless of presentation format.
 
 ## Map Vocabulary

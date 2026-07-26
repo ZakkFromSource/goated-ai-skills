@@ -9,7 +9,8 @@ metadata:
 
 ## Purpose
 
-Clarify a user-supplied topic by interviewing the user relentlessly but usefully, one question at a time.
+Clarify a user-supplied topic through proportionate challenge, focused
+questions, provisional recommendations, and explicit tradeoffs.
 
 Use this skill for general productivity conversations: brainstorming, exploring a question, sharpening an idea, pressure-testing a lightweight plan, or walking through a decision. The grill should expose assumptions, force crisp tradeoffs, and help the user decide the next move without pretending to know project facts.
 
@@ -77,7 +78,7 @@ Fallback: If companion skills are unavailable, continue the lightweight intervie
    - In deep-dive mode, summarize those four decision states after each coherent decision cluster, when the tree changes materially, or before context becomes hard to retain.
    - Separate confirmed user decisions from agent recommendations.
    - Keep assumptions explicit when they are based only on conversation context.
-   - Do not write durable docs, PRDs, issues, prototypes, or implementation files unless the user asks for that next step.
+   - Do not write durable docs, specs or legacy PRDs, tickets or remote issues, prototypes, or implementation files unless the user asks for that next step.
 
 7. Route prototypes only for decision evidence:
    - Recommend `prototype` only when a disposable experiment would distinguish live options more reliably than further discussion.

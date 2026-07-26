@@ -1,5 +1,12 @@
 # Lesson Note Template
 
+## Contents
+
+- [Candidate Card](#candidate-card)
+- [Optional Config](#optional-config)
+- [Lesson Note](#lesson-note)
+- [Final Chat Audit](#final-chat-audit)
+
 Use this reference when formatting candidate review cards, optional config files, lesson notes, or final chat audit summaries.
 
 ## Candidate Card
