@@ -22,6 +22,10 @@ from scripts.validation.onboarding import (
     validate_clarification_fixtures as validate_clarification_fixture_concern,
     validate_onboarding_fixtures as validate_onboarding_fixture_concern,
 )
+from scripts.validation.operations import (
+    validate_setup_scribe_fixtures as validate_setup_scribe_concern,
+    validate_wayfinding_fixtures as validate_wayfinding_concern,
+)
 from scripts.validation.planning import (
     validate_architecture_planning_fixtures as validate_architecture_planning_concern,
     validate_planning_fixtures as validate_planning_concern,
@@ -348,6 +352,16 @@ class ResearchConcernValidationTests(unittest.TestCase):
 
     def test_current_source_grounded_research_fixtures_are_valid(self) -> None:
         self.assertEqual(validate_source_research_concern(REPO_ROOT), [])
+
+
+class OperationsConcernValidationTests(unittest.TestCase):
+    """Prove Setup Scribe and Wayfinding through their concern module."""
+
+    def test_current_setup_scribe_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_setup_scribe_concern(REPO_ROOT), [])
+
+    def test_current_wayfinding_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_wayfinding_concern(REPO_ROOT), [])
 
 
 if __name__ == "__main__":
