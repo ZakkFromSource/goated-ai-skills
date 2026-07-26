@@ -20,6 +20,7 @@ import re
 from pathlib import Path
 
 if __package__:
+    from .validation import onboarding as onboarding_validation
     from .validation import routing as routing_validation
     from .validation.registry import registry_summary, validate_registry
     from .validation.skill_packages import (
@@ -36,6 +37,7 @@ if __package__:
         validate_fixture_contract_values,
     )
 else:
+    from validation import onboarding as onboarding_validation
     from validation import routing as routing_validation
     from validation.registry import registry_summary, validate_registry
     from validation.skill_packages import (
@@ -1193,6 +1195,14 @@ def validate_onboarding_fixtures(repo: Path) -> list[Finding]:
         )
     )
     return errors
+
+
+# Compatibility re-exports keep existing callers stable while the focused
+# module owns clarification and onboarding behavior.
+validate_clarification_fixtures = (
+    onboarding_validation.validate_clarification_fixtures
+)
+validate_onboarding_fixtures = onboarding_validation.validate_onboarding_fixtures
 
 
 def validate_planning_spec_expected(

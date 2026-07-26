@@ -10,6 +10,10 @@ from pathlib import Path
 
 import scripts.validate_skills as validator
 from scripts.validation import shared
+from scripts.validation.onboarding import (
+    validate_clarification_fixtures as validate_clarification_fixture_concern,
+    validate_onboarding_fixtures as validate_onboarding_fixture_concern,
+)
 from scripts.validation.registry import (
     registry_summary as registry_concern_summary,
 )
@@ -278,6 +282,16 @@ class RoutingConcernValidationTests(unittest.TestCase):
 
     def test_current_end_to_end_routing_fixtures_are_valid(self) -> None:
         self.assertEqual(validate_end_to_end_fixture_concern(REPO_ROOT), [])
+
+
+class OnboardingConcernValidationTests(unittest.TestCase):
+    """Prove clarification and onboarding through their concern module."""
+
+    def test_current_clarification_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_clarification_fixture_concern(REPO_ROOT), [])
+
+    def test_current_onboarding_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_onboarding_fixture_concern(REPO_ROOT), [])
 
 
 if __name__ == "__main__":
