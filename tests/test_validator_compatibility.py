@@ -14,6 +14,10 @@ from scripts.validation.onboarding import (
     validate_clarification_fixtures as validate_clarification_fixture_concern,
     validate_onboarding_fixtures as validate_onboarding_fixture_concern,
 )
+from scripts.validation.planning import (
+    validate_architecture_planning_fixtures as validate_architecture_planning_concern,
+    validate_planning_fixtures as validate_planning_concern,
+)
 from scripts.validation.registry import (
     registry_summary as registry_concern_summary,
 )
@@ -292,6 +296,16 @@ class OnboardingConcernValidationTests(unittest.TestCase):
 
     def test_current_onboarding_fixtures_are_valid(self) -> None:
         self.assertEqual(validate_onboarding_fixture_concern(REPO_ROOT), [])
+
+
+class PlanningConcernValidationTests(unittest.TestCase):
+    """Prove planning fixtures through the focused concern module."""
+
+    def test_current_planning_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_planning_concern(REPO_ROOT), [])
+
+    def test_current_architecture_planning_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_architecture_planning_concern(REPO_ROOT), [])
 
 
 if __name__ == "__main__":

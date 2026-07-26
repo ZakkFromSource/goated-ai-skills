@@ -21,6 +21,7 @@ from pathlib import Path
 
 if __package__:
     from .validation import onboarding as onboarding_validation
+    from .validation import planning as planning_validation
     from .validation import routing as routing_validation
     from .validation.registry import registry_summary, validate_registry
     from .validation.skill_packages import (
@@ -38,6 +39,7 @@ if __package__:
     )
 else:
     from validation import onboarding as onboarding_validation
+    from validation import planning as planning_validation
     from validation import routing as routing_validation
     from validation.registry import registry_summary, validate_registry
     from validation.skill_packages import (
@@ -1394,6 +1396,14 @@ def validate_architecture_planning_fixtures(repo: Path) -> list[Finding]:
         )
     )
     return errors
+
+
+# Compatibility re-exports keep existing callers stable while the focused
+# module owns specification, ticket, architecture, and implementation planning.
+validate_planning_fixtures = planning_validation.validate_planning_fixtures
+validate_architecture_planning_fixtures = (
+    planning_validation.validate_architecture_planning_fixtures
+)
 
 
 def validate_behavior_proof_fixtures(repo: Path) -> list[Finding]:
