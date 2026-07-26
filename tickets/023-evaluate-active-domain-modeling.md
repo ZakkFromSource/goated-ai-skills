@@ -60,7 +60,7 @@ go/revise/no-go recommendation for a separate `domain-modeling` skill.
 
 ## Blocked By
 
-- `tickets/015-sharpen-skill-authoring-discipline.md`
+- `tickets/archive/015-sharpen-skill-authoring-discipline.md`
 
 ## User Stories Addressed
 

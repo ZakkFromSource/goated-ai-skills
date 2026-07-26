@@ -11,22 +11,22 @@ metadata:
 
 Create self-contained GOATED skill folders that can travel across agent frameworks.
 
-Use this skill in two modes:
+Modes:
 
-- **Create from clarified intent** when the user wants a new or revised GOATED skill based on reusable behavior, preferences, standards, or a repeated workflow.
-- **Port from source material** when an existing skill, prompt, command, workflow, or instruction set must be converted into GOATED shape.
+- **Create** a new or revised skill from clarified reusable behavior.
+- **Port** an existing prompt, command, workflow, instruction set, or skill.
 
-Both modes preserve GOATED's normalized schema, public boundary, dependency behavior, real compatibility caveats, delegation contract, and self-contained installed behavior.
+Both preserve GOATED's schema, public boundary, dependency behavior,
+compatibility caveats, delegation contract, and standalone behavior.
 
 ## Inputs
 
-- User request and desired destination: new skill, revised skill, review report, private-only adaptation, or public GOATED contribution.
+- User request and destination: skill, revision, review, private adaptation, or public contribution.
 - Clarified intent, success criteria, audience, workflow scope, non-goals, and examples of user requests that should trigger the skill.
-- Source workflow artifacts when porting, such as a `SKILL.md`, command file, prompt, agent instruction section, checklist, script, template, issue, PRD, or handoff.
-- Source package links or folders, including adjacent references, scripts, templates, examples, assets, producer artifacts, or consumer artifacts.
+- Source workflow artifacts and adjacent support files when porting.
 - Target GOATED category, installation context, portability needs, maturity expectations, and real compatibility constraints, if already decided.
-- Public/private boundary requirements, including anything that must be removed, generalized, or kept out of tracked output.
-- Relevant framework docs, repository standards, or source licenses when they materially affect portability or reuse.
+- Public/private boundary requirements.
+- Framework docs, repository standards, or licenses that materially affect reuse.
 
 ## Dependencies
 
@@ -51,9 +51,10 @@ Fallback: If companion skills, source-framework docs, or live subagents are unav
 
 2. Create mode - clarify the skill contract:
    - State the behavior the skill should change, the audience, success criteria, scope, non-goals, and examples of triggering user requests.
+   - Before creating or splitting a skill, ask whether independent invocation by a user, agent, router, or neighboring skill earns its discovery and context cost. Otherwise keep the behavior with its owner or a linked reference.
    - Choose `agent-workflows`, `engineering`, or `productivity`; record portability and maturity as review judgments only when useful.
    - Write a trigger-focused `description`: say when to load the skill using requests, symptoms, task conditions, or project context. Do not summarize workflow steps in `description`.
-   - Capture activation conditions in the body and observable completion behavior in `## Output Contract`.
+   - Give each important phase an observable completion condition. Put final artifacts or decisions in `## Output Contract`; an attempt or plausible summary is not completion.
    - Classify dependencies as hard, soft, or graceful fallback in `## Dependencies`. Add compatibility caveats only for real per-skill constraints.
 
 3. Create mode - choose the artifact shape:
@@ -74,8 +75,8 @@ Fallback: If companion skills, source-framework docs, or live subagents are unav
 5. Port mode - translate behavior into GOATED shape:
    - Summarize what the full source package makes the agent do, when it triggers, what it asks from the user, what it edits or creates, and how it stops.
    - Separate durable behavior from incidental phrasing, persona, examples, local habits, and framework UI details.
-   - Inventory framework mechanics such as slash commands, file mention syntax, MCP tools, apps, plugin APIs, command palettes, or model-specific features.
-   - Inventory project mechanics such as instruction filenames, issue trackers, label vocabularies, docs layouts, scratch paths, build commands, or release processes.
+   - Inventory framework mechanics such as commands, file mentions, tools, apps, plugin APIs, or model-specific features.
+   - Inventory project mechanics such as instruction files, trackers, labels, docs layouts, scratch paths, build commands, or release processes.
    - Classify dependencies, assumptions, compatibility requirements, privacy risks, and portability blockers.
    - Preserve source-specific details only when they genuinely fit the destination workflow and remain public-safe.
 
@@ -91,6 +92,7 @@ Fallback: If companion skills, source-framework docs, or live subagents are unav
    - Design pressure scenarios or representative usage scenarios before trusting the skill.
    - When live subagents are available and safe, run a RED baseline without the skill, capture failures or rationalizations, then run GREEN verification with the skill.
    - When live evaluation is unavailable, write the evaluation plan and residual risk instead of claiming behavioral proof.
+   - Apply the reference's behavior, ownership, disclosure, and sequence-pressure lenses.
    - Add rationalization counters, stop rules, red flags, proof gates, or anti-pattern references when testing or review shows agents can dodge the intended behavior.
 
 8. Validate the artifact:
@@ -104,9 +106,12 @@ Fallback: If companion skills, source-framework docs, or live subagents are unav
 
 Use [Proposal And Report Templates](./references/proposal-and-report-templates.md) when producing a skill creator proposal, portability review, or edit report.
 
-For proposal or review output, INCLUDE mode and intent, source package manifest for port mode, neutral skill shape, support-file plan, evaluation plan or results, compatibility caveats, privacy and portability judgment, and remaining blockers.
+For proposals or reviews, include mode and intent, port manifest when relevant,
+skill shape, support-file plan, evaluation, compatibility, privacy,
+portability, and blockers.
 
-When editing a skill folder, REPORT files changed, selected mode and category decision, port manifest summary when relevant, discovery/output/dependency/support-file/compatibility decisions, evaluation checks, privacy or portability blockers, and verification performed.
+For edits, report changed files, mode, category, relevant port manifest,
+authoring decisions, evaluation, blockers, and verification.
 
 ## Delegation
 
@@ -128,6 +133,7 @@ evaluation gaps.
 - Do not inspect only the obvious entrypoint when a provided source package includes first-party support files that may define real behavior.
 - Do not assume one framework's instruction filename, command syntax, file mention behavior, plugin system, issue tracker, or docs layout is universal.
 - Do not claim behavioral proof from skill evaluation unless scenarios actually ran; describe unrun checks as a plan or residual risk.
+- Do not turn authoring review labels into mandatory GOATED terminology; use them only when they sharpen a concrete skill decision.
 - Do not bulk-copy external source material; summarize behavior, respect licensing, and attribute public inspiration when relevant.
 - Do not expand `SKILL.md` with long examples, templates, or generic compatibility matrices when a directly linked `references/` file would keep the skill lean.
 - Do not require this source repo's root `AGENT.md`, `README.md`, `CONTEXT.md`, issues, `.local/`, or handoffs at installed runtime.

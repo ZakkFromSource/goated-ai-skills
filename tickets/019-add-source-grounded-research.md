@@ -70,7 +70,7 @@ public documentation while preserving the boundaries with local
 
 ## Blocked By
 
-- `tickets/015-sharpen-skill-authoring-discipline.md`
+- `tickets/archive/015-sharpen-skill-authoring-discipline.md`
 
 Ticket 013 is not a functional dependency. Sequence overlapping validator
 edits if its refactor is in progress.

@@ -74,6 +74,39 @@ class SemanticConsistencyTests(unittest.TestCase):
         self.assertNotIn("when gated mandatory", readme)
 
 
+class SkillAuthoringDisciplineTests(unittest.TestCase):
+    def test_creator_prices_independent_invocation_and_phase_completion(self) -> None:
+        skill = read_repo_text(
+            "skills/agent-workflows/framework-agnostic-skill-creator/SKILL.md"
+        )
+
+        self.assertIn("independent invocation", skill)
+        self.assertIn("context cost", skill)
+        self.assertIn("observable completion condition", skill)
+
+    def test_evaluation_removes_a_concrete_no_op_instruction(self) -> None:
+        evaluation = read_repo_text(
+            "skills/agent-workflows/framework-agnostic-skill-creator/"
+            "references/skill-evaluation.md"
+        )
+
+        self.assertIn('"Be clear and thorough."', evaluation)
+        self.assertIn("Remove it as a no-op", evaluation)
+
+    def test_evaluation_progressively_discloses_branch_only_work(self) -> None:
+        evaluation = read_repo_text(
+            "skills/agent-workflows/framework-agnostic-skill-creator/"
+            "references/skill-evaluation.md"
+        )
+
+        self.assertIn(
+            "Only the port branch needs a compatibility matrix",
+            evaluation,
+        )
+        self.assertIn("branch-specific pointer", evaluation)
+        self.assertIn("positive target behavior", evaluation)
+
+
 class ReferenceNavigationTests(unittest.TestCase):
     def test_long_skill_references_have_contents_navigation(self) -> None:
         missing_contents: list[str] = []

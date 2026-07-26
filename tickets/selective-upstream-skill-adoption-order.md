@@ -9,7 +9,8 @@ implementation tickets before their maintainer gates are satisfied.
 
 ## Phase A: High-Confidence Adoption
 
-1. `tickets/015-sharpen-skill-authoring-discipline.md`
+1. `tickets/archive/015-sharpen-skill-authoring-discipline.md`
+   - Status: Completed and archived.
    - Blocked by: None
    - Enables: new skills to use the refined authoring and evaluation contract.
 2. `tickets/016-minimize-diagnostic-reproductions.md`
@@ -56,16 +57,17 @@ hard blocker because the parent spec contains a standalone research contract.
 
 ## Frontier
 
-The initial ready frontier is:
+The current ready frontier is:
 
-- Ticket 015
 - Ticket 016
 - Ticket 017
+- Ticket 018
+- Ticket 019
 - Ticket 021
+- Ticket 023
 
-Ticket 023 joins the frontier when Ticket 015 completes. Tickets 018 and 019
-also join after Ticket 015. Conditional Tickets 022 and 024 never join the
-frontier without their recorded maintainer go decisions.
+Ticket 015 is complete. Conditional Tickets 022 and 024 never join the frontier
+without their recorded maintainer go decisions.
 
 ## Acceptance-Criteria Coverage
 

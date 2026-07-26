@@ -3,6 +3,7 @@
 ## Contents
 
 - [Evaluation Loop](#evaluation-loop)
+- [Authoring Discipline Lenses](#authoring-discipline-lenses)
 - [Pressure Scenarios](#pressure-scenarios)
 - [Rationalization Capture](#rationalization-capture)
 - [Scenario Types By Skill Kind](#scenario-types-by-skill-kind)
@@ -19,6 +20,8 @@ The goal is to test whether the skill changes agent behavior, not whether the pr
 1. Define the behavior under test:
    - State the decision, workflow, or discipline the skill should change.
    - Identify the user value protected by the skill.
+   - State who must invoke it independently and why that reach earns its discovery and context cost.
+   - Give each important phase a completion criterion the agent can observe.
    - Choose realistic scenarios that would trigger the skill.
    - For discipline-heavy skills, include pressures that make the agent want to skip the rule.
 
@@ -37,8 +40,41 @@ The goal is to test whether the skill changes agent behavior, not whether the pr
 4. REFACTOR and re-test:
    - Add explicit counters for rationalizations observed during RED or GREEN.
    - Add stop rules, proof gates, red flags, anti-pattern references, or support-file links only where they address real failure modes.
-   - Remove unnecessary prose that does not change behavior.
+   - Remove no-op or duplicated prose that does not change behavior.
+   - Move branch-only material behind a clear pointer, and sharpen phase completion before splitting a sequence.
    - Re-run or re-plan the scenario after each significant change.
+
+## Authoring Discipline Lenses
+
+Use these as evaluation questions, not as required GOATED vocabulary:
+
+| Lens | Evaluation question | Preferred response |
+| --- | --- | --- |
+| Invocation value | Must a user, agent, router, or neighboring skill reach this behavior independently? | Keep a separate skill only when that reach earns the discovery description and context cost. |
+| Observable completion | Can the agent distinguish a finished phase from an attempted action or plausible summary? | End important phases with a checkable artifact, decision, state, or evidence condition. |
+| No-op guidance | Does this sentence change behavior compared with the agent's likely default? | Delete it when removing it produces no meaningful difference. |
+| Ownership | Is the same rule already authoritative in shared policy, a neighboring skill, or another section? | Keep the specialist delta here and point to the owner instead of copying universal behavior. |
+| Branch disclosure | Does every run need this detail, or only one mode or branch? | Inline common decisions; put branch-only detail behind a pointer that says when to read it. |
+| Sequence pressure | Do visible later steps tempt the agent to declare the current phase complete too early? | Sharpen the current completion criterion first; split only when observed pressure remains. |
+| Positive steering | Does a prohibition make the unwanted behavior more salient without naming the replacement? | State the positive target behavior first; retain a prohibition only when it is a necessary guardrail and pair it with the replacement action. |
+| Leading concept | Can a familiar compact concept replace repeated explanation without hiding a project-specific rule? | Use it when it improves retrieval or execution; explain unfamiliar meaning locally and do not require the label across GOATED. |
+
+Apply the lenses sentence by sentence and branch by branch. They are useful
+only when they change an authoring decision; do not add a vocabulary report to
+every evaluation.
+
+Concrete pruning and disclosure scenarios:
+
+- Candidate instruction: "Be clear and thorough." If RED behavior is already
+  equally clear and complete, Remove it as a no-op. If a real failure remains,
+  replace it with the specific observable action that counters that failure.
+- Candidate workflow: "Only the port branch needs a compatibility matrix."
+  Keep the shared branch decision in `SKILL.md`, then disclose the matrix
+  behind a branch-specific pointer with an explicit read condition.
+- Candidate sequence: investigation, decision, implementation, and closeout
+  appear together, and the agent repeatedly rushes investigation. First make
+  investigation end on named evidence. Split or progressively disclose later
+  phases only if the same premature-completion pressure remains.
 
 ## Pressure Scenarios
 
@@ -99,9 +135,14 @@ Avoid leaking the intended answer into an evaluation prompt. Pass the skill and 
 
 Before publishing or closing a skill change, verify:
 
+- Independent invocation and context visibility earn their cost.
 - `description` is discovery-focused and does not summarize the workflow.
 - Body activation conditions cover concrete requests, symptoms, or project conditions.
-- `## Output Contract` defines observable completion artifacts or decisions.
+- Important phases and `## Output Contract` define observable completion artifacts, decisions, states, or evidence.
+- No-op guidance and duplicated ownership were removed.
+- Branch-only detail is progressively disclosed with an explicit read condition.
+- Sequence pressure was tested before splitting, and positive target behavior leads avoidable prohibitions.
+- Compact leading concepts are used only when they improve behavior, not as mandatory terminology.
 - `## Dependencies` classifies hard dependencies, soft dependencies, and fallback behavior.
 - Compatibility notes are specific to real constraints and do not turn one framework into a universal rule.
 - Support files are directly linked from `SKILL.md` with clear read or run conditions.
