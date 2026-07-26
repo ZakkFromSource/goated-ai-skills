@@ -24,6 +24,7 @@ if __package__:
     from .validation import merge_conflicts as merge_conflict_validation
     from .validation import onboarding as onboarding_validation
     from .validation import planning as planning_validation
+    from .validation import research as research_validation
     from .validation import routing as routing_validation
     from .validation.registry import registry_summary, validate_registry
     from .validation.skill_packages import (
@@ -44,6 +45,7 @@ else:
     from validation import merge_conflicts as merge_conflict_validation
     from validation import onboarding as onboarding_validation
     from validation import planning as planning_validation
+    from validation import research as research_validation
     from validation import routing as routing_validation
     from validation.registry import registry_summary, validate_registry
     from validation.skill_packages import (
@@ -802,6 +804,16 @@ def validate_source_grounded_research_fixtures(repo: Path) -> list[Finding]:
         )
     )
     return errors
+
+
+# Compatibility re-exports keep existing callers stable while the focused
+# module owns durable retrieval and source-grounded public research.
+validate_knowledge_retrieval_fixtures = (
+    research_validation.validate_knowledge_retrieval_fixtures
+)
+validate_source_grounded_research_fixtures = (
+    research_validation.validate_source_grounded_research_fixtures
+)
 
 
 def validate_setup_scribe_fixtures(repo: Path) -> list[Finding]:

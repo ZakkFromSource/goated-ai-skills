@@ -26,6 +26,10 @@ from scripts.validation.planning import (
     validate_architecture_planning_fixtures as validate_architecture_planning_concern,
     validate_planning_fixtures as validate_planning_concern,
 )
+from scripts.validation.research import (
+    validate_knowledge_retrieval_fixtures as validate_knowledge_retrieval_concern,
+    validate_source_grounded_research_fixtures as validate_source_research_concern,
+)
 from scripts.validation.registry import (
     registry_summary as registry_concern_summary,
 )
@@ -334,6 +338,16 @@ class MergeConflictConcernValidationTests(unittest.TestCase):
 
     def test_current_merge_conflict_fixtures_are_valid(self) -> None:
         self.assertEqual(validate_merge_conflict_concern(REPO_ROOT), [])
+
+
+class ResearchConcernValidationTests(unittest.TestCase):
+    """Prove retrieval and public research through their concern module."""
+
+    def test_current_knowledge_retrieval_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_knowledge_retrieval_concern(REPO_ROOT), [])
+
+    def test_current_source_grounded_research_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_source_research_concern(REPO_ROOT), [])
 
 
 if __name__ == "__main__":
