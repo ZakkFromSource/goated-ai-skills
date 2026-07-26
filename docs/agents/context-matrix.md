@@ -69,9 +69,9 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Issue and PRD scans with `rg -n` | Sample issue and PRD headings, blockers, current names, and implementation summaries. | When deciding which issue to open first or checking documentation drift. | Ran on 2026-05-21 for issue discovery and interim doc sync. |
 | `git status --short` | Check local worktree state. | Before and after edits. | Ran on 2026-05-21 before interim doc-sync edits; output was empty. |
 | `rg --files -g 'package.json' -g 'pyproject.toml' -g 'pubspec.yaml' -g 'Cargo.toml' -g 'Makefile' -g '*.sln' -g '*.csproj' -g '*.fsproj' -g 'go.mod' -g 'requirements.txt' -g '.github/workflows/*'` | Look for build, package, and CI entrypoints. | Before claiming build, lint, format, test, or CI commands exist. | Root `pyproject.toml`, `.github/workflows/validate.yml`, and `tests/` support validation; no formatter, linter, or build config is present. |
-| `tests/test_validate_skills.py` | Registry, canonical-reference, adaptive-routing, onboarding, clarification, specification/ticket, architecture, implementation-planning, behavior-proof, review/verification, Wayfinding, knowledge-retrieval, and Setup Scribe fixture validation behavior tests. | Before changing the registry, canonical names, fixture contracts, or validator behavior. | Added by Ticket 001 and extended by Tickets 002-012 and 014. |
+| `tests/test_validate_skills.py` | Registry, canonical-reference, adaptive-routing, onboarding, clarification, specification/ticket, architecture, implementation-planning, behavior-proof, merge-conflict, review/verification, Wayfinding, knowledge-retrieval, and Setup Scribe fixture validation behavior tests. | Before changing the registry, canonical names, fixture contracts, or validator behavior. | Added by Ticket 001 and extended by Tickets 002-012, 014, and 018. |
 | `uv run python -m unittest discover -s tests -v` | Run validator behavior tests. | Before claiming registry or routing-fixture validation behavior passes. | Uses the standard library `unittest` runner. |
-| `uv run python scripts/validate_skills.py` | Validate implemented skills, canonical architecture references, the integrated registry, routing, onboarding, clarification, specification/ticket, architecture, implementation-planning, behavior-proof, review/verification, Wayfinding, knowledge-retrieval, and Setup Scribe fixtures, public-boundary checks, and report-only drift. | Before claiming skill, registry, canonical-name, or fixture changes are valid. | Uses `pyyaml` and `jsonschema` through `uv`. |
+| `uv run python scripts/validate_skills.py` | Validate implemented skills, canonical architecture references, the integrated registry, routing, onboarding, clarification, specification/ticket, architecture, implementation-planning, behavior-proof, merge-conflict, review/verification, Wayfinding, knowledge-retrieval, and Setup Scribe fixtures, public-boundary checks, and report-only drift. | Before claiming skill, registry, canonical-name, or fixture changes are valid. | Uses `pyyaml` and `jsonschema` through `uv`. |
 | Manual markdown review | Validate docs-only changes. | For docs changes outside validator-covered skill checks. | Pair with targeted script checks when a skill adds executable helpers. |
 
 ## Decisions And Context Packs
@@ -112,7 +112,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
   014; selective-adoption spec, Tickets 015-024, and their order file;
   ADR 0002; `stack/`, including routing, onboarding, clarification,
   specification/ticket, architecture, implementation-planning, behavior-proof,
-  review/verification, Wayfinding, knowledge-retrieval, Setup Scribe, and end-to-end
+  review/verification, merge-conflict, Wayfinding, knowledge-retrieval, Setup Scribe, and end-to-end
   fixtures; V1/V2 context comparison tooling; migration and acceptance docs;
   current validator tests and commands; targeted catalog, install, docs-drift,
   and ticket-state scans.

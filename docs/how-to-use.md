@@ -351,6 +351,14 @@ contract.
 - **Typical output**: Compact classifications, evidence, accepted work, technical pushback, user decisions, and route deltas.
 - **Pipeline role**: Specialized branch before review gates or follow-up implementation.
 
+#### `resolving-merge-conflicts`
+
+- **Purpose**: Resolves conflicts in active Git merges, rebases, cherry-picks, and reverts by preserving the intent behind both sides.
+- **Use when**: Git reports unmerged paths and the correct resolution depends on commits, pull requests, issues, tests, docs, or another primary source of intent.
+- **Typical input**: Current Git operation and branch state, unmerged paths and index stages, intent evidence for both sides, project checks, action reach, and lifecycle authorization.
+- **Typical output**: Detected operation and exact conflict scope, two-sided intent evidence, compatible resolutions or explicit semantic decisions, scoped check results, and one authorized or recommended next state.
+- **Pipeline role**: Independent engineering branch for an operation already in progress. Loading it never grants permission to stage, commit, continue, skip, abort, push, or mutate a protected branch; standalone use applies the same boundary without requiring the integrated registry.
+
 #### `standards-and-spec-review`
 
 - **Purpose**: Reviews changes against project standards and the originating spec, ticket, or remote issue.

@@ -253,6 +253,16 @@ skills:
     accepts_signals: [scope-changed, evidence-stale, security-impact, refinement-debt]
     emits_signals: [scope-changed, security-impact, refinement-debt]
 
+  - name: resolving-merge-conflicts
+    path: skills/engineering/resolving-merge-conflicts/SKILL.md
+    category: engineering
+    aliases: []
+    workflow_role: conflict-resolution
+    domains: [software]
+    profile_eligibility: [lightweight, standard, full]
+    accepts_signals: [scope-changed, evidence-stale, security-impact]
+    emits_signals: [scope-changed, evidence-stale, security-impact, refinement-debt]
+
   - name: standards-and-spec-review
     path: skills/engineering/standards-and-spec-review/SKILL.md
     category: engineering

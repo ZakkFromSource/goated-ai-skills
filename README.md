@@ -107,6 +107,7 @@ only the canonical folders.
 - [`code-refinement`](skills/engineering/code-refinement/SKILL.md): refine recently changed code after an explicit cleanup request or concrete refinement-debt finding while preserving behavior and avoiding unrelated churn.
 - [`subagent-driven-development`](skills/engineering/subagent-driven-development/SKILL.md): coordinate bounded implementer and reviewer agents while one main agent owns integration.
 - [`receiving-code-review`](skills/engineering/receiving-code-review/SKILL.md): handle review feedback without blindly accepting or dismissing it.
+- [`resolving-merge-conflicts`](skills/engineering/resolving-merge-conflicts/SKILL.md): resolve active merges, rebases, cherry-picks, and reverts by tracing and preserving both sides' intent without assuming Git lifecycle authority.
 - [`standards-and-spec-review`](skills/engineering/standards-and-spec-review/SKILL.md): review changes against project standards and the originating spec as separate axes.
 - [`code-security-review`](skills/engineering/code-security-review/SKILL.md): inspect risky diffs and trust boundaries for high-evidence security issues.
 - [`documentation-writer`](skills/engineering/documentation-writer/SKILL.md): create source-grounded durable manuals, guides, runbooks, product docs, and AI-facing guide docs.

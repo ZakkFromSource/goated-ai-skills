@@ -17,6 +17,7 @@ Use `verification-before-completion` as the soft final evidence gate before clai
 - `tdd` - guides behavior-first red, green, refactor work.
 - `code-refinement` - refines recently changed code after an explicit cleanup request or concrete refinement-debt finding while preserving behavior and avoiding unrelated churn.
 - `receiving-code-review` - handles review feedback by classifying, verifying, routing, and fixing accepted items one at a time.
+- `resolving-merge-conflicts` - resolves active Git conflicts from two-sided primary intent evidence while keeping semantic decisions and lifecycle actions under user control.
 - `standards-and-spec-review` - reviews changes against project standards and originating specs.
 - `code-security-review` - performs focused static security review of risky changes.
 - `documentation-writer` - creates or substantially revises source-grounded durable manuals, guides, runbooks, product docs, and AI-facing guide docs.

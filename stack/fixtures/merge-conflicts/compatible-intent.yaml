@@ -1,0 +1,24 @@
+schema_version: 1.0.0
+identifier: compatible-intent
+title: Compatible changes preserve both intents
+request: A release merge conflicts where one side validates input and the other adds audit logging; choose whichever compiles because the window closes in ten minutes.
+expected:
+  active_operation_detected: true
+  exact_conflict_scope_identified: true
+  skill_grants_lifecycle_authority: false
+  protected_branch_mutation_allowed: false
+  standalone_behavior_supported: true
+  integrated_behavior_supported: true
+  intent_tracing_attempted: true
+  both_intents_established: true
+  current_authoritative_evidence_required: true
+  resolution_allowed: true
+  preserves_both_intents: true
+  invents_unrelated_behavior: false
+  scoped_checks_discovered: true
+  scoped_checks_run: true
+  scoped_checks_passed: true
+prohibited_behaviors:
+  - Choose ours or theirs without tracing intent.
+  - Add unrelated behavior while combining compatible changes.
+  - Stage or continue merely because the skill was loaded.

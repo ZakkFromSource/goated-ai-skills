@@ -16,6 +16,7 @@ from scripts.validate_skills import (
     validate_clarification_fixtures,
     validate_end_to_end_fixtures,
     validate_knowledge_retrieval_fixtures,
+    validate_merge_conflict_fixtures,
     validate_onboarding_fixtures,
     validate_output_communication_fixtures,
     validate_planning_fixtures,
@@ -105,6 +106,17 @@ def copy_behavior_proof_fixtures(destination: Path) -> Path:
     )
     shutil.copytree(
         REPO_ROOT / "stack" / "fixtures" / "behavior-proof",
+        fixture_destination,
+    )
+    return fixture_destination
+
+
+def copy_merge_conflict_fixtures(destination: Path) -> Path:
+    """Copy merge-conflict fixtures and return their destination directory."""
+
+    fixture_destination = destination / "stack" / "fixtures" / "merge-conflicts"
+    shutil.copytree(
+        REPO_ROOT / "stack" / "fixtures" / "merge-conflicts",
         fixture_destination,
     )
     return fixture_destination
@@ -770,6 +782,192 @@ class BehaviorProofFixtureValidationTests(unittest.TestCase):
         )
         self.assertIn(
             "overlapping-delegation behavior requires execution='sequential'",
+            messages,
+        )
+
+
+class MergeConflictFixtureValidationTests(unittest.TestCase):
+    def test_current_merge_conflict_fixtures_are_valid(self) -> None:
+        self.assertEqual([], validate_merge_conflict_fixtures(REPO_ROOT))
+
+    def test_compatible_intents_must_preserve_both_sides(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_merge_conflict_fixtures(fixture_root)
+            fixture_path = fixture_directory / "compatible-intent.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["preserves_both_intents"] = False
+            fixture["expected"]["invents_unrelated_behavior"] = True
+            fixture["expected"]["scoped_checks_run"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_merge_conflict_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "compatible-intent behavior requires preserves_both_intents=True",
+            messages,
+        )
+        self.assertIn(
+            "compatible-intent behavior requires "
+            "invents_unrelated_behavior=False",
+            messages,
+        )
+        self.assertIn(
+            "compatible-intent behavior requires scoped_checks_run=True",
+            messages,
+        )
+
+    def test_incompatible_intent_requires_an_explicit_decision(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_merge_conflict_fixtures(fixture_root)
+            fixture_path = fixture_directory / "incompatible-intent.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["semantic_tradeoff_explicit"] = False
+            fixture["expected"]["user_decision_required"] = False
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_merge_conflict_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "incompatible-intent behavior requires "
+            "semantic_tradeoff_explicit=True",
+            messages,
+        )
+        self.assertIn(
+            "incompatible-intent behavior requires user_decision_required=True",
+            messages,
+        )
+
+    def test_insufficient_evidence_stops_resolution(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_merge_conflict_fixtures(fixture_root)
+            fixture_path = fixture_directory / "insufficient-evidence.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["both_intents_established"] = True
+            fixture["expected"]["stop_for_evidence"] = False
+            fixture["expected"][
+                "finish_authorization_substitutes_for_evidence"
+            ] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_merge_conflict_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "insufficient-evidence behavior requires "
+            "both_intents_established=False",
+            messages,
+        )
+        self.assertIn(
+            "insufficient-evidence behavior requires stop_for_evidence=True",
+            messages,
+        )
+        self.assertIn(
+            "insufficient-evidence behavior requires "
+            "finish_authorization_substitutes_for_evidence=False",
+            messages,
+        )
+
+    def test_wrong_operation_allows_safe_abort_without_implied_authority(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_merge_conflict_fixtures(fixture_root)
+            fixture_path = fixture_directory / "wrong-operation.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["stopped_before_edit"] = False
+            fixture["expected"]["safe_abort_allowed"] = False
+            fixture["expected"]["abort_authorized_by_skill"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_merge_conflict_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "wrong-operation behavior requires stopped_before_edit=True",
+            messages,
+        )
+        self.assertIn(
+            "wrong-operation behavior requires safe_abort_allowed=True",
+            messages,
+        )
+        self.assertIn(
+            "wrong-operation behavior requires abort_authorized_by_skill=False",
+            messages,
+        )
+
+    def test_continuation_requires_fresh_lifecycle_authorization(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fixture_root = Path(temporary_directory)
+            fixture_directory = copy_merge_conflict_fixtures(fixture_root)
+            fixture_path = fixture_directory / "authorized-continuation.yaml"
+            fixture = yaml.safe_load(fixture_path.read_text(encoding="utf-8"))
+            fixture["expected"]["fresh_authorization_verified"] = False
+            fixture["expected"]["continuation_limit"] = 2
+            fixture["expected"]["state_reinspected_after_continue"] = False
+            fixture["expected"]["stale_evidence_reused"] = True
+            fixture["expected"]["next_conflict_authorized"] = True
+            fixture["expected"]["push_allowed"] = True
+            fixture_path.write_text(
+                yaml.safe_dump(fixture, sort_keys=False),
+                encoding="utf-8",
+            )
+
+            messages = [
+                finding.message
+                for finding in validate_merge_conflict_fixtures(fixture_root)
+            ]
+
+        self.assertIn(
+            "authorized-continuation behavior requires "
+            "fresh_authorization_verified=True",
+            messages,
+        )
+        self.assertIn(
+            "authorized-continuation behavior requires continuation_limit=1",
+            messages,
+        )
+        self.assertIn(
+            "authorized-continuation behavior requires "
+            "state_reinspected_after_continue=True",
+            messages,
+        )
+        self.assertIn(
+            "authorized-continuation behavior requires stale_evidence_reused=False",
+            messages,
+        )
+        self.assertIn(
+            "authorized-continuation behavior requires "
+            "next_conflict_authorized=False",
+            messages,
+        )
+        self.assertIn(
+            "authorized-continuation behavior requires push_allowed=False",
             messages,
         )
 
