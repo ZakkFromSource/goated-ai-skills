@@ -10,18 +10,33 @@ AFK
 
 ## Work State
 
-Ready after the post-evaluation semantic consistency pass.
+Ready after the accepted high-confidence adoption batch. Baseline refreshed on
+2026-07-26 before implementation.
 
 ## What To Build
 
-Refactor the roughly 4,400-line validation subsystem into focused modules while
+Refactor the 5,358-line validation subsystem into focused modules while
 preserving the public imports used by tests and the command
 `uv run python scripts/validate_skills.py`.
 
 Keep `scripts/validate_skills.py` as a thin CLI and compatibility surface.
-Separate shared types and helpers from registry, routing, clarification,
-onboarding, planning, proof, review, output communication, knowledge,
-Wayfinder, and public-boundary validation.
+Separate shared types and helpers from:
+
+- skill-package, frontmatter, link, canonical-reference, and public-boundary
+  validation;
+- registry validation;
+- routing and end-to-end fixture validation;
+- clarification and onboarding validation;
+- specification/ticket, architecture, and implementation-planning validation;
+- behavior-proof, review/verification, and output-communication validation;
+- merge-conflict validation;
+- knowledge-retrieval and source-grounded-research validation;
+- Setup Scribe and Wayfinding validation; and
+- result aggregation, word-budget reporting, and CLI presentation.
+
+Use explicit dependency direction. Concern modules may depend on shared types
+and parsing helpers; shared modules and the CLI must not depend back on concern
+implementations through circular imports.
 
 ## Recommended First Reads
 
@@ -31,6 +46,30 @@ Wayfinder, and public-boundary validation.
 - `.github/workflows/validate.yml`
 - `AGENT.md`
 - `docs/agents/project-standards.md`
+- `docs/high-confidence-adoption-acceptance-report.md`
+- `tickets/archive/018-add-resolving-merge-conflicts.md`
+- `tickets/archive/019-add-source-grounded-research.md`
+- `stack/fixtures/`
+
+## Current Characterization Baseline
+
+Record this baseline again immediately before the first extraction:
+
+- `scripts/validate_skills.py`: 5,358 lines;
+- `tests/test_validate_skills.py`: 2,727 lines;
+- test compatibility surface: 16 validation functions imported directly from
+  `scripts.validate_skills`;
+- implemented skills and registry entries: 37 each;
+- focused high-confidence acceptance suite: 35 tests;
+- full unit suite: 121 tests;
+- shared policy: 1,193 words;
+- report-only drift: the same three pre-existing Learning Capture `status:`
+  examples;
+- representative route reductions: 47.9%, 17.7%, 40.9%, and 10.1%.
+
+The exact validator messages, finding paths, fixture counts, report-only notes,
+exit codes, import surface, and context-comparison results are compatibility
+behavior, not incidental output to simplify during extraction.
 
 ## Acceptance Criteria
 
@@ -40,6 +79,13 @@ Wayfinder, and public-boundary validation.
       migrated in one reviewed change.
 - [ ] No validation rule, fixture requirement, output status, or exit-code
       behavior is lost.
+- [ ] The accepted merge-conflict and source-grounded-research validators,
+      fixture counts, public-boundary checks, and focused tests retain explicit
+      module ownership and equivalent behavior.
+- [ ] Validator output preserves concern ordering, fixture counts,
+      word-budget reporting, zero human-review notes, and the three existing
+      report-only drift notes unless a separately approved behavior ticket
+      changes them.
 - [ ] Focused module tests can run without loading unrelated validation
       concerns.
 - [ ] The validator, full unit suite, and V1/V2 comparison pass locally and in
@@ -50,17 +96,38 @@ Wayfinder, and public-boundary validation.
 ## Expected Proof
 
 - Characterization tests passing before the refactor.
-- Focused tests for each extracted concern.
+- Focused tests for each extracted concern, including merge-conflict,
+  source-grounded-research, cross-concern aggregation, and CLI compatibility.
 - Fresh output from all three repository acceptance commands.
+- Fresh output from the 35-test high-confidence acceptance suite.
+- `python -m compileall -q scripts tests` and `git diff --check`.
 - Diff review showing a thin CLI and explicit module ownership.
 - Green GitHub Actions run on the branch.
 
 ## Blocked By
 
 - `tickets/archive/012-complete-and-accept-v2-migration.md`
+- `tickets/archive/020-accept-high-confidence-adoption-batch.md`
+
+## Extraction Order
+
+1. Characterize the current import surface, output ordering, exit codes,
+   fixture counts, and report-only notes before moving behavior.
+2. Expand with shared finding/types, path, YAML-loading, and parsing modules
+   while the existing CLI continues to own orchestration.
+3. Extract concern modules in bounded batches with focused GREEN proof after
+   every batch. Keep dependent or overlapping moves sequential.
+4. Extract result aggregation and presentation only after concern ownership is
+   stable.
+5. Contract `scripts/validate_skills.py` to the documented compatibility
+   imports, orchestration, argument parsing, presentation, and exit code.
+6. Run focused, repository-wide, context-comparison, compile, diff, and CI
+   proof before removing any temporary compatibility re-export.
 
 ## Implementation Route
 
+- Use `design-codebase-architecture` to define dependency direction and avoid
+  shallow pass-through modules before the extraction plan is approved.
 - Use `writing-plans` to define exact module ownership and extraction order.
 - Use `tdd` for characterization and compatibility proof.
 - Use `code-refinement` for the behavior-preserving module split.
@@ -70,4 +137,8 @@ Wayfinder, and public-boundary validation.
 
 - Do not add new validation behavior while moving existing rules.
 - Do not redesign fixture schemas, registry semantics, or CLI output.
+- Do not resolve the three report-only Learning Capture examples in this
+  refactor.
+- Do not combine accepted invocation-topology or domain-modeling experiments
+  with the validator split.
 - Do not add a general agent-evaluation runtime or Factory-only integration.

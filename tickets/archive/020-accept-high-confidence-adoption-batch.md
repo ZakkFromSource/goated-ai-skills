@@ -8,6 +8,10 @@
 
 HITL — maintainer acceptance is required.
 
+## Work State
+
+Completed, accepted with residual risk, and archived on 2026-07-26.
+
 ## What To Build
 
 Perform the cross-slice conformance, documentation, context-cost, public
@@ -40,16 +44,16 @@ experiments.
 
 ## Acceptance Criteria
 
-- [ ] Parent-spec AC1 through AC5, AC10, and AC11 are mapped to fresh evidence.
-- [ ] New skills remain self-contained and route as specialists rather than
+- [x] Parent-spec AC1 through AC5, AC10, and AC11 are mapped to fresh evidence.
+- [x] New skills remain self-contained and route as specialists rather than
       controllers.
-- [ ] Existing skill refinements preserve prior accepted behavior.
-- [ ] Public docs describe implemented capabilities without presenting
+- [x] Existing skill refinements preserve prior accepted behavior.
+- [x] Public docs describe implemented capabilities without presenting
       invocation or domain experiments as shipped.
-- [ ] Context comparison reports any catalog or route-cost change honestly.
-- [ ] Standards/spec, security where triggered, doc-sync, and full verification
+- [x] Context comparison reports any catalog or route-cost change honestly.
+- [x] Standards/spec, security where triggered, doc-sync, and full verification
       findings are resolved or explicitly accepted.
-- [ ] The maintainer records accept, accept-with-residual-risk, or reject.
+- [x] The maintainer records accept, accept-with-residual-risk, or reject.
 
 ## Expected Proof
 
@@ -83,3 +87,19 @@ experiments.
 - Do not fold Ticket 013's validator refactor into acceptance fixes.
 - Do not archive or mark source tickets complete before their own proof and
   review are accepted.
+
+## Acceptance Evidence
+
+- [`docs/high-confidence-adoption-acceptance-report.md`](../../docs/high-confidence-adoption-acceptance-report.md)
+  records the cross-slice evidence, context-cost review, manual boundary
+  checks, residual risks, and maintainer acceptance.
+
+## Acceptance Result
+
+The maintainer accepted the high-confidence adoption batch with the residual
+risks recorded in the acceptance report on 2026-07-26.
+
+Before the next implementation slice, the maintainer requested that
+[`tickets/013-split-validator-by-concern.md`](../013-split-validator-by-concern.md)
+be refreshed for the validator growth and accepted compatibility surface
+introduced by Tickets 015 through 019.

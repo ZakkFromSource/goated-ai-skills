@@ -30,13 +30,15 @@ implementation tickets before their maintainer gates are satisfied.
    - Blocked by: Ticket 015
    - Enables: reusable external-research evidence and optional support for
      Ticket 021.
-6. `tickets/020-accept-high-confidence-adoption-batch.md`
+6. `tickets/archive/020-accept-high-confidence-adoption-batch.md`
+   - Status: Accepted with residual risk and archived.
    - Blocked by: Tickets 015 through 019
    - Enables: maintainer acceptance of the independent adoption release.
 
 Tickets 016 and 017 could run alongside Ticket 015 when their write scopes did
-not overlap. Ticket 019 is complete. Ticket 020 is now ready for maintainer
-acceptance of the Phase A batch.
+not overlap. Phase A is accepted with residual risk. The maintainer selected
+`tickets/013-split-validator-by-concern.md` as the next slice and requested its
+baseline be refreshed for the accepted validator growth before implementation.
 
 ## Phase B: Invocation Topology
 
@@ -63,12 +65,13 @@ hard blocker because the parent spec contains a standalone research contract.
 
 The current ready frontier is:
 
-- Ticket 020
 - Ticket 021
 - Ticket 023
 
-Tickets 015 through 019 are complete. Conditional Tickets 022 and 024 never
-join the frontier without their recorded maintainer go decisions.
+Tickets 015 through 020 are complete. Conditional Tickets 022 and 024 never
+join the frontier without their recorded maintainer go decisions. Ticket 013
+is outside this spec's dependency graph but is the maintainer-selected next
+slice.
 
 ## Acceptance-Criteria Coverage
 
