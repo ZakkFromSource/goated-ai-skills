@@ -1403,6 +1403,15 @@ def validate_diagnosis_minimization_fixture(
     return errors
 
 
+# Compatibility re-exports while the now-unreachable routing implementation is
+# removed from this file in the contraction pass.
+validate_route_fixtures = routing_validation.validate_route_fixtures
+validate_end_to_end_fixtures = routing_validation.validate_end_to_end_fixtures
+validate_diagnosis_minimization_fixture = (
+    routing_validation.validate_diagnosis_minimization_fixture
+)
+
+
 def validate_clarification_expected(
     expected: dict[str, object],
     fixture_label: str,

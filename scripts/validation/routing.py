@@ -62,6 +62,12 @@ REQUIRED_IDENTIFIERS = {
     "conflicting-skill-triggers",
     "individual-skill-fallback",
 }
+REQUIRED_END_TO_END_FIXTURES = {
+    "feature-brief-to-verified-change",
+    "bug-report-to-root-cause-fix",
+    "product-idea-to-vertical-slice",
+    "existing-codebase-to-proportional-onboarding",
+}
 
 
 def route_fixture_vocabulary(
@@ -540,4 +546,372 @@ def validate_route_fixtures(repo: Path) -> list[Finding]:
         )
         for identifier in sorted(REQUIRED_IDENTIFIERS - identifiers)
     )
+    return errors
+
+
+def validate_end_to_end_fixtures(repo: Path) -> list[Finding]:
+    """Validate the four release-level workflow scenarios from the V2 spec."""
+
+    fixture_root = repo / "stack" / "fixtures" / "end-to-end"
+    fixture_paths = sorted(fixture_root.glob("*.yaml"))
+    if not fixture_paths:
+        return [
+            Finding(
+                "stack/fixtures/end-to-end",
+                "no end-to-end fixtures found",
+            )
+        ]
+
+    registry, registry_errors = load_mapping(
+        repo / "stack" / "goated-stack.yaml",
+        "stack/goated-stack.yaml",
+    )
+    errors = list(registry_errors)
+    if registry is None:
+        return errors
+
+    skill_entries = registry.get("skills")
+    signal_entries = registry.get("route_signals")
+    if not isinstance(skill_entries, list) or not isinstance(
+        signal_entries,
+        list,
+    ):
+        return errors + [
+            Finding(
+                "stack/goated-stack.yaml",
+                "registry skills and route_signals must be lists",
+            )
+        ]
+
+    registered_skills = {
+        entry["name"]
+        for entry in skill_entries
+        if isinstance(entry, dict) and isinstance(entry.get("name"), str)
+    }
+    registered_signals = {
+        entry["name"]
+        for entry in signal_entries
+        if isinstance(entry, dict) and isinstance(entry.get("name"), str)
+    }
+    identifiers: set[str] = set()
+    required_fields = {
+        "schema_version",
+        "identifier",
+        "user_request",
+        "project_context",
+        "expected",
+        "prohibited_behaviors",
+        "comparison",
+    }
+    expected_fields = {
+        "profile",
+        "selected_skills",
+        "conditional_skills",
+        "skipped_skills",
+        "route_signals",
+        "evidence",
+        "closeout",
+    }
+
+    for fixture_path in fixture_paths:
+        fixture_label = relative(fixture_path, repo)
+        fixture, fixture_errors = load_mapping(fixture_path, fixture_label)
+        errors.extend(fixture_errors)
+        if fixture is None:
+            continue
+
+        for field in sorted(required_fields - fixture.keys()):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"end-to-end fixture is missing {field}",
+                )
+            )
+        if required_fields - fixture.keys():
+            continue
+        if fixture["schema_version"] != "1.0.0":
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "unsupported end-to-end fixture schema_version",
+                )
+            )
+
+        identifier = fixture["identifier"]
+        if not isinstance(identifier, str) or not identifier:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end identifier must be a string",
+                )
+            )
+        elif identifier in identifiers:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"duplicate end-to-end fixture identifier: {identifier}",
+                )
+            )
+        else:
+            identifiers.add(identifier)
+
+        if not isinstance(fixture["user_request"], str) or not fixture[
+            "user_request"
+        ]:
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end user_request must be a string",
+                )
+            )
+        if not is_string_list(fixture["project_context"]):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end project_context must be a string list",
+                )
+            )
+        if not is_string_list(
+            fixture["prohibited_behaviors"],
+            allow_empty=False,
+        ):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end prohibited_behaviors "
+                    "must be a non-empty string list",
+                )
+            )
+
+        expected = fixture["expected"]
+        if not isinstance(expected, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end expected must be a mapping",
+                )
+            )
+            continue
+        for field in sorted(expected_fields - expected.keys()):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    f"end-to-end expected is missing {field}",
+                )
+            )
+        if expected_fields - expected.keys():
+            continue
+
+        errors.extend(validate_route_fixture_profile(expected, fixture_label))
+        if identifier == "bug-report-to-root-cause-fix":
+            errors.extend(
+                validate_diagnosis_minimization_fixture(
+                    expected,
+                    fixture_label,
+                )
+            )
+        for field in (
+            "selected_skills",
+            "conditional_skills",
+            "skipped_skills",
+        ):
+            skills = expected[field]
+            if not is_string_list(skills):
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        f"end-to-end expected.{field} must be a string list",
+                    )
+                )
+                continue
+            for skill in skills:
+                if skill not in registered_skills:
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            "end-to-end fixture references unregistered "
+                            f"skill: {skill}",
+                        )
+                    )
+
+        route_signals = expected["route_signals"]
+        if not is_string_list(route_signals):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end expected.route_signals must be a string list",
+                )
+            )
+        else:
+            for signal in route_signals:
+                if signal not in registered_signals:
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            "end-to-end fixture references undefined route "
+                            f"signal: {signal}",
+                        )
+                    )
+
+        evidence = expected["evidence"]
+        if not isinstance(evidence, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end evidence must be a mapping",
+                )
+            )
+        else:
+            for field in ("reuse", "refresh_after"):
+                if not is_string_list(evidence.get(field)):
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"end-to-end evidence.{field} "
+                            "must be a string list",
+                        )
+                    )
+
+        closeout = expected["closeout"]
+        if not isinstance(closeout, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end closeout must be a mapping",
+                )
+            )
+        else:
+            if closeout.get("single_task_closeout") is not True:
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "end-to-end fixture requires one consolidated "
+                        "task closeout",
+                    )
+                )
+            if closeout.get("specialists_return_deltas") is not True:
+                errors.append(
+                    Finding(
+                        fixture_label,
+                        "end-to-end specialists must return deltas "
+                        "instead of closeouts",
+                    )
+                )
+
+        comparison = fixture["comparison"]
+        if not isinstance(comparison, dict):
+            errors.append(
+                Finding(
+                    fixture_label,
+                    "end-to-end comparison must be a mapping",
+                )
+            )
+        else:
+            for field in ("v1_skills", "v2_skills"):
+                if not is_string_list(
+                    comparison.get(field),
+                    allow_empty=False,
+                ):
+                    errors.append(
+                        Finding(
+                            fixture_label,
+                            f"end-to-end comparison.{field} "
+                            "must be a non-empty string list",
+                        )
+                    )
+
+    for identifier in sorted(REQUIRED_END_TO_END_FIXTURES - identifiers):
+        errors.append(
+            Finding(
+                "stack/fixtures/end-to-end",
+                f"missing required end-to-end fixture: {identifier}",
+            )
+        )
+    return errors
+
+
+def validate_diagnosis_minimization_fixture(
+    expected: dict[str, object],
+    fixture_label: str,
+) -> list[Finding]:
+    """Validate reproduction minimization before broad diagnostic theories."""
+
+    diagnosis = expected.get("diagnosis")
+    if not isinstance(diagnosis, dict):
+        return [
+            Finding(
+                fixture_label,
+                "bug diagnosis requires a reproduction-minimization contract",
+            )
+        ]
+
+    errors: list[Finding] = []
+    if diagnosis.get("reproduction_scale") != "large-reducible":
+        errors.append(
+            Finding(
+                fixture_label,
+                "diagnosis minimization fixture must use a large "
+                "reducible reproduction",
+            )
+        )
+
+    ordered_steps = diagnosis.get("ordered_steps")
+    required_steps = (
+        "establish-fast-feedback-loop",
+        "confirm-exact-symptom",
+        "minimize-confirmed-reproduction",
+        "rank-falsifiable-hypotheses",
+    )
+    has_required_order = (
+        is_string_list(ordered_steps, allow_empty=False)
+        and all(step in ordered_steps for step in required_steps)
+        and all(
+            ordered_steps.index(earlier) < ordered_steps.index(later)
+            for earlier, later in zip(required_steps, required_steps[1:])
+        )
+    )
+    if not has_required_order:
+        errors.append(
+            Finding(
+                fixture_label,
+                "diagnosis must minimize a confirmed reducible reproduction "
+                "before ranking hypotheses",
+            )
+        )
+
+    if diagnosis.get("retained_elements_accounted_for") is not True:
+        errors.append(
+            Finding(
+                fixture_label,
+                "diagnosis minimization must account for every "
+                "retained element",
+            )
+        )
+    if diagnosis.get("symptom_fidelity_preserved") is not True:
+        errors.append(
+            Finding(
+                fixture_label,
+                "diagnosis minimization must preserve symptom fidelity",
+            )
+        )
+
+    safe_fallbacks = diagnosis.get("safe_lower_confidence_fallbacks")
+    required_fallbacks = {
+        "intermittent",
+        "production-only",
+        "destructive",
+        "human-in-the-loop",
+    }
+    if not is_string_list(safe_fallbacks) or not required_fallbacks.issubset(
+        safe_fallbacks
+    ):
+        errors.append(
+            Finding(
+                fixture_label,
+                "diagnosis minimization must retain safe lower-confidence "
+                "fallbacks for intermittent, production-only, destructive, "
+                "and human-in-the-loop cases",
+            )
+        )
+
     return errors

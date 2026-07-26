@@ -17,6 +17,7 @@ from scripts.validation.registry import (
     validate_registry as validate_registry_concern,
 )
 from scripts.validation.routing import (
+    validate_end_to_end_fixtures as validate_end_to_end_fixture_concern,
     validate_route_fixtures as validate_route_fixture_concern,
 )
 from scripts.validation.skill_packages import validate_skill_packages
@@ -274,6 +275,9 @@ class RoutingConcernValidationTests(unittest.TestCase):
 
     def test_current_adaptive_routing_fixtures_are_valid(self) -> None:
         self.assertEqual(validate_route_fixture_concern(REPO_ROOT), [])
+
+    def test_current_end_to_end_routing_fixtures_are_valid(self) -> None:
+        self.assertEqual(validate_end_to_end_fixture_concern(REPO_ROOT), [])
 
 
 if __name__ == "__main__":
