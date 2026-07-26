@@ -6,6 +6,8 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
+from io import StringIO
 from pathlib import Path
 
 import scripts.validate_skills as validator
@@ -33,6 +35,10 @@ from scripts.validation.planning import (
 from scripts.validation.research import (
     validate_knowledge_retrieval_fixtures as validate_knowledge_retrieval_concern,
     validate_source_grounded_research_fixtures as validate_source_research_concern,
+)
+from scripts.validation.reporting import (
+    build_validation_report,
+    render_validation_report,
 )
 from scripts.validation.registry import (
     registry_summary as registry_concern_summary,
@@ -362,6 +368,31 @@ class OperationsConcernValidationTests(unittest.TestCase):
 
     def test_current_wayfinding_fixtures_are_valid(self) -> None:
         self.assertEqual(validate_wayfinding_concern(REPO_ROOT), [])
+
+
+class ReportingConcernTests(unittest.TestCase):
+    """Prove count aggregation and presentation through the reporting module."""
+
+    def test_success_report_collects_fixture_counts_and_returns_zero(self) -> None:
+        report = build_validation_report(
+            REPO_ROOT,
+            errors=[],
+            review_notes=[],
+            drift=[],
+            skill_count=37,
+            registry_summary=(37, 1193, []),
+        )
+        output = StringIO()
+
+        with redirect_stdout(output):
+            exit_code = render_validation_report(report)
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(report.fixture_counts["routing"], 9)
+        self.assertIn(
+            "Adaptive routing fixture validation passed for 9 scenarios.",
+            output.getvalue(),
+        )
 
 
 if __name__ == "__main__":

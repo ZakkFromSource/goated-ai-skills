@@ -16,7 +16,6 @@ The validator has three result types:
 from __future__ import annotations
 
 import argparse
-import re
 from pathlib import Path
 
 if __package__:
@@ -26,21 +25,14 @@ if __package__:
     from .validation import operations as operations_validation
     from .validation import planning as planning_validation
     from .validation import research as research_validation
+    from .validation import reporting as reporting_validation
     from .validation import routing as routing_validation
     from .validation.registry import registry_summary, validate_registry
     from .validation.skill_packages import (
         validate_canonical_architecture_references,
         validate_skill_packages,
     )
-    from .validation.shared import (
-        Finding,
-        HEADING_RE,
-        is_string_list,
-        load_mapping,
-        read_text,
-        relative,
-        validate_fixture_contract_values,
-    )
+    from .validation.shared import Finding
 else:
     from validation import behavior_proof as behavior_proof_validation
     from validation import merge_conflicts as merge_conflict_validation
@@ -48,21 +40,14 @@ else:
     from validation import operations as operations_validation
     from validation import planning as planning_validation
     from validation import research as research_validation
+    from validation import reporting as reporting_validation
     from validation import routing as routing_validation
     from validation.registry import registry_summary, validate_registry
     from validation.skill_packages import (
         validate_canonical_architecture_references,
         validate_skill_packages,
     )
-    from validation.shared import (
-        Finding,
-        HEADING_RE,
-        is_string_list,
-        load_mapping,
-        read_text,
-        relative,
-        validate_fixture_contract_values,
-    )
+    from validation.shared import Finding
 
 
 def parse_args() -> argparse.Namespace:
@@ -170,19 +155,8 @@ def validate_skills(repo: Path) -> tuple[list[Finding], list[Finding], list[Find
     )
 
 
-def print_findings(title: str, findings: list[Finding], limit: int = 30) -> None:
-    """Print a readable finding group with a cap for noisy failures."""
-
-    print(f"\n{title}: {len(findings)}")
-    for finding in findings[:limit]:
-        print(f"- {finding.format()}")
-    remaining = len(findings) - limit
-    if remaining > 0:
-        print(f"- ... {remaining} more")
-
-
 def main() -> int:
-    """Program entrypoint used by `uv run python scripts/validate_skills.py`."""
+    """Run validation and delegate presentation to the reporting module."""
 
     args = parse_args()
     repo = args.repo.expanduser().resolve()
@@ -190,176 +164,15 @@ def main() -> int:
         raise SystemExit(f"Repo path does not exist or is not a directory: {repo}")
 
     errors, review_notes, drift, skill_count = validate_skills(repo)
-    registry_count, policy_words, skills_over_budget = registry_summary(repo)
-    route_fixture_count = len(
-        list((repo / "stack" / "fixtures" / "routing").glob("*.yaml"))
+    report = reporting_validation.build_validation_report(
+        repo,
+        errors=errors,
+        review_notes=review_notes,
+        drift=drift,
+        skill_count=skill_count,
+        registry_summary=registry_summary(repo),
     )
-    end_to_end_fixture_count = len(
-        list((repo / "stack" / "fixtures" / "end-to-end").glob("*.yaml"))
-    )
-    onboarding_fixture_count = len(
-        list((repo / "stack" / "fixtures" / "onboarding").glob("*.yaml"))
-    )
-    clarification_fixture_count = len(
-        list((repo / "stack" / "fixtures" / "clarification").glob("*.yaml"))
-    )
-    planning_fixture_count = len(
-        list((repo / "stack" / "fixtures" / "planning").glob("*.yaml"))
-    )
-    architecture_planning_fixture_count = len(
-        list(
-            (repo / "stack" / "fixtures" / "architecture-planning").glob(
-                "*.yaml"
-            )
-        )
-    )
-    behavior_proof_fixture_count = len(
-        list((repo / "stack" / "fixtures" / "behavior-proof").glob("*.yaml"))
-    )
-    merge_conflict_fixture_count = len(
-        list((repo / "stack" / "fixtures" / "merge-conflicts").glob("*.yaml"))
-    )
-    review_verification_fixture_count = len(
-        list(
-            (repo / "stack" / "fixtures" / "review-verification").glob(
-                "*.yaml"
-            )
-        )
-    )
-    output_communication_fixture_count = len(
-        list(
-            (repo / "stack" / "fixtures" / "output-communication").glob(
-                "*.yaml"
-            )
-        )
-    )
-    knowledge_retrieval_fixture_count = len(
-        list(
-            (repo / "stack" / "fixtures" / "knowledge-retrieval").glob(
-                "*.yaml"
-            )
-        )
-    )
-    source_grounded_research_fixture_count = len(
-        list(
-            (repo / "stack" / "fixtures" / "source-grounded-research").glob(
-                "*.yaml"
-            )
-        )
-    )
-    setup_scribe_fixture_count = len(
-        list((repo / "stack" / "fixtures" / "setup-scribe").glob("*.yaml"))
-    )
-    wayfinding_fixture_count = len(
-        list((repo / "stack" / "fixtures" / "wayfinding").glob("*.yaml"))
-    )
-    if 800 <= policy_words <= 1200:
-        policy_budget_status = "within 800-1,200 target"
-    elif policy_words < 800:
-        policy_budget_status = "below 800-1,200 target"
-    else:
-        policy_budget_status = "above 800-1,200 target"
-
-    # Only blocking errors affect the exit code. Human-review notes and docs
-    # drift are visible, but they do not fail the command by design.
-    if errors:
-        print(f"GOATED skill validation failed for {skill_count} implemented skills.")
-        print_findings("Blocking errors", errors)
-    else:
-        print(f"GOATED skill validation passed for {skill_count} implemented skills.")
-
-    if errors:
-        print(
-            f"Integrated registry checked with {registry_count} catalog entries; "
-            f"shared policy is {policy_words} words ({policy_budget_status})."
-        )
-    else:
-        print(
-            f"Integrated registry validation passed for {registry_count} catalog entries."
-        )
-        print(
-            "Adaptive routing fixture validation passed for "
-            f"{route_fixture_count} scenarios."
-        )
-        print(
-            "End-to-end fixture validation passed for "
-            f"{end_to_end_fixture_count} scenarios."
-        )
-        print(
-            "Onboarding fixture validation passed for "
-            f"{onboarding_fixture_count} scenarios."
-        )
-        print(
-            "Clarification fixture validation passed for "
-            f"{clarification_fixture_count} scenarios."
-        )
-        print(
-            "Planning fixture validation passed for "
-            f"{planning_fixture_count} scenarios."
-        )
-        print(
-            "Architecture and implementation-planning fixture validation passed for "
-            f"{architecture_planning_fixture_count} scenarios."
-        )
-        print(
-            "Behavior-proof fixture validation passed for "
-            f"{behavior_proof_fixture_count} scenarios."
-        )
-        print(
-            "Merge-conflict fixture validation passed for "
-            f"{merge_conflict_fixture_count} scenarios."
-        )
-        print(
-            "Review-and-verification fixture validation passed for "
-            f"{review_verification_fixture_count} scenarios."
-        )
-        print(
-            "Output-and-communication fixture validation passed for "
-            f"{output_communication_fixture_count} scenarios."
-        )
-        print(
-            "Knowledge-retrieval fixture validation passed for "
-            f"{knowledge_retrieval_fixture_count} scenarios."
-        )
-        print(
-            "Source-grounded-research fixture validation passed for "
-            f"{source_grounded_research_fixture_count} scenarios."
-        )
-        print(
-            "Setup Scribe fixture validation passed for "
-            f"{setup_scribe_fixture_count} scenarios."
-        )
-        print(
-            "Wayfinding fixture validation passed for "
-            f"{wayfinding_fixture_count} scenarios."
-        )
-        print(
-            f"Word-budget report: shared policy {policy_words} words "
-            f"({policy_budget_status})."
-        )
-        if skills_over_budget:
-            print(
-                "Skills above the 1,500-word decomposition threshold: "
-                + ", ".join(skills_over_budget)
-            )
-        else:
-            print("Skills above the 1,500-word decomposition threshold: 0")
-        print(
-            "Per-type soft targets remain review-only until registry roles are "
-            "assigned budget classes."
-        )
-
-    if review_notes:
-        print_findings("Human-review notes", review_notes)
-    else:
-        print("\nHuman-review notes: 0")
-
-    if drift:
-        print_findings("Report-only docs/example schema drift", drift)
-    else:
-        print("\nReport-only docs/example schema drift: 0")
-
-    return 1 if errors else 0
+    return reporting_validation.render_validation_report(report)
 
 
 if __name__ == "__main__":
