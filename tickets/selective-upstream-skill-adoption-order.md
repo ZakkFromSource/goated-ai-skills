@@ -43,15 +43,19 @@ implementation. That slice is now completed and archived.
 
 ## Phase B: Invocation Topology
 
-1. `tickets/021-investigate-invocation-topology.md`
+1. `tickets/archive/021-investigate-invocation-topology.md`
+   - Status: Completed with maintainer no-go and archived.
    - Blocked by: None
-   - Enables: maintainer go/revise/no-go decision and first-consumer choice.
-2. `tickets/022-implement-invocation-topology.md`
-   - Blocked by: Ticket 021 plus an explicit go decision
-   - Enables: accepted registry and adapter behavior.
+   - Result: no production consumer or invocation metadata accepted.
+2. `tickets/archive/022-implement-invocation-topology.md`
+   - Status: Not authorized; closed without implementation and archived.
+   - Blocked by: Ticket 021's maintainer no-go decision
+   - Result: no registry, schema, validator, adapter, or installation changes.
 
-Ticket 021 may reuse Ticket 019 after it is implemented, but Ticket 019 is not a
-hard blocker because the parent spec contains a standalone research contract.
+Ticket 021 reused Ticket 019's research workflow. Ticket 019 was not a hard
+blocker because the parent spec also contained a standalone research contract.
+Phase B concluded on 2026-07-27. Any future caller-aware invocation harness is
+a separate product track requiring its own spec and approval.
 
 ## Phase C: Active Domain Modeling
 
@@ -66,11 +70,11 @@ hard blocker because the parent spec contains a standalone research contract.
 
 The current ready frontier is:
 
-- Ticket 021
 - Ticket 023
 
-Tickets 013 and 015 through 020 are complete. Conditional Tickets 022 and 024
-never join the frontier without their recorded maintainer go decisions.
+Tickets 013 and 015 through 021 are complete. Ticket 022 closed without
+implementation after the invocation no-go. Conditional Ticket 024 never joins
+the frontier without its recorded maintainer go decision.
 
 ## Acceptance-Criteria Coverage
 
@@ -79,11 +83,12 @@ never join the frontier without their recorded maintainer go decisions.
 - AC3 -> Ticket 017
 - AC4 -> Ticket 018
 - AC5 -> Ticket 019
-- AC6 -> Ticket 021
-- AC7 -> Ticket 022
+- AC6 -> archived Ticket 021
+- AC7 -> not applicable after Ticket 021's no-go; archived Ticket 022 records
+  that no invocation metadata was accepted or implemented
 - AC8 -> Ticket 023
 - AC9 -> Ticket 024
-- AC10 -> Tickets 015 through 020, 022, and 024
+- AC10 -> Tickets 015 through 020 and conditional Ticket 024
 - AC11 -> every implementation ticket, consolidated by Ticket 020
 
 ## Deferred Separate Product Tracks
@@ -92,6 +97,7 @@ The parent spec records but does not ticket:
 
 - work-management setup, triage, and remote publishing;
 - optional architecture hotspot and review ergonomics;
+- custom invocation-policy or caller-aware routing harnesses;
 - guided learning; and
 - installer, marketplace, or adapter-generation CLI work.
 

@@ -2,7 +2,8 @@
 
 ## Status
 
-Approved and ticket ready.
+Approved. Phase A is accepted, Phase B concluded with a maintainer no-go, and
+Phase C remains ticket ready.
 
 ## Mode
 
@@ -111,6 +112,12 @@ production registry until:
 
 Static registry fixtures must not be described as proof of model behavior.
 
+Decision outcome, 2026-07-27: the maintainer selected **NO-GO** after the
+host research and disposable Codex experiment. GOATED will not add
+invocation-topology registry metadata or a Codex adapter. The added complexity
+would weaken the intentionally simple Codex workflow. Richer caller-aware
+behavior belongs in a separately scoped custom harness if it is ever pursued.
+
 ### R7: Evidence-gated active domain modeling
 
 GOATED must evaluate whether terminology decisions made during delivery are
@@ -150,12 +157,12 @@ Every new or changed skill must:
 - [ ] AC5: `source-grounded-research` is implemented, registered, documented,
       self-contained, and tested for read-only output, optional durable
       capture, stale or conflicting sources, and single-agent fallback.
-- [ ] AC6: A maintainer-reviewed invocation-topology report identifies real
+- [x] AC6: A maintainer-reviewed invocation-topology report identifies real
       host mappings, a consumer, unsupported behavior, and a go/no-go decision
       before production registry changes.
-- [ ] AC7: Any accepted invocation metadata is schema-validated, consumed by at
-      least one adapter, documented with graceful fallbacks, and verified
-      without overstating static fixtures as runtime proof.
+- [x] AC7: Not applicable after the AC6 no-go. No invocation metadata,
+      production consumer, or adapter was accepted, so no implementation was
+      authorized.
 - [ ] AC8: A maintainer-reviewed domain-modeling evaluation records current
       ownership, pressure-scenario evidence, overlap risks, and a go/no-go
       decision before a new skill is added.
@@ -222,6 +229,10 @@ Research host behavior and prototype one consumer. Production registry,
 schema, validator, and adapter changes require a separate maintainer go
 decision after the evidence is reviewed.
 
+Completed on 2026-07-27 with a maintainer **NO-GO**. The experiment evidence is
+retained, but no production consumer or metadata was accepted and the
+conditional implementation ticket is closed without implementation.
+
 ### Phase C: Domain-modeling experiment
 
 Evaluate current workflows under pressure. Creating the public skill requires
@@ -245,11 +256,15 @@ a separate maintainer go decision after the overlap evidence is reviewed.
 
 ## Open Questions
 
-- Which host should be the first invocation-topology consumer? Owner: GOATED
-  maintainer during the invocation investigation ticket.
 - Does current delivery work demonstrate enough terminology-loss failure to
   justify `domain-modeling`? Owner: GOATED maintainer after the evaluation
   report.
+
+## Resolved Questions
+
+- Invocation topology consumer: resolved on 2026-07-27 with **NO-GO**. No
+  production host was selected; Codex was only the disposable experiment
+  consumer. A future custom harness would require a separate approved scope.
 
 ## Sources
 

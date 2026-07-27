@@ -6,8 +6,24 @@
 
 ## Type
 
-HITL — starts only after Ticket 021 records an explicit maintainer go decision
-and approved consumer.
+Conditional HITL — this ticket did not receive the required maintainer go
+decision or approved consumer.
+
+## Work State
+
+Not authorized. Closed without implementation and archived on 2026-07-27
+after Ticket 021's maintainer **NO-GO** decision.
+
+## Disposition
+
+This conditional ticket never entered the ready frontier. Its implementation
+criteria remain unchecked because no production registry, schema, validator,
+adapter, installation output, fixture, migration, or public behavior was
+implemented.
+
+The rejected scope is retained for historical traceability only. A future
+custom invocation harness requires a separate spec and approval; it must not
+restart this ticket implicitly.
 
 ## What To Build
 
@@ -62,10 +78,10 @@ hosts.
 
 ## Blocked By
 
-- `tickets/021-investigate-invocation-topology.md`
+- [Ticket 021](021-investigate-invocation-topology.md)
 
-Ticket 013 is not a functional dependency. Re-plan against its completed module
-boundaries or sequence overlapping validator edits.
+Ticket 021 resolved with **NO-GO**, so the required go condition can no longer
+be satisfied by this ticket. Ticket 013 is not a functional dependency.
 
 ## User Stories Addressed
 

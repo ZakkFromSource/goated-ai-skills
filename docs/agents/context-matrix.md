@@ -12,7 +12,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | `CONTEXT.md` | Defines public-safe language, scope, and product concepts. | With `AGENT.md` for non-trivial repo work. | Keeps source repo, installed skills, and target projects separate. |
 | `README.md` | Explains the public distribution model, root layout, preserved V1 baseline, and accepted V2 release. | At the start of source-repo orientation or docs changes. | Good high-level map before opening narrower files. |
 | `docs/specs/2026-07-25-goated-ai-skills-v2.md` | V2 product and architecture contract. | Before changing V2 installation, routing, shared policy, registry, state, skills, or migration tickets. | Read only the sections relevant to the current ticket. |
-| `docs/specs/2026-07-26-selective-upstream-skill-adoption.md` | Approved selective-adoption contract for skill authoring, diagnosis, ticket slicing, merge conflicts, external research, invocation topology, and active domain modeling. | Before implementing or reviewing Tickets 015-024. | Phase A is approved delivery; invocation and domain-model implementation remain conditional on their named maintainer gates. |
+| `docs/specs/2026-07-26-selective-upstream-skill-adoption.md` | Approved selective-adoption contract for skill authoring, diagnosis, ticket slicing, merge conflicts, external research, invocation topology, and active domain modeling. | Before implementing or reviewing Tickets 015-024. | Phase A is accepted; Phase B concluded no-go; only domain-model implementation remains conditional on its named maintainer gate. Any invocation harness is a separate product track. |
 | `tickets/*.md` | Active future delivery tickets and the preserved V2 ticket-order index. | Before implementing or reviewing a named slice. | Completed V2 tickets are archived under `tickets/archive/`. |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Historical V1 product spec and acceptance reference. | When changing preserved V1 behavior or tracing why an existing skill exists. | V2 sources and accepted ADRs supersede conflicting active-development decisions. |
 | `docs/agents/context-matrix.md` | This routing artifact. | At the start of future serious sessions after this file exists. | Refresh when repo structure, workflow, or evidence paths change. |
@@ -83,8 +83,8 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | --- | --- | --- | --- |
 | `issues/prd-goated-ai-skills-v1-public-core.md` | Public core product model, skill schema, V1 skill set, onboarding and delivery workflows. | Historical V1 reference. | Superseded for active development by the V2 spec and accepted ADRs. |
 | `docs/specs/2026-07-25-goated-ai-skills-v2.md` | V2 integrated-stack product, routing, state, skill, and migration contract. | Implemented and accepted. | Primary V2 contract. |
-| `docs/specs/2026-07-26-selective-upstream-skill-adoption.md` | Selective upstream-inspired refinements, new specialists, and evidence-gated invocation/domain decisions. | Approved and ticket ready. | Parent contract for Tickets 015-024; explicitly excludes wholesale stack merging, work-management, guided learning, and installer tooling. |
-| `tickets/archive/013-*.md`, `tickets/archive/015-*.md` through `tickets/archive/020-*.md`, active `tickets/021-*.md` through `tickets/024-*.md`, and `tickets/selective-upstream-skill-adoption-order.md` | Accepted validator refactor and high-confidence adoption, plus invocation investigation and active-domain-modeling evaluation slices. | Ticket 013 and Phase A are accepted; Tickets 021 through 024 remain planned. | Tickets 022 and 024 require explicit maintainer go decisions. |
+| `docs/specs/2026-07-26-selective-upstream-skill-adoption.md` | Selective upstream-inspired refinements, new specialists, and evidence-gated invocation/domain decisions. | Approved; Phase A accepted, Phase B no-go, and Phase C ticket ready. | Parent contract for Tickets 015-024; explicitly excludes wholesale stack merging, work-management, guided learning, and installer tooling. |
+| `tickets/archive/013-*.md`, `tickets/archive/015-*.md` through `tickets/archive/022-*.md`, active `tickets/023-*.md` and `tickets/024-*.md`, and `tickets/selective-upstream-skill-adoption-order.md` | Accepted validator refactor and high-confidence adoption, the completed invocation investigation and no-go disposition, plus active-domain-modeling evaluation slices. | Ticket 013 and Phase A are accepted; Ticket 021 concluded with no-go, Ticket 022 closed without implementation, and Tickets 023-024 remain planned. | Ticket 024 requires an explicit maintainer go decision. A future custom invocation harness requires a separate approved scope. |
 | `docs/high-confidence-adoption-acceptance-report.md` | Cross-slice conformance, proof, documentation, context-cost, public-boundary, residual-risk, and maintainer-decision record for Tickets 015 through 020. | Accepted with residual risk. | Records the exact accepted risks and the decision to refresh Ticket 013 before its implementation slice. |
 | `tickets/archive/001-establish-v2-integrated-stack-foundation.md` | Shared-policy, registry, schema, validation, baseline, and install foundation. | Completed and archived. | Foundation consumed by the remaining V2 tickets. |
 | `issues/archive/*.md` | Completed scaffold, skill implementation, follow-up upgrade, doc-sync, and final acceptance handoffs. | Archived. | As of 2026-06-11, issues `001` through `060` are archived. Use the specific archived issue to understand why an existing artifact was created or upgraded. |
@@ -110,10 +110,11 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 ## Last Updated
 
-- Date: 2026-07-26
+- Date: 2026-07-27
 - Updated by: Codex
 - Evidence used: prior context-matrix evidence; V2 spec and Tickets 001-012 and
-  014; selective-adoption spec, Tickets 015-024, and their order file;
+  014; selective-adoption spec, Tickets 015-024, the invocation no-go decision
+  and report, and their order file;
   ADR 0002; `stack/`, including routing, onboarding, clarification,
   specification/ticket, architecture, implementation-planning, behavior-proof,
   review/verification, merge-conflict, Wayfinding, knowledge-retrieval,
