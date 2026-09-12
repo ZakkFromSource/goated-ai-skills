@@ -20,15 +20,16 @@ Use this checklist before delivering a non-trivial, GOATED-aware, sensitive, or 
 
 - The target, action, and success state are unambiguous.
 - Focused tasks use Location -> Action -> Detail when useful.
-- Complex builds include objective, milestones, implementation notes, context, ordered tasks, and verification.
+- Builds define outcomes, constraints, acceptance, and verification. Ordered tasks appear only when sequencing is necessary or already agreed.
 - Refinement prompts include task, context, references, evaluation criteria, and iteration expectations.
 - Planning prompts focus on outcome, criteria, tradeoffs, risks, and next action before implementation tactics.
 - Output format is explicit.
+- The endpoint and authorization are clear; implementation continues through relevant checks and fixes, while review-only scope and explicit checkpoints remain intact.
 
 ## GOATED Fit
 
 - GOATED Prompt mode respects `using-goated-ai-skills` as the router when route selection is uncertain.
-- The prompt routes serious, docs-grounded, cross-file, public-facing, architectural, or standards-sensitive work to `grill-with-docs`.
+- The prompt uses `grill-with-docs` only when unresolved intent or conflicting project evidence materially blocks progress. File count, visibility, and the presence of standards alone do not trigger it.
 - It routes scoped implementation planning to `writing-plans` instead of duplicating that workflow.
 - It routes prompt-to-skill work to `framework-agnostic-skill-creator`.
 - It does not imply automatic skill activation, runtime bootstrap, or framework-specific mechanics.
@@ -40,9 +41,8 @@ Use this checklist before delivering a non-trivial, GOATED-aware, sensitive, or 
 - Framework-specific command syntax appears only when the user or target environment provides it.
 - Assumptions and skipped checks are visible.
 
-## Final Rationale
+## Optional Rationale
 
-- The explanation is brief: 2-4 sentences.
-- It names classification, key context decisions, and why the chosen structure fits.
+- Include explanation only when requested or when a material assumption, route choice, or limitation affects use of the prompt.
+- Keep any explanation brief and place it after the finished prompt.
 - It does not restate the full prompt or pad with generic praise.
-

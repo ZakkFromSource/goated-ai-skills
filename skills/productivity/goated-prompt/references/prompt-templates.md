@@ -9,42 +9,31 @@
 - [General Prompt](#general-prompt)
 - [GOATED Prompt Wrapper](#goated-prompt-wrapper)
 
-Use these as starting shapes. Adapt them to the user request; do not paste placeholders that the receiving agent cannot resolve.
+Use only the shape that helps the request. Omit empty fields and unresolved
+placeholders. Add implementation steps only when their order is required or
+already agreed; otherwise let the receiving agent choose the method.
 
 ## Spec/Build Prompt
 
 ```text
-You are working in <project/context>. Ingest this specification and implement the ordered tasks.
+In <project/context>, implement <observable product outcome and purpose>.
 
-High-Level Objective
-<One sentence naming what is being built and why.>
+Relevant context:
+- <Current behavior, source locations, and decisions already settled>
 
-Mid-Level Objectives
-- <Measurable milestone>
-- <Measurable milestone>
-- <Measurable milestone>
+Constraints:
+- <Required compatibility, architecture, privacy, or operational boundaries>
 
-Implementation Notes
-- <Stack, libraries, constraints, standards, or architecture decisions>
-- <What to preserve or avoid>
-- <How to handle edge cases or uncertainty>
+Acceptance:
+- <Observable conditions that define the finished result>
 
-Context
-Beginning context:
-- <Known files, current behavior, current state, or source evidence>
+Verification:
+- <Required checks and evidence for acceptance>
 
-Ending context:
-- <Expected files, behavior, docs, tests, or user-visible state>
-
-Low-Level Tasks
-1. <ACTION> <DETAIL target> in <location>.
-   Detail: <specific behavior, acceptance criteria, and verification>
-2. <ACTION> <DETAIL target> in <location>.
-   Detail: <specific behavior, acceptance criteria, and verification>
-
-Verification
-- <Commands, manual checks, or evidence expected>
-- <What to report when complete>
+Scope and completion:
+- <Authorized actions and any explicit approval or review checkpoint>
+- Continue through implementation, relevant verification, and fixes caused by
+  this change. Report the result and any unresolved limitations.
 ```
 
 ## Focused Task Prompt
@@ -65,6 +54,10 @@ Acceptance criteria:
 
 Verification:
 - <Test, command, review, or manual check>
+
+Completion:
+- <Authorized endpoint, including checks and related fixes for implementation;
+  preserve review-only scope or a requested checkpoint>
 
 Report:
 - <Changed files or artifact>
@@ -101,7 +94,7 @@ Do not implement changes. Do not invent project facts that are not provided.
 ## Iterative/Refinement Prompt
 
 ```text
-Refine the current output using the TCREI loop.
+Improve <current output> so that <observable improvement>.
 
 Task:
 <What needs to improve or change.>
@@ -150,15 +143,15 @@ Use this wrapper when the receiving agent has GOATED AI Skills installed:
 ```text
 Use GOATED AI Skills for this request.
 
-Likely route:
+Route guidance, only if needed:
 - Start with `<skill>` because <reason>.
 - Route to `<next skill>` if <condition>.
 
 Task:
 <Optimized prompt body.>
 
-Context to inspect first:
-- <Project docs, issue, source area, or "conversation context only">
+Relevant context:
+- <Evidence pointers with the condition under which each is needed>
 
 Success criteria:
 - <Observable outcomes>

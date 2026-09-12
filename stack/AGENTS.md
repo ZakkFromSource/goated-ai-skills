@@ -1,18 +1,18 @@
 # GOATED Integrated Stack Policy
 
-This policy defines shared integrated-stack behavior. Merge this portable
-template into the target framework's applied instructions; do not assume it
-reads `AGENTS.md`.
+Apply this shared policy through the framework's active instructions: merge it
+or explicitly load its installed file once when GOATED applies. A link alone
+does not load instructions.
 
-Specialist skill files remain authoritative for their procedures. This policy
-owns only behavior that should be consistent across the whole installed stack.
+Specialists own their task procedures; this policy owns common behavior.
+Procedural defaults do not override instruction precedence or covering consent.
 
 ## Instruction And Project Boundaries
 
 Follow system, platform, user, and applicable target-project instructions ahead
-of this shared policy. Preserve stronger safety, quality, approval, and
-verification requirements. When instructions conflict or the active project
-boundary is unclear, stop before writes and resolve the conflict.
+of skill defaults. Preserve their explicit safety, quality, approval, and proof
+requirements. Resolve conflicts by precedence; ask only when a material
+decision or unclear boundary still prevents safe progress.
 
 Keep the GOATED source library, installed skill folders, and the target project
 distinct. Read only the context needed for the current task. Never make an
@@ -42,14 +42,12 @@ delegated, or resumable work.
 
 ## Work Envelope And Shared Evidence
 
-Maintain one compact envelope and reuse state.
-Always record goal, scope, action reach, and next action. Add profile
-dimensions, sensitivity, risk, routing, approval, evidence, decisions, proof,
-and continuity only when they affect the work. Single-session state may remain
+Maintain one compact envelope: goal, scope, action reach, and next action.
+Add other state only when decision-relevant. Single-session state may remain
 in conversation or framework storage.
 
-For resumable work, use
-`.local/goated/work-envelopes/<effort-slug>.md` only after confirming
+For resumable work, use `.local/goated/work-envelopes/<effort-slug>.md` and
+`.local/goated/handoffs/<effort-slug>.md` only after confirming
 `.local/` is ignored. Otherwise use an operating-system temporary location.
 Do not track envelopes, handoffs, or private session state unless the user
 deliberately promotes them.
@@ -66,7 +64,7 @@ Treat onboarding intensity as an artifact budget, not a mandatory document
 checklist. Reuse one discovery evidence bundle across every selected onboarding
 artifact.
 
-- `lightweight`: merge the shared policy and add thin project routing. Reuse
+- `lightweight`: apply shared policy and thin project routing. Reuse
   existing docs; do not create context, source-map, or standards artifacts
   without a demonstrated need.
 - `standard`: select only the context, retrieval, standards, or routing
@@ -76,15 +74,9 @@ artifact.
   resumability depth for complex or high-risk projects, while still omitting
   artifacts with no retrieval or decision value.
 
-Record provenance and freshness for inferred standards. Routine session
-orientation stays internal and reuses fresh envelope and evidence state; report
-only conflicts, missing decisions, material route changes, or user-requested
-orientation.
-
-For resumable work, prefer `.local/goated/work-envelopes/<effort-slug>.md` and
-`.local/goated/handoffs/<effort-slug>.md` after verifying `.local/` is ignored.
-Use OS temp when project-local state is inappropriate or cannot be stored
-safely. Handoffs reference durable artifacts instead of copying them.
+Record provenance and freshness for inferred standards. Reuse fresh orientation;
+report it only for material decisions, conflicts, or a user request.
+Handoffs reference durable artifacts instead of copying them.
 
 ## Scope, Changes, And Approvals
 
@@ -95,10 +87,10 @@ review.
 
 Proceed automatically with reads and safe diagnostics. Planned project writes
 may proceed when the request and current consent cover their scope. Require
-fresh explicit approval for destructive operations, credentials, external
-publication or deployment, protected-branch changes, and actions beyond the
-agreed scope or reach. Never interpret approval for one action as standing
-permission for materially different actions.
+explicit approval covering destructive operations, credentials, external
+publication or deployment, protected-branch changes, and expanded scope or reach.
+Reuse it only while it covers the same action. Prepare authorized, reviewable
+work before requesting approval for a remaining action.
 
 Honor the approval mode selected by the user or project:
 `confirm-each-write`, `approve-batch`, `standing-session-consent`, or
@@ -161,9 +153,10 @@ that explain non-obvious intent or constraints. Add abstractions only when they
 clarify a real concept, centralize an invariant, or hide meaningful complexity.
 Preserve public interfaces and architecture seams unless change is approved.
 
-Choose the smallest stable observable test boundary; breadth is not strength.
-Record why equivalent non-TDD proof is needed. Keep refactor-after-green in
-TDD; load full refinement only on request or concrete debt.
+Choose the smallest stable observable test boundary and complete required
+checks. Repeat or broaden checks for new changes, failures, or unresolved risk.
+Record why equivalent non-TDD proof is needed. Keep refactor-after-green in TDD;
+load full refinement only on request or concrete debt.
 
 Match claims to fresh, scoped evidence; changes invalidate affected proof.
 Narrow work verifies directly. Load full verification only for complex,
@@ -187,5 +180,7 @@ requested result. Omit empty fields and repeated path or check summaries unless
 omission would mislead. Put the requested artifact or decision before optional
 explanation.
 
-This policy does not replace specialist procedures, project-specific rules, or
-host-framework safety controls.
+Continue implementation through the requested behavior, verification, and fixes
+caused by the change. A first implementation is not completion. Respect a
+review-only request or an explicit review checkpoint. If a skill causes a pause,
+cite its exact instruction and explain the unresolved decision or authorization.

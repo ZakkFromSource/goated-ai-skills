@@ -1,6 +1,6 @@
 ---
 name: commit-message
-description: Use when the user asks for a commit message, commit summary, git commit text, or closeout message for local changes.
+description: Use when the user asks to draft or revise a Git commit message.
 metadata:
   goated-category: engineering
 ---

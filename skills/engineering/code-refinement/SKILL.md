@@ -62,9 +62,9 @@ Fallback: If companion skills, tests, commands, or clean diffs are unavailable, 
    - Do not expand from a known scope into nearby cleanup unless the user explicitly approves the broader scope.
 
 2. Choose edit mode or proposal mode:
-   - Use **edit mode** when scope is explicit, relevant proof is available or discoverable, changes are local, and public interfaces are not affected.
-   - Use **proposal mode** when the request is broad, proof is weak, user-authored changes are mixed in, public interfaces or module boundaries might be affected, the cleanup is subjective, or the safest next step is user selection.
-   - In proposal mode, return candidate refinements with evidence, expected benefit, risk, and proof needed. Do not mutate files until the user approves or narrows the scope.
+   - Use **edit mode** when current authorization covers local, reversible changes, relevant proof is available or discoverable, and public interfaces are preserved. Preserve separable user-authored edits in the same file.
+   - Use **proposal mode** when a material choice remains unresolved: scope is unclear, user changes cannot be separated safely, proof cannot support the proposed edit, or an interface or module-boundary change is not authorized. Subjective cleanup or a mixed file alone does not require a new approval.
+   - In proposal mode, gather available safe evidence and return candidates with benefit, risk, and proof needed. Pause only the affected mutation until the decision or authorization is resolved; reuse covering consent and continue independent authorized work.
 
 3. Establish behavior-preservation proof:
    - Prefer green focused tests, type checks, lint, format, snapshot checks, visual/manual checks, or other project-defined commands that already protect the changed behavior.
@@ -126,7 +126,7 @@ proof needed, and next step. Make the proposal-only claim explicit.
 ## Code Refinement Proposal
 
 - Scope: <requested or inferred scope>
-- Why not editing yet: <broad scope, weak proof, mixed changes, public interface risk, or subjective cleanup>
+- Why not editing yet: <unresolved scope, inseparable user edits, inadequate proof, or an unauthorized interface change>
 - Candidate refinements: <one bullet per candidate with benefit and risk>
 - Proof needed: <tests/checks/manual verification before/after>
 - Recommended next step: <approve narrowed edits, route to TDD, route to architecture, or skip>

@@ -6,8 +6,8 @@ Classify before writing. The prompt type decides how much structure the final pr
 
 | Type | Use When | Best Shape | Model Class |
 | --- | --- | --- | --- |
-| Spec/build | The user wants a new app, feature, module, system, or multi-file change. | Objective, milestones, implementation notes, context, ordered tasks. | Reasoning or code-specialized model. |
-| Focused task | The user wants one narrow action on an existing artifact. | Location -> Action -> Detail. | Fast capable or code-specialized model. |
+| Spec/build | A new deliverable needs a scoped product contract. | Outcome, context, constraints, acceptance, proof, and completion boundary. | Reasoning or code-specialized model. |
+| Focused task | One settled action affects existing artifacts, including several files. | Location, observable change, constraints, and proof. | Fast capable or code-specialized model. |
 | Planning/design | The user wants architecture, design, strategy, tradeoff analysis, or a decision before implementation. | Goal-oriented prose with decision criteria and output format. | Reasoning model. |
 | Iterative/refinement | The user has existing output, code, docs, prompt text, or analysis to improve. | TCREI: Task, Context, References, Evaluate, Iterate. | Match the original model class when known, otherwise use a capable general or code model. |
 | General | The request is non-code writing, research, explanation, comparison, analysis, or documentation. | Clear task, context, constraints, and output format. | Capable general model, or reasoning model for complex analysis. |
@@ -20,14 +20,14 @@ When writing a GOATED Prompt, include a route note only when it helps the receiv
 | --- | --- |
 | Unsure which GOATED skill applies | Start with `using-goated-ai-skills`. |
 | Unfamiliar project or source area | Start with `session-start-progressive-disclosure`. |
-| Scope, success criteria, project docs, standards, or source facts matter | Use `grill-with-docs` before implementation. |
+| An unresolved project decision or conflicting evidence materially blocks progress | Use `grill-with-docs` to resolve the decision. |
 | User needs lightweight ideation without project docs | Use `grill-me`. |
 | Fuzzy feature or product idea needs durable requirements | Use `write-a-spec`. |
 | Approved issue or scoped task needs exact executable steps | Use `writing-plans`. |
 | Behavior change needs proof through tests | Route implementation through `tdd`. |
 | Prompt should become an installable GOATED skill | Use `framework-agnostic-skill-creator`. |
 | Changed behavior or docs may create documentation drift | Use `doc-sync`. |
-| Completion, passing, ready, or synced claim is about to be made | Use `verification-before-completion`. |
+| Complex, risky, delegated, multi-surface, or audited completion needs evidence reconciliation | Use `verification-before-completion`; verify narrow claims directly. |
 
 Do not claim routing is automatic. The prompt should instruct the receiving agent to use the route when the installed stack and task conditions make it available.
 

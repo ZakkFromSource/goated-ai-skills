@@ -36,8 +36,8 @@ maintainer-accepted integrated stack.
   folders plus a shared policy, portable registry, registry schema, and
   human-readable state templates under `stack/`.
 - **Shared policy** - universal installed-stack behavior distributed from
-  `stack/AGENTS.md` and merged into the instruction artifact the target
-  framework actually applies.
+  `stack/AGENTS.md` and applied through a verified merge or explicit load from
+  the target framework's active instructions.
 - **Stack registry** - the versioned machine-readable catalog at
   `stack/goated-stack.yaml`; it owns cross-skill metadata but not specialist
   procedures.

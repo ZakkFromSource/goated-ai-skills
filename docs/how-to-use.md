@@ -421,7 +421,7 @@ contract.
 #### `commit-message`
 
 - **Purpose**: Drafts concise commit text from local diffs and evidence.
-- **Use when**: You want a commit message, commit summary, or closeout message for selected local changes.
+- **Use when**: You want to draft or revise a Git commit message for selected local changes.
 - **Typical input**: Git diff/status, changed files, user-selected scope, evidence, and docs/test results.
 - **Typical output**: Commit message text first. Commands appear only when the
   user explicitly asks for them.

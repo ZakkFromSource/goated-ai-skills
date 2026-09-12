@@ -33,7 +33,7 @@ compatibility caveats, delegation contract, and standalone behavior.
 Hard: None.
 
 Soft:
-- grill-with-docs before public-facing, cross-workflow, unclear, or high-impact skill changes
+- grill-with-docs when unresolved intent or conflicting source evidence materially blocks the skill change
 - session-start-progressive-disclosure for unfamiliar target projects or source packages
 - agent-instructions-integrator when target-project framework routing is needed
 - handoff when skill creation or porting is interrupted or resumable
@@ -47,47 +47,31 @@ Fallback: If companion skills, source-framework docs, or live subagents are unav
    - Use port mode when the main input is existing source material; if both apply, audit the source first, then design the created GOATED skill.
    - Identify the intended output: implemented skill folder, patch to an existing skill, proposal, compatibility note, private fork artifact, or portability review.
    - Keep source repo guidance, installed skill behavior, and target-project artifacts distinct.
-   - If the work is unclear, public-facing, or high-impact, use `grill-with-docs` or gather equivalent source-grounded clarification before drafting.
+   - Resolve discoverable facts first. Use `grill-with-docs` only for a material unresolved decision; public visibility or cross-workflow scope alone does not require clarification.
 
-2. Create mode - clarify the skill contract:
+2. Confirm the common contract:
    - State the behavior the skill should change, the audience, success criteria, scope, non-goals, and examples of triggering user requests.
    - Before creating or splitting a skill, ask whether independent invocation by a user, agent, router, or neighboring skill earns its discovery and context cost. Otherwise keep the behavior with its owner or a linked reference.
-   - Choose `agent-workflows`, `engineering`, or `productivity`; record portability and maturity as review judgments only when useful.
-   - Write a trigger-focused `description`: say when to load the skill using requests, symptoms, task conditions, or project context. Do not summarize workflow steps in `description`.
    - Give each important phase an observable completion condition. Put final artifacts or decisions in `## Output Contract`; an attempt or plausible summary is not completion.
-   - Classify dependencies as hard, soft, or graceful fallback in `## Dependencies`. Add compatibility caveats only for real per-skill constraints.
 
-3. Create mode - choose the artifact shape:
-   - Use prose when judgment, sequencing, or project-sensitive decisions matter.
-   - Use `scripts/` when a repeatable operation is safer, clearer, or more deterministic as maintained code than as generated prose.
-   - Use `references/` for long examples, pressure scenarios, templates, checklists, stack-specific notes, rationalization tables, anti-pattern catalogs, or compatibility playbooks.
-   - Use `assets/` for reusable fixtures, templates, images, snippets, or packaged materials that support the skill's output.
-   - Keep support files one level below `SKILL.md`, link each directly from `SKILL.md`, and say when to read or run each file.
-   - Do not add standalone `README.md`, install guides, changelogs, or decorative support files to a skill folder.
+3. Read the selected mode's procedure:
+   - For new or revised behavior, read [Create Or Revise](references/create-or-revise.md).
+   - For an existing source workflow, read [Port A Workflow](references/port-workflow.md). If the source includes adjacent support files, also read [Source Package Audit](references/source-package-audit.md) before judging the port.
+   - Read both modes only when the task needs both. End discovery when the selected contract and source evidence support the next action.
 
-4. Port mode - build the source package manifest:
-   - If the source is a folder, repo slice, public package, or entrypoint with adjacent support files, read [Source Package Audit](./references/source-package-audit.md) before judging the port.
-   - Recursively inventory the provided source package before summarizing behavior.
-   - Read first-party support files that carry workflow behavior, including templates, references, scripts, examples, assets, producer artifacts, and consumer artifacts.
-   - Record files and links inspected, skipped files, skip reasons, and residual uncertainty.
-   - Do not judge portability, category, or neutral shape until this manifest exists.
-
-5. Port mode - translate behavior into GOATED shape:
-   - Summarize what the full source package makes the agent do, when it triggers, what it asks from the user, what it edits or creates, and how it stops.
-   - Separate durable behavior from incidental phrasing, persona, examples, local habits, and framework UI details.
-   - Inventory framework mechanics such as commands, file mentions, tools, apps, plugin APIs, or model-specific features.
-   - Inventory project mechanics such as instruction files, trackers, labels, docs layouts, scratch paths, build commands, or release processes.
-   - Classify dependencies, assumptions, compatibility requirements, privacy risks, and portability blockers.
-   - Preserve source-specific details only when they genuinely fit the destination workflow and remain public-safe.
-
-6. Draft the GOATED skill:
+4. Draft the GOATED skill:
    - Use the normalized schema: top-level `name`, top-level `description`, and `metadata.goated-category`.
+   - Choose `agent-workflows`, `engineering`, or `productivity`. Classify hard and soft dependencies, fallback behavior, and real compatibility constraints in the body.
+   - Use the shortest description that preserves reliable selection. Compare neighboring descriptions; exclude likely misroutes without listing the entire workflow or every capability.
    - Make the body a framework-neutral operating procedure with `Purpose`, `Inputs`, `Dependencies`, `Workflow`, `Output Contract`, `Delegation`, `Guardrails`, and `References` when useful.
+   - State outcomes, decisions, and non-obvious invariants. Reserve fixed sequences for operations where deviation causes a concrete problem; distinguish requirements from suggestions.
+   - Keep support files one level below `SKILL.md` and link them directly with explicit read or run conditions. Keep branch-only detail behind those links and simple skills self-contained.
+   - Avoid decorative files, standalone README files, install guides, and changelogs inside the skill package.
    - Keep `SKILL.md` under the soft 300-line review threshold whenever possible.
    - Attribute public inspiration when useful, but do not bulk-copy external material or private source text.
    - If the user requested review only, return the proposed shape and blockers without editing files.
 
-7. Evaluate the skill:
+5. Evaluate the skill:
    - For a new, substantially changed, or discipline-heavy skill, read [Skill Evaluation](./references/skill-evaluation.md).
    - Design pressure scenarios or representative usage scenarios before trusting the skill.
    - When live subagents are available and safe, run a RED baseline without the skill, capture failures or rationalizations, then run GREEN verification with the skill.
@@ -95,7 +79,7 @@ Fallback: If companion skills, source-framework docs, or live subagents are unav
    - Apply the reference's behavior, ownership, disclosure, and sequence-pressure lenses.
    - Add rationalization counters, stop rules, red flags, proof gates, or anti-pattern references when testing or review shows agents can dodge the intended behavior.
 
-8. Validate the artifact:
+6. Validate the artifact:
    - Check the normalized schema, category metadata, discovery description, body activation conditions, output contract, dependencies, compatibility caveats, and self-contained runtime behavior.
    - Check that every local reference or script linked from `SKILL.md` exists and has a clear read or run condition.
    - Check that no root source-repo files are required after installation.
@@ -141,4 +125,4 @@ evaluation gaps.
 
 ## References
 
-Linked support files, read or use at the workflow/output gates above: [Source Package Audit](./references/source-package-audit.md), [Skill Evaluation](./references/skill-evaluation.md), and [Proposal And Report Templates](./references/proposal-and-report-templates.md).
+Linked support files, read or use at the workflow/output gates above: [Create Or Revise](references/create-or-revise.md), [Port A Workflow](references/port-workflow.md), [Source Package Audit](references/source-package-audit.md), [Skill Evaluation](references/skill-evaluation.md), and [Proposal And Report Templates](references/proposal-and-report-templates.md).

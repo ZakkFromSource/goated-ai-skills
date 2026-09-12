@@ -143,11 +143,8 @@ During the grill, follow the selected mode and label provisional recommendations
 - <recommended direct action or next skill>
 ```
 
-When the grill is skipped, report:
-
-- why the request qualifies as a tiny mechanical edit;
-- any facts already verified;
-- the direct next action.
+When clarification is unnecessary, continue the authorized task. Explain the
+skip only when doing so resolves a material uncertainty for the user.
 
 ## Delegation
 

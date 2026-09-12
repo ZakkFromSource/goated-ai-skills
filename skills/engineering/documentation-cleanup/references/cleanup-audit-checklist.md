@@ -62,11 +62,17 @@ Use these labels in reports:
 
 ## Stop Rules
 
-Stop and ask or switch to report-only output when:
+Continue safe source inspection before deciding whether a mutation is blocked.
+Pause the affected edit and ask, or report the unresolved issue, when:
 
 - two authoritative docs conflict and the correct owner is not discoverable;
 - cleanup would delete, move, or archive files without clear permission;
-- a doc appears legal, compliance, privacy, security, or contractual;
-- private or sensitive content is found in a public artifact;
-- source behavior must be verified against code before a documentation claim can be changed;
+- an edit would change legal, compliance, privacy, security, or contractual meaning without a clear authoritative source and covering authorization;
+- handling exposed private or sensitive content requires an action beyond current authorization; report its location without reproducing the content;
+- needed source evidence remains unavailable or contradictory after safe inspection;
 - the task has grown from cleanup into new documentation authoring or product-scope decisions.
+
+A document's subject or the need to check code is not itself an approval gate.
+Repair authorized mechanical issues when their meaning is clear, preserve
+immutable records, and continue independent authorized work. Reuse consent only
+while it covers the same scope and action reach.

@@ -33,7 +33,7 @@ Hard: None.
 Soft:
 - using-goated-ai-skills when the request should route through the installed GOATED stack
 - grill-me for lightweight intent, audience, tradeoff, or success-criteria clarification
-- grill-with-docs when docs, standards, ADRs, source behavior, tests, schemas, or public facts matter
+- grill-with-docs when unresolved project intent or conflicting evidence materially blocks a useful prompt
 - write-a-spec when the prompt should ask for a scoped spec before implementation
 - writing-plans when an approved issue or task needs exact implementation steps
 - framework-agnostic-skill-creator for an installable skill
@@ -50,7 +50,7 @@ Fallback: If companion skills or project evidence are unavailable, use conversat
 
 2. Classify the prompt type:
    - Read [Prompt Type Router](references/prompt-type-router.md) when the type is unclear or the request mixes several shapes.
-   - Use **Spec/build** for new features, apps, modules, systems, or multi-file work.
+   - Use **Spec/build** when a new deliverable needs a scoped product contract. File count alone does not require a spec prompt.
    - Use **Focused task** for narrow code, docs, config, or review actions on an existing artifact.
    - Use **Planning/design** for architecture, design decisions, tradeoffs, strategy, or conceptual work before implementation.
    - Use **Iterative/refinement** when the user has existing output, code, docs, prompt text, or analysis to improve, debug, or compare.
@@ -64,16 +64,17 @@ Fallback: If companion skills or project evidence are unavailable, use conversat
    - Trim context that is redundant, private, stale, tool-specific, or likely to confuse a model with similarly named entities.
 
 4. Select the prompt structure:
-   - Read [Prompt Templates](references/prompt-templates.md) for templates and compact examples.
-   - Use Location -> Action -> Detail phrasing for focused tasks.
-   - Use a spec prompt for complex builds: high-level objective, mid-level objectives, implementation notes, context, and ordered low-level tasks.
-   - Use TCREI for refinement: Task, Context, References, Evaluate, Iterate.
-   - Use What > How for planning/design prompts: state the outcome, constraints, evaluation criteria, and decision needs before implementation tactics.
+   - Default to the outcome, relevant context, constraints, acceptance criteria, verification, and authorized completion boundary.
+   - Read the relevant shape in [Prompt Templates](references/prompt-templates.md) only when a template or example would help.
+   - For focused tasks, name the location and observable change. For builds, state the product contract and let the receiving agent choose implementation details.
+   - Include ordered tasks only for agreed dependencies, required sequencing, or explicit user requests. Distinguish necessary constraints from optional suggestions.
+   - For refinement, state what should improve, what must remain stable, and how to evaluate the result. For planning, state decision criteria and the requested recommendation.
    - Use IDK action and detail language when it increases clarity; read [IDK Glossary](references/idk-glossary.md) when selecting precise verbs or coding nouns.
 
 5. Write the optimized prompt:
    - Be directive, concrete, and information dense.
    - Name the target, action, context, constraints, output format, and success criteria.
+   - For implementation prompts, carry through authorization and the expected endpoint, including relevant verification and fixes. Preserve review-only scope and explicit approval checkpoints.
    - Prefer generic model classes such as fast capable model, reasoning model, code-specialized model, or general model instead of current model-name claims.
    - For GOATED Prompt mode, name the likely route, such as `using-goated-ai-skills`, `grill-with-docs`, `write-a-spec`, `writing-plans`, `tdd`, `doc-sync`, or `framework-agnostic-skill-creator`, without pretending routing is automatic.
    - Put the final prompt in a clearly labeled code block.
@@ -121,7 +122,7 @@ success-criteria review.
 - Do not ask unnecessary clarifying questions when a strong prompt can be produced with explicit assumptions.
 - Do not hide uncertainty; put assumptions or required source checks into the prompt.
 - Do not turn every request into a full spec. Match prompt weight to task size and risk.
-- Do not turn serious multi-file, architectural, public-facing, or standards-sensitive work into a tiny prompt just because the raw request is short.
+- Preserve essential requirements and constraints regardless of prompt length; multiple files or public visibility alone do not justify a larger workflow.
 - Do not replace `using-goated-ai-skills`, `grill-with-docs`, `write-a-spec`, `writing-plans`, `framework-agnostic-skill-creator`, or implementation workflows. Route to them when they are the better owner.
 - Do not recommend specific current model names unless the user provides them or current official docs were checked.
 - Do not include private paths, credentials, client data, proprietary excerpts, raw private notes, source clone URLs, ignored scratch content, or sensitive personal context in reusable prompts.

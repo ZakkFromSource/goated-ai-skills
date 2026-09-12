@@ -6,9 +6,13 @@ This branch answers questions about visual structure, density, hierarchy, afford
 
 ## Default Shape
 
-For web apps, prefer variants inside the nearest existing route with a shareable switch and production gating.
+For web apps, an existing route with a shareable switch often preserves useful
+context. Use it when that context matters and the experiment can be gated out
+of production; use an isolated preview when the host adds irrelevant work or risk.
 
-The existing route gives the prototype real surrounding context: navigation, data density, auth state, page chrome, loading behavior, and neighboring actions. A standalone prototype surface is a last resort because it can make weak layouts look better than they will feel in the real app.
+Real navigation, data density, auth state, page chrome, loading behavior, and
+neighboring actions can change the verdict. If an isolated preview omits relevant
+context, reproduce it where practical or state that limitation in the evidence.
 
 For non-web apps, use the equivalent existing host and repeatable control: a screen variant, story, preview, debug menu, deep link, build flag, fixture, or design-system showcase. Preserve the same principles: real surrounding context, easy switching, and a gate that keeps prototype controls out of production behavior.
 
@@ -23,10 +27,10 @@ For non-web apps, use the equivalent existing host and repeatable control: a scr
    - Keep existing data loading, route parameters, permissions, auth assumptions, shell layout, navigation, and parent context in place.
    - Swap only the rendered subtree needed to compare the variants.
    - If the prototype is for a new section that naturally belongs inside an existing surface, mount it inside that surface.
-   - Create a new throwaway route, screen, story, or standalone surface only when no natural host exists.
+   - Use an isolated route, screen, story, or preview when no suitable host exists or isolation reduces unrelated work or risk; retain the context needed for the decision.
 
 3. Generate meaningful variants:
-   - Default to three variants and cap at five.
+   - Build only the alternatives needed to distinguish the live choices. A single candidate against the existing baseline may suffice; do not invent extra variants to meet a fixed count.
    - Make variants structurally different: layout, information hierarchy, primary action, navigation model, density, or interaction pattern.
    - Avoid variants that only change color, spacing, icon choice, or copy.
    - Use the target project's existing component, typography, styling, asset, and data conventions.

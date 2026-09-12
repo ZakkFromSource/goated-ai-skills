@@ -67,23 +67,23 @@ Fallback: If companion skills or target-project artifacts are unavailable, creat
    - If the file contains conflicting guidance, surface the conflict before deciding how to merge it.
 
 5. Route to installed skills:
-   - Point agents to the installed skill location or framework registry when known.
-   - Make installed `using-goated-ai-skills` the default first GOATED skill for serious project work; it can route onward to `session-start-progressive-disclosure` when context discovery is needed.
-   - For serious implementation or architecture work, keep the adapter as a router: send agents through installed `using-goated-ai-skills` so it can choose spec writing, ticket slicing, planning, TDD, or architecture skills for vertical slices, deep modules, and work that depends on public interfaces.
+   - Discover installed skills and the distribution root through the host's skill catalog, configuration, or installation metadata. Use registry names, supported variables, or paths relative to a verified root; do not embed machine-specific absolute paths in reusable instructions.
+   - If only a skill root is known, inspect nearby installation directories for a distribution containing `stack/AGENTS.md` and `stack/goated-stack.yaml`. Keep discovery bounded; if it remains unavailable, state the gap and use standalone skill instructions within the authorized scope.
+   - In integrated mode, apply one installed shared policy: merge its contents into active instructions or explicitly direct the agent to read it once when GOATED applies. Verify that the framework can perform the selected load; an ordinary link is not an import. If it cannot, merge the necessary policy instead.
+   - Use installed `using-goated-ai-skills` when the route is uncertain or needs revision. A clear specialist request may go directly to that skill; unfamiliar context can justify `session-start-progressive-disclosure`.
    - For prompt-crafting requests, name installed `goated-prompt` as the owner of prompt improvement, reusable prompts, spec/task/planning/refinement prompts, and GOATED-aware request translation.
    - Name the relevant installed GOATED skills instead of pasting their full contents.
-   - Include the onboarding route in brief: context matrix, standards profile, instruction routing, optional handoff.
-   - Include the delivery route only as a compact pointer to the installed delivery skills, not a full workflow dump.
+   - Keep workflow mechanics with shared policy and the router. The adapter needs only task-relevant pointers and project-specific constraints.
 
 6. Route to target-project artifacts:
-   - Tell future agents to read root `CONTEXT.md` when it exists for project language, boundaries, and durable artifact definitions.
-   - Tell future agents to read `docs/agents/context-matrix.md` when it exists for source discovery.
+   - Point to existing root `CONTEXT.md` when project language, boundaries, or durable artifact meanings need clarification.
+   - Point to an existing `docs/agents/context-matrix.md` when source discovery needs guidance.
    - Tell future agents to read `docs/agents/project-standards.md` when standards affect the work.
    - Mention only artifacts that exist. Missing optional onboarding artifacts
      do not lower confidence when discovery found no need for them.
    - Tell future agents to use `.local/goated/` for resumable envelopes and
      handoffs only after verifying `.local/` is ignored; otherwise use OS temp.
-   - State lower confidence if these artifacts are missing or not yet calibrated.
+   - State lower confidence only when missing or stale evidence leaves a material task question unresolved.
 
 7. Verify the adapter:
    - Re-read the edited artifact.
@@ -99,11 +99,12 @@ Update the selected target-project instruction artifact or configuration with a 
 ## GOATED Skill Routing
 
 - Framework: <Codex | Claude Code | Hermes | OpenCode | generic agent | other confirmed framework>
-- Installed skills: <path, registry, or "installed in framework; exact path not verified">
-- Start serious project work with installed `using-goated-ai-skills`; it will route to `session-start-progressive-disclosure` when context discovery is needed.
+- Installed skills: <host discovery source, registry, or path relative to a verified installation root>
+- Shared policy: <already applied, or explicitly locate the distribution through host configuration and read its package-relative stack/AGENTS.md once when GOATED applies; state standalone fallback if unavailable>.
+- Use installed `using-goated-ai-skills` when route selection or revision is needed; clear specialist requests may go directly to that skill.
 - Use installed `goated-prompt` for prompt improvement, reusable prompts, and GOATED-aware request translation.
-- Use root `CONTEXT.md` for project language and boundaries when present.
-- Use `docs/agents/context-matrix.md` for source discovery when present.
+- Use existing root `CONTEXT.md` when project language or boundaries need clarification.
+- Use an existing `docs/agents/context-matrix.md` when source discovery needs guidance.
 - Use `docs/agents/project-standards.md` for project standards when present.
 - Use `.local/goated/` for resumable local state only after ignore verification; otherwise use OS temp.
 - Use installed GOATED skills by name; do not copy skill bodies into this file.

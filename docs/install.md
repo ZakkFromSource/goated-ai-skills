@@ -23,8 +23,10 @@ directories.
    add a thin framework adapter that maps the registry's package paths to the
    framework's installed skill locations.
 4. Use `<goated-root>/stack/AGENTS.md` as the shared GOATED
-   policy. Merge it into the instruction artifact your framework actually
-   applies; do not assume every framework reads `AGENTS.md`.
+   policy. Merge it into active framework instructions, or explicitly instruct
+   the agent to load that installed file once when GOATED applies. Verify the
+   selected loading path; a Markdown link alone does not apply its contents.
+   Use a merge if the framework cannot reliably perform the explicit load.
 5. Keep stronger user, organization, and target-project instructions when
    merging the shared policy.
 6. Run `uv run python scripts/validate_skills.py` in this source checkout before
@@ -35,6 +37,23 @@ metadata, and each installed `SKILL.md` owns its specialist procedure. The
 registry is data for routing and validation; it is not an installer or runtime.
 Its paths describe the portable distribution layout, not a universal
 framework-native filesystem location.
+
+Reusable instructions should discover the installed distribution through the
+host's skill catalog, configuration, or installation metadata, then resolve
+package-relative paths from that root. Use supported configuration variables
+where appropriate; do not embed a machine's username, drive, or absolute home
+directory. If the shared distribution is unavailable, state the gap and use
+the selected skills' standalone instructions within the authorized scope.
+When metadata exposes only a skill root, a bounded inspection of nearby
+installation directories can locate a distribution containing both
+`stack/AGENTS.md` and `stack/goated-stack.yaml`; avoid a machine-wide search.
+
+When refreshing an installation, compare the complete selected skill folders
+and `stack/` against the intended source revision. If the framework also uses a
+flat discovery copy, refresh both layouts from that same revision. Back up
+overwritten files, preserve unrelated personal additions, and verify content
+and required references after copying. Clearly label any intentionally pinned
+snapshot so the agent does not treat it as the current distribution.
 
 ## Individual Skill Installation
 
@@ -85,8 +104,8 @@ Layer 2: Target Project Delivery
 1. Keep each copied skill folder intact.
 2. If your framework needs a routing file, add a short instruction that points
    to the installed skills.
-3. For integrated installs, merge the shared policy into that framework
-   instruction instead of copying specialist procedures into it.
+3. For integrated installs, apply the shared policy once through a verified
+   merge or explicit load. Keep specialist procedures in their skill packages.
 4. Do not require copied skills to load this repo's root `AGENT.md`,
    `README.md`, or `CONTEXT.md`.
 

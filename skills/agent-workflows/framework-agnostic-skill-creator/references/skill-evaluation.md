@@ -3,6 +3,7 @@
 ## Contents
 
 - [Evaluation Loop](#evaluation-loop)
+- [Model Upgrade Calibration](#model-upgrade-calibration)
 - [Authoring Discipline Lenses](#authoring-discipline-lenses)
 - [Pressure Scenarios](#pressure-scenarios)
 - [Rationalization Capture](#rationalization-capture)
@@ -43,6 +44,38 @@ The goal is to test whether the skill changes agent behavior, not whether the pr
    - Remove no-op or duplicated prose that does not change behavior.
    - Move branch-only material behind a clear pointer, and sharpen phase completion before splitting a sequence.
    - Re-run or re-plan the scenario after each significant change.
+
+## Model Upgrade Calibration
+
+Use this comparison when changed model behavior motivates an instruction edit.
+Compare unaided behavior, the existing instructions, and the candidate on the
+same representative requests. Use fresh contexts and record which instructions,
+model version, and host capabilities were available. Keep scenarios neutral;
+do not tell an evaluator the failure it is expected to demonstrate.
+
+Include positive and negative selection cases:
+
+| Scenario | Observable evidence |
+| --- | --- |
+| Settled change across several files | A useful prompt or action without a needless clarification gate or full specification. |
+| Authorized refinement beside separable user edits | Requested cleanup and relevant proof while preserving the other edit. |
+| Mechanical repair in a security-related document | Safe source inspection and the authorized repair without changing policy meaning. |
+| Review-only task with a consequential unresolved decision | Evidence and the required decision, without unauthorized mutation. |
+| Focused checks pass after a small change | Completion after required coverage; additional checks have a named reason. |
+| First implementation fails an acceptance check | Continued authorized diagnosis and repair rather than premature closeout. |
+| Request near two skills' selection boundaries | The appropriate skill is selected and the neighboring skill is skipped. |
+
+Inspect task quality, premature stops, unwanted actions, unnecessary questions,
+and irrelevant reads or checks. Shorter text alone is not a successful result.
+If a baseline already works, report that; the candidate may remove ambiguity
+without demonstrating better behavior. Repeat only when variance or a changed
+instruction leaves a material question. Check other models actually used before
+claiming cross-model compatibility.
+
+An agent's proposed next action is a decision exercise, not proof that the real
+workflow executed. Static package checks, decision exercises, and live task runs
+must retain distinct evidence labels. Do not add a runtime evaluation platform
+or model-specific dependency merely to update a skill.
 
 ## Authoring Discipline Lenses
 

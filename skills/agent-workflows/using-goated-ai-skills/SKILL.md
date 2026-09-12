@@ -104,12 +104,15 @@ GOATED source repository or hidden session files.
    - With no selected mode, use the risk-adaptive default: safe reads and
      diagnostics proceed; scoped reversible project writes may use one batch;
      destructive, credential, protected-branch, deployment, publication, and
-     external-changing actions need explicit approval.
+     external-changing actions need explicit approval covering that action.
    - Honor `confirm-each-write`, `approve-batch`,
      `standing-session-consent`, or `draft-without-applying`.
    - Reuse consent while its scope and action reach still cover the work. A
      material change to either invalidates consent where relevant and requires
      a fresh decision before the expanded action.
+   - Skills do not add approval gates to covered actions. For a necessary
+     pause, cite the instruction and unresolved decision; continue independent
+     authorized work.
 
 6. **Execute through selected gates.**
    - Give each skill the relevant envelope slice and fresh evidence instead of
@@ -132,22 +135,17 @@ GOATED source repository or hidden session files.
      fresh proof. Preserve unaffected evidence and approvals.
 
 8. **Close out once.**
+   - Continue implementation through the agreed result, matching proof, and
+     related fixes. Honor review-only scope and explicit checkpoints.
    - The main agent integrates skill deltas and produces one response with the
      outcome, important changes, fresh proof, skipped checks, and residual risk.
 
 ## Output Contract
 
-Update or initialize a compact work envelope. Goal, scope, action reach, and
-next action are the stable core. Include profile dimensions, sensitivity,
-risks, checkpoints, gates, approval, evidence, proof strategy, route signals,
-decisions, questions, and continuity state only when they affect the work.
-
-Routine routing stays internal. When route visibility materially helps the
-user, report only the chosen intensity, gates that affect their decisions,
-approval needs, and the reason for any route change.
-
-Standalone invocation returns the same compact route decision and local
-closeout without assuming integrated policy, registry, or source-repo access.
+Return one compact envelope update using Step 2's core fields. Add only
+decision-relevant route changes, approval needs, evidence, or residual risk.
+Keep routine routing internal; explain changes when they affect user decisions.
+Standalone use returns the same route and closeout without shared files.
 
 ## Delegation
 

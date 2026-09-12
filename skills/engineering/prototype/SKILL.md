@@ -28,7 +28,7 @@ Hard: None.
 
 Soft:
 - session-start-progressive-disclosure for unfamiliar target projects
-- grill-with-docs when the question is unclear, expensive, public-facing, cross-file, or docs/standards-sensitive
+- grill-with-docs when an unresolved question or conflicting project evidence blocks a useful experiment
 - write-a-spec when the prototype verdict should feed a broader product or delivery spec
 - spec-to-tickets when the prototype is exploring one focused delivery ticket
 - tdd when validated behavior is absorbed into production code after the prototype
@@ -42,30 +42,24 @@ Fallback: If companion skills or docs are unavailable, inspect minimal local evi
    - State the exact question the prototype must answer before creating artifacts.
    - Keep it to one question, such as "Does this state model handle rescheduling cleanly?" or "Which layout makes the approval flow easiest to scan?"
    - If the question is unclear, inspect the minimum relevant docs or code, then use `grill-with-docs` or ask a focused question before building.
-   - Write the question in the conversation and in the prototype artifact, such as a top-of-file comment, local README, route label, or note file.
+   - Record the question in the conversation and include it in any prototype artifact created.
 
-2. Choose the prototype branch before choosing artifacts:
-   - Choose the **logic/state/data/API branch** when the question is whether behavior, state transitions, data shape, API feel, validation, permissions, or integration boundaries make sense when exercised.
-   - Choose the **UI/look/layout branch** when the question is what a page, screen, flow, component, density, hierarchy, or interaction should look or feel like.
-   - Read [references/logic-prototype.md](references/logic-prototype.md) before designing artifacts for the logic/state/data/API branch.
-   - Read [references/ui-prototype.md](references/ui-prototype.md) before designing artifacts for the UI/look/layout branch.
-   - If the branch is ambiguous, inspect nearby docs and code first. If the user is reachable, ask one focused branch question; if not, pick the branch that best matches the surrounding work and record the assumption in the prototype and final output.
-
-3. Decide whether a prototype is justified:
+2. Decide whether a prototype is justified:
    - Use a prototype when the answer is easier to learn by running, clicking, toggling, or inspecting than by discussing.
    - Require a live decision with at least two plausible outcomes and name the observation that would distinguish them. If existing evidence already settles the choice, return a `not needed` verdict and the evidence instead of building.
    - Prefer direct implementation when the change is obvious, low risk, and already specified.
    - Do not use a prototype as a way to postpone required requirements work, tests, or design decisions.
    - Do not use a prototype to supply user consent, stakeholder intent, or another human-only high-risk decision.
 
+3. Read the branch needed for the experiment:
+   - Read [Logic Prototype](references/logic-prototype.md) when exercising behavior, state, data, API shape, validation, or an integration boundary.
+   - Read [UI Prototype](references/ui-prototype.md) when evaluating visual structure, flow, or interaction feel.
+   - Use nearby evidence to resolve the branch. Ask only when the choice materially changes the outcome and cannot be reasonably inferred; otherwise record the assumption.
+
 4. Choose the artifact shape from the selected branch:
-   - For logic/state/data/API prototypes, prefer a full-frame terminal interaction for hand-driven state questions: one compact state view re-rendered after each action, with the throwaway driver kept separate from reusable logic.
-   - Use a script, fixture harness, or isolated module instead when the question is better answered by repeatable cases, sample data, API shape exploration, or non-interactive inspection.
-   - For UI/look/layout prototypes on the web, prefer variants inside the nearest existing route with a shareable switch, such as a query parameter, and gate the switcher so it cannot appear in production builds.
-   - For non-web UI prototypes, use the equivalent existing host and shareable or easily repeatable control, such as a story, preview, debug menu, deep link, feature flag, or design-system fixture, with production gating where applicable.
-   - Default to three structurally different UI variants and cap at five. Variants should differ in layout, information hierarchy, or primary affordance, not just color, spacing, or copy.
-   - Create a new throwaway route, screen, story, or standalone surface only when there is no natural nearby host.
-   - For integration questions, stub external effects unless the question specifically concerns the integration boundary.
+   - Choose the simplest artifact and number of alternatives that can distinguish the live outcomes. Use the branch reference for optional presentation and interaction recipes.
+   - Preserve the real surrounding context needed to judge the result. Use a nearby host when useful; isolate the experiment when the host would add irrelevant work or risk.
+   - Stub external effects unless the question requires the integration boundary and authorization covers exercising it.
 
 5. Locate and mark artifacts:
    - Put prototype files close to the relevant code, route, module, or feature area so context is obvious.
@@ -77,13 +71,10 @@ Fallback: If companion skills or docs are unavailable, inspect minimal local evi
 6. Build the smallest runnable experiment:
    - Use existing dependencies, commands, components, fixtures, and styling conventions.
    - Make it runnable or viewable with one command, URL, story, script, or documented entrypoint.
-   - Prefer adding an entry to the target project's existing task runner for script or terminal prototypes; if there is no task runner, put the exact command at the top of the prototype note.
    - Keep state in memory by default.
    - Use fixtures, stubs, local scratch data, or clearly wipeable files for sample data.
    - Surface the relevant state after each action, variant switch, run, or simulated case so the result can be judged.
-   - For logic prototypes, keep I/O, terminal prompts, logs, and rendering outside the pure logic module. Re-render one compact state view after each user action instead of building an ever-growing transcript.
-   - For UI prototypes on an existing route, use a shareable switch such as a `?variant=` query param when the framework supports it, and keep existing data loading, params, auth, and surrounding page context intact.
-   - For UI prototypes, provide an obvious prototype switcher or equivalent control that is visually separate from the evaluated design, supports quick cycling, and is gated so it cannot appear in production builds.
+   - Separate reusable logic from its throwaway driver. Preserve existing data and authorization boundaries, and gate prototype controls out of production behavior.
    - Skip production polish: no broad abstractions, no unrelated cleanup, no hardened error handling, and no tests for the throwaway shell.
 
 7. Evaluate the question:

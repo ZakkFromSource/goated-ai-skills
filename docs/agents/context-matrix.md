@@ -40,6 +40,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | Source | Why read it | When to read | Notes |
 | --- | --- | --- | --- |
 | `skills/*/*/SKILL.md` | Actual installable workflow bodies. | Before editing, reviewing, installing, or adapting the named skill. | Do not bulk-read all skills when one skill is relevant. |
+| `docs/agents/external-docs/openai-skill-guidance.md` | Dated external evidence behind the instruction-calibration changes. | When reviewing model-upgrade assumptions or the September 2026 refinement. | Recheck current official guidance when model or host behavior changes; this is not runtime policy. |
 | `.out-of-scope/` | Public deferred ideas and future upgrades. | When deciding whether a requested idea belongs in the active public scope. | Sample only the relevant file; archived issue `030` owns the concrete triage deferral update. |
 | `.local/` | Ignored private notes or scratch work. | Only when the user explicitly points to it or the active workflow requires private/local workspace context. | Public behavior must not depend on `.local/`. |
 | `.local/goated/` | Ignored resumable envelopes and handoffs. | Only when the user points to existing state or resumable work requires it after ignore verification. | Public behavior must not depend on local state; OS temp remains the fallback. |
