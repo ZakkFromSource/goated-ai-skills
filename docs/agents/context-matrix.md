@@ -8,8 +8,8 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 | Source | Why read it | When to read | Notes |
 | --- | --- | --- | --- |
-| `AGENT.md` | Defines the maintainer contract for this source repo. | Before planning, editing, reviewing, or running automation in this repo. | Source-repo guidance wins over thin adapters unless a tool safety limit requires otherwise. |
-| `CONTEXT.md` | Defines public-safe language, scope, and product concepts. | With `AGENT.md` for non-trivial repo work. | Keeps source repo, installed skills, and target projects separate. |
+| Root `AGENTS.md` | Defines the maintainer contract for this source repo. | Before planning, editing, reviewing, or running automation in this repo. | The single root instruction file; distinct from the installable `stack/AGENTS.md` shared policy. |
+| `CONTEXT.md` | Defines public-safe language, scope, and product concepts. | With root `AGENTS.md` for non-trivial repo work. | Keeps source repo, installed skills, and target projects separate. |
 | `README.md` | Explains the public distribution model, root layout, preserved V1 baseline, and accepted V2 release. | At the start of source-repo orientation or docs changes. | Good high-level map before opening narrower files. |
 | `docs/specs/2026-07-25-goated-ai-skills-v2.md` | V2 product and architecture contract. | Before changing V2 installation, routing, shared policy, registry, state, skills, or migration tickets. | Read only the sections relevant to the current ticket. |
 | `docs/specs/2026-07-26-selective-upstream-skill-adoption.md` | Approved selective-adoption contract for skill authoring, diagnosis, ticket slicing, merge conflicts, external research, invocation topology, and active domain modeling. | Before implementing or reviewing Tickets 015-024. | Phase A is accepted; Phase B concluded no-go; only domain-model implementation remains conditional on its named maintainer gate. Any invocation harness is a separate product track. |
@@ -31,7 +31,6 @@ Use this map to choose the smallest useful context before working in the GOATED 
 | `skills/productivity/README.md` | Defines the productivity category and implemented skills. | Before implementing or reviewing productivity workflows. | Private or domain-specific workflows belong outside public main until sanitized. |
 | `issues/archive/*.md` | Completed implementation handoffs and blocker history. | Before modifying an implemented skill or tracing why an existing artifact exists. | Read the specific archived issue tied to the artifact or blocker chain. |
 | `issues/*.md` excluding `issues/archive/` and PRDs | Historical or deferred issue-format handoffs. | When a named legacy issue or preserved V1 artifact is relevant. | Active V2 implementation uses `tickets/`. |
-| `AGENTS.md` and `CLAUDE.md` | Thin framework adapter files. | Before changing agent-specific source-repo instructions. | They should route to `AGENT.md`, not duplicate the full workflow. |
 | `docs/adr/README.md` | ADR index and storage policy. | Before adding or changing architectural decision records. | ADR 0002 supersedes ADR 0001's installation-primary and self-containment decisions; ADR 0001's runtime-automation exclusions remain in force. |
 | `.gitignore` | Defines ignored local and scratch artifacts. | Before adding local/session artifacts or generated output paths. | `.local/` is intentionally ignored. |
 
@@ -52,7 +51,7 @@ Use this map to choose the smallest useful context before working in the GOATED 
 
 | Area | Paths | What lives there | Read before |
 | --- | --- | --- | --- |
-| Maintainer and adapter guidance | `AGENT.md`, `AGENTS.md`, `CLAUDE.md` | Source-repo rules and thin framework adapters. | Any repo planning, edits, review, or automation. |
+| Maintainer guidance | Root `AGENTS.md` | Source-repo rules in the single root instruction file. | Any repo planning, edits, review, or automation. |
 | Public context and root docs | `CONTEXT.md`, `README.md` | Domain language, source repo boundary, root layout, preserved V1 model, accepted V2 model, and public/private boundary. | Any public docs, product model, or skill-library work. |
 | Install and decision docs | `docs/install.md`, `docs/how-to-use.md`, `docs/adr/` | Integrated and individual installation, installed-stack usage guidance, deferred automation notes, and accepted ADRs. | Install/adaptation changes, usage-model changes, pipeline explanation changes, or accepted architecture decisions. |
 | Integrated stack | `stack/AGENTS.md`, `stack/goated-stack.yaml`, `stack/schemas/`, `stack/templates/`, `stack/fixtures/` | Shared V2 behavior, portable catalog metadata, registry schema, logical-state templates, focused contracts, and release-level end-to-end expectations. | Integrated policy, registry, route-signal, shared-state, or fixture-contract changes. |

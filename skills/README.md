@@ -75,7 +75,7 @@ Omit sections that add no value. Keep `SKILL.md` under a soft 300-line cap.
 
 Installed skills must retain the task-critical guidance needed when invoked
 alone. They can reference files inside their own skill folder, but they must
-not require the integrated registry or this source repo's `AGENT.md`,
+not require the integrated registry or this source repo's root `AGENTS.md`,
 `README.md`, or `CONTEXT.md` at runtime.
 
 ## Progressive Disclosure Contract

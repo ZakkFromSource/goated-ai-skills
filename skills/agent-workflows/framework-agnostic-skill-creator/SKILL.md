@@ -120,7 +120,7 @@ evaluation gaps.
 - Do not turn authoring review labels into mandatory GOATED terminology; use them only when they sharpen a concrete skill decision.
 - Do not bulk-copy external source material; summarize behavior, respect licensing, and attribute public inspiration when relevant.
 - Do not expand `SKILL.md` with long examples, templates, or generic compatibility matrices when a directly linked `references/` file would keep the skill lean.
-- Do not require this source repo's root `AGENT.md`, `README.md`, `CONTEXT.md`, issues, `.local/`, or handoffs at installed runtime.
+- Do not require this source repo's root `AGENTS.md`, `README.md`, `CONTEXT.md`, issues, `.local/`, or handoffs at installed runtime.
 - Prefer explicit blockers over quiet assumptions when portability, privacy, or evaluation confidence is uncertain.
 
 ## References

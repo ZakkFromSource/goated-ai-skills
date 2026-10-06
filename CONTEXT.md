@@ -16,7 +16,7 @@ maintainer-accepted integrated stack.
 - **Source repo maintenance** - work that changes this repository's docs, issues, skill folders, adapters, or maintainer artifacts.
 - **Skill pack distribution** - Layer 0 of the product model: users clone, download, copy, install, or adapt skill folders from this repo into their own agent workflow.
 - **Agent framework** - the tool or environment that discovers and runs skills, commands, prompts, or instructions, such as Codex, Claude Code, Hermes, OpenCode, or a generic tool-calling agent.
-- **Installed skill** - a copied or installed skill folder inside a user's chosen agent framework. It must remain useful without loading this repo's root `AGENT.md`, `README.md`, or `CONTEXT.md`.
+- **Installed skill** - a copied or installed skill folder inside a user's chosen agent framework. It must remain useful without loading this repo's root `AGENTS.md`, `README.md`, or `CONTEXT.md`.
 - **Installed skill stack** - the set of copied or installed GOATED skill folders available to an agent framework for one user or target project. The stack is routed by installed skill files, not by this source repo's root docs.
 - **Target project** - a project where installed skills are used to do onboarding or delivery work. In public docs this usually means a user's downstream project; when this repo is the work target, source repo maintenance rules still win.
 

@@ -1,4 +1,5 @@
 .local/
+.codex-remote-attachments
 
 # Local/editor noise
 .DS_Store

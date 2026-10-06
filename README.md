@@ -241,7 +241,7 @@ using-goated-ai-skills when the route is unclear
 This repo is the source library and maintainer workspace for GOATED AI Skills. It is not a project template that users are expected to clone into every codebase.
 
 An individually copied skill must retain enough task-critical guidance to work
-without the integrated registry or this repo's root [`AGENT.md`](AGENT.md),
+without the integrated registry or this repo's root [`AGENTS.md`](AGENTS.md),
 [`README.md`](README.md), or [`CONTEXT.md`](CONTEXT.md). Integrated installs
 share universal behavior through `stack/AGENTS.md`.
 
@@ -250,9 +250,7 @@ Target projects are the user's downstream projects where installed skills do the
 ## Repo Map
 
 ```text
-AGENT.md               Maintainer and contributor guidance for this source repo.
-AGENTS.md              Thin adapter for agents contributing to this repo.
-CLAUDE.md              Thin adapter for Claude-style contributors to this repo.
+AGENTS.md              Maintainer and contributor guidance for agents in this source repo.
 CONTEXT.md             Public context and domain language for GOATED AI Skills.
 pyproject.toml         Local uv tooling configuration for maintainer checks.
 uv.lock                Locked Python tooling dependencies.

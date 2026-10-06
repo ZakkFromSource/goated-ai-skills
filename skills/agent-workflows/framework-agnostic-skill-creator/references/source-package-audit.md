@@ -74,5 +74,5 @@ Before finalizing the port, confirm:
 - Source repo maintenance rules are not treated as installed-skill runtime requirements.
 - Installed skill guidance stays self-contained inside the skill folder and local support files.
 - Target-project artifacts are described as outputs, inputs, or defaults, not as files this source repo must contain.
-- The port does not require GOATED root `AGENT.md`, `README.md`, `CONTEXT.md`, issues, or handoffs after installation.
+- The port does not require GOATED root `AGENTS.md`, `README.md`, `CONTEXT.md`, issues, or handoffs after installation.
 - Public output contains no private context unless the user explicitly requested a private artifact outside public main.

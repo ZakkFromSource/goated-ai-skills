@@ -106,7 +106,7 @@ Layer 2: Target Project Delivery
    to the installed skills.
 3. For integrated installs, apply the shared policy once through a verified
    merge or explicit load. Keep specialist procedures in their skill packages.
-4. Do not require copied skills to load this repo's root `AGENT.md`,
+4. Do not require copied skills to load this repo's root `AGENTS.md`,
    `README.md`, or `CONTEXT.md`.
 
 Installed skills should retain a compact standalone fallback. They may

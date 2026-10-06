@@ -125,7 +125,7 @@ resolve `DONE_WITH_CONCERNS`; supply `NEEDS_CONTEXT`; narrow, replan, or stop on
 - Do not require commits, branches, worktrees, issue movement, PRs, task-tool syntax, model names, or framework-specific commands unless the target project or user requires them.
 - Do not copy source-repo instructions, local research paths, hidden chat history, or private scratch notes into installed-skill requirements.
 - Do not include private names, credentials, client data, sensitive personal context, ignored scratch content, or real user data in prompts or reports.
-- Do not make this skill depend on this source repo's root `AGENT.md`, `README.md`, `CONTEXT.md`, issue files, `.local/`, or upstream inspiration after installation.
+- Do not make this skill depend on this source repo's root `AGENTS.md`, `README.md`, `CONTEXT.md`, issue files, `.local/`, or upstream inspiration after installation.
 
 ## References
 
