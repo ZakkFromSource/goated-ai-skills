@@ -9,8 +9,8 @@ metadata:
 
 ## Purpose
 
-Select one proportionate route for the task, reuse shared evidence and consent,
-and revise only affected route parts at controlled checkpoints.
+Select one proportionate route, reuse shared evidence and consent, and revise
+only affected route parts at controlled checkpoints.
 
 Rerun routing for a stale envelope or material route signal. A finished skill
 alone is not a reason to reload it. For an obvious tiny request, apply the
@@ -59,7 +59,7 @@ skill map, approval, evidence, checkpoint, and route-line rules in this file.
      framework state; use an ignored local artifact only for resumable work.
 
 3. **Reuse evidence before discovery.**
-   - Reuse an entry when its source, applicable scope, freshness, depth, and
+   - Reuse an entry when its source, scope, freshness, depth, and
      confidence support the next claim.
    - Refresh only missing, stale, changed, contradictory, or too-shallow
      evidence. Prefer current source and executable proof for exact or
@@ -117,8 +117,7 @@ skill map, approval, evidence, checkpoint, and route-line rules in this file.
      authorized work.
 
 6. **Execute through selected gates.**
-   - Give each skill its envelope slice and fresh evidence so it need not
-     rediscover the task.
+   - Give each skill its envelope slice and fresh evidence.
    - Skills return internal deltas: result, evidence, changes, risks, route
      signals, and skipped checks. They never rebuild the route or give
      competing closeouts.
@@ -133,7 +132,7 @@ skill map, approval, evidence, checkpoint, and route-line rules in this file.
      an earlier checkpoint before affected work continues.
    - Change only gates the signal affects; record why. Do not restart
      discovery or activate a long pipeline.
-   - After project changes, invalidate affected pre-change evidence and collect
+   - After project changes, invalidate affected evidence and collect
      fresh proof. Preserve unaffected evidence and approvals.
 
 8. **Close out once.**
@@ -146,7 +145,7 @@ skill map, approval, evidence, checkpoint, and route-line rules in this file.
 
 Return one compact envelope update using Step 2's core fields. Add only
 decision-relevant route changes, approval needs, evidence, or residual risk,
-explaining any change that affects a user decision. Standalone use returns
+explaining changes that affect a user decision. Standalone use returns
 the same route and closeout without shared files.
 
 End routing with one route line, on its own line, outside code blocks:
@@ -158,8 +157,9 @@ End routing with one route line, on its own line, outside code blocks:
   its route.
 
 `doc-sync`, `standards-and-spec-review`, `verification-before-completion` and
-`setup-scribe` are met at the closeout, not in `requires:`;
-`code-security-review` may be listed, as it applies while writing.
+`setup-scribe` are met at the closeout, not in `requires:`, unless the task is
+that skill's own work, such as a review; `code-security-review` may be listed,
+as it applies while writing.
 
 Use lowercase keywords and installed skill names, list each skill once, and
 add no trailing text. A checkpoint changing the required skills writes a new
