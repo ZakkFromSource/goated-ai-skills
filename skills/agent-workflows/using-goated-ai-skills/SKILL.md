@@ -10,12 +10,11 @@ metadata:
 ## Purpose
 
 Select one proportionate route for the task, reuse shared evidence and consent,
-and revise only the affected route parts at controlled checkpoints.
+and revise only affected route parts at controlled checkpoints.
 
-Rerun routing when an envelope needs refreshing or a material route signal
-appears. A finished skill alone is not a reason to reload it. For an obvious
-tiny request, apply the lightweight path silently apart from the one-line
-`goated-route: direct`.
+Rerun routing for a stale envelope or material route signal. A finished skill
+alone is not a reason to reload it. For an obvious tiny request, apply the
+lightweight path silently apart from the one-line `goated-route: direct`.
 
 ## Inputs
 
@@ -23,7 +22,7 @@ tiny request, apply the lightweight path silently apart from the one-line
 - Current project boundary and applicable project instructions.
 - Existing work envelope, decisions, approvals, and evidence entries.
 - Integrated registry metadata when installed, or the available skill list.
-- Material route signals returned by skills.
+- Material route signals from skills.
 
 ## Dependencies
 
@@ -94,8 +93,8 @@ skill map, approval, evidence, checkpoint, and route-line rules in this file.
      `documentation-cleanup` to audit or tidy docs; `goated-prompt` to write
      prompts or prompt-writing guidance; `retrospective` after a merged wave of
      delegated tickets, or recurring friction; `prototype` for cheap evidence;
-     `setup-scribe` for setup knowledge. When a named skill is not
-     installed, apply the gate directly and leave it out of `requires:`.
+     `setup-scribe` for setup knowledge. Leave an uninstalled skill out of
+     `requires:`.
    - Reject Wayfinder for merely large work, session-sized discussion, or
      implementation whose decisions are settled. Its chart requires approval
      covering destination, location, visible frontier, action reach, and
@@ -132,8 +131,8 @@ skill map, approval, evidence, checkpoint, and route-line rules in this file.
    - A material signal such as `scope-changed`, `evidence-stale`,
      `security-impact`, `documentation-impact`, or `refinement-debt` may trigger
      an earlier checkpoint before affected work continues.
-   - Compare the signal with the envelope, change only affected gates, and
-     record the reason. Do not restart discovery or activate a long pipeline.
+   - Change only gates the signal affects; record why. Do not restart
+     discovery or activate a long pipeline.
    - After project changes, invalidate affected pre-change evidence and collect
      fresh proof. Preserve unaffected evidence and approvals.
 
@@ -157,6 +156,10 @@ End routing with one route line, on its own line, outside code blocks:
   when the listed specialist skills must load before the first write;
 - `goated-route: continue` when a later prompt continues the current task and
   its route.
+
+`doc-sync`, `standards-and-spec-review`, `verification-before-completion` and
+`setup-scribe` are met at the closeout, not in `requires:`;
+`code-security-review` may be listed, as it applies while writing.
 
 Use lowercase keywords and installed skill names, list each skill once, and
 add no trailing text. A checkpoint changing the required skills writes a new
