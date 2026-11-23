@@ -6,23 +6,23 @@ The maintainer chose every decision on 2026-11-23 and asked for three
 tickets: closely related changes share a ticket and are phased inside it,
 for one agent each.
 
-1. `tickets/122-core-reviews-kept-across-small-follow-ups.md`
-   - Status: Ready. Decisions D1, D2, D4, D5, D6 and D7.
+1. `tickets/archive/122-core-reviews-kept-across-small-follow-ups.md`
+   - Status: Completed, merged and archived on 2026-11-23. Decisions D1, D2, D4, D5, D6 and D7.
    - Blocked by: None.
    - Overlaps: the contract and the scenario files with 123, and the
      closeout note (122 changes how often it is given, 123 its order).
    - Enables: no Review or Verification re-ask for small follow-ups on a
      reviewed branch; briefs without a route line spared Review; notices
      given once.
-2. `tickets/123-core-narrower-triggers-and-hold-texts.md`
-   - Status: Ready. Decisions D3, D8 and D10.
+2. `tickets/archive/123-core-narrower-triggers-and-hold-texts.md`
+   - Status: Completed, merged and archived on 2026-11-23. Decisions D3, D8 and D10.
    - Blocked by: None.
    - Overlaps: as above with 122.
    - Enables: no security hold on a conversation `session`, plain reads
      with backslashes in quotes, no Setup ask for example-env comments,
      and the four hold-text changes.
-3. `tickets/124-skill-text-closeout-skills-and-real-data.md`
-   - Status: Ready. Decisions D9 and D11.
+3. `tickets/archive/124-skill-text-closeout-skills-and-real-data.md`
+   - Status: Completed, merged and archived on 2026-11-23. Decisions D9 and D11.
    - Blocked by: None.
    - Overlaps: none.
    - Enables: routes and briefs without closeout-time skills in
@@ -46,9 +46,8 @@ for one agent each.
 
 ## Ready Frontier
 
-- `tickets/122-core-reviews-kept-across-small-follow-ups.md`
-- `tickets/123-core-narrower-triggers-and-hold-texts.md`
-- `tickets/124-skill-text-closeout-skills-and-real-data.md`
+Wave 22 (122, 123 and 124) is merged and archived (2026-11-23). Round 7 is
+complete; no ticket is ready.
 
 ## Coverage
 

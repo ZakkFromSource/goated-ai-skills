@@ -64,3 +64,17 @@ fixtures quote the changed text, update `stack/goated-stack.yaml` and
 - Lines about driving a UI in a browser or recounting stated numbers (not
   chosen).
 - Syncing installed copies: the lead does that after merging.
+
+## Closeout
+
+Completed, merged and archived on 2026-11-23.
+
+- Merged as `1d7f40b` (`d8e1591`, with review fix `f80f61e`).
+- Review fix: the closeout skills may still be listed when the task is
+  that skill's own work, such as a review.
+- Implementer decisions: four router passages were tightened to stay
+  within the word budget, which is now full; a guardrail in
+  `verification-before-completion` that repeated its Purpose was removed;
+  `spawn-brief.md` gained a Contents section.
+- Reviewed by one reviewer agent before merge. Installed copies synced
+  after the merge.

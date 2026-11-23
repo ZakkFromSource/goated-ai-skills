@@ -105,3 +105,22 @@ adapter's text fixture is regenerated (see the order file's merge notes).
 - A CRLF check of any kind.
 - Other shell quoting forms, such as `$'...'`, unless a test shows the
   same bug there.
+
+## Closeout
+
+Completed, merged and archived on 2026-11-23.
+
+- Merged as `04b8fe4` (`f455890`). The closeout-note overlap with ticket
+  122 kept 122's once-per-task check with this ticket's order, so the
+  context documents open the note.
+- Implementer decisions: `session` is no longer an auth word, which
+  behaves as "only beside another auth word" since that word matches on
+  its own; the line-ending sentence is a wording slot the core leaves
+  empty and the Claude Code adapter fills; the pull-request holds' wording
+  is unchanged.
+- Accepted gaps: session code named only with words such as `sso`, `saml`,
+  `mfa`, `csrf` or `cookie` meets no security hold; an edit to a fragment
+  after `#` inside a setting line of an example env file reads as
+  comment-only.
+- Reviewed by one reviewer agent before merge. Installed copies synced
+  after the merge.

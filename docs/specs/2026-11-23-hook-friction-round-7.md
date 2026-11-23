@@ -2,7 +2,7 @@
 
 ## Status
 
-Ticket-ready, 2026-11-23. The maintainer chose an option for every
+Delivered, 2026-11-23: Tickets 122 to 124 are merged and archived. The maintainer chose an option for every
 decision in a brainstorm on 2026-11-23 ([Decisions](#decisions)). Three
 details were settled by the lead while writing this spec, and each is
 marked as such. Builds on [the round 6 spec](2026-11-19-hook-friction-round-6.md):

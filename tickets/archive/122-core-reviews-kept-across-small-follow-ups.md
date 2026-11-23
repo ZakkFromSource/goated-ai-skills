@@ -111,3 +111,22 @@ Notices sections, and conformance scenarios under
 - Reading a background check's result when it arrives (deferred).
 - Hold text other than the new wording these rules need: Ticket 123 owns
   the other text changes.
+
+## Closeout
+
+Completed, merged and archived on 2026-11-23.
+
+- Merged as `e773862` (`2945386`, with review fixes `6114172`).
+- Implementer decisions: growth is a difference of branch sizes, so a
+  rewrite of lines already changed, or a switch to a branch of about the
+  same size, is not caught (stated in the contract); a load from an earlier
+  turn counts for Verification only through its point; the closeout note's
+  record is per task and a compaction keeps it.
+- Review fixes: a turn that changes no code also records the Review point
+  when it meets Review; a `branch_grows` scenario step proves the 50-line
+  boundary for both items; the closeout note's check compares item labels
+  only, in order.
+- Accepted gap: with the review skill loaded in an earlier turn, a later
+  no-code turn that only prints a diff counts as a review.
+- Reviewed by one reviewer agent before merge. Installed copies synced
+  after the merge.
