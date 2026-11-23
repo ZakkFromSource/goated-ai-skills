@@ -117,6 +117,35 @@ class ReadsOwedTests(unittest.TestCase):
         self.assertNotIn("land before a read of", context(again))
         self.assertNotIn("- Reads:", self.stop().get("reason", ""))
 
+    def test_one_lasting_skip_carries_one_notice_per_task_and_another_kind_its_own(self) -> None:
+        # Round 7, R3: the notice is given once per task for each gate, skill and file kind.
+        test_file = "tests/test_export.py"
+        (self.session.project / "tests").mkdir()
+        (self.session.project / test_file).write_text(EXISTING, encoding="utf-8")
+        # A test edit adding 20 lines or more asks for test-design reads.
+        test_edit = {"file_path": test_file, "old_string": "def rows():\n",
+                     "new_string": "def test_total():\n"
+                                   + "".join(f"    assert {n}\n" for n in range(22))
+                                   + "def rows():\n"}
+        self.session.say(SKIP_LINE)
+        self.session.say("goated-skip: tdd: the asserts are placeholders for the export")
+        self.session.call("Edit", PUBLIC_FUNCTION)
+        self.session.call("Edit", test_edit)
+        self.session.prompt("Add more export helpers.")
+        self.session.say("goated-route: continue")
+        carried = []
+        for name in ("average", "median", "mode"):
+            edit = {**PUBLIC_FUNCTION,
+                    "new_string": PUBLIC_FUNCTION["new_string"].replace("total", name)}
+            output = self.session.call("Edit", edit)
+            self.assertEqual(decision(output), "pass", reason(output))
+            carried.append("through without a read of" in context(output))
+        self.assertEqual(carried, [True, False, False])
+        other = self.session.call("Edit", {**test_edit, "new_string": test_edit[
+            "new_string"].replace("test_total", "test_mean")})
+        self.assertIn("through without a read of", context(other))
+        self.assertIn("test files", context(other))
+
     # Phase 2: one notice per turn.
 
     def test_a_second_edit_selecting_the_same_references_adds_no_notice_text(self) -> None:

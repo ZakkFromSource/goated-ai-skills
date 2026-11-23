@@ -193,6 +193,21 @@ class OncePerTurnTests(NoteCase):
         _, next_turn = change(s, "Edit", small_edit())
         self.assertEqual(labels(next_turn), ["Proof", "Docs"])
 
+    def test_the_same_list_is_noted_once_per_task_and_a_changed_list_again(self) -> None:
+        # Round 7, R4: a follow-up turn of the same task, with the same list, gets none.
+        s = self.session()
+        _, first = change(s, "Edit", small_edit())
+        self.assertEqual(labels(first), ["Proof", "Docs"])
+        s.prompt("Tweak it.")
+        _, same = change(s, "Edit", small_edit("src/other.py"))
+        self.assertEqual(note(same), "")
+        s.prompt("Now the full version.")
+        s.load("software-design-principles")
+        for name in ("process", "complexity-and-modules", "readability"):
+            s.read(f"{SKILLS}/software-design-principles/references/{name}.md")
+        _, changed = change(s, "Write", large_write("src/third.py"))
+        self.assertEqual(labels(changed), ["Proof", "Docs", "Design"])
+
     def closeout_held(self, s: Session) -> None:
         """Change code by a shell command, which brings no note, then meet the
         closeout at a commit."""

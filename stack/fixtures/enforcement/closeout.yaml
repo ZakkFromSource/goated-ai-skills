@@ -24,6 +24,43 @@ scenarios:
         result: {ok: true, output: "-limit = 1\n+limit = 2"}
       - turn_end: true
 
+  - name: a follow-up turn with the same closeout list gets no note, and a changed list gets one
+    covers:
+      - {gate: closeout, case: holds}
+    steps:
+      - prompt: {type: prompt, author: person, text: Fix the export limit.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: *limit
+        expect_after: {decision: allow, notices: [closeout_note]}
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+      # Round 7, R4: the same task, the same list, so no note.
+      - prompt: {type: prompt, author: person, text: Raise it once more.}
+      - call: *limit
+        expect_after: {decision: allow, notices: []}
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Proof, Docs]}]
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+      # With Docs already skipped, this turn's list is Proof alone: a new list, so a note.
+      - prompt: {type: prompt, author: person, text: Raise it one last time.}
+      - reply: "goated-skip: doc-sync: an internal constant with no documented behavior"
+      - call: *limit
+        expect_after: {decision: allow, notices: [closeout_note]}
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - turn_end: true
+
   - name: skip lines meet the closeout items
     covers:
       - {gate: closeout, case: clears, way: skip-line}
@@ -727,6 +764,295 @@ scenarios:
           starts_now: true
         result: {ok: true, output: "No findings."}
       - turn_end: true
+
+  - name: a review and a check in one turn meet a large branch's follow-up turn of the same task
+    covers:
+      - {gate: closeout, case: holds}
+      - {gate: closeout, case: clears, way: proof}
+    setup: {branch_changed_lines: 450}
+    steps:
+      - prompt: {type: prompt, author: person, text: Fix the export limit and review the branch.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Review, Verification]}]
+      - call: {kind: skill_load, skill: verification-before-completion}
+      - call: {kind: skill_load, skill: standards-and-spec-review}
+      - turn_end: true
+      # The branch has not grown since the points, and no change read meets Review
+      # again here, so only the points meet both items.
+      - prompt: {type: prompt, author: person, text: Raise it once more.}
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - reply: "goated-skip: doc-sync: an internal constant with no documented behavior"
+      - turn_end: true
+
+  - name: 49 lines of growth since both points meet a follow-up turn
+    covers:
+      - {gate: closeout, case: near-miss}
+    setup: {branch_changed_lines: 450}
+    steps:
+      - prompt: {type: prompt, author: person, text: Fix the export limit and review the branch.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - reply: "goated-skip: standards-and-spec-review: the branch is generated client code\ngoated-skip: verification-before-completion: the suite above covers the change"
+      - turn_end: true
+      - prompt: {type: prompt, author: person, text: Add the export footer.}
+      - branch_grows: 49
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+
+  - name: the review point covers 49 lines of growth and asks again at 50
+    covers:
+      - {gate: closeout, case: holds}
+    setup: {branch_changed_lines: 450}
+    steps:
+      - prompt: {type: prompt, author: person, text: Fix the export limit and review the branch.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: {kind: skill_load, skill: verification-before-completion}
+      - reply: "goated-skip: standards-and-spec-review: the branch is generated client code"
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+      # Review was declined by a skip line, so no change read meets it again. Verification
+      # is met again 30 lines on, so its point moves and only Review's stays.
+      - prompt: {type: prompt, author: person, text: Add the export header.}
+      - branch_grows: 30
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: verification-before-completion}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+      - prompt: {type: prompt, author: person, text: Add the export footer.}
+      - branch_grows: 19
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+      # 50 lines since the review point: Review is asked; Verification's point is 20 back.
+      - prompt: {type: prompt, author: person, text: Add the export title.}
+      - branch_grows: 1
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Review]}]
+
+  - name: the verification point covers 49 lines of growth and asks again at 50
+    covers:
+      - {gate: closeout, case: holds}
+    setup: {branch_changed_lines: 450}
+    steps:
+      - prompt: {type: prompt, author: person, text: Fix the export limit and review the branch.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: {kind: skill_load, skill: verification-before-completion}
+      - call: {kind: skill_load, skill: standards-and-spec-review}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+      # Review is met again 30 lines on, by its loaded skill and this turn's change read.
+      - prompt: {type: prompt, author: person, text: Add the export header.}
+      - branch_grows: 30
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+      - prompt: {type: prompt, author: person, text: Add the export footer.}
+      - branch_grows: 19
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+      - prompt: {type: prompt, author: person, text: Add the export title.}
+      - branch_grows: 1
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Verification]}]
+
+  - name: skip lines for Review and Verification set points that survive a compaction
+    covers:
+      - {gate: closeout, case: holds}
+      - {gate: closeout, case: clears, way: skip-line}
+    setup: {branch_changed_lines: 450}
+    steps:
+      - prompt: {type: prompt, author: person, text: Fix the export limit.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Review, Verification]}]
+      - reply: "goated-skip: standards-and-spec-review: the branch is generated client code\ngoated-skip: verification-before-completion: the suite above covers the change"
+      - turn_end: true
+      - compaction: true
+      - prompt: {type: prompt, author: person, text: Raise it once more.}
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+
+  - name: a new task's route ends the review and verification points
+    covers:
+      - {gate: closeout, case: holds}
+    setup: {branch_changed_lines: 450}
+    steps:
+      - prompt: {type: prompt, author: person, text: Fix the export limit and review the branch.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: {kind: skill_load, skill: verification-before-completion}
+      - call: {kind: skill_load, skill: standards-and-spec-review}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+      - prompt: {type: prompt, author: person, text: Now fix the import limit as a new task.}
+      - reply: "goated-route: direct"
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Docs, Review, Verification]}]
+
+  - name: after a compaction a full route asks for Verification again despite its point
+    covers:
+      - {gate: closeout, case: holds}
+    setup: {branch_changed_lines: 450}
+    steps:
+      - prompt: {type: prompt, author: person, text: Fix the export limit test first.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: full | requires: tdd"
+      - call: {kind: skill_load, skill: tdd}
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: {kind: skill_load, skill: verification-before-completion}
+      - call: {kind: skill_load, skill: standards-and-spec-review}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+      - compaction: true
+      - prompt: {type: prompt, author: person, text: Raise it once more.}
+      - call: {kind: skill_load, skill: tdd}
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Verification]}]
+
+  - name: a brief with a skills line and no route line meets no Review item, so its check clears the turn
+    covers:
+      - {gate: closeout, case: holds}
+      - {gate: closeout, case: clears, way: proof}
+    setup: {branch_changed_lines: 450}
+    steps:
+      - session_start: new
+      - prompt:
+          type: prompt
+          author: session
+          starts_session: true
+          text: "## Goal\n\nFix the export limit.\n\ngoated-skills: tdd\n"
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Verification]}]
+      # With no Review item to meet, the check alone clears the turn.
+      - call: {kind: skill_load, skill: verification-before-completion}
+      - turn_end: true
+
+  - name: a person's first prompt with a skills line is no brief, so Review is asked
+    covers:
+      - {gate: closeout, case: holds}
+    setup: {branch_changed_lines: 450}
+    steps:
+      - session_start: new
+      - prompt: {type: prompt, author: person, text: "Fix the export limit.\n\ngoated-skills: tdd\n"}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: *limit
+      - call: *passing
+        result: {ok: true, output: "4 passed in 0.10s"}
+      - call: {kind: skill_load, skill: doc-sync}
+      - call: *diff
+        result: {ok: true, output: "-limit = 1\n+limit = 2"}
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Review, Verification]}]
 
   - name: installing a package asks for the setup record
     covers:

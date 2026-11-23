@@ -24,6 +24,7 @@ from goated_core import events
 from goated_core.events import (
     AgentFinished, Call, CallFinished, Compaction, Prompt, ReplyText, Result, SkillInvoked,
 )
+from goated_core.contracts import skills_line_problem
 from goated_core.markers import parse_reply
 
 from . import translation
@@ -302,8 +303,11 @@ def _read_turns_once(path: Path, since_key: str | None,
             entries = list(reversed(pending))
             chunks.append((kind, entries))
             pending = []
+            # A brief marks itself by a route line or, for the Review item
+            # only, a valid skills line (round 7, R2).
             brief = (kind == MACHINE and not sidechain and (text := _brief_text(entries[0]))
-                     is not None and parse_reply(text).route is not None)
+                     is not None and (parse_reply(text).route is not None
+                                      or skills_line_problem(text) is None))
             brief_chunk = entries if brief else None
             if kind == "compaction":
                 break

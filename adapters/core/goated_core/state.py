@@ -5,7 +5,9 @@ the current task's route, whether missing or reset state lost the task, what
 counts until the next compaction (whether the router loaded, which GOATED
 skills loaded, which design references, skill references, and spawn-brief
 templates were read, and digests of the first distinct files read), the
-task's lasting skips (`actions.LastingSkip`), the reads the current turn's
+task's lasting skips (`actions.LastingSkip`) and what their notices named,
+the task's review points (`actions.ReviewPoints`) and the list its last
+closeout note named, the reads the current turn's
 landed writes owe (`actions.OwedRead`), which
 template each of the current turn's spawns' briefs followed, the last turn
 seen, the latest user overrides, and the friction count (`friction.py`). Beside it,
@@ -84,6 +86,7 @@ class SessionState:
         "reference_reads", "brief_routed", "brief_task", "briefed", "loads", "template_reads",
         "skill_reference_reads", "spawn_templates", "open_holds", "held_gates", "friction",
         "retrospective_notice_shown", "files_read", "files_seen", "shell", "lasting_skips", "owed_reads",
+        "review_points", "carried_notices", "closeout_noted",
     )
 
     def __init__(self) -> None:
@@ -134,6 +137,19 @@ class SessionState:
         # {"gate", "skill", "kind", "reference", "turn"}, the turn being the one
         # whose skip line cleared the hold (`record_lasting_skips`).
         self.lasting_skips: list[dict] = []
+        # The current task's review points (round 7, R1), by closeout item
+        # label (`Review`, `Verification`): {"lines": <branch size>, "turn":
+        # <turn key>}, the turn being the one that met or declined the item.
+        # Unlike the lasting skips, they survive a compaction; a new task ends them.
+        self.review_points: dict = {}
+        # What a lasting skip's notice already named in the current task
+        # (round 7, R3): {"gate", "skill", "kind", "turn"}. It ends with the
+        # lasting skips it is about.
+        self.carried_notices: list[dict] = []
+        # The labels of the items the task's last closeout note named, and the
+        # turn that gave it (round 7, R4): {"labels": [...], "turn": <turn key>},
+        # or {} for none. A new task ends it.
+        self.closeout_noted: dict = {}
         # The reads each write of one turn owes, which a read gate let land
         # (round 5, R5): {"turn": <turn key>, "edits": {<call_id>: [<owed read>]}},
         # each owed read {"gate", "skill", "kind", "reference", "path"}.
@@ -173,12 +189,52 @@ class SessionState:
         self.files_seen = []
         self.end_lasting_skips(boundary_turn)
 
+    def end_task(self, boundary_turn: str | None = None) -> None:
+        """End what lasts only for the current task, as a new task's route
+        line or a `/clear` ends it: its lasting skips and their notices, its
+        review points, and its closeout note's list, keeping only those
+        `boundary_turn`, the turn that started the new task, recorded, since
+        that turn may be folded again after them."""
+
+        self.end_lasting_skips(boundary_turn)
+        self.review_points = {label: point for label, point in self.review_points.items()
+                              if point["turn"] == boundary_turn}
+        if self.closeout_noted.get("turn") != boundary_turn:
+            self.closeout_noted = {}
+
+    def record_carried_notices(self, turn: str, keys) -> None:
+        """Keep the (gate, skill, kind) keys a call of `turn` gave the lasting-skip notice for."""
+
+        known = set(self.carried_notice_keys())
+        for gate, skill, kind in keys:
+            if (gate, skill, kind) not in known:
+                known.add((gate, skill, kind))
+                self.carried_notices.append(
+                    {"gate": gate, "skill": skill, "kind": kind, "turn": turn})
+
+    def carried_notice_keys(self) -> list[tuple[str, str, str]]:
+        """The (gate, skill, kind) keys the task's lasting-skip notices already named."""
+
+        return [(n["gate"], n["skill"], n["kind"]) for n in self.carried_notices]
+
+    def record_review_points(self, turn: str, met: dict[str, int]) -> None:
+        """Keep the review points (`actions.ReviewPoints.met`) that `turn` set."""
+
+        for label, lines in met.items():
+            self.review_points[label] = {"lines": lines, "turn": turn}
+
+    def review_point_lines(self) -> dict[str, int]:
+        """The task's review points, as branch sizes by item label."""
+
+        return {label: point["lines"] for label, point in self.review_points.items()}
+
     def end_lasting_skips(self, boundary_turn: str | None = None) -> None:
         """End the lasting skips at a new task or a compaction, keeping only
         those `boundary_turn` recorded: it is the turn that crossed the
         boundary, which may be folded again after its own skip lines."""
 
         self.lasting_skips = [s for s in self.lasting_skips if s["turn"] == boundary_turn]
+        self.carried_notices = [n for n in self.carried_notices if n["turn"] == boundary_turn]
 
     def record_lasting_skips(self, turn: str, skips) -> None:
         """Keep the lasting skips (`actions.LastingSkip`) that a skip line of `turn` made."""
@@ -243,6 +299,9 @@ class SessionState:
             "shell": self.shell,
             "lasting_skips": self.lasting_skips,
             "owed_reads": self.owed_reads,
+            "review_points": self.review_points,
+            "carried_notices": self.carried_notices,
+            "closeout_noted": self.closeout_noted,
         }
 
     @classmethod
@@ -275,6 +334,14 @@ class SessionState:
         state.lasting_skips = [_valid_lasting_skip(s)
                                for s in _expect(data.get("lasting_skips", []), list)]
         state.owed_reads = _valid_owed_reads(data.get("owed_reads", {}))
+        state.review_points = _valid_review_points(data.get("review_points", {}))
+        state.carried_notices = [
+            {key: _expect(_expect(notice, dict).get(key), str)
+             for key in ("gate", "skill", "kind", "turn")}
+            for notice in _expect(data.get("carried_notices", []), list)]
+        noted = _expect(data.get("closeout_noted", {}), dict)
+        state.closeout_noted = ({"labels": _string_list(noted.get("labels")),
+                                 "turn": _expect(noted.get("turn"), str)} if noted else {})
         task = _expect(data.get("task"), (dict, type(None)))
         if task is not None:
             state.task = Task(
@@ -363,6 +430,19 @@ def _valid_owed_reads(data) -> dict:
              for key in ("gate", "skill", "kind", "reference", "path")}
             for read in _expect(reads, list)] for call_id, reads in calls.items()},
     }
+
+
+def _valid_review_points(data) -> dict:
+    """The review points as `record_review_points` saved them; ValueError on any other shape."""
+
+    points = {}
+    for label, point in _expect(data, dict).items():
+        point = _expect(point, dict)
+        lines = point.get("lines")
+        if isinstance(lines, bool) or not isinstance(lines, int):
+            raise ValueError("a review point's lines are not a count")
+        points[_expect(label, str)] = {"lines": lines, "turn": _expect(point.get("turn"), str)}
+    return points
 
 
 def _valid_held_gates(data) -> dict:

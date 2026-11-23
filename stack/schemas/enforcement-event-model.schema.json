@@ -577,6 +577,13 @@
           "properties": {"compaction": {"const": true}}
         },
         {
+          "description": "The runner, not the agent, adds this many changed lines of non-test code to the project's checkout, as a new untracked code file, so a setup branch grows between steps. Nothing is judged and no adapter sees it as an event.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["branch_grows"],
+          "properties": {"branch_grows": {"type": "integer", "minimum": 1}}
+        },
+        {
           "type": "object",
           "additionalProperties": false,
           "required": ["turn_end"],

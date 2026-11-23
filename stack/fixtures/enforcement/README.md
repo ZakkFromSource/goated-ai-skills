@@ -30,7 +30,9 @@ Rules for every scenario:
 - **Placeholders.** `{outside}` is a folder outside the project and any
   checkout, as a scratch file's or an installed skill's folder is.
 - **Setup** describes the project, not the harness: skills installed, a
-  branch of a given size, or a subagent as the agent that acts.
+  branch of a given size, or a subagent as the agent that acts. A
+  `branch_grows: <lines>` step grows that branch later, by a new untracked
+  code file the runner writes; the adapter sees no event for it.
 
 The repo proves every scenario against the Claude Code adapter through
 `tests/claude_code_scenarios.py`, which translates each step into that

@@ -7,6 +7,7 @@ files a turn writes are written to disk as well as recorded as tool calls.
 
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import tempfile
@@ -512,6 +513,22 @@ class BriefedSessionReviewTests(ReviewTestCase):
         self.branch(s, 0)
         self.assertIn("- Review:", self.large_turn(s))
 
+    def test_a_brief_with_a_skills_line_and_no_route_line_meets_none(self) -> None:
+        # Round 7, R2: the skills line marks the brief, for the Review item only.
+        s = self.briefed(route="goated-skills: tdd")
+        held = reason(s.call("Write", {"file_path": "src/early.py", "content": "x = 1\n"}))
+        self.assertIn("goated-hold: router-first", held)  # Routed as an unbriefed session is.
+        s.load(ROUTER)
+        s.say("goated-route: direct")
+        self.branch(s, 0)
+        self.assertNotIn("- Review:", self.large_turn(s))
+
+    def test_a_typed_first_prompt_with_a_skills_line_is_no_brief(self) -> None:
+        s = self.session()
+        self.branch(s, 0)
+        s.say("goated-skills: tdd")
+        self.assertIn("- Review:", self.large_turn(s))
+
     def test_the_same_branch_in_a_typed_session_meets_it(self) -> None:
         s = self.session()
         self.branch(s, 0)
@@ -605,6 +622,156 @@ class VerificationItemTests(ReviewTestCase):
 
         s.say(PROOF_SKIP)
         self.assertEqual(stop(s), {})
+
+
+class ReviewPointTests(ReviewTestCase):
+    """A review or check met in one turn stays met across later turns while
+    the branch has grown by fewer than 50 lines since it (round 7, R1)."""
+
+    def follow_up(self, s: Session, path: str, count: int) -> dict:
+        """A person's follow-up turn of the same task, writing `count` code
+        lines to `path`, meeting every item but Review and Verification."""
+
+        s.prompt("Tweak the export.")
+        self.write(s, path, count)
+        s.run("pytest -q")
+        s.say(DOC_SKIP)
+        return stop(s)
+
+    def reviewed(self, s: Session, how: str = "load") -> None:
+        """A turn on a 420-line branch that meets Review and Verification by
+        `how`: their loads, with a change read, or their skip lines."""
+
+        self.branch(s, 400)
+        self.write(s, "src/export.py", 20)
+        if how == "load":
+            s.load(VERIFY)
+        else:
+            s.say(PROOF_SKIP)
+        self.meet_the_rest(s)
+        if how == "load":
+            s.load(REVIEW)
+        else:
+            s.say(REVIEW_SKIP)
+        self.assertEqual(stop(s), {})
+
+    def items(self, held: dict) -> list[str]:
+        return [line.split(":", 1)[0][2:] for line in held.get("reason", "").splitlines()
+                if line.startswith("- ")]
+
+    def test_a_review_by_load_lasts_under_50_lines_and_is_asked_at_50(self) -> None:
+        s = self.session()
+        self.reviewed(s)
+        self.assertEqual(self.follow_up(s, "src/one.py", 20), {})
+        held = self.follow_up(s, "src/two.py", 30)  # 50 lines since the review.
+        self.assertEqual(self.items(held), ["Review", "Verification"])
+
+    def reviewed_without_code(self) -> Session:
+        """A session on a 400-line branch whose second turn, of the same
+        task, changes no code and has loaded `verification-before-completion`."""
+
+        s = self.session()
+        self.branch(s, 400)
+        s.run("git status")  # A judged call, so the core sees the task's route.
+        self.assertEqual(stop(s), {})
+        s.prompt("Review the branch.")
+        s.load(VERIFY)
+        return s
+
+    def test_a_review_in_a_turn_that_changed_no_code_sets_the_point(self) -> None:
+        # Review of Ticket 122: "review the branch" in its own turn, then a small fix.
+        for how in ("load", "skip", "reviewer"):
+            with self.subTest(how=how):
+                s = self.reviewed_without_code()
+                if how == "load":
+                    s.load(REVIEW)
+                    s.run("git diff main")
+                elif how == "skip":
+                    s.say(REVIEW_SKIP)
+                else:
+                    s.load("subagent-driven-development")
+                    s.read(REVIEWER_PROMPT)
+                    agent = s.subagent(f"r-{self._sessions}")
+                    agent.prompt("Review the branch.", hook=False)
+                    agent.run("git diff main")
+                    self.assertEqual(decision(s.spawn(f"r-{self._sessions}", REVIEWER_BRIEF)),
+                                     "pass")
+                self.assertEqual(stop(s), {})
+                self.assertEqual(self.follow_up(s, "src/fix.py", 20), {})
+        # The near miss: the same turn with no review, so the fix is asked.
+        s = self.reviewed_without_code()
+        s.run("git diff main")
+        self.assertEqual(stop(s), {})
+        self.assertEqual(self.items(self.follow_up(s, "src/fix.py", 20)), ["Review"])
+
+    def test_meeting_it_again_sets_a_new_point(self) -> None:
+        s = self.session()
+        self.reviewed(s)
+        self.follow_up(s, "src/one.py", 60)
+        s.load(REVIEW)
+        s.run("git diff")
+        s.load(VERIFY)
+        self.assertEqual(stop(s), {})
+        self.assertEqual(self.follow_up(s, "src/two.py", 40), {})
+
+    def test_skip_lines_set_both_points_and_they_survive_a_compaction(self) -> None:
+        s = self.session()
+        self.reviewed(s, how="skip")
+        s.compact()
+        self.assertEqual(self.follow_up(s, "src/one.py", 20), {})
+        held = self.follow_up(s, "src/two.py", 30)
+        self.assertEqual(self.items(held), ["Review", "Verification"])
+
+    def test_a_new_tasks_route_ends_both_points(self) -> None:
+        s = self.session()
+        self.reviewed(s)
+        self.turn(s)  # A new route line starts a new task.
+        self.write(s, "src/one.py", 20)
+        s.run("pytest -q")
+        s.say(DOC_SKIP)
+        self.assertEqual(self.items(stop(s)), ["Review", "Verification"])
+
+    def test_the_other_verification_triggers_still_ask_in_each_turn(self) -> None:
+        # The compaction drops the load, which otherwise counts until then.
+        for trigger in ("full", "sensitive", "subagent"):
+            with self.subTest(trigger=trigger):
+                s = self.session("goated-route: full | requires: tdd" if trigger == "full"
+                                 else "goated-route: direct")
+                self.reviewed(s)
+                s.compact()
+                s.prompt("Tweak the export.")
+                if trigger == "subagent":
+                    s.brief_with_handoff()
+                    agent = s.subagent("w1")
+                    agent.prompt("Implement it.", hook=False)
+                    agent.say(DESIGN_SKIP)
+                    agent.call("Edit", {"file_path": "src/app.py", "old_string": "a",
+                                        "new_string": "b"},
+                               agent_id="w1", agent_type="general-purpose")
+                    agent.run("pytest -q")
+                    self.assertEqual(decision(s.spawn("w1", BRIEF)), "pass")
+                else:
+                    if trigger == "full":
+                        s.load("tdd")
+                        path = "src/one.py"
+                    else:
+                        s.say("goated-skip: code-security-review: a renamed constant, no boundary")
+                        path = "src/auth.py"
+                    self.write(s, path, 6)
+                s.run("pytest -q")
+                s.say(DOC_SKIP)
+                self.assertEqual(self.items(stop(s)), ["Verification"])
+
+    def test_state_saved_before_review_points_loads_and_asks_as_before(self) -> None:
+        s = self.session()
+        self.reviewed(s)
+        saved = s.config.state_dir / f"{s.session_id}.json"
+        state = json.loads(saved.read_text(encoding="utf-8"))
+        del state["review_points"]
+        saved.write_text(json.dumps(state), encoding="utf-8")
+        held = self.follow_up(s, "src/one.py", 20)
+        self.assertEqual(self.items(held), ["Review", "Verification"])
+        self.assertNotIn("could not", held["reason"])
 
 
 class PortableStatementTests(unittest.TestCase):

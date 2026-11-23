@@ -188,7 +188,8 @@ Every hold follows these rules:
   first code change. A write naming no project file gets no lasting skip.
   A later hold of the same gate that asks only for references a lasting
   skip covers, on a file of the same kind, passes. When no other gate
-  holds the call, it carries a `skip_carried` notice naming the skip. A
+  holds the call, it carries a `skip_carried` notice naming the skip, once
+  per task for each gate, skill, and kind of file (see [Notices](#notices)). A
   hold that asks for another reference holds for that reference alone. A
   new task (a route line that is not `continue`) and a compaction end every
   lasting skip. Only the main agent keeps lasting skips: a subagent's skip
@@ -283,8 +284,8 @@ that change is already proved.
 | `Unfinished` | The last check after the change failed | `handoff` counts as loaded | `handoff` |
 | `Docs` | A non-test code file changed | `doc-sync` counts as loaded, and a change read follows the last code change; or, with no load, a documentation file (`.md`, `.mdx`, `.rst`, `.adoc`, or `.txt`, a dependency manifest aside; a `.txt` file counts only outside a [test path](#code-and-test-files) and when it is no build file such as `CMakeLists.txt`, so a golden output file does not) changed after the last code change and a change read follows the last such doc change (the maintainer's choice X1, 2026-11-19). A doc changed only before the last code change does not meet it | `doc-sync` |
 | `Design` | `software-design-principles` loaded in the turn, or counts as loaded and the turn made an edit the `design` gate triggers on; in both, some code change in the turn is not a [comment-only edit](#comment-only-edits) adding fewer than twenty lines | `software-design-principles/references/red-flags.md` read whole after the last code change that is not comment-only, then a change read; later changes adding fewer than five lines in total need only the change read. Of those later changes, a line counts only when it is not blank and its text, indentation aside, is not a line of the text the edit replaces, so unchanged context sent with an edit adds none (round 6, R6); an edit that only moves existing lines therefore adds none, a gap the maintainer accepted. The changes the read scanned still count every line their edits add, context included, to reach five. The item repeats the question `red-flags.md` ends with; no answer is checked | `software-design-principles` |
-| `Review` | The turn changed code, the session was not started from a brief with a route line, and the branch's work is large: 400 or more changed lines of non-test code against its base | A reviewer agent that finished after the last code change; or `standards-and-spec-review` counts as loaded and a change read follows the last code change | `standards-and-spec-review` |
-| `Verification` | The turn changed code or a security-sensitive file, and the route is `full`, a spawned agent changed code, a security-sensitive file changed, or the branch's work is large | `verification-before-completion` counts as loaded | `verification-before-completion` |
+| `Review` | The turn changed code, the session was not started from a brief with a route line or a skills line, and the branch's work is large: 400 or more changed lines of non-test code against its base | A reviewer agent that finished after the last code change; or `standards-and-spec-review` counts as loaded and a change read follows the last code change; or the task's [review point](#review-points) while the branch has grown by fewer than 50 lines since it | `standards-and-spec-review` |
+| `Verification` | The turn changed code or a security-sensitive file, and the route is `full`, a spawned agent changed code, a security-sensitive file changed, or the branch's work is large | `verification-before-completion` counts as loaded. When only the branch's size asks for it: the skill loads in the turn, or the task's [verification point](#review-points) holds while the branch has grown by fewer than 50 lines since it | `verification-before-completion` |
 | `Security` | `code-security-review` counts as loaded and a security-sensitive file changed | A change read after the last sensitive change | `code-security-review` |
 | `Setup` | The turn installed or added a named package or tool, or wrote an env or settings file inside the project | `setup-scribe` counts as loaded, before or after the change | `setup-scribe` |
 
@@ -307,6 +308,33 @@ commit without the load gets the full closeout, and so does the next
 commit once that one has ended the conflict, and the turn's end.
 The Setup item is not judged against code changes. A bare install that only
 restores what a manifest records, or installs a local path, does not count.
+
+### Review Points
+
+**A review point** (round 7, R1, decisions D1, D6 and D7) is the
+[branch size](#branch-size) at which a turn met or declined the Review item
+by its own evidence: a reviewer agent, `standards-and-spec-review` with a
+change read, or a Review skip line. A turn that changed no code, such as one
+that only reviews the branch, records the point the same way, any change
+read counting, though it is asked for no Review item. **A verification point** is the branch
+size when a turn loads `verification-before-completion` or writes its skip
+line, in any turn. Meeting an item again records a new point; a turn the
+point itself meets records none. In a later turn of the same task, Review
+is met while the branch has grown by fewer than 50 changed lines of
+non-test code since its point (`REVIEW_POINT_GROWTH`), measured as the
+difference of the two sizes; at 50 or more it is asked again. The
+verification point counts the same way, but only when the branch's size is
+the item's one trigger: a `full` route, a spawned agent's code change, or a
+security-sensitive change asks in each turn as before, met by a load that
+counts as loaded. With only size as its trigger, an earlier turn's load
+counts only through its point. Both points are saved with the session's
+facts, survive a compaction, and end when a route line starts a new task or
+a clear ends the task. A size that cannot be measured records no point.
+Saved state without points loads as a task with none. A known limit, from
+the lead decision to measure growth by the size the item already uses:
+rewriting lines already changed against the base, or checking out another
+branch of about the same size, grows the size little or not at all, so it
+does not ask again.
 
 ## Hold Messages
 
@@ -414,9 +442,15 @@ A recorded override brings an `override_recorded` notice.
 - **A task** starts at a route line that is not `continue` and runs through
   later `continue` turns. In a session with no task yet, a turn whose only
   route lines are `continue` starts a task that requires no skills.
-  `goated-route: direct` exempts the task from `pipeline`.
+  `goated-route: direct` exempts the task from `pipeline`. A new task ends
+  the last one's lasting skips and [review points](#review-points).
 - A session whose first prompt is a brief with a route line is **briefed**
-  for good: it meets no Review item.
+  for good: it meets no Review item. So is one whose brief has a valid
+  `goated-skills:` line and no route line (round 7, R2, decision D2), for
+  the Review item only: briefed-session orientation still needs the
+  brief's route line, so such a session is routed as an unbriefed one is.
+  Only the event model's `brief` flag (`starts_session`) makes a brief; a
+  typed first prompt with a skills line is not one.
 - **The brief's task** is the task its turn started. A person's prompt ends
   the brief's route, and with it briefed-session orientation in `pipeline`,
   but not that task: a person's follow-up continues it as above, and
@@ -451,7 +485,14 @@ A notice never holds.
   will meet, each short, judged as if the turn ended there, Reads
   included, then the project's own context documents that exist (see
   [Calling The Core](#calling-the-core)), and none when none does. Once per
-  turn; none in a turn the closeout already held.
+  turn; none in a turn the closeout already held. It is also given once per
+  task while its list of item labels is unchanged (round 7, R4, decision
+  D5): a later turn of the task whose list is the same as the last note's
+  gets none, and one whose list differs gets the note, naming the new list.
+  The check compares the items' labels only, in order, so a turn whose
+  items are the same but whose wording differs, such as a Reads item naming
+  other references, gets no note.
+  A new task's route or a clear ends the record; a compaction does not.
 - `session_notice`: at a session start, when the shared policy or the router
   is missing, or project agent files the onboarding skills write are
   missing; and at the next person's prompt after a session's third declined
@@ -459,8 +500,12 @@ A notice never holds.
 - `skip_carried`: on a pending call of the main agent that no gate holds,
   when a lasting skip let it through `design`, `design-reads`, or
   `reference-reads` (see [Holds](#holds)), one per gate. It names the skip
-  line's skill, the references, and the kind of file. An adapter shows it
-  to the agent.
+  line's skill, the references, and the kind of file. It is given once per
+  task for each gate, skill, and kind of file it names (round 7, R3,
+  decision D4): a later write that the same lasting skip lets through
+  carries none, and one that a skip for another kind of file lets through
+  carries its own. The record ends with the lasting skips, at a new task
+  or a compaction. An adapter shows it to the agent.
 - `reads_owed`: on a pending call of the main agent that no gate holds,
   when `design`, `design-reads`, or `reference-reads` let a write
   land before its reads (see [Holds](#holds)), one per call, and only
@@ -933,9 +978,12 @@ git ls-files --others --exclude-standard --full-name -z -- :/
 The size is asked for only in a turn that changed code (or a sensitive file,
 for Verification), and only when nothing else has met the item. Because the
 branch is measured, not the commit, a large ticket split across commits is
-still caught, and every later turn on a large branch that changes code
-raises the item again, until a review in that turn meets it or a skip line
-declines it. A commit in a turn that changed no code meets no Review or
+still caught. A later turn on a large branch that changes code raises the
+item again only once the branch has grown by 50 lines or more since the
+task's [review point](#review-points), or when the task has none; this
+reverses Ticket 069's rule that only a review in the same turn counts. The
+size is also asked for to record a point when a turn meets or declines the
+item. A commit in a turn that changed no code meets no Review or
 Verification item, and a commit made in another folder (`git -C <dir>`, or
 after a `cd`) is measured as the working folder's branch, or not at all when
 that folder is no checkout.
@@ -949,8 +997,8 @@ limit. Holding on an unknown size would hold every pull request from a fork
 or another clone, and a justified-skip hold that fires without evidence
 teaches agents to skip it.
 
-A session whose first prompt was a brief with a route line meets no Review
-item for the whole session, typed prompts and compactions included: the
+A session whose first prompt was a brief with a route line or a valid skills
+line meets no Review item for the whole session, typed prompts and compactions included: the
 starting session reviews the work when it inspects the report and the
 changed paths (`handoff`'s spawn-brief template). Missing state counts as
 not briefed.

@@ -530,6 +530,18 @@ def git_branch_with_change(
         git("checkout", "-q", base)
 
 
+def grow_branch(project: Path, changed_lines: int) -> None:
+    """Add `changed_lines` changed lines of non-test code to the checkout at
+    `project`, as a new untracked code file, which the branch measure counts:
+    a scenario's `branch_grows` step (round 7)."""
+
+    folder = project / "src"
+    folder.mkdir(parents=True, exist_ok=True)
+    grown = len(list(folder.glob("grown_*.py")))
+    (folder / f"grown_{grown}.py").write_text(
+        "".join(f"grown_{grown}_{n} = {n}\n" for n in range(changed_lines)), encoding="utf-8")
+
+
 def default_input(tool: str) -> dict:
     if tool in {"Bash", "PowerShell"}:
         # An unknown command: not a plain read (Ticket 088 made `echo` one),

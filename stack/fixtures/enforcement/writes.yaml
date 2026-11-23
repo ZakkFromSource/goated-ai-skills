@@ -440,6 +440,30 @@ scenarios:
           edits: [{removed: null, added: "{\n  \"limit\": 3,\n  \"format\": \"csv\",\n  \"header\": true,\n  \"quote\": \"minimal\"\n}\n"}]
         expect: {decision: allow, notices: [skip_carried]}
 
+  - name: a lasting skip's notice is given once per task, and again in a new task
+    covers:
+      - {gate: design-reads, case: clears, way: lasting-skip}
+    steps:
+      - prompt: {type: prompt, author: person, text: Add the export settings.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: {kind: skill_load, skill: software-design-principles}
+      - call: *shell_settings
+        expect:
+          decision: hold
+          holds: [{gate: design-reads, kind: justified-skip}]
+      - reply: "goated-skip: software-design-principles: one setting with no design in it"
+      - call: *shell_settings
+      - prompt: {type: prompt, author: person, text: Add the import settings too.}
+      - reply: "goated-route: continue"
+      - call: *import_settings
+        expect: {decision: allow, notices: [skip_carried]}
+      # Round 7, R3: later writes the same skip lets through carry no notice.
+      - call: *import_settings
+        expect: {decision: allow, notices: []}
+      - call: *shell_settings
+        expect: {decision: allow, notices: []}
+
   - name: a lasting design-reads skip covers neither another reference nor another kind of file
     covers:
       - {gate: design-reads, case: holds}

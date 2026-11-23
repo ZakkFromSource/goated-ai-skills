@@ -311,7 +311,9 @@ does not say), and `agent`, the event model's `session.agent`. It gives no
 agent configuration folder, so pick one under `home`. The call's `result` is
 `{"ok": true}` when the scenario gives none. Each step is its own method
 call: `compaction()` only compacts, since a scenario that restarts the
-session after a compaction has a `session_start` step of its own. The
+session after a compaction has a `session_start` step of its own. A
+`branch_grows` step needs no method: the runner itself adds that many lines
+to the project's checkout, as a new untracked code file. The
 docstring of [`scripts/run_conformance.py`](../scripts/run_conformance.py)
 defines each part.
 
