@@ -311,12 +311,16 @@ def fold_turns(
             state.briefed = True
         elif turn.typed:
             state.brief_routed = False
+        if _brief_with_skills_line(turn):
+            # A valid skills line marks a brief for the Review item too (round 7,
+            # R2); without a route line it brings no briefed-session orientation.
+            state.briefed = True
         route = _task_route_in(turn)
         if route is not None:
             state.task = Task(route=route, started_turn=turn.key)
             state.task_unknown = False
             state.brief_task = turn.brief_route is not None
-            state.end_lasting_skips(turn.key)  # A new task ends them (spec R4).
+            state.end_task(turn.key)  # A new task ends its lasting skips and points.
         elif turn.route is not None and state.task is None and not state.task_unknown:
             # Only `continue` lines, in a session with no task, such as one
             # started from another session: they start a task with no skills,
@@ -348,6 +352,15 @@ def fold_turns(
             )[:ORIENTATION_FILES]
         state.shell = last_shell([turn]) or state.shell
         state.last_turn = turn.key
+
+
+def _brief_with_skills_line(turn: Turn) -> bool:
+    """Whether `turn` opens with the brief that started the session (the event
+    model's `brief` flag) and that brief has a valid `goated-skills:` line."""
+
+    opener = turn.opener
+    return (isinstance(opener, events.Prompt) and opener.starts_session
+            and contracts.skills_line_problem(opener.text) is None)
 
 
 def last_shell(turns: list[Turn]) -> str | None:

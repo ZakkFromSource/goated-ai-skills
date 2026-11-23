@@ -200,9 +200,12 @@ any `<system-reminder>` blocks, with `turnOrigin` `host_synthetic` and no
 `origin`. A route line in a typed prompt, a later prompt, or another
 session's message never counts, and a brief never carries an override. The
 `handoff` skill's spawn-brief template says where the parent puts the line.
-A brief with a route line also marks the session as briefed, for good (one with none does not): typed prompts and
-compactions do not end that, and a briefed session meets no closeout Review
-item (see the closeout table below).
+A brief with a route line, or with a valid `goated-skills:` line and no route
+line (round 7), also marks the session as briefed, for good (one with
+neither does not): typed prompts and compactions do not end that, and a
+briefed session meets no closeout Review item (see the closeout table
+below). A brief with only a skills line carries no route, so the session is
+routed, and oriented, as an unbriefed one is.
 
 The contract's [Gates](../../stack/enforcement-contract.md#gates) table is
 the authority for each gate, and its
@@ -239,8 +242,8 @@ table is the authority for each item; this one adds Claude Code's detail.
 | Unfinished work | The last check after the change failed | `handoff` counts as loaded | `handoff` |
 | Docs | A code file outside the tests changed | `doc-sync` counts as loaded, and a [change read](#change-reads); or a doc changed after the last code change, then a change read, as the contract states | `doc-sync` |
 | Design red flags | As the contract states | `software-design-principles/references/red-flags.md` [read whole](#whole-reads) by the Read tool after the last code change that is not [comment-only](#comment-only-edits), then a [change read](#change-reads) | `software-design-principles` |
-| Review | The branch is [large](#large-branches) and the session was not started from a brief | A [reviewer subagent](#reviewer-subagents) started by `Agent` or `Task`, or `standards-and-spec-review` and a [change read](#change-reads) | `standards-and-spec-review` |
-| Verification | As the contract states | `verification-before-completion` counts as loaded | `verification-before-completion`, the Proof item's skip line, so one line answers both |
+| Review | The branch is [large](#large-branches) and the session was not started from a brief | A [reviewer subagent](#reviewer-subagents) started by `Agent` or `Task`, or `standards-and-spec-review` and a [change read](#change-reads); or, in a later turn of the task, its [review point](../../stack/enforcement-contract.md#review-points) while the branch has grown by fewer than 50 lines since | `standards-and-spec-review` |
+| Verification | As the contract states | `verification-before-completion` counts as loaded; when only branch size asks, its load in the turn or its [verification point](../../stack/enforcement-contract.md#review-points) under the same 50-line rule | `verification-before-completion`, the Proof item's skip line, so one line answers both |
 | Security | As the contract states | A [change read](#change-reads) | `code-security-review` |
 | Setup | A [package install or setup file](../../stack/enforcement-contract.md#package-installs-and-setup-files), such as a `settings*.json` under `.claude/` | `setup-scribe` counts as loaded | `setup-scribe` |
 
@@ -602,7 +605,7 @@ compaction. Those holds are `reference-reads`, and `design-reads` or
 `design` once `software-design-principles` is loaded (see the contract's
 Holds). When such a skip lets a later call through and no gate holds it,
 the core's `skip_carried` notice goes to the agent as that call's
-`additionalContext`.
+`additionalContext`, once per task for each gate, skill, and kind of file.
 
 A file edit that `design-reads` or `reference-reads` would hold for reads
 alone, or `design` once `software-design-principles` is loaded, is applied
@@ -741,7 +744,9 @@ the project's root, the ones that exist, and names none when none does
   (see [State](#state)), so it never meets the unseen-line advice's claim or
   a hold's. A turn the closeout already held, at a commit or a `Stop`,
   gets none: that hold named its items. A turn that already has its note
-  is known from the marker alone, without reading the transcript.
+  is known from the marker alone, without reading the transcript. A later
+  turn of the same task whose list of items is the one the last note named
+  gets none either (round 7); a changed list gets the note again.
 - A docs file, a file outside the project, a call that failed or was held,
   a subagent's edit, and a code change by a shell command bring none; the
   hook's matcher starts it only for the file edit tools, so no other call
@@ -946,7 +951,8 @@ tool that names its repository, and at most two seconds when git hangs.
 
 The closeout's [large-branch](#large-branches) measure (Ticket 069, five git
 calls) runs at a commit or `Stop` in a turn that changed code, while the
-Review or Verification item is not otherwise met. Measured on 2026-11-17 the
+Review or Verification item is not otherwise met, and when a turn meets or
+declines one, to record its review point. Measured on 2026-11-17 the
 same way, a `Stop` with only that measure left to run:
 
 | Case | Median | p90 |
@@ -1256,7 +1262,11 @@ of the call's prompt, which is normally already there.
 - A session started from a brief meets no Review item, trusting the
   starting session to review: a brief sent with no review planned leaves a
   large branch unreviewed. Only a brief the adapter recognizes, with a route
-  line (see [What It Holds](#what-it-holds)), marks the session.
+  line or a valid skills line (see [What It Holds](#what-it-holds)), marks
+  the session.
+- A review point measures growth as the difference of two branch sizes, so
+  rewriting lines already changed against the base, or checking out another
+  branch of about the same size, does not ask for Review again.
 - The Proof and Verification items name the same skill, so the skill-usage
   mod counts a `verification-before-completion` load as answering both items
   of a hold that lists both, though only Verification asks for the load.

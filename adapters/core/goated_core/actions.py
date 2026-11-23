@@ -232,6 +232,10 @@ READS_LAND_MIN_LINES = 30
 # paths (spec R11), is large enough to review before it lands: the threshold
 # `standards-and-spec-review` states (contract, Branch Size).
 REVIEW_MIN_LINES = 400
+# Once the Review or Verification item is met or declined, a later turn of the
+# task meets it while the branch has grown by fewer than this many lines since
+# (round 7, R1; decision D6).
+REVIEW_POINT_GROWTH = 50
 # The route intensity whose work always needs `verification-before-completion` (spec R3).
 FULL_ROUTE = "full"
 # How long the size check's git calls may take in all before it gives up and
@@ -358,10 +362,17 @@ class TaskSkips:
     the call goes through, and shows the notices. A caller that keeps no
     state, as for a subagent, passes none: every skip line lasts its turn,
     and every write is held for its reads, since nothing would keep what it
-    owes."""
+    owes.
 
-    def __init__(self, kept=()) -> None:
+    A kept skip's notice is given once per task for each gate, skill and
+    file kind (round 7, R3): `shown` are those keys an earlier call's notice
+    already named, and the gates add to `carried` the keys this call's
+    notices name, which the caller saves when the call goes through."""
+
+    def __init__(self, kept=(), shown=()) -> None:
         self.kept = frozenset(LastingSkip(*skip) for skip in kept)
+        self.shown = frozenset(tuple(key) for key in shown)
+        self.carried: list[tuple[str, str, str]] = []
         self.cleared: list[LastingSkip] = []
         self.notices: list[str] = []
         self.owed: list[OwedRead] = []
@@ -400,8 +411,9 @@ def _unexcused(proof: "_Proof", gate: str, needs: list[_Need],
     skip line of this turn names is cleared, and that skip lasts the task for
     its reference on files of its kind; a need such a lasting skip covers
     passes. When every need passes and a lasting skip let one through, the
-    call carries a notice naming the skip. `label` names a reference as the
-    hold does."""
+    call carries a notice naming the skip, unless an earlier call of the
+    task named the same gate, skill and kind (`TaskSkips.shown`). `label`
+    names a reference as the hold does."""
 
     task = proof.task_skips
     held, carried = [], []
@@ -414,8 +426,10 @@ def _unexcused(proof: "_Proof", gate: str, needs: list[_Need],
             carried.append(need)
         else:
             held.append(need)
-    if carried and not held:
-        task.notices.append(_carried_notice(gate, carried, label))
+    fresh = [need for need in carried if (gate, need.skill, need.kind) not in task.shown]
+    if fresh and not held:
+        task.notices.append(_carried_notice(gate, fresh, label))
+        task.carried += [(gate, need.skill, need.kind) for need in fresh]
     return held
 
 
@@ -588,14 +602,46 @@ class _Proof:
         ]
 
 
+class ReviewPoints:
+    """The branch sizes at which the task's Review and Verification items were
+    last met or declined (round 7, R1), keyed by item label, as one judged
+    event sees them.
+
+    `kept` are those earlier turns recorded. The closeout adds to `met` the
+    size at which an item is met or declined by this turn's own evidence: a
+    reviewer agent, the review skill with a change read, the verification
+    skill's load, or a skip line. The caller saves `met`. While only branch
+    size asks for an item, a later turn meets it while the branch has grown
+    by fewer than `REVIEW_POINT_GROWTH` lines since its kept point. A caller
+    that keeps no state, as for a subagent, passes none."""
+
+    def __init__(self, kept: dict[str, int] | None = None) -> None:
+        self.kept = dict(kept or {})
+        self.met: dict[str, int] = {}
+
+    def record(self, label: str, size: int | None) -> None:
+        """Note that `label` was met or declined this turn on a branch of `size` lines."""
+
+        if size is not None:
+            self.met[label] = size
+
+    def covers(self, label: str, size: int) -> bool:
+        """Whether an earlier turn's point for `label` still covers a branch of `size` lines."""
+
+        point = self.kept.get(label)
+        return point is not None and size - point < REVIEW_POINT_GROWTH
+
+
 class Closeout(NamedTuple):
     """What a commit's closeout hold reads besides the turn: `spawn_templates`,
-    `intensity`, `briefed`, and `owed_reads`, as `check_closeout` takes them."""
+    `intensity`, `briefed`, `owed_reads`, and `points`, as `check_closeout`
+    takes them."""
 
     spawn_templates: dict[str, list[str]] | None = None
     intensity: str | None = None
     briefed: bool = False
     owed_reads: dict[str, list[OwedRead]] | None = None
+    points: ReviewPoints | None = None
 
 
 def check_action(call: Call, turn: Turn, overrides: dict,
@@ -647,6 +693,7 @@ def check_action(call: Call, turn: Turn, overrides: dict,
         at_commit=True, by_tool=by_tool, earlier=earlier,
         spawn_templates=closeout.spawn_templates, intensity=closeout.intensity,
         briefed=closeout.briefed, owed_reads=closeout.owed_reads, task_skips=task_skips,
+        points=closeout.points,
     )
     cwd = project.cwd if project else None  # Where git measures a pull request's size.
     owes_reads = bool(closeout and closeout.owed_reads)
@@ -2041,7 +2088,8 @@ def check_closeout(turn: Turn, overrides: dict, namespaces: tuple[str, ...] = ()
                    spawn_templates: dict[str, list[str]] | None = None,
                    intensity: str | None = None, briefed: bool = False,
                    owed_reads: dict[str, list[OwedRead]] | None = None,
-                   task_skips: TaskSkips | None = None) -> Hold | None:
+                   task_skips: TaskSkips | None = None,
+                   points: ReviewPoints | None = None) -> Hold | None:
     """Return the closeout hold for a turn about to end, if any; `at_commit`:
     for a commit the turn is about to make, which must meet it first, made by
     an MCP commit tool when `by_tool`, which has no command to rerun.
@@ -2092,6 +2140,12 @@ def check_closeout(turn: Turn, overrides: dict, namespaces: tuple[str, ...] = ()
     a read gate to the reads it owes (`OwedRead`), which the Reads item asks
     for (`_reads_item`). `task_skips` are the task's lasting skips, which
     cover an owed read; a skip line meeting the item adds to its `cleared`.
+
+    `points` are the task's review points (`ReviewPoints`): while branch size
+    alone asks for Review or Verification, a point an earlier turn of the
+    task recorded meets it until the branch has grown by
+    `REVIEW_POINT_GROWTH` lines since (round 7, R1). Meeting or declining
+    either item in this turn adds its point to `points.met`.
     """
 
     changes = _Changes(turn, subagents or {}, project)
@@ -2100,7 +2154,7 @@ def check_closeout(turn: Turn, overrides: dict, namespaces: tuple[str, ...] = ()
     proof = _Proof(turn, overrides, namespaces, final_text, earlier, task_skips)
     items = _closeout_items(
         changes, proof, subagents or {}, spawn_templates or {}, intensity, briefed,
-        branch_size, owed_reads)
+        branch_size, owed_reads, points or ReviewPoints())
     # A commit that ends a conflict the skill resolved asks for less (round 6, R8).
     if (at_commit and CONFLICT_SKILL in proof.loads
             and _open_conflict(turn, project).being_resolved):
@@ -2126,20 +2180,23 @@ def check_closeout(turn: Turn, overrides: dict, namespaces: tuple[str, ...] = ()
 def _closeout_items(changes: "_Changes", proof: _Proof, subagents: dict,
                     spawn_templates: dict[str, list[str]], intensity: str | None,
                     briefed: bool, branch_size: Callable[[], int | None],
-                    owed_reads: dict[str, list[OwedRead]] | None = None) -> list["_Item"]:
+                    owed_reads: dict[str, list[OwedRead]] | None = None,
+                    points: ReviewPoints | None = None) -> list["_Item"]:
     """Every closeout item the turn `changes` and `proof` describe still
     needs, in the closeout's order (see `check_closeout`). Reads comes
     first: revising a landed write against its references may change what
     the other items judge."""
 
+    points = points or ReviewPoints()
     reads = _reads_item(owed_reads or {}, changes, proof)
     items = [reads] if reads else []
     items += (
         _code_items(changes, proof)
-        + ([] if briefed else _review_item(changes, proof, spawn_templates, branch_size))
+        + ([] if briefed else _review_item(changes, proof, spawn_templates, branch_size,
+                                           points))
         if changes.code else []
     )
-    items += _verification_item(changes, proof, intensity, branch_size)
+    items += _verification_item(changes, proof, intensity, branch_size, points)
     sensitive = changes.sensitive
     if sensitive and SECURITY_SKILL in proof.loads and not proof.skipped(SECURITY_SKILL):
         last_sensitive = sensitive[-1][0]
@@ -2163,10 +2220,11 @@ def closeout_note(turn: Turn, call: Call, overrides: dict, namespaces: tuple[str
                   earlier: SinceCompaction = SinceCompaction(),
                   intensity: str | None = None,
                   owed_reads: dict[str, list[OwedRead]] | None = None,
-                  task_skips: TaskSkips | None = None) -> str:
+                  task_skips: TaskSkips | None = None) -> "CloseoutNote":
     """The early closeout note (Ticket 096) for `call`, a finished file edit
-    of the main agent in `turn`, or "" when it changed no project code file
-    or the turn's closeout would ask for nothing yet.
+    of the main agent in `turn`, with no text when it changed no project
+    code file or the turn's closeout would ask for nothing yet. Its labels
+    let the caller give a list once per task (round 7, R4).
 
     The note names, by their short forms, the items the closeout would ask
     for were the turn to end now, so they can be met before the report. It
@@ -2178,20 +2236,30 @@ def closeout_note(turn: Turn, call: Call, overrides: dict, namespaces: tuple[str
     """
 
     if not any(map(_is_code_change, _changed_paths(call, project))):
-        return ""
+        return CloseoutNote()
     if not (call.id and any(c.id == call.id for c in turn.calls)):
         turn.calls.append(call)
     proof = _Proof(turn, overrides, namespaces, "", earlier, task_skips)
     items = _closeout_items(_Changes(turn, {}, project), proof, {}, {}, intensity,
                             briefed=False, branch_size=lambda: None, owed_reads=owed_reads)
     if not items:
-        return ""
-    *rest, last = [i.label for i in items]
-    return ("this turn changed code, so its closeout will ask for "
-            + (f"{', '.join(rest)} and {last}" if rest else last)
-            + ". Meet each after your last code change, since a later change asks again, "
-            "and before your final report, so you report once:\n"
-            + "\n".join(i.short for i in items))
+        return CloseoutNote()
+    labels = tuple(i.label for i in items)
+    *rest, last = labels
+    return CloseoutNote(
+        "this turn changed code, so its closeout will ask for "
+        + (f"{', '.join(rest)} and {last}" if rest else last)
+        + ". Meet each after your last code change, since a later change asks again, "
+        "and before your final report, so you report once:\n"
+        + "\n".join(i.short for i in items), labels)
+
+
+class CloseoutNote(NamedTuple):
+    """The early closeout note's `text` ("" for none) and the `labels` of the
+    items it names, in order."""
+
+    text: str = ""
+    labels: tuple[str, ...] = ()
 
 
 class _Item(NamedTuple):
@@ -2379,25 +2447,26 @@ def _code_items(changes: "_Changes", proof: _Proof) -> list[_Item]:
 
 
 def _review_item(changes: "_Changes", proof: _Proof, spawn_templates: dict[str, list[str]],
-                 branch_size: Callable[[], int | None]) -> list[_Item]:
+                 branch_size: Callable[[], int | None], points: ReviewPoints) -> list[_Item]:
     """The Review item for a turn that changed code (spec R1), or [] when the
     branch's work is not large, cannot be measured, or the item is met: by a
     reviewer subagent started after the last code change that has finished
     (one started in the background once its completion arrived in the turn),
     by the skill loaded and a change read after that change, before or after
-    the load (Ticket 092), or by a skip line. `branch_size` runs only when nothing else met it."""
+    the load (Ticket 092), or by a skip line, each of which records the
+    task's review point; or by an earlier turn's point while the branch has
+    grown by fewer than `REVIEW_POINT_GROWTH` lines since it (round 7, R1)."""
 
-    if proof.skipped(REVIEW_SKILL):
-        return []
     last = changes.code[-1].index
-    if any(index > last and _reviewer_returned(call, proof, spawn_templates)
-           for index, call in enumerate(proof.turn.calls)):
-        return []
     loaded = proof.load_index(REVIEW_SKILL)
-    if loaded is not None and changes.read_after(last):
+    if (proof.skipped(REVIEW_SKILL)
+            or any(index > last and _reviewer_returned(call, proof, spawn_templates)
+                   for index, call in enumerate(proof.turn.calls))
+            or (loaded is not None and changes.read_after(last))):
+        points.record("Review", branch_size())
         return []
     size = branch_size()
-    if size is None or size < REVIEW_MIN_LINES:
+    if size is None or size < REVIEW_MIN_LINES or points.covers("Review", size):
         return []
     # The template is named by its path: a reader of hold texts takes a bare
     # backticked name as a skill the item asks for, and this item's skill is the
@@ -2429,13 +2498,25 @@ def _review_item(changes: "_Changes", proof: _Proof, spawn_templates: dict[str, 
 
 
 def _verification_item(changes: "_Changes", proof: _Proof, intensity: str | None,
-                       branch_size: Callable[[], int | None]) -> list[_Item]:
+                       branch_size: Callable[[], int | None],
+                       points: ReviewPoints) -> list[_Item]:
     """The Verification item (spec R3) for a turn that changed code or a
-    sensitive file, or [] when no trigger holds or `verification-before-completion`
-    counts as loaded or is skipped. Its skip line is the Proof item's too.
-    `branch_size` runs only when no other trigger holds."""
+    sensitive file, or [] when no trigger holds or the item is met. Its skip
+    line is the Proof item's too.
 
-    if not (changes.code or changes.sensitive) or proof.loaded_or_skipped(PROOF_SKILL):
+    A load of `verification-before-completion` in this turn, or a skip line,
+    records the task's verification point, in any turn. When the route, a
+    subagent's code, or a sensitive file asks for the item, a load that
+    counts as loaded meets it, as before. When only branch size does, the
+    turn's own load or skip meets it, or an earlier turn's point while the
+    branch has grown by fewer than `REVIEW_POINT_GROWTH` lines since it
+    (round 7, R1). `branch_size` runs only when it records a point or no
+    other trigger holds."""
+
+    this_turn = PROOF_SKILL in proof.turn_loads or proof.skipped(PROOF_SKILL)
+    if this_turn:
+        points.record("Verification", branch_size())
+    if not (changes.code or changes.sensitive):
         return []
     triggers = []
     if intensity == FULL_ROUTE:
@@ -2444,9 +2525,13 @@ def _verification_item(changes: "_Changes", proof: _Proof, intensity: str | None
         triggers.append("a subagent changed code")
     if changes.sensitive:
         triggers.append("a security-sensitive file changed")
+    if triggers and proof.loaded_or_skipped(PROOF_SKILL):
+        return []
     if not triggers:
+        if this_turn:
+            return []
         size = branch_size()
-        if size is None or size < REVIEW_MIN_LINES:
+        if size is None or size < REVIEW_MIN_LINES or points.covers("Verification", size):
             return []
         triggers.append(
             f"this branch's work is {size} changed lines of non-test code against its base")

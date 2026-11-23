@@ -225,7 +225,8 @@ def judge_call(settings: Settings, situation: Situation, call: Call,
         return found
 
     earlier = _since_compaction(state)
-    task_skips = actions.TaskSkips(state.lasting_skip_keys())
+    task_skips = actions.TaskSkips(state.lasting_skip_keys(), state.carried_notice_keys())
+    points = actions.ReviewPoints(state.review_point_lines())
     registry_warnings: list[str] = []
     routing = gates.check_routing(
         state, call, current, overrides,
@@ -241,11 +242,15 @@ def judge_call(settings: Settings, situation: Situation, call: Call,
         earlier,
         closeout=actions.Closeout(state.spawn_templates_of(current.key),
                                   _route_intensity(state), state.briefed,
-                                  _owed_reads(state, current.key)),
+                                  _owed_reads(state, current.key), points),
         references=lambda: _registry_references(settings, registry_warnings),
         task_skips=task_skips,
     )
     state.record_lasting_skips(current.key, task_skips.cleared)
+    state.record_review_points(current.key, points.met)
+    if not holds:
+        # A lasting skip's notice is given once per task for its gate, skill and kind.
+        state.record_carried_notices(current.key, task_skips.carried)
     if not holds and call.id:
         # Which templates a spawn's brief followed, for the closeout.
         templates = actions.brief_templates(
@@ -322,6 +327,7 @@ def judge_turn_end(settings: Settings, situation: Situation, read: TurnReader,
     current = turns[-1]
     subagents, unread = situation.subagents(current)
     task_skips = actions.TaskSkips(state.lasting_skip_keys())
+    points = actions.ReviewPoints(state.review_point_lines())
     overrides = overrides_for(state, current, prompt_key)
     gates.note_task_routed(state, current, overrides)
     hold = actions.check_closeout(
@@ -333,9 +339,11 @@ def judge_turn_end(settings: Settings, situation: Situation, read: TurnReader,
         briefed=state.briefed,
         owed_reads=_owed_reads(state, current.key),
         task_skips=task_skips,
+        points=points,
     )
     # A skip line meeting the Reads item lasts as one clearing its gate would.
     state.record_lasting_skips(current.key, task_skips.cleared)
+    state.record_review_points(current.key, points.met)
     holds = [hold] if hold else []
     settled += friction.observe(state, current, friction.STOP, holds)
     if hold is None:
@@ -362,6 +370,7 @@ def judge_turn_end(settings: Settings, situation: Situation, read: TurnReader,
                     state.shell)
 
 
+@_one_hook_at_a_time
 def note_finished_call(settings: Settings, situation: Situation, call: Call,
                        read: TurnReader) -> Decision:
     """After the main agent's first finished code change of a turn by a file
@@ -370,11 +379,13 @@ def note_finished_call(settings: Settings, situation: Situation, call: Call,
 
     `call` is the finished call, with its result. A subagent has no
     closeout, so gets no note; nor does a turn the closeout already held,
-    which has seen its items. The note ends by naming the project's context
-    documents, when `situation.context_docs()` gives any
+    which has seen its items, nor a turn whose list of items is the one the
+    task's last note named (round 7, R4). The note ends by naming the
+    project's context documents, when `situation.context_docs()` gives any
     (`gates.context_pointer`). The note's claim on the turn marker has its
-    own purpose, and a claim that fails or cannot be made adds no note. The
-    saved state is only read: the events that judge calls own it.
+    own purpose, and a claim that fails or cannot be made adds no note. Of
+    the saved state, only the list the note named is written: the events
+    that judge calls own the rest.
     """
 
     if call.kind != events.FILE_WRITE or situation.agent_id is not None or not call.ok:
@@ -392,23 +403,29 @@ def note_finished_call(settings: Settings, situation: Situation, call: Call,
     if (state.held_gates.get("turn") == current.key
             and actions.CLOSEOUT_GATE in state.held_gates["gates"]):
         return Decision()
-    text = actions.closeout_note(
+    note = actions.closeout_note(
         current, call, overrides_for(state, current, prompt_key), settings.skill_namespaces,
         situation.project, _since_compaction(state), _route_intensity(state),
         _owed_reads(state, current.key), actions.TaskSkips(state.lasting_skip_keys()))
-    if not text:
+    if not note.text:
         return Decision()
-    pointer = gates.context_pointer(situation.context_docs())
-    if pointer:
-        text += "\n" + pointer
     try:
         claimed = store.claim_turn(situation.session_id, current.key, CLOSEOUT_NOTE)
     except (OSError, StateUnsafe):
         claimed = False  # The note is advice: without a marker it could repeat, so none.
-    if not claimed:
+    # `state` was folded through this turn, so a new task's route has already ended the list.
+    if not claimed or list(note.labels) == state.closeout_noted.get("labels"):
         return Decision([], [], state.shell)
+    text = note.text
+    pointer = gates.context_pointer(situation.context_docs())
+    if pointer:
+        text += "\n" + pointer
+    # Save only the list, onto the state as saved: folding is the judge calls' to save.
+    saved, _ = store.load(situation.session_id)
+    saved.closeout_noted = {"labels": list(note.labels), "turn": current.key}
     log = _logged(settings, situation, lambda r: r.notices([CLOSEOUT_NOTE_KIND]))
-    return Decision([], [Notice(CLOSEOUT_NOTE_KIND, text), *_warnings(log)], state.shell)
+    return Decision([], [Notice(CLOSEOUT_NOTE_KIND, text),
+                         *_warnings(_save(store, situation.session_id, saved), log)], state.shell)
 
 
 @_one_hook_at_a_time
@@ -522,6 +539,7 @@ def start_session(settings: Settings, situation: Situation, source: str,
     if source == CLEARED:
         # No task is known to run: the next route line starts one afresh.
         state.task, state.task_unknown = None, False
+        state.end_task()
     notices = []
     if not state.policy_notice_shown:
         state.policy_notice_shown = True
