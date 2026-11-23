@@ -41,6 +41,11 @@ READ = _slot("read")
 NO_RANGE = _slot("no-range")
 # The file edit calls, after "a file edit tool", such as "(a file write call)".
 FILE_EDIT_TOOLS = _slot("file-edit-tools")
+# What the harness's file edit tools and shell do to a file's line endings, as
+# a sentence with its trailing space, in a hold on a script or shell write
+# (round 7, R6), or nothing: agents script edits to keep CRLF, and only a
+# harness can say whether its edit tool keeps it.
+LINE_ENDINGS = _slot("line-endings")
 # Ends a call's hold that a line can clear, on a line of its own: the harness
 # names a call that can carry the line when the held call has no field for
 # one, or says nothing and drops the line.
@@ -50,7 +55,8 @@ FULL_ADVICE = "line-advice"
 SHORT_ADVICE = "line-advice-short"
 FULL_CLEARING = "clearing"
 SHORT_CLEARING = "clearing-short"
-NAMES = frozenset({"skill-tool", "read-tool", "read", "no-range", "file-edit-tools", "carrier",
+NAMES = frozenset({"skill-tool", "read-tool", "read", "no-range", "file-edit-tools",
+                   "line-endings", "carrier",
                    FULL_ADVICE, SHORT_ADVICE, FULL_CLEARING, SHORT_CLEARING})
 # A line-advice slot; its groups are the slot's name, the line, and the way out.
 ADVICE_RE = re.compile(
@@ -127,6 +133,7 @@ NEUTRAL_PHRASES = {
     READ: "read",
     NO_RANGE: "with no range",
     FILE_EDIT_TOOLS: "(a file write call)",
+    LINE_ENDINGS: "",
 }
 
 

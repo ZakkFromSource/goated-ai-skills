@@ -196,7 +196,7 @@ class EverySlotHasClaudeCodeWording(unittest.TestCase):
     SLOTS = {
         "skill-tool": wording.SKILL_TOOL, "read-tool": wording.READ_TOOL, "read": wording.READ,
         "no-range": wording.NO_RANGE, "file-edit-tools": wording.FILE_EDIT_TOOLS,
-        "carrier": wording.CARRIER,
+        "line-endings": wording.LINE_ENDINGS, "carrier": wording.CARRIER,
         "line-advice": wording.unseen_line_advice("route line", "skip routing"),
         "line-advice-short": wording.short_advice("route line", "skip routing"),
         "clearing": wording.clearing_section(["skip line"], ["skip tdd", "skip diagnose"], True),

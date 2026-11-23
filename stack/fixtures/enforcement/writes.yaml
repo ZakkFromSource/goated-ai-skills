@@ -1465,7 +1465,7 @@ scenarios:
       - call: {kind: skill_load, skill: using-goated-ai-skills}
       - call: {kind: shell_command, shell: powershell, command: "echo x > nul"}
 
-  - name: a test file named for sessions is not security-sensitive
+  - name: a test file named for login sessions is not security-sensitive
     covers:
       - {gate: security, case: near-miss}
     steps:
@@ -1474,7 +1474,7 @@ scenarios:
       - reply: "goated-route: direct"
       - call:
           kind: file_write
-          path: tests/test_session_x.py
+          path: tests/test_login_session.py
           edits: [{removed: "assert ttl == 10", added: "assert ttl == 20"}]
 
   - name: a test path that is not test code, or matches by its kind, is still security-sensitive
@@ -1505,20 +1505,41 @@ scenarios:
       - call: {kind: file_write, path: src/contest/auth.py, edits: [{removed: "a = 1", added: "a = 2"}]}
         expect: *security_held
 
-  - name: session code is security-sensitive
+  - name: session code beside another auth word is security-sensitive
     covers:
       - {gate: security, case: holds}
+      - {gate: security, case: clears, way: proof}
+    steps:
+      - prompt: {type: prompt, author: person, text: Fix the session timeout.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: &auth_session
+          kind: file_write
+          path: src/auth/session.py
+          edits: [{removed: "ttl = 10", added: "ttl = 20"}]
+        expect: &session_held
+          decision: hold
+          holds: [{gate: security, kind: justified-skip}]
+      - call: &login_session
+          kind: file_write
+          path: src/login_session.py
+          edits: [{removed: "ttl = 10", added: "ttl = 20"}]
+        expect: *session_held
+      - call: {kind: skill_load, skill: code-security-review}
+      - call: *auth_session
+      - call: *login_session
+
+  - name: session code with no other auth word is not security-sensitive
+    covers:
+      - {gate: security, case: near-miss}
     steps:
       - prompt: {type: prompt, author: person, text: Fix the session timeout.}
       - call: {kind: skill_load, skill: using-goated-ai-skills}
       - reply: "goated-route: direct"
       - call:
           kind: file_write
-          path: src/session.py
+          path: src/runtime/session.py
           edits: [{removed: "ttl = 10", added: "ttl = 20"}]
-        expect:
-          decision: hold
-          holds: [{gate: security, kind: justified-skip}]
 
   - name: an edit inside an open merge conflict waits for the conflict skill
     covers:

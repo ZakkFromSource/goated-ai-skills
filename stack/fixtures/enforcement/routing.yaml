@@ -62,6 +62,29 @@ scenarios:
           whole_file: true
           edits: [{removed: null, added: "step = 1\n"}]
 
+  - name: a literal backslash inside double quotes is a plain read before routing
+    # A posix shell escapes only `$`, a backquote, `"`, `\` or a newline
+    # inside double quotes, and a powershell one nothing, so both read `\|`
+    # as written.
+    covers:
+      - {gate: router-first, case: near-miss}
+    steps:
+      - prompt: {type: prompt, author: person, text: List the headings.}
+      - call: {kind: shell_command, shell: posix, command: 'grep -n "^#\|^##" README.md'}
+
+  - name: an escaping backslash or a substitution inside double quotes is no plain read
+    covers:
+      - {gate: router-first, case: holds}
+      - {gate: router-first, case: clears, way: proof}
+    steps:
+      - prompt: {type: prompt, author: person, text: Find the cleanup call.}
+      - call: {kind: shell_command, shell: posix, command: 'grep -n "\$(rm x)" src/cleanup.sh'}
+        expect: &plain_read_held {decision: hold, holds: [{gate: router-first, kind: strict}]}
+      - call: {kind: shell_command, shell: posix, command: 'grep -n "$(rm x)" src/cleanup.sh'}
+        expect: *plain_read_held
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - call: {kind: shell_command, shell: posix, command: 'grep -n "\$(rm x)" src/cleanup.sh'}
+
   - name: the brief that starts a session carries its route until a person's prompt
     covers:
       - {gate: router-first, case: clears, way: brief-route}

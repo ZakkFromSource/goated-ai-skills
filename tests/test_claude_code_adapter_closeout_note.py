@@ -138,6 +138,17 @@ class FirstCodeChangeTests(NoteCase):
         self.assertIn("context documents, for its terms, sources, and standards: "
                       "`CONTEXT.md` and `docs/agents/context-matrix.md`.", note(after))
 
+    def test_the_context_docs_come_first_in_the_note(self) -> None:
+        # Round 7, R11: the pointer opens the note, before the items.
+        s = self.session()
+        s.project.mkdir(parents=True, exist_ok=True)
+        (s.project / "CONTEXT.md").write_text("# Context\n", encoding="utf-8")
+        _, after = change(s, "Edit", small_edit())
+        self.assertTrue(note(after).startswith(
+            "GOATED Claude Code adapter: This project's own context documents, for its terms, "
+            "sources, and standards: `CONTEXT.md`.\nThis turn changed code, so its closeout "
+            "will ask for "), note(after))
+
     def test_the_note_names_no_context_docs_when_none_exists(self) -> None:
         _, after = change(self.session(), "Edit", small_edit())
         self.assertTrue(note(after))

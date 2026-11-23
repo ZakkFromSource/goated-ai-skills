@@ -370,7 +370,7 @@ def note_finished_call(settings: Settings, situation: Situation, call: Call,
 
     `call` is the finished call, with its result. A subagent has no
     closeout, so gets no note; nor does a turn the closeout already held,
-    which has seen its items. The note ends by naming the project's context
+    which has seen its items. The note opens by naming the project's context
     documents, when `situation.context_docs()` gives any
     (`gates.context_pointer`). The note's claim on the turn marker has its
     own purpose, and a claim that fails or cannot be made adds no note. The
@@ -400,7 +400,8 @@ def note_finished_call(settings: Settings, situation: Situation, call: Call,
         return Decision()
     pointer = gates.context_pointer(situation.context_docs())
     if pointer:
-        text += "\n" + pointer
+        # The documents come first (round 7, R11), so the items open a sentence of their own.
+        text = f"{pointer}\n{text[0].upper()}{text[1:]}"
     try:
         claimed = store.claim_turn(situation.session_id, current.key, CLOSEOUT_NOTE)
     except (OSError, StateUnsafe):

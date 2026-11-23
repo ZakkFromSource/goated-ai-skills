@@ -724,11 +724,12 @@ its short form, and saying they can be met before the final report. For
 example, a non-test code change brings Proof and Docs; a test file alone
 brings Proof; `software-design-principles` counted as loaded with a
 substantial change adds the Design red-flags item; a `full` route adds
-Verification. An item already met or skipped is left out. The note ends by
+Verification. An item already met or skipped is left out. The note opens by
 naming the project's own context documents among `CONTEXT.md`,
 `docs/agents/context-matrix.md`, and `docs/agents/project-standards.md` at
 the project's root, the ones that exist, and names none when none does
-(Ticket 119). The orientation hold names them the same way.
+(Ticket 119; first since round 7, R11). The orientation hold names them the
+same way.
 
 - The items are the closeout's own, judged as if the turn ended at that
   call, from the hook's payload (`tool_name`, `tool_input`,

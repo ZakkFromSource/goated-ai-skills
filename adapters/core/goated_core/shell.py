@@ -306,7 +306,7 @@ class ShellCommand:
     joined only by pipes or list separators, with no wrapper, redirect into
     a file (a Bash `2>/dev/null` aside), heredoc, group, substitution, or
     background job, and with none of the text in `NOT_PLAINLY_SPELLED_RE`
-    outside a whole single-quoted argument (see `_outside_quoted_arguments`);
+    outside what a whole quoted argument exempts (see `_outside_quoted_arguments`);
     when the reading is in doubt it is False. `only_reads_and_writes_files`
     is the same test loosened only for file work: each simple command may
     instead be a `cd`, a command that only writes the files it names
@@ -721,7 +721,8 @@ FD_DUPLICATE_RE = re.compile(FD_DUPLICATE)
 #   goes to a native program unparsed, quotes included;
 # - `::` before a separator, a PowerShell provider path
 #   (`FileSystem::\\host\share`), which can reach the network too.
-# A backslash and `//` inside a whole single-quoted argument are exempt; see
+# A backslash and `//` inside a whole single-quoted argument are exempt, and so
+# is a literal backslash inside a whole double-quoted one; see
 # `_outside_quoted_arguments`.
 NOT_PLAINLY_SPELLED_RE = re.compile(
     rf"[$`\\]|<<<|>(?=&)(?!{FD_DUPLICATE})|[^\t\n\x20-\x7e]|<#|@[\"']|\[\[|\]\]|//|--%"
@@ -736,6 +737,11 @@ AFTER_WORD = frozenset(" \t\n|;&()<>")
 # digits, `+`, `.`, or `-`, opening with a letter, then `:`.
 SEPARATOR_PAIR_RE = re.compile(r"[\\/]{2}")
 URL_SCHEME_END_RE = re.compile(r"(?:^|[^\w+.-])[A-Za-z][\w+.-]*:$")
+# A backslash inside double quotes that both shells keep as written (round 7,
+# R8): bash escapes only `$`, a backquote, `"`, `\` or a newline there, as POSIX
+# says, and PowerShell escapes nothing with it. One before any of those, or at
+# the text's end (before its closing quote), is an escape in bash alone.
+DOUBLE_QUOTED_LITERAL_BACKSLASH = r'\\(?=[^$`"\\\n])'
 # A provider path, kept unblanked so NOT_PLAINLY_SPELLED_RE sees it.
 PROVIDER_PATH_RE = re.compile(r"::[\\/]")
 # Characters bash expands into file names, even when this reading saw them
@@ -747,10 +753,13 @@ BASH_NULL_DEVICE = "/dev/null"
 
 def _outside_quoted_arguments(command: str) -> str:
     """`command` with the backslashes and slashes of each whole
-    single-quoted argument blanked out, so that `NOT_PLAINLY_SPELLED_RE`
-    passes them (`grep -n 'def\\s+x' a.py`), unless the argument may name a
-    UNC path. Bash and PowerShell both read a single-quoted text literally,
-    so they agree on it only while they agree on where each quote opens:
+    single-quoted argument blanked out, and the backslashes of each whole
+    double-quoted one that both shells keep as written
+    (`DOUBLE_QUOTED_LITERAL_BACKSLASH`), so that `NOT_PLAINLY_SPELLED_RE`
+    passes them (`grep -n 'def\\s+x' a.py`, `grep -n "^#\\|^##" a.md`),
+    unless the argument may name a UNC path. Bash and PowerShell both read
+    a single-quoted text literally, and agree on those backslashes, so they
+    agree on it only while they agree on where each quote opens:
     the text is read from the start, and once a backslash or backtick is
     met outside quotes, where bash escapes the next character and
     PowerShell may not, `command` is returned unchanged, and so is held.
@@ -770,9 +779,9 @@ def _outside_quoted_arguments(command: str) -> str:
                 break
             text = command[i + 1 : end]
             whole = word_start and command[end + 1 : end + 2] in AFTER_WORD | {""}
-            if c == "'" and whole and not _may_name_network_path(text):
-                text = re.sub(r"[\\/]", "_", text)
-            out.append(c + text + c)  # A backslash in double quotes is kept, and held.
+            if whole and not _may_name_network_path(text):
+                text = re.sub(r"[\\/]" if c == "'" else DOUBLE_QUOTED_LITERAL_BACKSLASH, "_", text)
+            out.append(c + text + c)
             i, word_start = end + 1, False
         elif c == "#" and word_start:
             end = command.find("\n", i)

@@ -263,7 +263,7 @@ file (see [Holds](#holds)).
 | `design-reads` | justified-skip | A later file write to a code file, or to a configuration file that is not test data, inside the project, once `software-design-principles` counts as loaded, whose signals select a reference not read whole since the last compaction. A shell write counts as for `design`; its text is not read for signals, so only its path selects (a configuration file, the third code file), and a test file it writes selects nothing. A comment-only edit adding fewer than twenty lines is small, so its comment selects no `readability.md`. A file edit that shows its text, or a shell write adding thirty or more counted lines, [lands and reads after](#holds) | Each selected reference is read whole, or a lasting skip covers it | `proof`, `skip-line`, `lasting-skip`, `override` | `software-design-principles`'s Read now lists |
 | `reference-reads` | justified-skip | A write inside the project (or anywhere, for a `gate-fires` signal) that fires a signal the installed registry declares for a reference of a skill that counts as loaded. A named pattern matches as [Registry Reference Signals](#registry-reference-signals) states: `mock-or-patch` takes `patch` only as a call or decorator, `monkeypatch` only as a patch of code, and no word inside a quoted string the line shows for certain or a multi-line string the edit shows opening. A file edit that shows its text, or a shell write adding thirty or more counted lines, [lands and reads after](#holds) | Each named reference is read whole, or a lasting skip covers it | `proof`, `skip-line`, `lasting-skip`, `override` | The registry's `references` signals (`stack/goated-stack.yaml`, `skills/README.md`) |
 | `review-intake` | justified-skip | A write to a code file inside the project once a reviewer agent has reported in the turn: an agent started now by a spawn whose brief followed `subagent-driven-development`'s reviewer template, whose result arrived or, started in the background, whose completion did. Any other brief, and a held or failed spawn, trigger nothing | `receiving-code-review` counts as loaded | `proof`, `skip-line`, `override` | `receiving-code-review` |
-| `security` | justified-skip | A write to a security-sensitive path inside the project (test code meets no category a word in its name selects; see [Security-Sensitive Paths](#security-sensitive-paths)): dependency manifests and lockfiles, env and key files, files named for secrets, credentials, or tokens, auth, session, and permission code, migrations and schemas, CI, container, and deployment files | `code-security-review` counts as loaded | `proof`, `skip-line`, `override` | `code-security-review` |
+| `security` | justified-skip | A write to a security-sensitive path inside the project (test code meets no category a word in its name selects; see [Security-Sensitive Paths](#security-sensitive-paths)): dependency manifests and lockfiles, env and key files, files named for secrets, credentials, or tokens, auth and permission code (session code only beside an auth word), migrations and schemas, CI, container, and deployment files | `code-security-review` counts as loaded | `proof`, `skip-line`, `override` | `code-security-review` |
 | `scripted-edit` | justified-skip | A shell command whose inline script writes a code file inside the project, or a file it names only at run time. It follows `security` and `review-intake` for the same file | A skip line naming `software-design-principles`; loading the skill does not clear it | `skip-line`, `override` | `software-design-principles`: change code with the file edit tools |
 | `conflict-resolution` | justified-skip | A write while a merge conflict is open in the turn: an edit whose removed text has a conflict marker at a line start, a write to a file a read, a file printer, or `git diff` showed with one, or any write after a merge, rebase, cherry-pick, revert, or pull reported a conflict, until it finishes or is aborted | `resolving-merge-conflicts` counts as loaded | `proof`, `skip-line`, `override` | `resolving-merge-conflicts` |
 | `repeated-failure` | justified-skip | A write once the same check has failed twice in a row in the turn. A run that only fails to load a missing module, the first run after a test file was written, a run with fewer failures than the one before, and a call that never ran (held, refused, or interrupted) neither add nor reset | `diagnose` counts as loaded | `proof`, `skip-line`, `override` | `diagnose` ("a check that keeps failing") |
@@ -447,10 +447,11 @@ A notice never holds.
   subagent's turn or the registry.
 - `override_recorded`: a person's override for the turn.
 - `closeout_note`: after the main agent's first finished file write of a
-  turn that changes code inside the project, the closeout items the turn
+  turn that changes code inside the project, first the project's own
+  context documents that exist (see [Calling The Core](#calling-the-core)),
+  and none when none does (round 7, R11), then the closeout items the turn
   will meet, each short, judged as if the turn ended there, Reads
-  included, then the project's own context documents that exist (see
-  [Calling The Core](#calling-the-core)), and none when none does. Once per
+  included. Once per
   turn; none in a turn the closeout already held.
 - `session_notice`: at a session start, when the shared policy or the router
   is missing, or project agent files the onboarding skills write are
@@ -650,15 +651,20 @@ The first matching category is named (`SECURITY_CATEGORIES` in
 | --- | --- |
 | dependencies | `package.json`, `package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`, `requirements*.txt` or `.in`, `pyproject.toml`, `poetry.lock`, `uv.lock`, `Pipfile` and its lock, `Cargo.toml` and `Cargo.lock`, `go.mod`, `go.sum`, `Gemfile` and its lock, `composer.json` and its lock, `*.csproj` |
 | secrets | `.env` and `.env.*`, `*.pem`, `*.key`, `*.p12`, `*.pfx`, `id_rsa`, `id_ed25519`, `id_ecdsa`, and the words `secret`, `credential`, `token`, `apikey` or `api_key`, singular or plural |
-| auth | the words `auth`, `authn`, `authz`, `authenticat…`, `authoriz…`, `oauth`, `oauth2`, `login`, `logout`, `signin`, `jwt`, `password`, `permission`, `rbac`, `acl`, `policy`, `session`, and the plurals of `password`, `permission`, `acl`, `policy`, and `session` only |
+| auth | the words `auth`, `authn`, `authz`, `authenticat…`, `authoriz…`, `oauth`, `oauth2`, `login`, `logout`, `signin`, `jwt`, `password`, `permission`, `rbac`, `acl`, `policy`, and the plurals of `password`, `permission`, `acl`, and `policy` only; `session` or `sessions` only beside another of these words in the path |
 | persistence | a `migration/` or `migrations/` folder, `schema.sql`, `schema.prisma`, any `.sql` file |
 | deploy-and-ci | `Dockerfile`, `docker-compose`, `.github/workflows/`, `.gitlab-ci`, a `terraform/` folder or `.tf` file, a `k8s/` or `helm/` folder, `serverless.yml` or `.yaml` |
+
+A session is often a program's run, not a login, so `session` is no auth
+word of its own (round 7, R5): `src/runtime/session.py` meets no `security`
+hold, while `src/auth/session.py` and `src/login_session.py` do, through
+the other auth word beside it.
 
 Of docs-like files, only dependency manifests (`requirements.txt`) are
 sensitive. Test code, a code file that is also a
 [test file](#code-and-test-files), is not sensitive by a word in its name:
-it meets neither auth nor secrets, so `tests/test_session_x.py` meets no
-`security` hold while `src/session.py` does (the maintainer's choice X3,
+it meets neither auth nor secrets, so `tests/test_auth_x.py` meets no
+`security` hold while `src/auth.py` does (the maintainer's choice X3,
 2026-11-19). It still meets the categories a file's kind or folder selects
 (`TEST_CODE_SPARED` in `actions.py`): `migrations/0001_test.sql` is
 persistence. A test file that is not code meets every category, as
@@ -1317,8 +1323,19 @@ argument, which both shells read literally (`grep -n 'def\s+x' a.py`,
 appear anywhere in it but right after a URL scheme such as `https:`: a
 program may split a path off anywhere (`'-f//host/p'` is `-f` with
 `//host/p`), and the core cannot tell a pattern from a path, so
-`grep '// TODO' a.c` and `grep 'a\\b' a.py` are held. A quote inside a word
-(`x'\s'`) and double quotes get no exemption. So a Windows path with
+`grep '// TODO' a.c` and `grep 'a\\b' a.py` are held. Inside a whole
+double-quoted argument, a backslash is read as POSIX reads it (round 7,
+R8): it escapes only `$`, a backquote, `"`, `\`, or a newline, and before
+any other character stays literal, as it always is in PowerShell, so both
+shells agree on it and it is fine (`grep -n "^#\|^##" a.md`). One before
+those five, or at the argument's end, is held, since bash reads it as an
+escape and PowerShell does not (`"a\"; rm b; "` ends the string in
+PowerShell). The `$` and backtick rules still hold inside double quotes,
+so `grep "\$(rm x)" a`, which bash reads as the literal text `$(rm x)`, is
+held, as `grep "$(rm x)" a` is; so are two separators that may start a
+network path, under the single-quote rule, and a slash pair, which double
+quotes do not exempt. A quote inside a word (`x'\s'`, `-e"a\|b"`) gets no
+exemption. So a Windows path with
 backslashes, such as `Get-Content src\a.py`, is held;
 `Get-Content 'src\a.py'`, a file read, or a forward-slash path passes. When
 the analysis cannot tell, the call is held. The lists are
@@ -1433,6 +1450,15 @@ editor or agent settings file: a `settings*.json` directly in a folder named
 write or a shell command (`SETUP_FILE_RE` in `actions.py`). It counts only
 inside the project, so a scratch folder's settings do not, and neither do
 settings under the home folder, unless the project holds it.
+
+A file write to `.env.example`, `.env.sample`, or `.env.template`, in any
+case, that only adds, removes, or edits comment lines (`#` first, past any
+spaces) and blank lines is no setup (round 7, R9; `EXAMPLE_ENV_FILES` in
+`actions.py`): each edit's replaced text must hold the same other lines,
+trailing space aside, as the text it writes. A setting line added,
+removed, or changed there, a commented-out setting turned on, a whole-file
+write, an edit that does not show its text, and a shell write still count,
+and so does any change to `.env` itself or another `.env.*` file.
 
 Two limits: an install inside `bash -c "…"` or another wrapped command
 string is not seen, as with every shell reading here; and an install whose
@@ -1822,3 +1848,17 @@ The [Hold Messages](#hold-messages) rules, as the core's text meets them
   read asks for the owed references first and the change after them, since
   the Reads item counts only a read of the file made after them; one read
   in that order meets both.
+- The `commit` hold's change read says to make the read in an earlier
+  message than the commit, since a read sent in the commit's own message
+  has not finished when the commit is judged and cannot count for it
+  (round 7, R10). The `pull-request` and `pr-review` holds keep their
+  wording.
+- The `scripted-edit` hold, and a `design` or `design-reads` hold on a
+  shell write, carry a slot for what the harness's file edit tools and
+  shell do to a file's line endings (`wording.LINE_ENDINGS`; round 7, R6),
+  since agents script edits to keep CRLF. The core's neutral words leave it
+  empty; an adapter fills it only with what it has checked of its own
+  harness. The Claude Code adapter says that the Edit tool keeps a file's
+  line endings, so CRLF is no reason to use a script, and that `sed -i` in
+  Git Bash can strip CR from a file (both checked on 2026-11-23). A hold on
+  a file edit tool's write carries no slot.
