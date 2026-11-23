@@ -20,7 +20,7 @@ from typing import NamedTuple
 from unittest import mock
 
 from claude_code_adapter_support import (
-    REPO_ROOT, Session, git_branch_with_change, parse, reason,
+    REPO_ROOT, Session, git_branch_with_change, grow_branch, parse, reason,
 )
 from enforcement_support import expectation_mismatch, item_labels
 from goated_core import wording
@@ -124,6 +124,8 @@ class _Run:
                 self._agent_finished(step["agent_finished"])
             elif "compaction" in step:
                 self._compaction()
+            elif "branch_grows" in step:
+                grow_branch(self.s.project, step["branch_grows"])
             elif "turn_end" in step:
                 self._turn_end(step)
             elif "session_start" in step:

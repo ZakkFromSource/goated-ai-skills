@@ -666,6 +666,44 @@ class ReviewPointTests(ReviewTestCase):
         held = self.follow_up(s, "src/two.py", 30)  # 50 lines since the review.
         self.assertEqual(self.items(held), ["Review", "Verification"])
 
+    def reviewed_without_code(self) -> Session:
+        """A session on a 400-line branch whose second turn, of the same
+        task, changes no code and has loaded `verification-before-completion`."""
+
+        s = self.session()
+        self.branch(s, 400)
+        s.run("git status")  # A judged call, so the core sees the task's route.
+        self.assertEqual(stop(s), {})
+        s.prompt("Review the branch.")
+        s.load(VERIFY)
+        return s
+
+    def test_a_review_in_a_turn_that_changed_no_code_sets_the_point(self) -> None:
+        # Review of Ticket 122: "review the branch" in its own turn, then a small fix.
+        for how in ("load", "skip", "reviewer"):
+            with self.subTest(how=how):
+                s = self.reviewed_without_code()
+                if how == "load":
+                    s.load(REVIEW)
+                    s.run("git diff main")
+                elif how == "skip":
+                    s.say(REVIEW_SKIP)
+                else:
+                    s.load("subagent-driven-development")
+                    s.read(REVIEWER_PROMPT)
+                    agent = s.subagent(f"r-{self._sessions}")
+                    agent.prompt("Review the branch.", hook=False)
+                    agent.run("git diff main")
+                    self.assertEqual(decision(s.spawn(f"r-{self._sessions}", REVIEWER_BRIEF)),
+                                     "pass")
+                self.assertEqual(stop(s), {})
+                self.assertEqual(self.follow_up(s, "src/fix.py", 20), {})
+        # The near miss: the same turn with no review, so the fix is asked.
+        s = self.reviewed_without_code()
+        s.run("git diff main")
+        self.assertEqual(stop(s), {})
+        self.assertEqual(self.items(self.follow_up(s, "src/fix.py", 20)), ["Review"])
+
     def test_meeting_it_again_sets_a_new_point(self) -> None:
         s = self.session()
         self.reviewed(s)
@@ -695,20 +733,31 @@ class ReviewPointTests(ReviewTestCase):
 
     def test_the_other_verification_triggers_still_ask_in_each_turn(self) -> None:
         # The compaction drops the load, which otherwise counts until then.
-        for trigger in ("full", "sensitive"):
+        for trigger in ("full", "sensitive", "subagent"):
             with self.subTest(trigger=trigger):
                 s = self.session("goated-route: full | requires: tdd" if trigger == "full"
                                  else "goated-route: direct")
                 self.reviewed(s)
                 s.compact()
                 s.prompt("Tweak the export.")
-                if trigger == "full":
-                    s.load("tdd")
-                    path = "src/one.py"
+                if trigger == "subagent":
+                    s.brief_with_handoff()
+                    agent = s.subagent("w1")
+                    agent.prompt("Implement it.", hook=False)
+                    agent.say(DESIGN_SKIP)
+                    agent.call("Edit", {"file_path": "src/app.py", "old_string": "a",
+                                        "new_string": "b"},
+                               agent_id="w1", agent_type="general-purpose")
+                    agent.run("pytest -q")
+                    self.assertEqual(decision(s.spawn("w1", BRIEF)), "pass")
                 else:
-                    s.say("goated-skip: code-security-review: a renamed constant, no boundary")
-                    path = "src/auth.py"
-                self.write(s, path, 6)
+                    if trigger == "full":
+                        s.load("tdd")
+                        path = "src/one.py"
+                    else:
+                        s.say("goated-skip: code-security-review: a renamed constant, no boundary")
+                        path = "src/auth.py"
+                    self.write(s, path, 6)
                 s.run("pytest -q")
                 s.say(DOC_SKIP)
                 self.assertEqual(self.items(stop(s)), ["Verification"])

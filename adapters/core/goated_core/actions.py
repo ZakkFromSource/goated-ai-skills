@@ -2190,12 +2190,9 @@ def _closeout_items(changes: "_Changes", proof: _Proof, subagents: dict,
     points = points or ReviewPoints()
     reads = _reads_item(owed_reads or {}, changes, proof)
     items = [reads] if reads else []
-    items += (
-        _code_items(changes, proof)
-        + ([] if briefed else _review_item(changes, proof, spawn_templates, branch_size,
-                                           points))
-        if changes.code else []
-    )
+    items += _code_items(changes, proof) if changes.code else []
+    items += [] if briefed else _review_item(changes, proof, spawn_templates, branch_size,
+                                             points)
     items += _verification_item(changes, proof, intensity, branch_size, points)
     sensitive = changes.sensitive
     if sensitive and SECURITY_SKILL in proof.loads and not proof.skipped(SECURITY_SKILL):
@@ -2455,15 +2452,19 @@ def _review_item(changes: "_Changes", proof: _Proof, spawn_templates: dict[str, 
     by the skill loaded and a change read after that change, before or after
     the load (Ticket 092), or by a skip line, each of which records the
     task's review point; or by an earlier turn's point while the branch has
-    grown by fewer than `REVIEW_POINT_GROWTH` lines since it (round 7, R1)."""
+    grown by fewer than `REVIEW_POINT_GROWTH` lines since it (round 7, R1).
+    A turn that changed no code asks for nothing, but records the point when
+    one of those meets the item in it, with any change read counting."""
 
-    last = changes.code[-1].index
+    last = changes.code[-1].index if changes.code else -1
     loaded = proof.load_index(REVIEW_SKILL)
     if (proof.skipped(REVIEW_SKILL)
             or any(index > last and _reviewer_returned(call, proof, spawn_templates)
                    for index, call in enumerate(proof.turn.calls))
             or (loaded is not None and changes.read_after(last))):
         points.record("Review", branch_size())
+        return []
+    if not changes.code:
         return []
     size = branch_size()
     if size is None or size < REVIEW_MIN_LINES or points.covers("Review", size):

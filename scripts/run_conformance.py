@@ -37,6 +37,9 @@ A translator has these methods, each called once per step of its kind:
 - `session_start(source)` -> decision: a session starts, from `new`,
   `resumed`, `after_compaction` or `cleared`.
 
+A `branch_grows` step calls no method: the runner adds that many changed
+lines of code to the project's checkout itself, as a new untracked file.
+
 A decision is the event model's `decision`: `decision`, `holds` with each
 hold's `gate` and `kind`, and `notices` with each notice's `kind`. Hold
 text is read only for a closeout hold's item lines. `setup`, given to
@@ -214,6 +217,7 @@ class _Run:
         setup = scenario.get("setup", {})
         if "branch_changed_lines" in setup:
             _git_branch_with_change(project, setup["branch_changed_lines"], setup.get("origin_url"))
+        self.project = project
         self.steps = scenario["steps"]
         self.failures: list[str] = []
         self.number = 0
@@ -247,6 +251,9 @@ class _Run:
                                  lambda: t.agent_finished(step["agent_finished"]))
             elif "compaction" in step:
                 self._translated("compaction", t.compaction)
+            elif "branch_grows" in step:
+                # The project changes on disk; the translator sees no event.
+                _grow_branch(self.project, step["branch_grows"])
             elif "turn_end" in step:
                 self._check(step.get("expect", {"decision": "allow"}), "turn end",
                             self._translated("turn_end", t.turn_end))
@@ -319,6 +326,17 @@ def _git_branch_with_change(project: Path, changed_lines: int,
     change.write_text("".join(f"line {n}\n" for n in range(changed_lines)), encoding="utf-8")
     git("add", "src/change.py")
     git("commit", "-q", "-m", "Change")
+
+
+def _grow_branch(project: Path, changed_lines: int) -> None:
+    """Add `changed_lines` changed lines of non-test code to the checkout at
+    `project`, as a new untracked code file: a `branch_grows` step."""
+
+    folder = project / "src"
+    folder.mkdir(parents=True, exist_ok=True)
+    grown = len(list(folder.glob("grown_*.py")))
+    (folder / f"grown_{grown}.py").write_text(
+        "".join(f"grown_{grown}_{n} = {n}\n" for n in range(changed_lines)), encoding="utf-8")
 
 
 def main(argv: list[str] | None = None) -> int:

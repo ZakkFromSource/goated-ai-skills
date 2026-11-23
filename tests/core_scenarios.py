@@ -116,6 +116,9 @@ class _Run:
             elif "compaction" in step:
                 self.turns.append({"key": f"t{len(self.turns) + 1}",
                                    "opener": {"type": "compaction"}, "entries": []})
+            elif "branch_grows" in step:
+                from claude_code_adapter_support import grow_branch
+                grow_branch(self.project, step["branch_grows"])
             elif "turn_end" in step:
                 decision = self._judged(step.get("expect", {"decision": "allow"}),
                                         {"type": "turn_end"})

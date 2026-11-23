@@ -314,7 +314,9 @@ restores what a manifest records, or installs a local path, does not count.
 **A review point** (round 7, R1, decisions D1, D6 and D7) is the
 [branch size](#branch-size) at which a turn met or declined the Review item
 by its own evidence: a reviewer agent, `standards-and-spec-review` with a
-change read, or a Review skip line. **A verification point** is the branch
+change read, or a Review skip line. A turn that changed no code, such as one
+that only reviews the branch, records the point the same way, any change
+read counting, though it is asked for no Review item. **A verification point** is the branch
 size when a turn loads `verification-before-completion` or writes its skip
 line, in any turn. Meeting an item again records a new point; a turn the
 point itself meets records none. In a later turn of the same task, Review
@@ -487,6 +489,9 @@ A notice never holds.
   task while its list of item labels is unchanged (round 7, R4, decision
   D5): a later turn of the task whose list is the same as the last note's
   gets none, and one whose list differs gets the note, naming the new list.
+  The check compares the items' labels only, in order, so a turn whose
+  items are the same but whose wording differs, such as a Reads item naming
+  other references, gets no note.
   A new task's route or a clear ends the record; a compaction does not.
 - `session_notice`: at a session start, when the shared policy or the router
   is missing, or project agent files the onboarding skills write are
