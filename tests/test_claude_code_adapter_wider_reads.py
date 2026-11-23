@@ -81,6 +81,12 @@ WIDER_READS = [
     ("PowerShell", r"Get-Content 'src\a.py'"),
     ("Bash", r"cat 'a b' 'c\d'"),
     ("Bash", r"grep -e 'a\b' -e 'c\d' a.py # it's a note"),
+    # Inside a whole double-quoted argument, a backslash before any
+    # character but `$`, a backquote, `"`, `\` or a newline stays literal,
+    # in bash as POSIX reads it and in PowerShell (round 7, R8).
+    ("Bash", r'grep -n "^#\|^##" file'),
+    ("Bash", r'grep -n "def\s+x" a.py'),
+    ("PowerShell", r'Select-String -Pattern "a\|b" a.txt'),
     # `2>/dev/null` in Bash, where `/dev/null` is the null device.
     ("Bash", "grep -rn x src 2>/dev/null | wc -l"),
     ("Bash", "cat a 2> /dev/null"),
@@ -181,7 +187,6 @@ WIDER_HELD = [
     ("Bash", "file -m magic a"),
     # A backslash outside a whole single-quoted argument, and `//` that may
     # start a UNC path inside one.
-    ("Bash", r'grep -n "def\s+x" a.py'),
     ("Bash", r"grep -n def\\s a.py"),
     ("Bash", r"grep -n x'\s' a.py"),
     ("Bash", r"grep -n 'x'\s a.py"),
@@ -218,6 +223,17 @@ WIDER_HELD = [
     ("PowerShell", "Get-Content 'FileSystem::/x'"),
     ("PowerShell", "grep --% 'x //host/share/f'"),
     ("PowerShell", "grep --% x a.txt"),
+    # A backslash in double quotes before `$`, a backquote, `"` or `\`,
+    # which bash reads as an escape and PowerShell does not; a `$` in double
+    # quotes; two separators that may start a network path; and a quote
+    # inside a word.
+    ("Bash", r'grep "\$(rm x)" a.txt'),
+    ("Bash", r'grep "$(rm x)" a.txt'),
+    ("Bash", r'grep "a\"; rm b; "" a.txt'),
+    ("Bash", r'grep "a\\b" a.txt'),
+    ("Bash", r'grep "a\`b" a.txt'),
+    ("Bash", r'cat "\/host/share/a"'),
+    ("Bash", r'grep -e"a\|b" a.txt'),
     # A redirect other than standard error into the null device.
     ("Bash", "ls 2> errors.txt"),
     ("Bash", "ls 2>> errors.txt"),

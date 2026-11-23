@@ -3329,6 +3329,36 @@ class SetupCloseoutTests(AdapterTestCase):
                 self.assertEqual(closeout_line(held), "goated-hold: closeout | justified-skip")
                 self.assertIn("- Setup:", held["reason"])
 
+    def test_comments_alone_in_an_example_env_file_do_not_count(self) -> None:
+        """Round 7, R9: adding, removing or editing comment lines in
+        `.env.example`, `.env.sample` or `.env.template` records no setup.
+        Near misses: a setting line there, a whole-file write, and a comment
+        in `.env` itself."""
+
+        for path, old, new, counts in (
+            (".env.example", "# The API's address.", "# The API's address, with no slash.", False),
+            ("web/.env.sample", "API_URL=", "# Where the API runs.\nAPI_URL=", False),
+            (".env.template", "  # Old note\nKEY=", "KEY=", False),
+            (".ENV.EXAMPLE", "KEY=1\n# a", "KEY=1\n\n# b", False),
+            (".env.example", "# The API's address.", "# The API's address.\nAPI_URL=", True),
+            (".env.example", "KEY=1", "KEY=2", True),
+            (".env.example", "# KEY=1", "KEY=1", True),
+            (".env", "# The API's address.", "# The API's address, with no slash.", True),
+            (".env.local", "# a", "# b", True),
+            (".env.example", None, "# The API's address.", True),
+        ):
+            with self.subTest(path=path, new=new):
+                s = self.fresh()
+                s.prompt("Document the setting.")
+                s.load(ROUTER)
+                s.say("goated-route: direct")
+                s.say(SECURITY_SKIP)
+                if old is None:
+                    s.call("Write", {"file_path": path, "content": new})
+                else:
+                    s.call("Edit", {"file_path": path, "old_string": old, "new_string": new})
+                self.assertEqual("- Setup:" in stop(s).get("reason", ""), counts)
+
     def test_a_settings_file_outside_the_project_does_not_count(self) -> None:
         """Ticket 058 (spec R9): a scratch live-check folder's settings are not
         the project's setup. The near miss, the same file in the project, counts."""
@@ -4117,6 +4147,11 @@ class ReviewRegressionTests(AdapterTestCase):
             ("src/api_token.py", True),
             ("src/userAuth.ts", True),
             ("src/auth/views.py", True),
+            # `session` counts only beside another auth word (round 7, R5).
+            ("src/runtime/session.py", False),
+            ("src/sessions.py", False),
+            ("src/auth/session.py", True),
+            ("src/login_session.py", True),
         ):
             with self.subTest(path=path):
                 edit = {"file_path": path, "old_string": "a", "new_string": "b"}

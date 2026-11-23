@@ -162,6 +162,9 @@ def _adapter_texts() -> dict[str, str]:
         texts["spawnRead"] = reason(spawn.call("Agent", {"prompt": BRIEF}))
 
         texts["design"] = reason(routed("design").call("Write", _write("src/export.py")))
+        # A shell write's design hold says the Edit tool keeps line endings (round 7, R6).
+        texts["designShellWrite"] = reason(routed("design-shell-write").call(
+            "Bash", {"command": f"cat > src/export.py <<'EOF'\n{PLAIN}\nEOF"}))
         # Once the skill loads: the design hold asks for the references the edit requires
         # and no design-reads line (Ticket 089), then the design-reads hold for a later
         # edit's references. Since Ticket 118 the main agent's file edit lands owing
@@ -305,6 +308,17 @@ def _adapter_texts() -> dict[str, str]:
             "new_string": "rate = 2\n",
         }))
 
+        # The note after a turn's first code change, the context documents first (round 7, R11).
+        noted = routed("closeout-note")
+        noted.project.mkdir(parents=True, exist_ok=True)
+        (noted.project / "CONTEXT.md").write_text("# Context\n", encoding="utf-8")
+        small = _edit("src/export.py", "rate = 2")
+        noted.call("Edit", small)
+        texts["closeoutNote"] = parse(noted.hook(
+            "PostToolUse", tool_name="Edit", tool_input=small, tool_use_id=noted._new_id(),
+            tool_response={"filePath": "src/export.py", "success": True},
+        ))["hookSpecificOutput"]["additionalContext"]
+
         overridden = session("override")
         context = parse(overridden.prompt("Skip routing and add CSV export."))["hookSpecificOutput"]
         texts["overrideContext"] = context["additionalContext"]
@@ -365,6 +379,7 @@ class SkillUsageModFixtureTests(unittest.TestCase):
             "spawn": "spawn | strict",
             "spawnRead": "spawn | strict",
             "design": "design | justified-skip",
+            "designShellWrite": "design | justified-skip",
             "designFirstReads": "design | justified-skip",
             "designReads": "design-reads | justified-skip",
             "referenceReads": "reference-reads | justified-skip",
@@ -397,6 +412,20 @@ class SkillUsageModFixtureTests(unittest.TestCase):
         self.assertIn("- Unfinished:", texts["closeoutUnfinished"])
         self.assertIn("- Design:", texts["closeoutUnfinished"])
         self.assertIn("- Setup:", texts["closeoutSetup"])
+        # Round 7: the line-ending sentence on script and shell writes (R6), the commit's
+        # read in an earlier message (R10), and the context documents first (R11).
+        line_endings = "The Edit tool keeps a file's line endings, so CRLF is no reason"
+        for key in ("scriptedEdit", "designShellWrite"):
+            with self.subTest(key=key):
+                self.assertIn(line_endings, texts[key])
+        self.assertNotIn(line_endings, texts["design"])
+        for key in ("commit", "commitRead", "commitContract"):
+            with self.subTest(key=key):
+                self.assertIn("Make that read in an earlier message than the commit", texts[key])
+        self.assertNotIn("earlier message", texts["pullRequestRead"])
+        self.assertTrue(texts["closeoutNote"].startswith(
+            "GOATED Claude Code adapter: This project's own context documents"), texts["closeoutNote"])
+        self.assertIn("`CONTEXT.md`.\nThis turn changed code", texts["closeoutNote"])
         # Ticket 089: no hold asks for a design-reads line or a citation; the near miss,
         # the design hold's references, is still asked for.
         for key, text in texts.items():

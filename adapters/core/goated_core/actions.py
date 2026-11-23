@@ -67,7 +67,8 @@ from .gates import (
 )
 from .markers import parse_reply
 from .wording import (
-    FILE_EDIT_TOOLS, NO_RANGE, READ, READ_TOOL, SKILL_TOOL, short_advice, unseen_line_advice,
+    FILE_EDIT_TOOLS, LINE_ENDINGS, NO_RANGE, READ, READ_TOOL, SKILL_TOOL, short_advice,
+    unseen_line_advice,
 )
 
 JUSTIFIED_SKIP = "justified-skip"
@@ -265,6 +266,9 @@ TXT_BUILD_FILES = frozenset({"cmakelists.txt"})
 # Paths are lowercased with camelCase humps split by `_` first, and words must
 # stand alone between `/`, `.`, `_`, or `-`, so `tokenizer.py` and `author.py`
 # are not secrets or auth, while `api_token.py` and `userAuth.ts` are.
+# `session` is no auth word of its own (round 7, R5): `src/runtime/session.py`
+# is held for nothing, while `auth/session.py` and `login_session.py` are held
+# for the other auth word beside it.
 _ALONE = r"(?<![a-z0-9])(?:{})(?![a-z0-9])"
 SECURITY_CATEGORIES = (
     ("dependencies", re.compile(
@@ -276,7 +280,7 @@ SECURITY_CATEGORIES = (
         + _ALONE.format(r"secrets?|credentials?|tokens?|api_?keys?"))),
     ("auth", re.compile(_ALONE.format(
         r"auth|authn|authz|authenticat\w*|authoriz\w*|oauth2?|login|logout|signin|jwt"
-        r"|passwords?|permissions?|rbac|acls?|polic(?:y|ies)|sessions?"))),
+        r"|passwords?|permissions?|rbac|acls?|polic(?:y|ies)"))),
     ("persistence", re.compile(r"(?:^|/)migrations?/|(?:^|/)schema\.(?:sql|prisma)$|\.sql$")),
     ("deploy-and-ci", re.compile(
         r"(?:^|/)dockerfile|docker-compose|(?:^|/)\.github/workflows/|\.gitlab-ci|(?:^|/)terraform/"
@@ -294,6 +298,9 @@ TEST_CODE_SPARED = frozenset({"auth", "secrets"})
 SETUP_FILE_RE = re.compile(
     r"(?:^|/)\.env(?:\.[^/]*)?$|(?:^|/)\.(?:claude|vscode)/settings[^/]*\.json$", re.IGNORECASE
 )
+# Example env files, whose comments document settings rather than set them, so
+# a change to their comments alone is no setup (round 7, R9; `_env_comments_only`).
+EXAMPLE_ENV_FILES = frozenset({".env.example", ".env.sample", ".env.template"})
 
 
 class SinceCompaction(NamedTuple):
@@ -815,7 +822,8 @@ def _commit_hold(message: str | None, proof: _Proof, changes: Callable[[], "_Cha
     current = changes()
     read = _change_read_ask(current, by_tool, "committing it",
                             "check that the message describes it and run the commit again",
-                            since=current.last_material, owes_reads=owes_reads)
+                            since=current.last_material, owes_reads=owes_reads,
+                            apart="the commit")
     asks = [ask for ask in (load, contract, read) if ask]
     typed = ("A commit message the user typed in their prompt stands it down when the commit "
              "uses that message.")
@@ -1150,12 +1158,16 @@ class _Ask(NamedTuple):
 
 
 def _change_read_ask(changes: "_Changes", by_tool: bool, doing: str, then: str,
-                     since: int | None = None, owes_reads: bool = False) -> _Ask | None:
+                     since: int | None = None, owes_reads: bool = False,
+                     apart: str = "") -> _Ask | None:
     """The change read a commit or pull request still needs, or None: a read
     must follow call `since`, by default the turn's last change to any
     project file, before or after the skill's load (Tickets 059 and 092).
     `owes_reads`: a write of the turn landed owing reads, so the ask says to
-    read those first.
+    read those first. `apart` names the held call, such as "the commit", when
+    the ask says to make the read in an earlier message than it (round 7,
+    R10): a read sent in the call's own message has not finished when the
+    call is judged.
 
     An MCP tool (`by_tool`) passes when the turn changed no project file: it
     carries the change in its own input, and outside a git checkout no diff
@@ -1175,14 +1187,17 @@ def _change_read_ask(changes: "_Changes", by_tool: bool, doing: str, then: str,
     ask = (f"Read the references this turn's writes owe first, if any is still unread, then "
            f"the change before {doing}{after}, so one read of it meets the Reads item too"
            if owes_reads else f"Read the change before {doing}{after}")
+    earlier = (f" Make that read in an earlier message than {apart}, since a read sent in "
+               f"{apart}'s own message cannot count for it." if apart else "")
     return _Ask(
-        f"{ask}: {how}. Then {then}.",
+        f"{ask}: {how}.{earlier} Then {then}.",
         f"a change read{after}",
         (f"Print the diff or {READ} a file you changed" if changes.paths
          else f"Print the diff with a git diff or git show command (a {READ} cannot "
               "count: this turn changed no file it can name)")
         + f", then {then}. A --stat or --name-only listing does not count, nor "
-        "does a read chained in this command or made in parallel.",
+        "does a read chained in this command or made in parallel."
+        + (f" Make the read in an earlier message than {apart}." if apart else ""),
     )
 
 
@@ -1400,7 +1415,7 @@ def _scripted_edit_hold(paths: list[str], unknown: bool, proof: _Proof) -> Hold 
         "scripted-edit", JUSTIFIED_SKIP,
         f"Make the change with a file edit tool {FILE_EDIT_TOOLS}, where the design and "
         f"reference holds can judge it: an inline script in this command writes {what}. "
-        "A script suits only a mechanical rewrite across many files; for one, "
+        f"{LINE_ENDINGS}A script suits only a mechanical rewrite across many files; for one, "
         f"write `goated-skip: {DESIGN_SKILL}: <reason>` on its own line instead. Loading "
         "the skill does not clear this hold. This command was not run. "
         + unseen_line_advice("skip line", f"skip {DESIGN_SKILL}"),
@@ -1635,8 +1650,9 @@ def _design_hold(writes: dict[str, bool], write: Call | None, proof: _Proof,
                          named="design" if first else "design-reads"):
         return None
     edit = "edit" if write is not None else "command"
+    # A shell write may be scripted to keep a file's line endings (round 7, R6).
     not_done = "This edit was not applied." if write is not None else \
-        "This command was not run."
+        f"{LINE_ENDINGS}This command was not run."
     if loaded and not first:
         names = _listed([f"\"{_file_name(p)}\"" for p in paths])
         return Hold(
@@ -2642,7 +2658,7 @@ def _setup_changes(calls, project: Project | None) -> str:
         if not call.ok:
             continue
         if call.kind == events.FILE_WRITE:
-            targets = [call.path]
+            targets = [] if _env_comments_only(call) else [call.path]
             unplaced = []
         elif call.kind == events.SHELL_COMMAND:
             command = shell.analyze(call.command, call.shell)
@@ -2663,6 +2679,27 @@ def _setup_changes(calls, project: Project | None) -> str:
         ["wrote " + ", ".join(f'"{name}"' for name in files)] if files else []
     )
     return " and ".join(done)
+
+
+def _env_comments_only(write: Call) -> bool:
+    """True when `write`, a file write of an example env file
+    (`EXAMPLE_ENV_FILES`), adds, removes or edits only comment lines, which
+    open with `#` past any spaces, and blank lines: each edit's replaced text
+    holds the same other lines, trailing space aside, as the text it writes.
+    A whole-file write, a write with no edits, or an edit whose text is not
+    shown may change a setting, so it is not."""
+
+    if _file_name(_norm(write.path).lower()) not in EXAMPLE_ENV_FILES:
+        return False
+    if write.whole_file or not write.edits:
+        return False
+
+    def settings(text: str) -> list[str]:
+        return [line.rstrip() for line in text.split("\n")
+                if line.strip() and not line.lstrip().startswith("#")]
+
+    return all(removed is not None and added is not None and settings(removed) == settings(added)
+               for removed, added in write.edits)
 
 
 class _Change:
@@ -3188,7 +3225,7 @@ def sensitive_category(path: str, project: Project | None) -> str | None:
     """The security category of a project file at `path` (`security_category`),
     or None for test code whose category comes from a word in its name
     (round 6, R9): a code file that is a test file (`is_test`), matched as
-    `TEST_CODE_SPARED` says, as `tests/test_session_x.py` is by `session`.
+    `TEST_CODE_SPARED` says, as `tests/test_login_x.py` is by `login`.
     A test file that is not code (`tests/.env`), and test code matched by
     its kind (`migrations/0001_test.sql`), stay sensitive. The `security`
     gate, the Security closeout item and the `sensitive-category-count`

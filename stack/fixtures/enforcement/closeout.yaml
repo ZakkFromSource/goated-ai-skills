@@ -1068,6 +1068,57 @@ scenarios:
           decision: hold
           holds: [{gate: closeout, kind: justified-skip, items: [Setup]}]
 
+  - name: a setting line in an example env file asks for the setup record
+    covers:
+      - {gate: closeout, case: holds}
+      - {gate: closeout, case: clears, way: skip-line}
+    steps:
+      - prompt: {type: prompt, author: person, text: Document the API address.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - reply: &example_skips "goated-skip: code-security-review: an example file with no real values\ngoated-skip: verification-before-completion: an example file runs nothing"
+      - call:
+          kind: file_write
+          path: .env.example
+          edits: [{removed: "# The API's address.", added: "# The API's address.\nAPI_URL="}]
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Setup]}]
+      - reply: "goated-skip: setup-scribe: the example file records the new setting itself"
+      - turn_end: true
+
+  - name: comments alone in an example env file meet no Setup item
+    covers:
+      - {gate: closeout, case: near-miss}
+    steps:
+      - prompt: {type: prompt, author: person, text: Document the API address.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - reply: *example_skips
+      - call:
+          kind: file_write
+          path: .env.example
+          edits: [{removed: "# The API's address.\nAPI_URL=", added: "# The API's address, with no slash.\n\nAPI_URL="}]
+      - turn_end: true
+
+  - name: a comment in the env file itself asks for the setup record
+    covers:
+      - {gate: closeout, case: holds}
+    steps:
+      - prompt: {type: prompt, author: person, text: Document the API address.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - reply: "goated-skip: code-security-review: a comment with no value\ngoated-skip: verification-before-completion: a comment runs nothing"
+      - call:
+          kind: file_write
+          path: .env
+          edits: [{removed: "# The API's address.", added: "# The API's address, with no slash."}]
+      - turn_end: true
+        expect:
+          decision: hold
+          holds: [{gate: closeout, kind: justified-skip, items: [Setup]}]
+
   - name: a subagent's turn end meets no closeout
     covers:
       - {gate: closeout, case: near-miss}

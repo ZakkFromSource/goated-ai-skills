@@ -364,15 +364,15 @@ class ConflictCommitTests(SessionCase):
 class TestPathSecurityTests(SessionCase):
     """R9: a test path is not security-sensitive."""
 
-    def test_a_test_file_named_for_sessions_meets_no_security_hold(self) -> None:
+    def test_a_test_file_named_for_login_sessions_meets_no_security_hold(self) -> None:
         s = self.session("Add a session test.")
-        held = s.call("Edit", edit("tests/test_session_x.py", "assert ok", "pass"))
+        held = s.call("Edit", edit("tests/test_login_session.py", "assert ok", "pass"))
         self.assertNotIn("security", gates_of(held))
         self.assertEqual(decision(held), "pass")
 
-    def test_session_code_still_meets_the_security_hold(self) -> None:
+    def test_login_session_code_still_meets_the_security_hold(self) -> None:
         s = self.session("Fix the session code.")
-        held = s.call("Edit", edit("src/session.py", "TTL = 20", "TTL = 10"))
+        held = s.call("Edit", edit("src/login_session.py", "TTL = 20", "TTL = 10"))
         self.assertEqual(gates_of(held), ["security"])
 
     def test_test_paths_that_are_not_test_code_or_match_by_kind_still_hold(self) -> None:

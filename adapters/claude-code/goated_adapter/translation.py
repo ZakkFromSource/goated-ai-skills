@@ -220,6 +220,11 @@ PHRASES = {
     wording.READ: "Read",
     wording.NO_RANGE: "with no limit, offset, or pages",
     wording.FILE_EDIT_TOOLS: "(Edit, MultiEdit, or Write)",
+    # Checked on 2026-11-23: Edit kept CRLF on changed and new lines, and Git
+    # Bash's `sed -i` turned every CRLF into LF (round 7, R6).
+    wording.LINE_ENDINGS: ("The Edit tool keeps a file's line endings, so CRLF is no reason "
+                           "to use a script, and \"sed -i\" in Git Bash can strip CR from a "
+                           "file. "),
 }
 
 
