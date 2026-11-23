@@ -75,6 +75,7 @@ Fallback: If companion skills, commands, tools, artifacts, or runtime access are
    - Tests passing require test output for the relevant test command, suite, or CI job.
    - Build, lint, format, type, migration, generated-artifact, or docs claims require the corresponding command output or artifact inspection.
    - Bug-fix and feature-completion claims require proof of the original behavior or acceptance criteria, not just a code diff.
+   - When a feature depends on runtime data, such as a profile, a configuration, or a model, exercise it against the owner's active data, not only fixtures.
    - Issue closure or archive claims require acceptance criteria checked against current behavior and evidence that any required user, maintainer, PR, or project-defined review is complete.
    - Review-ready claims require inspected diffs, source reads, review gates, or artifact checks that match the requested review scope.
    - Documentation-sync claims require changed facts and relevant docs to have been checked.
@@ -146,7 +147,6 @@ sequentially without delegation.
 ## Guardrails
 
 - Claim completion, correctness, passing checks, review readiness, docs sync, security confidence, or successful implementation only with fresh matching evidence.
-- Do not close, archive, move, rename, or mark an issue, ticket, or handoff complete unless all required acceptance and review evidence supports that lifecycle action.
 - Match proof to claim breadth: a passing partial check, code change, clean-looking diff, or generated summary does not prove that broader behavior works.
 - Report failed checks, skipped checks, warnings, flaky results, missing artifacts, and environment limits plainly, not behind positive wording.
 - Use whatever test runner, CI provider, git host, browser, artifact renderer, or agent framework the project has; none is required.

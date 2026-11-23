@@ -9,6 +9,12 @@ For a scoped implementation task, fill the implementer prompt from
 `subagent-driven-development` instead when that skill is installed; it adds
 write ownership and review statuses. Use this template for everything else.
 
+## Contents
+
+- [Before Writing](#before-writing)
+- [Template](#template)
+- [After Sending](#after-sending)
+
 ## Before Writing
 
 - Decide the brief is needed. A lookup you could run in a few steps, or a
@@ -30,6 +36,12 @@ write ownership and review statuses. Use this template for everything else.
   `goated-skills: none: the agent only lists files`. This file defines the
   line; other brief templates follow it. Picking the skills stays your
   judgement: name those your own route or work needed for this task.
+  `doc-sync`, `standards-and-spec-review`, `verification-before-completion`
+  and `setup-scribe` are met at the closeout, so leave them off the skills
+  line and out of `requires:` even when the task will need them later,
+  unless the task is that skill's own work, such as a review brief, a
+  doc-sync task or a setup-scribe task.
+  `code-security-review` may still be listed, since it applies while writing.
 - If you already routed the task, end the brief with its route line, such as
   `goated-route: standard | requires: tdd`, on its own line outside code
   blocks. A new session takes it as its route and still loads those skills.
