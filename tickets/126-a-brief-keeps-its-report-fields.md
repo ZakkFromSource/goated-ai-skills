@@ -86,23 +86,23 @@ fixture is regenerated with
 
 ## Acceptance Criteria
 
-- [ ] A handoff brief with a `Report Back` heading but no `Status` line
+- [x] A handoff brief with a `Report Back` heading but no `Status` line
       naming the four values is held by `spawn`. The hold text names the
       missing line.
-- [ ] The same brief with the template's `Status` line starts, even when it
+- [x] The same brief with the template's `Status` line starts, even when it
       drops other Report Back lines.
-- [ ] Implementer and reviewer briefs are held the same way when their
+- [x] Implementer and reviewer briefs are held the same way when their
       Required Report Format lacks the `Status` line, and start with it.
-- [ ] A `Status` line inside a code block, or under another heading, does
+- [x] A `Status` line inside a code block, or under another heading, does
       not count.
-- [ ] `spawn-brief.md` says to copy Report Back as written.
-- [ ] `stack/AGENTS.md` asks a started agent to end with its brief's report
+- [x] `spawn-brief.md` says to copy Report Back as written.
+- [x] `stack/AGENTS.md` asks a started agent to end with its brief's report
       fields as labelled lines, starting with `Status`.
-- [ ] The contract states the rule, and conformance scenarios cover holding,
+- [x] The contract states the rule, and conformance scenarios cover holding,
       clearing, and the near misses above.
-- [ ] Existing briefs in fixtures and tests that lack the `Status` line gain
+- [x] Existing briefs in fixtures and tests that lack the `Status` line gain
       it.
-- [ ] The repo checks in `AGENTS.md` pass, and so does `claude plugin test .`
+- [x] The repo checks in `AGENTS.md` pass, and so does `claude plugin test .`
       in `adapters/claude-code/skill-usage`.
 
 ## Expected Proof

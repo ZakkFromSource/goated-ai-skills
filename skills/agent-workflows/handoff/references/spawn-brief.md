@@ -107,7 +107,9 @@ goated-skills: <skill>, <skill>
 
 Drop sections and lines that carry nothing for this task, such as Shared
 with when no other agent works nearby, but keep Report Back and the skills
-line.
+line. Copy Report Back as written, one labelled line per field, starting
+with its `Status` line and its four values: the agent ends its report with
+these lines, so a summary of them in prose loses the report.
 Keep the brief short enough that the agent reads all of it before acting.
 
 ## After Sending

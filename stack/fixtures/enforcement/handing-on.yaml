@@ -273,7 +273,7 @@ scenarios:
       - call: &audit
           kind: spawn
           starts_now: true
-          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n## Report Back\n\n- Status and findings.\n\ngoated-skills: code-security-review\n"
+          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n## Report Back\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Status and findings.\n\ngoated-skills: code-security-review\n"
         expect:
           decision: hold
           holds: [{gate: spawn, kind: strict}]
@@ -330,7 +330,90 @@ scenarios:
       - call:
           kind: spawn
           starts_now: true
-          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n### Report Back\n\n- Status and findings.\n\ngoated-skills: code-security-review\n"
+          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n### Report Back\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Status and findings.\n\ngoated-skills: code-security-review\n"
+        result: {ok: true, output: No findings., agent: {id: auditor-1}}
+
+  - name: a Report Back of prose without its Status line is held until the line is copied
+    covers:
+      - {gate: spawn, case: holds}
+    steps:
+      - prompt: {type: prompt, author: person, text: Have an agent audit the exporter.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: {kind: skill_load, skill: handoff}
+      - call: {kind: file_read, path: "{outside}/skills/handoff/references/spawn-brief.md", whole: true}
+      - call:
+          kind: spawn
+          starts_now: true
+          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n## Report Back\n\nStatus, changed paths, checks run and checks skipped.\n\ngoated-skills: code-security-review\n"
+        expect:
+          decision: hold
+          holds: [{gate: spawn, kind: strict}]
+      - call:
+          kind: spawn
+          starts_now: true
+          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n## Report Back\n\n- `Status`: `DONE` | `DONE_WITH_CONCERNS` | `NEEDS_CONTEXT` | `BLOCKED`\n\ngoated-skills: code-security-review\n"
+        result: {ok: true, output: No findings., agent: {id: auditor-1}}
+
+  - name: a Status line in a code block or under another heading does not count
+    covers:
+      - {gate: spawn, case: holds}
+    steps:
+      - prompt: {type: prompt, author: person, text: Have an agent audit the exporter.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: {kind: skill_load, skill: handoff}
+      - call: {kind: file_read, path: "{outside}/skills/handoff/references/spawn-brief.md", whole: true}
+      - call:
+          kind: spawn
+          starts_now: true
+          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n## Report Back\n\n```\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n```\n\ngoated-skills: code-security-review\n"
+        expect:
+          decision: hold
+          holds: [{gate: spawn, kind: strict}]
+      - call:
+          kind: spawn
+          starts_now: true
+          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n\n## Report Back\n\n- Findings.\n\ngoated-skills: code-security-review\n"
+        expect:
+          decision: hold
+          holds: [{gate: spawn, kind: strict}]
+
+  - name: a reviewer brief keeps its report format's Status line
+    covers:
+      - {gate: spawn, case: holds}
+    steps:
+      - prompt: {type: prompt, author: person, text: Have an agent review the export change.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: {kind: skill_load, skill: subagent-driven-development}
+      - call: {kind: file_read, path: "{outside}/skills/subagent-driven-development/references/reviewer-prompt.md", whole: true}
+      - call:
+          kind: spawn
+          starts_now: true
+          brief: "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The export change.\n\n## Required Report Format\n\n- Status and findings.\n\ngoated-skills: standards-and-spec-review\n"
+        expect:
+          decision: hold
+          holds: [{gate: spawn, kind: strict}]
+      - call:
+          kind: spawn
+          starts_now: true
+          brief: "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The export change.\n\n## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
+        result: {ok: true, output: No findings., agent: {id: reviewer-1}}
+
+  - name: a backticked Status line alone, under a subheading of Report Back, keeps the report
+    covers:
+      - {gate: spawn, case: near-miss}
+    steps:
+      - prompt: {type: prompt, author: person, text: Have an agent audit the exporter.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: {kind: skill_load, skill: handoff}
+      - call: {kind: file_read, path: "{outside}/skills/handoff/references/spawn-brief.md", whole: true}
+      - call:
+          kind: spawn
+          starts_now: true
+          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n## Report Back\n\n### Fields\n\n* **Status**: `DONE` | `DONE_WITH_CONCERNS` | `NEEDS_CONTEXT` | `BLOCKED`\n\ngoated-skills: code-security-review\n"
         result: {ok: true, output: No findings., agent: {id: auditor-1}}
 
   - name: offering work a person may start later carries no brief to check

@@ -13,7 +13,9 @@ contract states plainly enough to test without judgement:
   and it always keeps Report Back, so the agent ends with a report (Ticket 125).
   `subagent-driven-development`'s implementer and reviewer prompts require the
   task or review mode, the write ownership or review inputs, and the report
-  format. Every brief also carries the skills line that `handoff`'s spawn
+  format. Each report section also keeps its `Status` line naming the four
+  status values, so a report asked for in prose does not pass (Ticket 126).
+  Every brief also carries the skills line that `handoff`'s spawn
   brief defines (Ticket 071): `goated-skills: <skill>, <skill>` naming the
   skills the new agent reads first, or `goated-skills: none: <reason>`.
 
@@ -34,11 +36,26 @@ SECRET_RE = re.compile(
     r"|sk-[A-Za-z0-9_-]{20,}|AKIA[0-9A-Z]{16}|xox[abprs]-[A-Za-z0-9-]{10,})"
     r"|-----BEGIN [A-Z ]*PRIVATE KEY-----"
 )
-HEADING_RE = re.compile(r"^[ ]{0,3}#{1,6}[ \t]+(.+?)[ \t#]*$", re.MULTILINE)
+# A Markdown heading: its run of `#`, which gives its level, and its text.
+HEADING_RE = re.compile(r"^[ ]{0,3}(#{1,6})[ \t]+(.+?)[ \t#]*$", re.MULTILINE)
+
+
+# The values a report section's Status line names (Ticket 126), each matched
+# as a whole word, so `DONE` inside `DONE_WITH_CONCERNS` does not count.
+STATUS_VALUES = ("DONE", "DONE_WITH_CONCERNS", "NEEDS_CONTEXT", "BLOCKED")
+_STATUS_VALUE_RES = tuple(re.compile(rf"\b{value}\b") for value in STATUS_VALUES)
+
+
+def _is_kept(found: str, kept: str) -> bool:
+    """Whether heading text `found` counts as the kept heading `kept`: at any
+    level, in any case, and with words after it, such as `Goal and context`."""
+
+    return found.strip().lower().startswith(kept.lower())
 
 
 class BriefTemplate:
-    """A spawn-brief template: the skill that owns it, its file, and its kept headings."""
+    """A spawn-brief template: the skill that owns it, its file, and its kept
+    headings, the last of which is its report section."""
 
     __slots__ = ("skill", "reference", "headings")
 
@@ -47,9 +64,46 @@ class BriefTemplate:
         self.reference = reference
         self.headings = headings
 
+    @property
+    def report(self) -> str:
+        """The report section's heading, whose Status line a brief keeps (Ticket 126)."""
+
+        return self.headings[-1]
+
     def missing_headings(self, brief: str) -> list[str]:
-        found = [h.strip().lower() for h in HEADING_RE.findall(brief)]
-        return [h for h in self.headings if not any(f.startswith(h.lower()) for f in found)]
+        found = [m.group(2) for m in HEADING_RE.finditer(brief)]
+        return [h for h in self.headings if not any(_is_kept(f, h) for f in found)]
+
+    def follows(self, brief: str) -> bool:
+        """Whether `brief` keeps every heading and the report section's Status line."""
+
+        return not self.missing_headings(brief) and self._has_status_line(brief)
+
+    def _has_status_line(self, brief: str) -> bool:
+        """Whether a line under the report heading, outside code blocks, reads
+        `Status:` and names all four `STATUS_VALUES`, bare or backticked, and
+        may be a list item. The section runs to the next heading of its level
+        or higher."""
+
+        in_fence = False
+        section_level = 0  # 0: outside the report section.
+        for raw in brief.splitlines():
+            if raw.strip().startswith(FENCE_PREFIXES):
+                in_fence = not in_fence
+                continue
+            if in_fence:
+                continue
+            heading = HEADING_RE.match(raw)
+            if heading:
+                level = len(heading.group(1))
+                if _is_kept(heading.group(2), self.report):
+                    section_level = level
+                elif level <= section_level:
+                    section_level = 0
+                continue
+            if section_level and _is_status_line(raw):
+                return True
+        return False
 
     def read_by(self, path: str) -> bool:
         """Whether a Read of `path` read this template, in any install folder."""
@@ -78,6 +132,12 @@ BRIEF_TEMPLATES = (
     ),
     REVIEWER_TEMPLATE,
 )
+
+
+def _is_status_line(raw: str) -> bool:
+    line = LIST_MARKER_RE.sub("", raw.strip(), count=1).replace("`", "").replace("*", "")
+    return (line.lower().startswith("status:")
+            and all(value.search(line) for value in _STATUS_VALUE_RES))
 
 
 def templates_read(calls) -> list[str]:

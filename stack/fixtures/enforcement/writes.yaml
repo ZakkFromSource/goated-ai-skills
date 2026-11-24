@@ -1217,7 +1217,7 @@ scenarios:
       - call: &review
           kind: spawn
           starts_now: true
-          brief: "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The export change.\n\n## Required Report Format\n\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
+          brief: "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The export change.\n\n## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
         result: {ok: true, output: "One finding: the limit is off by one.", agent: {id: reviewer-1}}
       - call: &fix
           kind: file_write
@@ -1298,7 +1298,7 @@ scenarios:
           kind: spawn
           starts_now: true
           separate: true
-          brief: "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The export change.\n\n## Required Report Format\n\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
+          brief: "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The export change.\n\n## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
         result: {ok: true, output: "Session started.", agent: {id: reviewer-1}}
       - call: *fix
 
@@ -1314,7 +1314,7 @@ scenarios:
       - call:
           kind: spawn
           starts_now: false
-          brief: "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The export change.\n\n## Required Report Format\n\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
+          brief: "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The export change.\n\n## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
         result: {ok: true, output: "Proposed.", agent: {id: reviewer-1}}
       - call: *fix
 

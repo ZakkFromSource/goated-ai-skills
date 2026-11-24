@@ -20,6 +20,7 @@ from claude_code_adapter_support import (
     REPO_ROOT,
     ROUTER,
     SPAWN_BRIEF_PATH,
+    STATUS_LINE,
     Session,
     decision,
     git_branch_with_change,
@@ -731,13 +732,68 @@ class SpawnBriefTests(AdapterTestCase):
     def test_a_brief_without_report_back_is_held_and_told_to_add_it(self) -> None:
         s = self.routed()
         s.brief_with_handoff()
-        brief = BRIEF.replace("## Report Back\n\n- Status and findings.\n\n", "")
+        brief = BRIEF.replace("## Report Back\n\n" + STATUS_LINE + "- Findings.\n\n", "")
         self.assertNotIn("Report Back", brief)
 
         held = s.call("Agent", {"prompt": brief})
         self.assertEqual(hold_line(held), "goated-hold: spawn | strict")
         self.assertIn("`## Report Back`", reason(held))
         self.assertNotIn("`## Goal`", reason(held))
+
+    def test_a_report_back_of_prose_without_its_status_line_is_held(self) -> None:
+        # The diagnosed brief: the heading kept, the fields squeezed into one line.
+        s = self.routed()
+        s.brief_with_handoff()
+        brief = BRIEF.replace(STATUS_LINE + "- Findings.\n", "Status, changed paths and checks run.\n")
+
+        held = s.call("Agent", {"prompt": brief})
+        self.assertEqual(hold_line(held), "goated-hold: spawn | strict")
+        text = " ".join(reason(held).split())
+        self.assertIn("Status line", text)
+        self.assertIn("the four values DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT and BLOCKED", text)
+        self.assertIn("copy that section as its template writes it", text)
+        self.assertNotIn("Add the headings", text)
+
+    def test_a_status_line_missing_a_value_is_held(self) -> None:
+        s = self.routed()
+        s.brief_with_handoff()
+        brief = BRIEF.replace(STATUS_LINE, "- Status: DONE | BLOCKED\n")
+
+        self.assertEqual(decision(s.call("Agent", {"prompt": brief})), "deny")
+
+    def test_the_status_line_alone_keeps_report_back_whole_enough(self) -> None:
+        s = self.routed()
+        s.brief_with_handoff()
+        backticked = "- `Status`: `DONE` | `DONE_WITH_CONCERNS` | `NEEDS_CONTEXT` | `BLOCKED`\n"
+
+        self.assertEqual(decision(s.call("Agent", {"prompt": BRIEF.replace("- Findings.\n", "")})),
+                         "pass")
+        self.assertEqual(decision(s.call("Agent", {"prompt": BRIEF.replace(STATUS_LINE, backticked)})),
+                         "pass")
+
+    def test_a_status_line_in_a_code_block_or_under_another_heading_does_not_count(self) -> None:
+        s = self.routed()
+        s.brief_with_handoff()
+        fenced = BRIEF.replace(STATUS_LINE, "```\n" + STATUS_LINE + "```\n")
+        elsewhere = BRIEF.replace("## Report Back\n\n" + STATUS_LINE, "## Report Back\n\n").replace(
+            "- A list of findings.\n", "- A list of findings.\n" + STATUS_LINE)
+        self.assertIn(STATUS_LINE, elsewhere)
+
+        for brief in (fenced, elsewhere):
+            held = s.call("Agent", {"prompt": brief})
+            self.assertEqual(hold_line(held), "goated-hold: spawn | strict")
+            self.assertIn("Status line", reason(held))
+
+    def test_the_spawn_brief_says_to_copy_report_back_as_written(self) -> None:
+        template = (REPO_ROOT / "skills" / "agent-workflows" / "handoff" / "references"
+                    / "spawn-brief.md").read_text(encoding="utf-8")
+        self.assertIn("copy report back as written", " ".join(template.split()).lower())
+
+    def test_the_shared_policy_asks_a_started_agent_to_end_with_its_report_fields(self) -> None:
+        policy = " ".join((REPO_ROOT / "stack" / "AGENTS.md").read_text(encoding="utf-8").split())
+        self.assertIn("unless their artifact is itself the requested result, as a started "
+                      "agent's report is: it ends with its brief's report fields as labelled "
+                      "lines, `Status` first.", policy)
 
     def test_the_spawn_brief_template_keeps_report_back_with_the_implementer_fields(self) -> None:
         template = (REPO_ROOT / "skills" / "agent-workflows" / "handoff" / "references"
@@ -765,12 +821,31 @@ class SpawnBriefTests(AdapterTestCase):
         )
         brief = (
             "## Task\n\nAdd export.\n\n## Ownership\n\n- src/\n\n"
-            "## Required Report Format\n\n- Status\n\ngoated-skills: tdd\n"
+            "## Required Report Format\n\n" + STATUS_LINE + "\ngoated-skills: tdd\n"
         )
 
         self.assertEqual(decision(s.call("Agent", {"prompt": brief})), "pass")
         held = s.call("Agent", {"prompt": BRIEF})
         self.assertIn("## Task", reason(held))
+        held = s.call("Agent", {"prompt": brief.replace(STATUS_LINE, "- Status and changes.\n")})
+        self.assertEqual(hold_line(held), "goated-hold: spawn | strict")
+        self.assertIn("Status line", reason(held))
+        self.assertIn("Required Report Format", reason(held))
+
+    def test_the_reviewer_prompt_keeps_its_status_line_too(self) -> None:
+        s = self.routed()
+        s.load("subagent-driven-development")
+        s.read("/opt/goated/skills/subagent-driven-development/references/reviewer-prompt.md")
+        brief = (
+            "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The branch.\n\n"
+            "## Required Report Format\n\n" + STATUS_LINE + "- Findings.\n\n"
+            "goated-skills: standards-and-spec-review\n"
+        )
+
+        self.assertEqual(decision(s.call("Agent", {"prompt": brief})), "pass")
+        held = s.call("Agent", {"prompt": brief.replace(STATUS_LINE, "")})
+        self.assertEqual(hold_line(held), "goated-hold: spawn | strict")
+        self.assertIn("Status line", reason(held))
 
     def test_session_spawns_without_a_brief_are_not_held(self) -> None:
         s = self.routed()

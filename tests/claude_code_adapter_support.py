@@ -38,10 +38,12 @@ def parse_overrides(prompt: str, *known_skills) -> dict:
 ROUTER = "using-goated-ai-skills"
 # A Windows-style install path, so the reader's path matching covers backslashes.
 SPAWN_BRIEF_PATH = "D:\\goated\\skills\\handoff\\references\\spawn-brief.md"
+# The Status line each template's report section opens with (Ticket 126).
+STATUS_LINE = "- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n"
 BRIEF = (
     "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n"
     "## Done Means\n\n- A list of findings.\n\n"
-    "## Report Back\n\n- Status and findings.\n\n"
+    "## Report Back\n\n" + STATUS_LINE + "- Findings.\n\n"
     "goated-skills: code-security-review\n"
 )
 

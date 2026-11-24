@@ -55,7 +55,7 @@ REVIEWER_PROMPT = "D:\\goated\\skills\\subagent-driven-development\\references\\
 REVIEWER_BRIEF = (
     "## Review Mode\n\nSpec and standards review of the export change.\n\n"
     "## Review Inputs\n\n- The diff against main.\n\n"
-    "## Required Report Format\n\n- Findings with file paths.\n\n"
+    "## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Findings with file paths.\n\n"
     "goated-skills: standards-and-spec-review\n"
 )
 

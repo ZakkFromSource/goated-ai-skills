@@ -128,27 +128,26 @@ material gate changes; no skill may silently reconstruct a pipeline.
 ## Proportional Clarification
 
 Support `focused`, `rapid`, `recommend-and-proceed`, and `deep-dive`
-clarification. Outside deep-dive, derive a soft question budget from workflow
-intensity; rapid never exceeds three tightly related questions. Reuse fresh
+clarification. Outside deep-dive, workflow intensity sets a soft question
+budget; rapid never exceeds three tightly related questions. Reuse fresh
 evidence before asking discoverable facts. Provisional defaults may advance
-reversible low-risk choices, but irreversible or high-risk decisions require
-explicit human input. Deep-dive follows the material decision tree with
-periodic summaries of settled, provisional, deferred, and conflicting
-decisions. Route to a
-disposable prototype only when it can produce evidence that improves a live
-decision, never as production work.
+reversible low-risk choices; irreversible or high-risk decisions require
+explicit human input. Deep-dive follows the material decision tree,
+periodically summarizing settled, provisional, deferred, and conflicting
+decisions. Route to a disposable prototype only when its evidence can improve
+a live decision, never as production work.
 
 ## Ownership And Delegation
 
 The main agent owns user intent, orchestration, integration, final judgment,
-and user communication. Delegate from a concrete task board with owners,
-scopes, dependencies, evidence, review paths, and settled interfaces. Keep
-overlapping writes or dependent work sequential.
+and user communication. Delegate from a concrete task board: owners, scopes,
+dependencies, evidence, review paths, settled interfaces. Sequence
+overlapping writes and dependent work.
 Require delegated work to return inspected paths, commands, evidence,
-assumptions, uncertainty, and status; review and integrate it rather than
-forwarding it unexamined.
+assumptions, uncertainty, and status; review and integrate it, never forward
+it unexamined.
 
-Remain single-agent-compatible when delegation is unavailable.
+Without delegation, remain single-agent-compatible.
 
 ## Readability And Proof
 
@@ -178,11 +177,13 @@ Report decisions, blockers, material scope or risk changes, and long-running
 work concisely. Avoid repeated routes and skill closeouts. The main agent
 produces one final outcome with important changes, proof, and residual risk.
 Specialists reuse envelope evidence and return internal deltas, not repeated
-discovery or closeouts, unless their artifact is itself the requested result.
-Omit empty fields and repeated path or check summaries unless omission would
-mislead. Put the requested artifact or decision before optional explanation.
+discovery or closeouts, unless their artifact is itself the requested result,
+as a started agent's report is: it ends with its brief's report fields as
+labelled lines, `Status` first. Omit empty fields and repeated path or check
+summaries unless omission would mislead. Put the requested artifact or
+decision before optional explanation.
 
 Continue implementation through the requested behavior, verification, and fixes
-caused by the change. A first implementation is not completion. Respect a
-review-only request or an explicit review checkpoint. If a skill causes a pause,
-cite its exact instruction and explain the unresolved decision or authorization.
+caused by the change. Respect a review-only request or an explicit review
+checkpoint. If a skill causes a pause, cite its exact instruction and explain
+the unresolved decision or authorization.

@@ -32,7 +32,7 @@ REVIEWER_TEMPLATE = "/opt/goated/skills/subagent-driven-development/references/r
 REVIEWER_BRIEF = (
     "## Goal\n\nReview the exporter change.\n\n## Scope\n\n- Work in: src/export/\n\n"
     "## Done Means\n\n- Findings.\n\n## Review Mode\n\nspec\n\n"
-    "## Review Inputs\n\n- the diff\n\n## Required Report Format\n\n- findings\n\n"
+    "## Review Inputs\n\n- the diff\n\n## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- findings\n\n"
     "goated-skills: standards-and-spec-review\n"
 )
 STANDARD = "goated-route: standard | requires: tdd"

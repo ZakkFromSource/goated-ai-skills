@@ -259,7 +259,7 @@ file (see [Holds](#holds)).
 | `commit` | strict | A commit, by a git command (not a dry run) or a `commit` call | `commit-message` counts as loaded, an inline message passes the content check, and a [change read](#change-reads) follows the last change to code that is not a comment-only edit, or, in a turn with no such change, comes anywhere in the turn | `proof`, `override` | `commit-message` ("use before any Git commit") |
 | `pull-request` | strict | Opening a pull or merge request, by a `gh` or `glab` command or a `pull_request` call | `pr-description` counts as loaded, and a change read follows the last change to any project file | `proof`, `override` | `pr-description` |
 | `pr-review` | justified-skip | Opening a pull or merge request that changes 400 or more lines of non-test code against its base. It is judged together with `pull-request`, so both may hold the same call | `standards-and-spec-review` counts as loaded, and a change read follows the last change | `proof`, `skip-line`, `override` | `standards-and-spec-review`'s rule to review a branch of 400 or more changed lines in code outside test paths (`skills/engineering/standards-and-spec-review/SKILL.md`) |
-| `spawn` | strict | A spawn with a brief, except of a read-only agent | `handoff` counts as loaded and its `references/spawn-brief.md` is read whole, or `subagent-driven-development` counts as loaded and its implementer or reviewer prompt is read whole; and the brief passes the content check | `proof`, `override` | `handoff` and `subagent-driven-development` |
+| `spawn` | strict | A spawn with a brief, except of a read-only agent | `handoff` counts as loaded and its `references/spawn-brief.md` is read whole, or `subagent-driven-development` counts as loaded and its implementer or reviewer prompt is read whole; and the brief passes the content check, its report section's `Status` line included | `proof`, `override` | `handoff` and `subagent-driven-development` |
 | `design` | justified-skip | The turn's first file write adding five or more lines to a non-test code file inside the project, or any such file write while the skill does not count as loaded. A [comment-only edit](#comment-only-edits) adding fewer than twenty lines is small, so it is not such a write. A shell write counts only where it puts new text into a file: a redirect, heredoc, `tee`, `Set-Content`, `Add-Content`, `Out-File`, or `New-Item` with a value. It adds the lines of text the command shows, such as a heredoc's body, and five or more when it shows none, as for a program's output or text holding a variable, command substitution, or subexpression. Writes to two spellings of one file add up. A copy, move, restore, or in-place edit adds no text designed in the command, so it is not judged; a script's files are `scripted-edit`'s; and a write naming no file is not judged, since no file's design can be asked for (the maintainer's choice, [Ticket 098](../tickets/archive/098-adapter-contract-gaps.md)). Once the skill counts as loaded, a file edit that shows its text, or a shell write adding thirty or more counted lines, [lands and reads after](#holds) | `software-design-principles` counts as loaded, and every reference the edit's signals select is read whole or a lasting skip covers it | `proof`, `skip-line`, `lasting-skip`, `override` | `software-design-principles`, workflow steps 2 and 4 |
 | `design-reads` | justified-skip | A later file write to a code file, or to a configuration file that is not test data, inside the project, once `software-design-principles` counts as loaded, whose signals select a reference not read whole since the last compaction. A shell write counts as for `design`; its text is not read for signals, so only its path selects (a configuration file, the third code file), and a test file it writes selects nothing. A comment-only edit adding fewer than twenty lines is small, so its comment selects no `readability.md`. A file edit that shows its text, or a shell write adding thirty or more counted lines, [lands and reads after](#holds) | Each selected reference is read whole, or a lasting skip covers it | `proof`, `skip-line`, `lasting-skip`, `override` | `software-design-principles`'s Read now lists |
 | `reference-reads` | justified-skip | A write inside the project (or anywhere, for a `gate-fires` signal) that fires a signal the installed registry declares for a reference of a skill that counts as loaded. A named pattern matches as [Registry Reference Signals](#registry-reference-signals) states: `mock-or-patch` takes `patch` only as a call or decorator, `monkeypatch` only as a patch of code, and no word inside a quoted string the line shows for certain or a multi-line string the edit shows opening. A file edit that shows its text, or a shell write adding thirty or more counted lines, [lands and reads after](#holds) | Each named reference is read whole, or a lasting skip covers it | `proof`, `skip-line`, `lasting-skip`, `override` | The registry's `references` signals (`stack/goated-stack.yaml`, `skills/README.md`) |
@@ -372,7 +372,10 @@ goated-hold: <gate> | <kind>
 - The `spawn` hold that asks for `handoff` names every heading its spawn
   brief keeps, `Report Back` among them, and its skills line. The hold for a
   brief that lacks kept headings names, for each template read, each heading
-  the brief still needs, as a `## <Heading>` Markdown heading.
+  the brief still needs, as a `## <Heading>` Markdown heading. The hold for
+  a brief that keeps every heading but lacks its report section's `Status`
+  line names that line and its four values, and says to copy the section as
+  its template writes it.
 - The closeout lists each unmet item on its own line, starting
   `- <Label>: `, with the labels of the [Closeout Items](#closeout-items)
   table. The labels are stable.
@@ -1815,7 +1818,14 @@ states plainly enough to test without judgement (`contracts.py`):
   that every brief asks for a report as the other two do; `Task`,
   `Ownership`, and `Required Report Format` for the implementer prompt;
   `Review Mode`, `Review Inputs`, and `Required Report Format` for the
-  reviewer prompt. A brief passes when it matches a template whose skill
+  reviewer prompt. The last of these, the report section, also keeps its
+  `Status` line, so a report section summarised in prose does not count
+  (Ticket 126): a line under that heading, before the next heading of its
+  level or higher and outside code blocks, that reads `Status:` and names
+  `DONE`, `DONE_WITH_CONCERNS`, `NEEDS_CONTEXT`, and `BLOCKED` as whole
+  words, bare, backticked or in bold, and may be a `- ` or `* ` list item. The
+  heading is matched as the other kept headings are. No other line of the
+  section is required. A brief passes when it matches a template whose skill
   counts as loaded and whose reference was read whole since the last
   compaction. A spawn with an empty brief, or of a `read_only` agent, meets
   no `spawn` check at all: no template load or read, headings, or skills

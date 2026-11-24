@@ -50,16 +50,16 @@ IMPLEMENTER = "D:\\goated\\skills\\subagent-driven-development\\references\\impl
 REVIEWER = "D:\\goated\\skills\\subagent-driven-development\\references\\reviewer-prompt.md"
 HANDOFF_BRIEF = (
     "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n"
-    "## Done Means\n\n- A list of findings.\n\n## Report Back\n\n- Status and findings.\n\n"
+    "## Done Means\n\n- A list of findings.\n\n## Report Back\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Status and findings.\n\n"
     "goated-skills: code-security-review\n"
 )
 IMPLEMENTER_BRIEF = (
     "## Task\n\nAdd the exporter.\n\n## Ownership\n\n- src/export.py\n\n"
-    "## Required Report Format\n\n- Status.\n\ngoated-skills: tdd\n"
+    "## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Status.\n\ngoated-skills: tdd\n"
 )
 REVIEWER_BRIEF = (
     "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The diff.\n\n"
-    "## Required Report Format\n\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
+    "## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
 )
 REVIEW = "standards-and-spec-review"
 SECURITY = "code-security-review"
