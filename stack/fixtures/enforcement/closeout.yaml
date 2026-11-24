@@ -753,7 +753,7 @@ scenarios:
       - call: &branch_review
           kind: spawn
           starts_now: false
-          brief: "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The branch.\n\n## Required Report Format\n\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
+          brief: "## Review Mode\n\nSpec review.\n\n## Review Inputs\n\n- The branch.\n\n## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Findings.\n\ngoated-skills: standards-and-spec-review\n"
         result: {ok: true, output: "Proposed."}
       - turn_end: true
         expect:

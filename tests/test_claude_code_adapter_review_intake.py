@@ -30,12 +30,12 @@ IMPLEMENTER_PROMPT = (
 REVIEWER_BRIEF = (
     "## Review Mode\n\nSpec and standards review of the export change.\n\n"
     "## Review Inputs\n\n- The diff against main.\n\n"
-    "## Required Report Format\n\n- Findings with file paths.\n\n"
+    "## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Findings with file paths.\n\n"
     "goated-skills: standards-and-spec-review\n"
 )
 IMPLEMENTER_BRIEF = (
     "## Task\n\nAdd the CSV exporter.\n\n## Ownership\n\n- src/export.py\n\n"
-    "## Required Report Format\n\n- Changed paths and checks run.\n\n"
+    "## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Changed paths and checks run.\n\n"
     "goated-skills: tdd\n"
 )
 CODE_EDIT = {"file_path": "src/export.py", "old_string": "a = 1", "new_string": "a = 2"}

@@ -1256,12 +1256,27 @@ def _spawn_hold(brief: str, proof: _Proof) -> Hold | None:
         )
     problems = []
     if not _matched_templates(brief, proof):
-        gaps = "; ".join(
-            f"`{t.reference}` needs " + ", ".join(f"`## {h}`" for h in t.missing_headings(brief))
-            for t in read
-        )
-        problems.append(f"Add the headings its template keeps as Markdown headings, since "
-                        f"the brief lacks them: {gaps}.")
+        lacking_headings = [t for t in read if t.missing_headings(brief)]
+        lacking_status = [t for t in read if t not in lacking_headings]
+        if lacking_headings:
+            gaps = "; ".join(
+                f"`{t.reference}` needs "
+                + ", ".join(f"`## {h}`" for h in t.missing_headings(brief))
+                for t in lacking_headings
+            )
+            problems.append(f"Add the headings its template keeps as Markdown headings, "
+                            f"since the brief lacks them: {gaps}.")
+        if lacking_status:
+            # Ticket 126: a report section of prose lost the report it asks for.
+            sections = " or ".join(f"`## {h}`" for h in dict.fromkeys(
+                t.report for t in lacking_status))
+            # Only skill names are backticked as bare words (contract, Hold Messages).
+            *first, last = contracts.STATUS_VALUES
+            problems.append(
+                f"Add the Status line under {sections}, outside code blocks, naming the "
+                f"four values {', '.join(first)} and {last}, since the brief's report "
+                "section lacks it: copy that section as its template writes it."
+            )
     line_problem = contracts.skills_line_problem(brief)
     if line_problem:
         # The line's form is defined in handoff's references/spawn-brief.md (Ticket 071).
@@ -1286,9 +1301,10 @@ def _templates_read(proof: _Proof) -> list[contracts.BriefTemplate]:
 
 
 def _matched_templates(brief: str, proof: _Proof) -> list[contracts.BriefTemplate]:
-    """The templates `brief` follows: loaded, read, and with every heading they keep."""
+    """The templates `brief` follows: loaded, read, and with every heading they
+    keep and their report section's Status line."""
 
-    return [t for t in _templates_read(proof) if not t.missing_headings(brief)]
+    return [t for t in _templates_read(proof) if t.follows(brief)]
 
 
 def brief_templates(call: Call, turn: Turn, overrides: dict,

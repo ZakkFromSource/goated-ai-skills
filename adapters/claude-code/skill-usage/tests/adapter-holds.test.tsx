@@ -66,6 +66,7 @@ test('holds that ask for a read, missing headings or a message fix name no skill
   for (const [tool, text, gate] of [
     ['Agent', ADAPTER_TEXTS.spawnRead, 'spawn'],
     ['Agent', ADAPTER_TEXTS.spawnHeadings, 'spawn'],
+    ['Agent', ADAPTER_TEXTS.spawnStatus, 'spawn'],
     ['Bash', ADAPTER_TEXTS.commitContract, 'commit'],
     ['Bash', ADAPTER_TEXTS.commitRead, 'commit'],
     ['Bash', ADAPTER_TEXTS.pullRequestRead, 'pull-request'],

@@ -31,7 +31,8 @@ from pathlib import Path
 
 import yaml
 
-from claude_code_adapter_support import BRIEF, ROUTER, Session, git_branch_with_change, parse, reason
+from claude_code_adapter_support import (
+    BRIEF, ROUTER, STATUS_LINE, Session, git_branch_with_change, parse, reason)
 from usage_log_session import recorded_session
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -90,7 +91,7 @@ def _edit(path: str, new: str) -> dict:
 # A brief from the reviewer prompt, which starts a reviewer subagent.
 REVIEWER_BRIEF = (
     "## Review Mode\n\nSpec review of the export change.\n\n## Review Inputs\n\n- The diff.\n\n"
-    "## Required Report Format\n\n- Findings with file paths.\n\n"
+    "## Required Report Format\n\n- Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED\n- Findings with file paths.\n\n"
     "goated-skills: standards-and-spec-review\n"
 )
 # Six added lines that trip no design-reads signal.
@@ -300,6 +301,9 @@ def _adapter_texts() -> dict[str, str]:
         headings = routed("spawn-headings")
         headings.brief_with_handoff()
         texts["spawnHeadings"] = reason(headings.call("Agent", {"prompt": "Audit the exporter."}))
+        # A brief whose Report Back keeps no Status line (Ticket 126).
+        texts["spawnStatus"] = reason(headings.call("Agent", {"prompt": BRIEF.replace(
+            STATUS_LINE, "- Status and findings.\n")}))
 
         texts["securityNoExtension"] = reason(routed("security-no-extension").call("Write", _write(".env")))
         texts["conflictResolution"] = reason(routed("conflict-resolution").call("Edit", {
@@ -395,6 +399,7 @@ class SkillUsageModFixtureTests(unittest.TestCase):
             "closeoutReview": "closeout | justified-skip",
             "commitContract": "commit | strict",
             "spawnHeadings": "spawn | strict",
+            "spawnStatus": "spawn | strict",
             "securityNoExtension": "security | justified-skip",
             "conflictResolution": "conflict-resolution | justified-skip",
             "jointTestEdit": "design-reads | justified-skip",
