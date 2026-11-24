@@ -123,6 +123,19 @@ fixture is regenerated with
 - Requiring Report Back lines other than `Status`.
 - Changing the verification skill's activation, the Verification closeout
   item, or how the router lists closeout skills. The diagnosed session
-  suggested these. They are separate from the report format; the router rule is ticket
-  124's decision.
+  suggested these. They are separate from the report format; the router
+  rule is ticket 124's decision.
 - Syncing installed copies: the lead does that after merging.
+
+## Closeout
+
+Completed, merged and archived on 2026-11-24.
+
+- Merged as `5244265` (`ed24e59`).
+- Maintainer decision during the work: the policy sentence took
+  `stack/AGENTS.md` over its 1,200-word budget, so 21 words of other policy
+  text were cut without dropping a rule, rather than raising the budget.
+- The session started from this ticket's brief ended with the labelled
+  report, `Status` first.
+- Reviewed by the lead, who read the core, template, policy and contract
+  diff; no separate reviewer agent. Installed copies synced after the merge.
