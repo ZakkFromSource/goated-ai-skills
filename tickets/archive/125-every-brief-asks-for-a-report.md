@@ -84,19 +84,19 @@ change in the same change. The adapter's text fixture is regenerated with
 
 ## Acceptance Criteria
 
-- [ ] `spawn-brief.md` keeps Report Back always and asks for the fields in
+- [x] `spawn-brief.md` keeps Report Back always and asks for the fields in
       R2. Its "drop sections" sentence names Report Back beside the skills
       line.
-- [ ] A spawn whose brief has Goal, Scope, Done Means and a skills line but
+- [x] A spawn whose brief has Goal, Scope, Done Means and a skills line but
       no Report Back heading is held by `spawn`. The hold text names Report
       Back among the headings to add.
-- [ ] The same brief with a Report Back heading starts. Implementer and
+- [x] The same brief with a Report Back heading starts. Implementer and
       reviewer briefs are judged as before.
-- [ ] The contract states the rule, and conformance scenarios cover holding,
+- [x] The contract states the rule, and conformance scenarios cover holding,
       clearing, and a near miss (a Report Back heading inside a code block,
       or under another level, judged the way the other kept headings are).
-- [ ] The adapter's text fixture shows the new heading list.
-- [ ] The repo checks in `AGENTS.md` pass, and so does `claude plugin test .`
+- [x] The adapter's text fixture shows the new heading list.
+- [x] The repo checks in `AGENTS.md` pass, and so does `claude plugin test .`
       in `adapters/claude-code/skill-usage`.
 
 ## Expected Proof
@@ -118,3 +118,17 @@ change in the same change. The adapter's text fixture is regenerated with
 - Checking the report itself at the end of a delegated session.
 - Changing the implementer or reviewer templates.
 - Syncing installed copies: the lead does that after merging.
+
+## Closeout
+
+Completed, merged and archived on 2026-11-24.
+
+- Merged as `da75441` (`c221b89`).
+- Implementer decisions: the `spawn` hold text takes its heading list from
+  the handoff template, so the template and the text cannot drift; the
+  briefs in existing fixtures and tests gained a Report Back heading.
+- Accepted gap: a Report Back heading inside a code block still counts, as
+  it does for the other kept headings; the near-miss scenario covers a
+  heading at another level only.
+- Reviewed by the lead, who read the core, template, contract and scenario
+  diff; no separate reviewer agent. Installed copies synced after the merge.
