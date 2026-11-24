@@ -273,7 +273,7 @@ scenarios:
       - call: &audit
           kind: spawn
           starts_now: true
-          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\ngoated-skills: code-security-review\n"
+          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n## Report Back\n\n- Status and findings.\n\ngoated-skills: code-security-review\n"
         expect:
           decision: hold
           holds: [{gate: spawn, kind: strict}]
@@ -297,6 +297,40 @@ scenarios:
         expect: {decision: allow, notices: [override_recorded, route_continued]}
       - reply: "goated-route: continue"
       - call: *audit
+        result: {ok: true, output: No findings., agent: {id: auditor-1}}
+
+  - name: a brief from the handoff template without its Report Back is held
+    covers:
+      - {gate: spawn, case: holds}
+    steps:
+      - prompt: {type: prompt, author: person, text: Have an agent audit the exporter.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: {kind: skill_load, skill: handoff}
+      - call: {kind: file_read, path: "{outside}/skills/handoff/references/spawn-brief.md", whole: true}
+      - call:
+          kind: spawn
+          starts_now: true
+          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\ngoated-skills: code-security-review\n"
+        expect:
+          decision: hold
+          holds: [{gate: spawn, kind: strict}]
+      - call: *audit
+        result: {ok: true, output: No findings., agent: {id: auditor-1}}
+
+  - name: a Report Back heading at another level counts as the others do
+    covers:
+      - {gate: spawn, case: near-miss}
+    steps:
+      - prompt: {type: prompt, author: person, text: Have an agent audit the exporter.}
+      - call: {kind: skill_load, skill: using-goated-ai-skills}
+      - reply: "goated-route: direct"
+      - call: {kind: skill_load, skill: handoff}
+      - call: {kind: file_read, path: "{outside}/skills/handoff/references/spawn-brief.md", whole: true}
+      - call:
+          kind: spawn
+          starts_now: true
+          brief: "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n### Report Back\n\n- Status and findings.\n\ngoated-skills: code-security-review\n"
         result: {ok: true, output: No findings., agent: {id: auditor-1}}
 
   - name: offering work a person may start later carries no brief to check

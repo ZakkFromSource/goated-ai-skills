@@ -89,9 +89,14 @@ write ownership and review statuses. Use this template for everything else.
 ## Report Back
 
 - Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED
+- Task completed or attempted
 - Changed paths and paths inspected
 - Commands run and their results
-- Assumptions, concerns, and checks skipped
+- Tests added or updated, and test results or behaviour proof
+- Assumptions and concerns
+- Skipped checks or unavailable evidence
+- Self-review notes
+- Recommended next step
 
 Read each skill below before you start: load it with your skill tool, or
 read its SKILL.md file if you have no skill tool.
@@ -101,7 +106,8 @@ goated-skills: <skill>, <skill>
 ```
 
 Drop sections and lines that carry nothing for this task, such as Shared
-with when no other agent works nearby, but keep the skills line.
+with when no other agent works nearby, but keep Report Back and the skills
+line.
 Keep the brief short enough that the agent reads all of it before acting.
 
 ## After Sending

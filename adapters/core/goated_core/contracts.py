@@ -9,7 +9,8 @@ contract states plainly enough to test without judgement:
   secrets, tokens ... in commit text");
 - a spawn brief carries the headings its template cannot drop. `handoff`'s
   spawn brief says an agent that inherits everything still gets "the task,
-  the scope, and what done looks like", so Goal, Scope, and Done Means stay.
+  the scope, and what done looks like", so Goal, Scope, and Done Means stay,
+  and it always keeps Report Back, so the agent ends with a report (Ticket 125).
   `subagent-driven-development`'s implementer and reviewer prompts require the
   task or review mode, the write ownership or review inputs, and the report
   format. Every brief also carries the skills line that `handoff`'s spawn
@@ -64,8 +65,12 @@ REVIEWER_TEMPLATE = BriefTemplate(
     "subagent-driven-development/references/reviewer-prompt.md",
     ("Review Mode", "Review Inputs", "Required Report Format"),
 )
+HANDOFF_TEMPLATE = BriefTemplate(
+    "handoff", "handoff/references/spawn-brief.md",
+    ("Goal", "Scope", "Done Means", "Report Back"),
+)
 BRIEF_TEMPLATES = (
-    BriefTemplate("handoff", "handoff/references/spawn-brief.md", ("Goal", "Scope", "Done Means")),
+    HANDOFF_TEMPLATE,
     BriefTemplate(
         "subagent-driven-development",
         "subagent-driven-development/references/implementer-prompt.md",

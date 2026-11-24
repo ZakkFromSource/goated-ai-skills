@@ -654,7 +654,7 @@ goated-route: direct
       - call:
           kind: spawn
           starts_now: true
-          brief: "## Goal\n\nCheck the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\ngoated-skills: code-security-review\n"
+          brief: "## Goal\n\nCheck the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n## Done Means\n\n- A list of findings.\n\n## Report Back\n\n- Status and findings.\n\ngoated-skills: code-security-review\n"
         result: {ok: true, output: Started., agent: {id: checker-1, background: true}}
       - prompt: {type: prompt, author: session, text: The export limit is off by one.}
         continues: true

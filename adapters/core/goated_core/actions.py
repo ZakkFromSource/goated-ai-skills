@@ -1233,8 +1233,9 @@ def _spawn_hold(brief: str, proof: _Proof) -> Hold | None:
             "spawn", STRICT,
             f"Load `{HANDOFF_SKILL}` with {SKILL_TOOL}{proof.within} before starting another "
             "agent or session with a brief, read its `references/spawn-brief.md` whole, and "
-            "write the brief from that template (Goal, Scope, Done Means, and its skills line "
-            "at least). For a "
+            "write the brief from that template ("
+            + ", ".join(contracts.HANDOFF_TEMPLATE.headings)
+            + ", and its skills line at least). For a "
             "scoped implementation or review task, load `subagent-driven-development` "
             "and fill its implementer or reviewer prompt instead. Nothing was started. "
             "This hold is strict: a goated-skip line does not clear it.",
