@@ -728,6 +728,29 @@ class SpawnBriefTests(AdapterTestCase):
         self.assertEqual(hold_line(held), "goated-hold: spawn | strict")
         self.assertIn("## Done Means", reason(held))
 
+    def test_a_brief_without_report_back_is_held_and_told_to_add_it(self) -> None:
+        s = self.routed()
+        s.brief_with_handoff()
+        brief = BRIEF.replace("## Report Back\n\n- Status and findings.\n\n", "")
+        self.assertNotIn("Report Back", brief)
+
+        held = s.call("Agent", {"prompt": brief})
+        self.assertEqual(hold_line(held), "goated-hold: spawn | strict")
+        self.assertIn("`## Report Back`", reason(held))
+        self.assertNotIn("`## Goal`", reason(held))
+
+    def test_the_spawn_brief_template_keeps_report_back_with_the_implementer_fields(self) -> None:
+        template = (REPO_ROOT / "skills" / "agent-workflows" / "handoff" / "references"
+                    / "spawn-brief.md").read_text(encoding="utf-8")
+        self.assertIn("keep Report Back and the skills line", " ".join(template.split()))
+        report = template.split("## Report Back", 1)[1].split("Read each skill", 1)[0]
+        for field in ("Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED",
+                      "Task completed or attempted", "Changed paths and paths inspected",
+                      "Commands run and their results", "Tests added or updated",
+                      "Assumptions and concerns", "Skipped checks or unavailable evidence",
+                      "Self-review notes", "Recommended next step"):
+            self.assertIn(field, report)
+
     def test_a_skip_line_never_passes_the_spawn_hold(self) -> None:
         s = self.routed()
         s.say("goated-skip: handoff: this is only a quick lookup agent")

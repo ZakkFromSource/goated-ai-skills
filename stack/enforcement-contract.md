@@ -369,6 +369,10 @@ goated-hold: <gate> | <kind>
   skill it asks for by its bare name, and no other bare word; a file is
   quoted by its path. In the `spawn` hold the two skills are alternatives;
   everywhere else each named skill is a separate requirement.
+- The `spawn` hold that asks for `handoff` names every heading its spawn
+  brief keeps, `Report Back` among them, and its skills line. The hold for a
+  brief that lacks kept headings names, for each template read, each heading
+  the brief still needs, as a `## <Heading>` Markdown heading.
 - The closeout lists each unmet item on its own line, starting
   `- <Label>: `, with the labels of the [Closeout Items](#closeout-items)
   table. The labels are stable.
@@ -1807,7 +1811,8 @@ states plainly enough to test without judgement (`contracts.py`):
   from another commit (`-c`, `-C`), or from an editor is not checked.
 - **Spawn brief.** The brief needs, as Markdown headings, the sections its
   template keeps even for an agent that inherits the conversation: `Goal`,
-  `Scope`, and `Done Means` for `handoff`'s spawn brief; `Task`,
+  `Scope`, `Done Means`, and `Report Back` for `handoff`'s spawn brief, so
+  that every brief asks for a report as the other two do; `Task`,
   `Ownership`, and `Required Report Format` for the implementer prompt;
   `Review Mode`, `Review Inputs`, and `Required Report Format` for the
   reviewer prompt. A brief passes when it matches a template whose skill

@@ -50,7 +50,8 @@ IMPLEMENTER = "D:\\goated\\skills\\subagent-driven-development\\references\\impl
 REVIEWER = "D:\\goated\\skills\\subagent-driven-development\\references\\reviewer-prompt.md"
 HANDOFF_BRIEF = (
     "## Goal\n\nAudit the exporter.\n\n## Scope\n\n- Work in: src/export/\n\n"
-    "## Done Means\n\n- A list of findings.\n\ngoated-skills: code-security-review\n"
+    "## Done Means\n\n- A list of findings.\n\n## Report Back\n\n- Status and findings.\n\n"
+    "goated-skills: code-security-review\n"
 )
 IMPLEMENTER_BRIEF = (
     "## Task\n\nAdd the exporter.\n\n## Ownership\n\n- src/export.py\n\n"
